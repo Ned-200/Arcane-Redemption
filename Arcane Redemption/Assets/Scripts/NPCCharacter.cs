@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Cinemachine;
 
 public class NPC_Character : BaseCharacter
 {
@@ -18,12 +19,16 @@ public class NPC_Character : BaseCharacter
     public float textSpeed;
     private int index;
 
+    
+    private GameObject CinemachineCamera;
+
     // Reference to player controller to block movement
     private PlayerController playerController;
+    private GameObject playerMesh;
 
     void Start()
     {
-        textComponent.text = string.Empty;
+        CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
     }
 
     void Update()
@@ -37,6 +42,7 @@ public class NPC_Character : BaseCharacter
 
             // Disable player movement
             playerController.canMove = false;
+            playerMesh.SetActive(false);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -60,6 +66,13 @@ public class NPC_Character : BaseCharacter
         {   
             // Get player from collision
             playerController = other.GetComponent<PlayerController>();
+            if (other.transform.Find("PlayerMesh").gameObject)
+            {
+                playerMesh = other.transform.Find("PlayerMesh").gameObject;
+            } else
+            {
+                Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+            }
 
             playerInRange = true;
             Debug.Log("Entered NPC range");
@@ -85,6 +98,7 @@ public class NPC_Character : BaseCharacter
         index = 0;
         StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
+        CinemachineCamera.SetActive(true);
     }
 
     IEnumerator TypeLine()
@@ -109,10 +123,13 @@ public class NPC_Character : BaseCharacter
             Debug.Log("Dialogue End");
             playerInRange = false;   
             DialogueBox.SetActive(false);
+            CinemachineCamera.SetActive(false);
             NPC_Speaking = false;
 
             // Re-enable player movement
             playerController.canMove = true;
+            // Un-hide player mesh
+            playerMesh.SetActive(true);
         }
     }
 

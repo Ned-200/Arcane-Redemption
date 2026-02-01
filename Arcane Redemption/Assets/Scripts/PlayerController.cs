@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
+    [SerializeField] public bool canMove = true;
     [SerializeField] private float walkSpeed = 3f;
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float sprintStaminaCost = 10f;
@@ -57,9 +58,11 @@ public class PlayerController : MonoBehaviour
     {
         HandleGroundCheck();
         HandleGravity();
-        HandleDash();
-        HandleMovement();
-        HandleJump();
+        if (canMove) {
+            HandleDash();
+            HandleMovement();
+            HandleJump();
+        }
     }
 
     private void HandleGroundCheck()

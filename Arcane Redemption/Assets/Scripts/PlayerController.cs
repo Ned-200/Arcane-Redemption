@@ -3,6 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Animation")]
+    [SerializeField] public Animator playerAnim;
+    private bool isWalkingAnim = false;
+
     [Header("Movement")]
     [SerializeField] public bool canMove = true;
     [SerializeField] private float walkSpeed = 3f;
@@ -132,6 +136,21 @@ public class PlayerController : MonoBehaviour
         bool isSprinting = Input.GetKey(KeyCode.LeftShift) && CanSprint();
         float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
 
+        // Toggle walking animation
+        if (move.magnitude > 0f){
+            if (!isWalkingAnim)
+            {
+                playerAnim.SetBool("isWalking", true);
+                isWalkingAnim = true;
+            }
+        } else {
+            if (isWalkingAnim)
+            {
+                isWalkingAnim = false;
+                playerAnim.SetBool("isWalking", false);
+            }
+        }
+
         if (isSprinting && move.magnitude > 0f)
         {
             ConsumeStamina(sprintStaminaCost * Time.deltaTime);
@@ -204,7 +223,9 @@ public class PlayerController : MonoBehaviour
     {
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         ConsumeStamina(jumpStaminaCost);
-        
+        playerAnim.Play("Jump");
+
+
         if (enableDebugLogs)
         {
             Debug.Log("Jumping! Velocity Y: " + velocity.y);

@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundMask = -1;
 
     [Header("Debug")]
-    [SerializeField] private bool enableDebugLogs = true;
+    [SerializeField] private bool enableDebugLogs = false;
     [SerializeField] private bool showGroundCheckGizmo = true;
 
     // Components
@@ -62,7 +62,8 @@ public class PlayerController : MonoBehaviour
     {
         HandleGroundCheck();
         HandleGravity();
-        if (canMove) {
+        if (canMove)
+        {
             HandleDash();
             HandleMovement();
             HandleJump();
@@ -93,13 +94,6 @@ public class PlayerController : MonoBehaviour
 
         // Consider grounded if either method detects ground
         isGrounded = sphereCastHit || controllerGrounded;
-
-        if (enableDebugLogs && Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log($"Ground Check - SphereCast: {sphereCastHit}, ControllerGrounded: {controllerGrounded}, " +
-                      $"Final IsGrounded: {isGrounded}, Player Y: {transform.position.y}, " +
-                      $"Hit Distance: {(sphereCastHit ? hit.distance.ToString() : "N/A")}");
-        }
 
         // Reset downward velocity when grounded
         if (isGrounded && velocity.y < 0f)
@@ -133,17 +127,25 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
 
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && CanSprint();
+        // Check if player wants to sprint AND has enough stamina
+        bool wantsToSprint = Input.GetKey(KeyCode.LeftShift) && move.magnitude > 0f;
+        bool hasStamina = baseCharacter != null && baseCharacter.HasEnoughStamina(sprintStaminaCost * Time.deltaTime);
+        bool isSprinting = wantsToSprint && hasStamina;
+
+        // Determine speed
         float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
 
         // Toggle walking animation
-        if (move.magnitude > 0f){
+        if (move.magnitude > 0f)
+        {
             if (!isWalkingAnim)
             {
                 playerAnim.SetBool("isWalking", true);
                 isWalkingAnim = true;
             }
-        } else {
+        }
+        else
+        {
             if (isWalkingAnim)
             {
                 isWalkingAnim = false;
@@ -151,9 +153,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (isSprinting && move.magnitude > 0f)
+        // Consume stamina while sprinting
+        if (isSprinting && baseCharacter != null)
         {
-            ConsumeStamina(sprintStaminaCost * Time.deltaTime);
+            baseCharacter.ConsumeStamina(sprintStaminaCost * Time.deltaTime);
+            
+            if (enableDebugLogs)
+            {
+                Debug.Log($"Sprinting - Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
+            }
         }
 
         characterController.Move(move * currentSpeed * Time.deltaTime);
@@ -164,21 +172,13 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (enableDebugLogs)
-            {
-                Debug.Log($"Space pressed! IsGrounded: {isGrounded}, IsDashing: {isDashing}");
-            }
-
             if (isGrounded && !isDashing)
             {
                 TryJump();
             }
-            else if (!isGrounded)
+            else if (!isGrounded && enableDebugLogs)
             {
-                if (enableDebugLogs)
-                {
-                    Debug.Log("Can't jump - not grounded!");
-                }
+                Debug.Log("Can't jump - not grounded!");
             }
         }
     }
@@ -192,10 +192,6 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C) && !isDashing && dashCooldownRemaining <= 0f)
         {
-            if (enableDebugLogs)
-            {
-                Debug.Log("Dash pressed!");
-            }
             TryDash();
         }
 
@@ -221,53 +217,54 @@ public class PlayerController : MonoBehaviour
 
     private void TryJump()
     {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        ConsumeStamina(jumpStaminaCost);
-        playerAnim.Play("Jump");
-
-
-        if (enableDebugLogs)
+        // Check if player has enough stamina to jump
+        if (baseCharacter != null && baseCharacter.TryConsumeStamina(jumpStaminaCost))
         {
-            Debug.Log("Jumping! Velocity Y: " + velocity.y);
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            playerAnim.Play("Jump");
+
+            if (enableDebugLogs)
+            {
+                Debug.Log($"Jumping! Velocity Y: {velocity.y}, Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
+            }
+        }
+        else if (enableDebugLogs)
+        {
+            Debug.Log("Not enough stamina to jump!");
         }
     }
 
     private void TryDash()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 move = transform.right * horizontal + transform.forward * vertical;
-
-        if (move.magnitude < 0.1f)
+        // Check if player has enough stamina to dash
+        if (baseCharacter != null && baseCharacter.TryConsumeStamina(dashStaminaCost))
         {
-            dashDirection = transform.forward;
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            Vector3 move = transform.right * horizontal + transform.forward * vertical;
+
+            if (move.magnitude < 0.1f)
+            {
+                dashDirection = transform.forward;
+            }
+            else
+            {
+                dashDirection = move.normalized;
+            }
+
+            isDashing = true;
+            dashTimeRemaining = dashDuration;
+            dashCooldownRemaining = dashCooldown;
+
+            if (enableDebugLogs)
+            {
+                Debug.Log($"Dashing! Direction: {dashDirection}, Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
+            }
         }
-        else
+        else if (enableDebugLogs)
         {
-            dashDirection = move.normalized;
+            Debug.Log("Not enough stamina to dash!");
         }
-
-        isDashing = true;
-        dashTimeRemaining = dashDuration;
-        dashCooldownRemaining = dashCooldown;
-        ConsumeStamina(dashStaminaCost);
-        
-        if (enableDebugLogs)
-        {
-            Debug.Log("Dashing! Direction: " + dashDirection);
-        }
-    }
-
-    private bool CanSprint()
-    {
-        // Add stamina check when BaseCharacter exposes the method
-        return true;
-    }
-
-    private void ConsumeStamina(float amount)
-    {
-        // This is a placeholder - you'll need to add a public method to BaseCharacter
-        // baseCharacter.ConsumeStamina(amount);
     }
 
     // Visualize the ground check in Scene view

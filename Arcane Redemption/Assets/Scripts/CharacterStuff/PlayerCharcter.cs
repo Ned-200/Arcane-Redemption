@@ -55,6 +55,9 @@ public class PlayerCharacter : BaseCharacter
         currentYaw = transform.eulerAngles.y;
         currentPitch = 0f;
         currentDistance = cameraDistance;
+
+        // Debug initial health
+        Debug.Log($"[PlayerCharacter] Initialized - Health: {CurrentHealth}/{MaxHealth}");
     }
 
     protected override void Update()
@@ -118,6 +121,36 @@ public class PlayerCharacter : BaseCharacter
         cameraTransform.rotation = rotation;
     }
 
+    /// <summary>
+    /// Called when player takes damage - Override for debug logging
+    /// </summary>
+    protected override void OnDamageTaken(float damage)
+    {
+        base.OnDamageTaken(damage);
+        
+        Debug.Log($"[PlayerCharacter] TOOK DAMAGE: {damage} | Health: {CurrentHealth}/{MaxHealth} ({HealthPercent * 100:F1}%)");
+        
+        // TODO: Play hurt sound
+        // TODO: Screen shake effect
+        // TODO: Damage VFX
+    }
+
+    /// <summary>
+    /// Called when player health reaches zero
+    /// </summary>
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        
+        
+        Debug.LogError($"Player '{gameObject.name}' health reached zero!");
+      
+        
+        // TODO: Trigger death screen/respawn logic
+        // TODO: Play death animation
+        // TODO: Disable player controls
+    }
+
     // Optional: Allow player to unlock cursor with Escape
     private void OnApplicationFocus(bool hasFocus)
     {
@@ -144,5 +177,10 @@ public class PlayerCharacter : BaseCharacter
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(pivotPosition, cameraTransform.position);
         }
+    }
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 300, 20), $"Health: {CurrentHealth}/{MaxHealth}");
     }
 }

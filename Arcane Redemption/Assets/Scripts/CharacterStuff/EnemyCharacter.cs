@@ -1,13 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Enemy character that inherits stats and hand slots from BaseCharacter
+/// Enemy character that inherits stats and weapon slot from BaseCharacter
 /// </summary>
 public class EnemyCharacter : BaseCharacter
 {
     [Header("Enemy Settings")]
     [SerializeField] private GameObject defaultWeapon;
-    [SerializeField] private GameObject defaultShield;
 
     [Header("AI Settings")]
     [SerializeField] private float detectionRadius = 15f;
@@ -20,8 +19,11 @@ public class EnemyCharacter : BaseCharacter
     [SerializeField] private float rotationSpeed = 5f;
 
     [Header("Combat")]
-    [SerializeField] private float attackDamage = 10f;
+    [SerializeField] private float attackDamage = 5f;
     [SerializeField] private float attackCooldown = 2f;
+
+    [Header("Death Settings")]
+    [SerializeField] private float deathDelay = 2f;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugGizmos = true;
@@ -44,10 +46,10 @@ public class EnemyCharacter : BaseCharacter
 
     protected override void Awake()
     {
-        base.Awake(); // Initialize stats and hand slots
+        base.Awake(); // Initialize stats and weapon slot
 
-        // Equip default equipment
-        EquipDefaultItems();
+        // Equip default weapon
+        EquipDefaultWeapon();
     }
 
     protected override void Update()
@@ -59,16 +61,11 @@ public class EnemyCharacter : BaseCharacter
         // AI behavior handled by EnemyAIController
     }
 
-    private void EquipDefaultItems()
+    private void EquipDefaultWeapon()
     {
         if (defaultWeapon != null)
         {
-            EquipRightHand(defaultWeapon);
-        }
-
-        if (defaultShield != null)
-        {
-            EquipLeftHand(defaultShield);
+            EquipWeapon(defaultWeapon);
         }
     }
 
@@ -99,8 +96,7 @@ public class EnemyCharacter : BaseCharacter
     /// <returns>True if health is below threshold</returns>
     public bool ShouldRetreat(float healthThreshold)
     {
-        float healthPercent = currentHealth / maxHealth;
-        return healthPercent <= healthThreshold;
+        return HealthPercent <= healthThreshold;
     }
 
     /// <summary>
@@ -108,7 +104,7 @@ public class EnemyCharacter : BaseCharacter
     /// </summary>
     public float GetHealthPercent()
     {
-        return currentHealth / maxHealth;
+        return HealthPercent;
     }
 
     /// <summary>
@@ -116,7 +112,7 @@ public class EnemyCharacter : BaseCharacter
     /// </summary>
     public bool IsCriticallyWounded()
     {
-        return currentHealth <= (maxHealth * 0.3f);
+        return HealthPercent <= 0.3f;
     }
 
     /// <summary>
@@ -146,16 +142,22 @@ public class EnemyCharacter : BaseCharacter
     }
 
     /// <summary>
-    /// Performs the attack
+    /// Performs the attack and deals damage to the player
     /// </summary>
     private void PerformAttack()
     {
-        // Deal damage to player
-        PlayerCharacter player = targetPlayer.GetComponent<PlayerCharacter>();
-        if (player != null)
+        if (targetPlayer == null) return;
+
+        // Try to get BaseCharacter component first (more general)
+        BaseCharacter targetCharacter = targetPlayer.GetComponent<BaseCharacter>();
+        if (targetCharacter != null)
         {
-            // TODO: Implement damage system
-            Debug.Log($"{gameObject.name} attacked player for {attackDamage} damage!");
+            targetCharacter.TakeDamage(attackDamage);
+            Debug.Log($"{gameObject.name} attacked {targetPlayer.name} for {attackDamage} damage!");
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name} attacked {targetPlayer.name} but target has no BaseCharacter component!");
         }
 
         OnAttackPerformed();
@@ -163,20 +165,38 @@ public class EnemyCharacter : BaseCharacter
 
     /// <summary>
     /// Takes damage from the player or environment
+    /// Overrides base TakeDamage to add enemy-specific logging and behavior
     /// </summary>
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        currentHealth = Mathf.Max(0f, currentHealth);
+        if (isDead) return;
 
-        Debug.Log($"{gameObject.name} took {damage} damage. Health: {currentHealth}/{maxHealth}");
+        // Store health before damage
+        float healthBefore = CurrentHealth;
 
-        if (currentHealth <= 0f && !isDead)
+        // Call base class TakeDamage which handles health reduction and events
+        base.TakeDamage(damage);
+
+        // Log detailed damage information
+        
+        Debug.Log($"Damage Taken: {damage}");
+        
+        
+        // Show status indicator
+        if (HealthPercent <= 0.2f)
+        {
+            Debug.LogWarning($"[{gameObject.name}] CRITICAL HEALTH!");
+        }
+        else if (HealthPercent <= 0.5f)
+        {
+            Debug.Log($"[{gameObject.name}] Low Health");
+        }
+
+        // Check if enemy died from this damage
+        if (!IsAlive && !isDead)
         {
             Die();
         }
-
-        OnDamageTaken(damage);
     }
 
     /// <summary>
@@ -187,36 +207,61 @@ public class EnemyCharacter : BaseCharacter
         isDead = true;
         currentState = EnemyState.Dead;
 
-        // Drop equipped items
-        DropEquippedItems();
+        // Drop equipped weapon
+        DropEquippedWeapon();
 
+        // Disable components immediately
+        DisableComponents();
+
+        // Call death event (animations, sounds, VFX)
         OnDeath();
 
-        // Disable components
-        enabled = false;
-
-        // TODO: Play death animation
-        // TODO: Spawn loot
-        // TODO: Disable collider after animation
+        // Destroy the GameObject after a delay
+        Destroy(gameObject, deathDelay);
     }
 
     /// <summary>
-    /// Drops items the enemy was holding
+    /// Disables enemy components to prevent further actions
     /// </summary>
-    private void DropEquippedItems()
+    private void DisableComponents()
     {
-        // TODO: Spawn items as pickups in the world
-        if (RightHandItem != null)
+        // Disable this script
+        enabled = false;
+
+        // Disable AI controller if present
+        EnemyAIController aiController = GetComponent<EnemyAIController>();
+        if (aiController != null)
         {
-            Debug.Log($"{gameObject.name} dropped {RightHandItem.name}");
+            aiController.enabled = false;
         }
 
-        if (LeftHandItem != null)
+        // Disable character controller to prevent movement
+        CharacterController charController = GetComponent<CharacterController>();
+        if (charController != null)
         {
-            Debug.Log($"{gameObject.name} dropped {LeftHandItem.name}");
+            charController.enabled = false;
         }
 
-        UnequipAll();
+        // Optionally disable collider to make enemy non-interactive
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// Drops the weapon the enemy was holding
+    /// </summary>
+    private void DropEquippedWeapon()
+    {
+        // TODO: Spawn weapon as pickup in the world
+        if (EquippedWeapon != null)
+        {
+            Debug.Log($"{gameObject.name} dropped {EquippedWeapon.name}");
+        }
+
+        UnequipWeapon();
     }
 
     #region Virtual Event Methods
@@ -241,18 +286,27 @@ public class EnemyCharacter : BaseCharacter
     /// <summary>
     /// Called when the enemy takes damage
     /// </summary>
-    protected virtual void OnDamageTaken(float damage)
+    protected override void OnDamageTaken(float damage)
     {
-        // Override for custom behavior (play hurt sound, visual effects, etc.)
+        base.OnDamageTaken(damage);
+        // Add enemy-specific damage response (play hurt sound, visual effects, etc.)
     }
 
     /// <summary>
-    /// Called when the enemy dies
+    /// Called when the enemy dies.
+    /// GameObject will be destroyed after deathDelay seconds.
     /// </summary>
-    protected virtual void OnDeath()
+    protected override void OnDeath()
     {
-        Debug.Log($"{gameObject.name} has died!");
-        // Override for custom behavior (death animation, sound, particle effects, etc.)
+        base.OnDeath();
+        
+        Debug.LogError($" [{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
+        
+        // TODO: Play death animation 
+        // TODO: Play death sound
+        // TODO: Spawn particle effects (blood, dissolve effect, etc.)
+        // TODO: Spawn loot drops
+        // TODO: Add score/experience to player
     }
 
     #endregion

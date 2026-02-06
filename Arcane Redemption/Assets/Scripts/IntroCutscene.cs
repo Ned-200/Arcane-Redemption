@@ -76,6 +76,7 @@ public class IntroCutscene : MonoBehaviour
             Debug.Log("Dialogue End");
             DialogueBox.SetActive(false);
             CutsceneImageObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 

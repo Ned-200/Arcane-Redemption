@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Unity.Cinemachine;
 
@@ -41,7 +42,11 @@ public class MayorCharacter : NPC_Character
         } else {
             Debug.Log("PLAYER NOT FOUND BY MAYOR! Check Player Tag.");
         }
-
+        
+        // Fade out of black
+        FadeUI.SetActive(true);
+        FadeUI.GetComponent<Image>().CrossFadeAlpha(0, 8.0f, true);
+        Debug.Log("FADING UI");
     }
 
     protected override void Update()

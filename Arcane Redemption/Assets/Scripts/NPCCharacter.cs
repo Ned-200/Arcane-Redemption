@@ -11,6 +11,7 @@ public class NPC_Character : BaseCharacter
 
     [Header("UI")]
     [SerializeField] protected GameObject SpeakImage;
+    [SerializeField] protected GameObject FadeUI;
 
     [Header("Text")]
     [SerializeField] protected GameObject DialogueBox;

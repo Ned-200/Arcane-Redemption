@@ -22,7 +22,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private KeyCode switchWeaponKey = KeyCode.Q;
 
     private List<WeaponBase> instantiatedWeapons = new List<WeaponBase>();
-    private int currentWeaponIndex = -1;
+
+    private int currentWeaponIndex;
     private WeaponBase currentWeapon;
 
     public WeaponBase CurrentWeapon => currentWeapon;
@@ -101,14 +102,21 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             currentWeapon.TryPrimaryAttack();
-            playerAnim.Play("Sword Slash");
+
+            //0 WHEN STAFF, 1 WHEN SWORD
+            if (currentWeaponIndex == 0)
+            {
+                playerAnim.Play("Spell Cast");
+            } else if (currentWeaponIndex == 1) {
+                playerAnim.Play("Sword Slash");
+            }
+
         }
 
         // Secondary attack (Right Mouse Button)
         if (Input.GetMouseButtonDown(1))
         {
             currentWeapon.TrySecondaryAttack();
-            playerAnim.Play("Spell Cast");
         }
 
         // Release secondary (for aim toggle)
@@ -128,7 +136,7 @@ public class WeaponManager : MonoBehaviour
         if (instantiatedWeapons.Count == 0) return;
 
         int nextIndex = (currentWeaponIndex + 1) % instantiatedWeapons.Count;
-        EquipWeapon(nextIndex);
+        EquipWeapon(nextIndex); 
     }
 
     public void EquipWeapon(int index)

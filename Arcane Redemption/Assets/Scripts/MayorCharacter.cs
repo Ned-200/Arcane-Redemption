@@ -1,35 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Unity.Cinemachine;
 
-public class NPC_Character : BaseCharacter
+public class MayorCharacter : NPC_Character
 {
-    protected bool playerInRange = false;
-    protected bool NPC_Speaking = false;
 
-    [Header("UI")]
-    [SerializeField] protected GameObject SpeakImage;
-    [SerializeField] protected GameObject FadeUI;
-
-    [Header("Text")]
-    [SerializeField] protected GameObject DialogueBox;
-    public TextMeshProUGUI textComponent;
-    public string[] lines;
-    public float textSpeed;
-    protected int index;
-
-    
-    protected GameObject CinemachineCamera;
-
-    // Reference to player controller to block movement
-    protected PlayerController playerController;
-    protected GameObject playerMesh;
+    private GameObject player;
 
     void Start()
     {
         CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
+
+        Debug.Log("Dialogue Begin");
+        SpeakImage.SetActive(false);
+        StartDialogue();
+        NPC_Speaking = true;
+
+        // Get player by tag
+        player = GameObject.FindWithTag("Player");
+        
+        if (player != null) 
+        {   
+            playerController = player.GetComponent<PlayerController>();
+            if (player.transform.Find("PlayerMesh").gameObject)
+            {
+                playerMesh = player.transform.Find("PlayerMesh").gameObject;
+            } else
+            {
+                Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+            }
+
+            playerInRange = true;
+            Debug.Log("Beginning Intro Dialogue, Freezing Player");
+            // Disable player movement
+            playerController.canMove = false;
+            playerMesh.SetActive(false);
+
+        } else {
+            Debug.Log("PLAYER NOT FOUND BY MAYOR! Check Player Tag.");
+        }
+        
+        // Fade out of black
+        FadeUI.SetActive(true);
+        FadeUI.GetComponent<Image>().CrossFadeAlpha(0, 8.0f, true);
+        Debug.Log("FADING UI");
     }
 
     protected override void Update()
@@ -59,11 +76,11 @@ public class NPC_Character : BaseCharacter
         }
     }
 
-    protected virtual void OnTriggerEnter(Collider collision)
+    protected override void OnTriggerEnter(Collider collision)
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !NPC_Speaking) // Check if not already speaking, since player starts in dialogue
         {   
             // Get player from collision
             playerController = other.GetComponent<PlayerController>();
@@ -80,38 +97,7 @@ public class NPC_Character : BaseCharacter
             SpeakImage.SetActive(true);
         }
     }
-
-    protected void OnTriggerExit(Collider collision)
-    {
-        GameObject other = collision.gameObject;
-
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            Debug.Log("Left NPC range");
-            SpeakImage.SetActive(false);
-        }
-    }
-
-    protected void StartDialogue()
-    {
-        textComponent.text = string.Empty;
-        index = 0;
-        StartCoroutine(TypeLine());
-        DialogueBox.SetActive(true);
-        CinemachineCamera.SetActive(true);
-    }
-
-    protected IEnumerator TypeLine()
-    {
-        foreach (char c in lines[index].ToCharArray())
-        {
-            textComponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-    }
-
-    protected virtual void NextLine()
+    protected override void NextLine()
     {
         if (index < lines.Length - 1)
         {
@@ -120,6 +106,11 @@ public class NPC_Character : BaseCharacter
             StartCoroutine(TypeLine());
         } else
         {
+            // Change Dialogue if player speaks with NPC again
+            System.Array.Resize(ref lines, 2);
+            lines[0] = "What are you waiting around for? Go save my town and earn your darn freedom!";
+            lines[1] = "Ahem... ...Please.";
+
             // End dialogue
             Debug.Log("Dialogue End");
             playerInRange = false;   
@@ -133,5 +124,7 @@ public class NPC_Character : BaseCharacter
             playerMesh.SetActive(true);
         }
     }
+
+
 
 }

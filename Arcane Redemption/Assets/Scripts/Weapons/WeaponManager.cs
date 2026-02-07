@@ -14,6 +14,9 @@ public class WeaponManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform weaponSlot;
     [SerializeField] private BaseCharacter character;
+    
+    [Header("Animation")]
+    [SerializeField] public Animator playerAnim;
 
     [Header("Input")]
     [SerializeField] private KeyCode switchWeaponKey = KeyCode.Q;
@@ -98,12 +101,14 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             currentWeapon.TryPrimaryAttack();
+            playerAnim.Play("Sword Slash");
         }
 
         // Secondary attack (Right Mouse Button)
         if (Input.GetMouseButtonDown(1))
         {
             currentWeapon.TrySecondaryAttack();
+            playerAnim.Play("Spell Cast");
         }
 
         // Release secondary (for aim toggle)

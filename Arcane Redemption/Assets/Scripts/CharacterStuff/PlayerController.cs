@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
             HandleJump();
         }
+
+        playerAnim.SetBool("isGrounded", isGrounded);
     }
 
     private void HandleGroundCheck()
@@ -134,6 +136,9 @@ public class PlayerController : MonoBehaviour
 
         // Determine speed
         float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+        // Toggle sprinting animation
+        playerAnim.SetBool("isSprinting", isSprinting);
 
         // Toggle walking animation
         if (move.magnitude > 0f)
@@ -251,6 +256,8 @@ public class PlayerController : MonoBehaviour
             {
                 dashDirection = move.normalized;
             }
+
+            playerAnim.Play("Dash");
 
             isDashing = true;
             dashTimeRemaining = dashDuration;

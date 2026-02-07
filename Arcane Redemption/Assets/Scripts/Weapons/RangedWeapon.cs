@@ -41,7 +41,7 @@ public abstract class RangedWeapon : WeaponBase
         }
 
         // Spawn projectile
-        GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, playerCamera.transform.rotation);
         ProjectileBase projectile = projectileObj.GetComponent<ProjectileBase>();
 
         if (projectile != null)

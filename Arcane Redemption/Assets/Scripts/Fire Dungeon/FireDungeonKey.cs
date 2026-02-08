@@ -6,6 +6,14 @@ public class FireDungeonKey : MonoBehaviour
 
     private bool playerInRange = false;
 
+    void Start()
+    {
+        if (interactImage == null)
+        {
+            Debug.LogError("FireDungeonKey can't find interactImage!");
+        }
+    }
+
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))

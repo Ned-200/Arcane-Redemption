@@ -14,6 +14,7 @@ public class ProjectileBase : MonoBehaviour
 
     [Header("Visual Effects")]
     [SerializeField] protected GameObject impactEffectPrefab;
+    protected private GameObject impactEffect;
     [SerializeField] protected TrailRenderer trail;
 
     protected float damage;
@@ -68,18 +69,25 @@ public class ProjectileBase : MonoBehaviour
         // Spawn impact effect
         if (impactEffectPrefab != null)
         {
-            Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            impactEffect = Instantiate(impactEffectPrefab, transform.position, impactEffectPrefab.transform.rotation);
         }
 
         // Destroy projectile
         if (destroyOnImpact)
         {
-            Destroy(gameObject);
+            Invoke(nameof(DestroyProjectile), 2);
         }
     }
 
     protected virtual void OnTargetHit(BaseCharacter target)
     {
         Debug.Log($"Projectile hit {target.gameObject.name} for {damage} damage!");
+    }
+
+    void DestroyProjectile()
+    {
+        Destroy(impactEffect);
+        Destroy(gameObject);
     }
 }

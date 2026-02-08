@@ -8,6 +8,19 @@ public class FireDungeonKeyDoor : MonoBehaviour
     [SerializeField] GameObject fireDungeonKey;
     private bool playerInRange = false;
 
+    void Start()
+    {
+        if (fireDungeonKey == null)
+        {
+            Debug.LogError("Dungeon door can't find key!");
+        }
+
+        if (interactImage == null)
+        {
+            Debug.LogError("Dungeon door can't find interact image!");
+        }
+    }
+
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E) & fireDungeonKey == null)

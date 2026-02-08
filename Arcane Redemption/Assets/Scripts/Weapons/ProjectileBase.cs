@@ -55,11 +55,14 @@ public class ProjectileBase : MonoBehaviour
         hasHit = true;
 
         // Apply damage
-        BaseCharacter targetCharacter = other.GetComponent<BaseCharacter>();
+        BaseCharacter targetCharacter = other.GetComponent<BaseCharacter>(); // If a character
         if (targetCharacter != null)
         {
             targetCharacter.TakeDamage(damage);
             OnTargetHit(targetCharacter);
+        } else if (other.gameObject.tag == "PlantWall") // If a plant wall - ADD TEST WHETHER PROJECTILE IS FIRE MAGIC
+        {
+            Destroy(other.gameObject);
         }
 
         // Spawn impact effect

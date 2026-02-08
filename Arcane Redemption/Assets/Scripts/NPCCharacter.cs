@@ -26,6 +26,8 @@ public class NPC_Character : BaseCharacter
     // Reference to player controller to block movement
     protected PlayerController playerController;
     protected GameObject playerMesh;
+    protected GameObject weaponMesh;
+ 
 
     void Start()
     {
@@ -44,6 +46,8 @@ public class NPC_Character : BaseCharacter
             // Disable player movement
             playerController.canMove = false;
             playerMesh.SetActive(false);
+            weaponMesh.SetActive(false);
+            
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -70,6 +74,8 @@ public class NPC_Character : BaseCharacter
             if (other.transform.Find("PlayerMesh").gameObject)
             {
                 playerMesh = other.transform.Find("PlayerMesh").gameObject;
+                weaponMesh = other.transform.Find("WeaponSlot").gameObject;
+              
             } else
             {
                 Debug.Log("NPC Could Not Find/Hide Player Mesh!");
@@ -100,6 +106,8 @@ public class NPC_Character : BaseCharacter
         StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
         CinemachineCamera.SetActive(true);
+        playerController.canMove = false;
+        playerMesh.SetActive(false);
     }
 
     protected IEnumerator TypeLine()
@@ -131,6 +139,8 @@ public class NPC_Character : BaseCharacter
             playerController.canMove = true;
             // Un-hide player mesh
             playerMesh.SetActive(true);
+            weaponMesh.SetActive(true);
+        
         }
     }
 

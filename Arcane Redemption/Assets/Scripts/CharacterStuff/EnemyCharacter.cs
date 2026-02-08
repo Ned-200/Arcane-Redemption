@@ -44,13 +44,17 @@ public class EnemyCharacter : BaseCharacter
     public float RotationSpeed => rotationSpeed;
     public bool IsDead => isDead;
 
+    //accessing disintegrate script
+    [SerializeField] private Disintegrate disintegrate;
+
     protected override void Awake()
     {
         base.Awake(); // Initialize stats and weapon slot
 
         // Equip default weapon
         EquipDefaultWeapon();
-    }
+
+           }
 
     protected override void Update()
     {
@@ -215,6 +219,9 @@ public class EnemyCharacter : BaseCharacter
 
         // Call death event (animations, sounds, VFX)
         OnDeath();
+
+        //Trigger disintegration material
+        disintegrate.TriggerDisintegration();
 
         // Destroy the GameObject after a delay
         Destroy(gameObject, deathDelay);

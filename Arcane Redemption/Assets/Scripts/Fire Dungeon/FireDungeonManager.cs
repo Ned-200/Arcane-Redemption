@@ -6,14 +6,18 @@ public class FireDungeonManager : MonoBehaviour
     [SerializeField] GameObject[] battleLockedDoors;
     [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject bridge;
+    [SerializeField] GameObject vinesWall2;
+    [SerializeField] GameObject dungeonEntrance;
+    [SerializeField] GameObject teleportDoor;
     [SerializeField] CharacterController characterController;    
     private PlayerController playerController;
     [SerializeField] GameObject burningPrefab;
     private GameObject burningEffect;
     private bool movedOrMoving;
-    
-    private Vector3 targetPosition;
+    private bool entranceOpened;
     [SerializeField] float moveDuration;
+
+    private bool[] doorsOpened = new bool[5];
 
     void Start()
     {
@@ -31,13 +35,26 @@ public class FireDungeonManager : MonoBehaviour
         {
             Debug.LogError("Fire dungeon manager can't find burningPrefab!");
         }
+        
+        if (vinesWall2 == null)
+        {
+            Debug.LogError("Fire dungeon manager can't find vinesWall2!");
+        }
 
-        targetPosition = new Vector3(58,-16.9f,16);
+        if (dungeonEntrance == null)
+        {
+            Debug.LogError("Fire dungeon manager can't find dungeonEntrance!");
+        }
+        
+        if (teleportDoor == null)
+        {
+            Debug.LogError("Fire dungeon manager can't find teleportDoor!");
+        }
     }
 
-    IEnumerator TweenPosition(Vector3 targetPos, float duration)
+    IEnumerator TweenPosition(GameObject movingObject, Vector3 targetPos, float duration)
     {
-        Vector3 startPosition = bridge.transform.position;
+        Vector3 startPosition = movingObject.transform.localPosition;
         float timeElapsed = 0.0f;
 
         while (timeElapsed < duration)
@@ -46,7 +63,7 @@ public class FireDungeonManager : MonoBehaviour
             float t = timeElapsed / duration;
 
             // Interpolate the position
-            bridge.transform.position = Vector3.Lerp(startPosition, targetPos, t);
+            movingObject.transform.localPosition = Vector3.Lerp(startPosition, targetPos, t);
             
             // Increment time and wait for the next frame
             timeElapsed += Time.deltaTime;
@@ -54,32 +71,47 @@ public class FireDungeonManager : MonoBehaviour
         }
 
         // Ensure the object reaches the exact target position
-        bridge.transform.position = targetPos;
+        movingObject.transform.localPosition = targetPos;
     }
 
     private void Update() {
-        if (enemies[0] == null & enemies[1] == null)
+        if (enemies[0] == null & enemies[1] == null & !doorsOpened[0])
         {
-            Destroy(battleLockedDoors[0]);
-            Destroy(battleLockedDoors[1]);
+            doorsOpened[0] = true;
+            StartCoroutine(TweenPosition(battleLockedDoors[0], new Vector3(battleLockedDoors[0].transform.localPosition.x, 8, battleLockedDoors[0].transform.localPosition.z), 3));
+            StartCoroutine(TweenPosition(battleLockedDoors[1], new Vector3(battleLockedDoors[1].transform.localPosition.x, 8, battleLockedDoors[1].transform.localPosition.z), 3));
+            Debug.Log("Opening doors");
         }
 
-        if (enemies[2] == null & enemies[3] == null)
+        if (enemies[2] == null & enemies[3] == null & !doorsOpened[1])
         {
-            Destroy(battleLockedDoors[2]);
+            doorsOpened[1] = true;
+            StartCoroutine(TweenPosition(battleLockedDoors[2], new Vector3(battleLockedDoors[2].transform.localPosition.x, 8, battleLockedDoors[2].transform.localPosition.z), 3));
+            Debug.Log("Opening door");
         }
 
-        if (enemies[4] == null & enemies[5] == null & enemies[6] == null & enemies[7] == null & enemies[8] == null & enemies[9] == null)
+        if (enemies[4] == null & enemies[5] == null & enemies[6] == null & enemies[7] == null & enemies[8] == null & enemies[9] == null & !doorsOpened[2])
         {
-            Destroy(battleLockedDoors[3]);
+            doorsOpened[2] = true;
+            StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, 8, battleLockedDoors[3].transform.localPosition.z), 3));
+            Debug.Log("Opening door");
         }
 
         if (enemies[10] == null & enemies[11] == null & !movedOrMoving)
         {
             movedOrMoving = true;
             // Start the tweening coroutine
-            StartCoroutine(TweenPosition(targetPosition, moveDuration));
-            bridge.transform.position = new Vector3(58,-17,16);
+            StartCoroutine(TweenPosition(bridge, new Vector3(17,-19,-60), moveDuration));
+            bridge.transform.position = new Vector3(17,-19,-60);
+        }
+
+        if (vinesWall2 == null & !entranceOpened)
+        {
+            entranceOpened = true;
+            teleportDoor.SetActive(true);
+            // Start the tweening coroutine
+            StartCoroutine(TweenPosition(dungeonEntrance, new Vector3(-28, 8, -12.5f), 10));
+            dungeonEntrance.transform.position = new Vector3(-28, 8, -12.5f);
         }
         
     }

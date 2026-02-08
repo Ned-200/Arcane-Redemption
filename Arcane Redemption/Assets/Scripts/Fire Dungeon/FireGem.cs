@@ -8,9 +8,9 @@ public class FireGem : MonoBehaviour
     private bool playerInRange = false;
 
     [SerializeField] GameObject gemDoor;
+    private BoxCollider boxCollider;
 
     private bool movedOrMoving;
-    private Vector3 targetPosition = new Vector3(32, 3, -18.5f);
     [SerializeField] float moveDuration;
     
     void Start()
@@ -19,19 +19,29 @@ public class FireGem : MonoBehaviour
         {
             Debug.LogError("FireGem can't find interactImage!");
         }
+
+        if (gemDoor == null)
+        {
+            Debug.LogError("FireGem can't find gemDoor!");
+        } else
+        {
+            boxCollider = gemDoor.GetComponent<BoxCollider>();
+        }
     }
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) & !movedOrMoving)
         {
+            movedOrMoving = true;
             interactImage.SetActive(false);
             Debug.Log("Fire Gem Obtained!");
 
             // GIVE PLAYER FIRE ABILITIES HERE
 
             // Start the tweening coroutine
-            StartCoroutine(TweenPosition(targetPosition, moveDuration));
+            boxCollider.enabled = true;
+            StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, 3, gemDoor.transform.localPosition.z), moveDuration));
             Invoke(nameof(DestroyFireGem), moveDuration);
         }
     }
@@ -66,7 +76,7 @@ public class FireGem : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") & !movedOrMoving)
         {   
             playerInRange = true;
             Debug.Log("Entered Gem range");
@@ -78,7 +88,7 @@ public class FireGem : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") & !movedOrMoving)
         {
             playerInRange = false;
             Debug.Log("Left Gem range");

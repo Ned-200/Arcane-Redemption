@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4748964793363452052}
   - component: {fileID: 75984173828103380}
   - component: {fileID: 7294200311582072778}
+  - component: {fileID: -4757602470988403817}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -69,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,6 +127,7 @@ MonoBehaviour:
   attackCooldown: 2
   deathDelay: 2
   showDebugGizmos: 1
+  disintegrate: {fileID: -4757602470988403817}
 --- !u!114 &75984173828103380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,3 +165,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8659943070623925175, guid: 507178d8a96900640a4cb79d22726a42, type: 3}
+--- !u!114 &-4757602470988403817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824414575673759372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  weightProp: _Weight
+  duration: 5
+  destroyAfter: 1
+  destroyDelay: 0.2

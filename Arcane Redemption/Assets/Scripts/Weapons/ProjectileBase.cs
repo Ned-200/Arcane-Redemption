@@ -14,6 +14,7 @@ public class ProjectileBase : MonoBehaviour
 
     [Header("Visual Effects")]
     [SerializeField] protected GameObject impactEffectPrefab;
+    protected private GameObject impactEffect;
     [SerializeField] protected TrailRenderer trail;
 
     protected float damage;
@@ -55,28 +56,38 @@ public class ProjectileBase : MonoBehaviour
         hasHit = true;
 
         // Apply damage
-        BaseCharacter targetCharacter = other.GetComponent<BaseCharacter>();
+        BaseCharacter targetCharacter = other.GetComponent<BaseCharacter>(); // If a character
         if (targetCharacter != null)
         {
             targetCharacter.TakeDamage(damage);
             OnTargetHit(targetCharacter);
+        } else if (other.gameObject.tag == "PlantWall") // If a plant wall - ADD TEST WHETHER PROJECTILE IS FIRE MAGIC
+        {
+            Destroy(other.gameObject);
         }
 
         // Spawn impact effect
         if (impactEffectPrefab != null)
         {
-            Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            impactEffect = Instantiate(impactEffectPrefab, transform.position, impactEffectPrefab.transform.rotation);
         }
 
         // Destroy projectile
         if (destroyOnImpact)
         {
-            Destroy(gameObject);
+            Invoke(nameof(DestroyProjectile), 2);
         }
     }
 
     protected virtual void OnTargetHit(BaseCharacter target)
     {
         Debug.Log($"Projectile hit {target.gameObject.name} for {damage} damage!");
+    }
+
+    void DestroyProjectile()
+    {
+        Destroy(impactEffect);
+        Destroy(gameObject);
     }
 }

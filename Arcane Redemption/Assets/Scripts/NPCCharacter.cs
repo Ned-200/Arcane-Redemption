@@ -6,6 +6,7 @@ using Unity.Cinemachine;
 
 public class NPC_Character : BaseCharacter
 {
+    protected private GameObject player;
     protected private bool playerInRange = false;
     protected private bool NPC_Speaking = false;
 
@@ -27,6 +28,7 @@ public class NPC_Character : BaseCharacter
     protected PlayerController playerController;
     protected GameObject playerMesh;
     protected GameObject weaponMesh;
+    protected GameObject playerAccessory;
  
 
     void Start()
@@ -74,6 +76,7 @@ public class NPC_Character : BaseCharacter
             if (other.transform.Find("PlayerMesh").gameObject)
             {
                 playerMesh = other.transform.Find("PlayerMesh").gameObject;
+                playerAccessory = other.transform.Find("Hat").gameObject;
                 weaponMesh = other.transform.Find("WeaponSlot").gameObject;
               
             } else
@@ -106,8 +109,32 @@ public class NPC_Character : BaseCharacter
         StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
         CinemachineCamera.SetActive(true);
+
+        if (playerController == null)
+        {
+            // Get player by tag
+            player = GameObject.FindWithTag("Player");
+            
+            if (player != null) 
+            {   
+                playerController = player.GetComponent<PlayerController>();
+            }
+        }
+
+        if (player.transform.Find("PlayerMesh").gameObject)
+        {
+            playerMesh = player.transform.Find("PlayerMesh").gameObject;
+            playerAccessory = player.transform.Find("Hat").gameObject;
+            weaponMesh = player.transform.Find("WeaponSlot").gameObject;
+              
+        } else
+        {
+            Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+        }
+
         playerController.canMove = false;
         playerMesh.SetActive(false);
+        playerAccessory.SetActive(false);
     }
 
     protected IEnumerator TypeLine()
@@ -139,6 +166,7 @@ public class NPC_Character : BaseCharacter
             playerController.canMove = true;
             // Un-hide player mesh
             playerMesh.SetActive(true);
+            playerAccessory.SetActive(true);
             weaponMesh.SetActive(true);
         
         }

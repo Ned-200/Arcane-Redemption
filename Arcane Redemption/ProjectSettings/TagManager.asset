@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - PlantWall
+  - PlayerAccessory
   layers:
   - Default
   - TransparentFX

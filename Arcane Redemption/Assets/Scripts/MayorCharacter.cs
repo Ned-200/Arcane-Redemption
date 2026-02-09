@@ -8,8 +8,6 @@ using Unity.Cinemachine;
 public class MayorCharacter : NPC_Character
 {
 
-    private GameObject player;
-
     void Start()
     {
         CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
@@ -40,7 +38,7 @@ public class MayorCharacter : NPC_Character
             playerMesh.SetActive(false);
 
         } else {
-            Debug.Log("PLAYER NOT FOUND BY MAYOR! Check Player Tag.");
+            Debug.LogError("PLAYER NOT FOUND BY MAYOR! Check Player Tag.");
         }
         
         // Fade out of black
@@ -87,6 +85,8 @@ public class MayorCharacter : NPC_Character
             if (other.transform.Find("PlayerMesh").gameObject)
             {
                 playerMesh = other.transform.Find("PlayerMesh").gameObject;
+                playerAccessory = other.transform.Find("Hat").gameObject;
+                weaponMesh = other.transform.Find("WeaponSlot").gameObject;
             } else
             {
                 Debug.Log("NPC Could Not Find/Hide Player Mesh!");
@@ -122,6 +122,8 @@ public class MayorCharacter : NPC_Character
             playerController.canMove = true;
             // Un-hide player mesh
             playerMesh.SetActive(true);
+            playerAccessory.SetActive(true);
+            weaponMesh.SetActive(true);
         }
     }
 

@@ -14,6 +14,8 @@ public class WeaponManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform weaponSlot;
     [SerializeField] private BaseCharacter character;
+    [SerializeField] private PlayerController playerController;
+    
     
     [Header("Animation")]
     [SerializeField] public Animator playerAnim;
@@ -99,7 +101,7 @@ public class WeaponManager : MonoBehaviour
         if (currentWeapon == null) return;
 
         // Primary attack (Left Mouse Button)
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) & playerController.canMove)
         {
             currentWeapon.TryPrimaryAttack();
 
@@ -114,13 +116,13 @@ public class WeaponManager : MonoBehaviour
         }
 
         // Secondary attack (Right Mouse Button)
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) & playerController.canMove)
         {
             currentWeapon.TrySecondaryAttack();
         }
 
         // Release secondary (for aim toggle)
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) & playerController.canMove)
         {
             // Some weapons might need to know when button is released
             RangedWeapon rangedWeapon = currentWeapon as RangedWeapon;

@@ -6,8 +6,8 @@ using Unity.Cinemachine;
 
 public class NPC_Character : BaseCharacter
 {
-    protected bool playerInRange = false;
-    protected bool NPC_Speaking = false;
+    protected private bool playerInRange = false;
+    protected private bool NPC_Speaking = false;
 
     [Header("UI")]
     [SerializeField] protected GameObject SpeakImage;
@@ -36,7 +36,7 @@ public class NPC_Character : BaseCharacter
 
     protected override void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !NPC_Speaking)
+        if (playerInRange & Input.GetKeyDown(KeyCode.E) & !NPC_Speaking)
         {
             Debug.Log("Dialogue Begin");
             SpeakImage.SetActive(false);
@@ -50,7 +50,7 @@ public class NPC_Character : BaseCharacter
             
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) & NPC_Speaking)
         {
             if (textComponent.text == lines[index])
             {

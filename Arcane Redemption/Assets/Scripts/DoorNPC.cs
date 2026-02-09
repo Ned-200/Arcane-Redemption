@@ -66,7 +66,7 @@ public class DoorNPC : NPC_Character
             awaitingInteract = false;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) & NPC_Speaking)
         {
             if (textComponent.text == lines[index])
             {

@@ -1,0 +1,115 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Unity.Cinemachine;
+
+public class DoorNPC : NPC_Character
+{
+    private bool hasSeenIntro = false;
+
+    protected override void Update()
+    {
+        if (playerInRange && !NPC_Speaking && Input.GetKeyDown(KeyCode.E) && hasSeenIntro)
+        {
+            Debug.Log("Dialogue Begin");
+            SpeakImage.SetActive(false);
+            StartDialogue();
+            NPC_Speaking = true;
+
+            // disable player movement
+            playerController.canMove = false;
+            // hide player mesh
+            playerMesh.SetActive(false);
+            playerAccessory.SetActive(false);
+            weaponMesh.SetActive(false);
+        }
+
+        if (Input.GetMouseButtonDown(0) & NPC_Speaking)
+        {
+            if (textComponent.text == lines[index])
+            {
+                NextLine();
+            } else
+            {
+                StopAllCoroutines();
+                textComponent.text = lines[index];
+            }
+        }
+    }
+
+    protected override void OnTriggerEnter(Collider collision)
+    {
+        GameObject other = collision.gameObject;
+
+        if (other.CompareTag("Player") && !NPC_Speaking)
+        {   
+            // Get player from collision
+            player = other;
+            playerController = player.GetComponent<PlayerController>();
+            if (player.transform.Find("PlayerMesh").gameObject)
+            {
+                playerMesh = player.transform.Find("PlayerMesh").gameObject;
+                playerAccessory = player.transform.Find("Hat").gameObject;
+                weaponMesh = player.transform.Find("WeaponSlot").gameObject;
+              
+            } else
+            {
+                Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+            }
+
+            if (!hasSeenIntro){
+                hasSeenIntro = true;
+                StartDialogue();
+                Debug.Log("Dialogue Begin");
+                SpeakImage.SetActive(false);
+                NPC_Speaking = true;
+
+                // disable player movement
+                playerController.canMove = false;
+                // hide player mesh
+                playerMesh.SetActive(false);
+                playerAccessory.SetActive(false);
+                weaponMesh.SetActive(false);
+
+            }else{
+                playerInRange = true;
+                Debug.Log("Entered NPC range");
+                SpeakImage.SetActive(true);
+            }
+        }
+    }
+
+    protected override void NextLine()
+    {
+        if (index < lines.Length - 1)
+        {
+            index++;
+            textComponent.text = string.Empty;
+            StartCoroutine(TypeLine());
+        } else
+        {
+            // Change Dialogue if player speaks with NPC again
+            System.Array.Resize(ref lines, 2);
+            lines[0] = "What are you still standing here for, help us!!";
+            lines[1] = "I know there's still some good left in you..";
+            // End dialogue
+            Debug.Log("Dialogue End");
+            playerInRange = false;   
+            DialogueBox.SetActive(false);
+            CinemachineCamera.SetActive(false);
+            NPC_Speaking = false;
+
+            // Re-enable player movement
+            playerController.canMove = true;
+            // Un-hide player mesh
+            playerMesh.SetActive(true);
+            playerAccessory.SetActive(true);
+            weaponMesh.SetActive(true);
+        }
+    }
+
+
+
+}

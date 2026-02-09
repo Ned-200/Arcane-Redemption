@@ -33,7 +33,10 @@ public class MainMenu : MonoBehaviour
 		// Show Loading Screen
         LoadingUI.SetActive(true);
 
-		Invoke(nameof(Teleport), 1.5f);
+        if (!teleporting) {
+            teleporting = true;
+		    Invoke(nameof(Teleport), 1.5f);
+        }
 	}
 
     void OnControlsClick() 
@@ -48,6 +51,5 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Teleporting Player to new Scene");
         SceneManager.LoadScene("JailGraybox", LoadSceneMode.Single);
-        teleporting = true;
     }
 }

@@ -3,6 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+
+    [Header("Player Data")]
+    [SerializeField] protected GameObject playerDataPrefab;
+
     [Header("Animation")]
     [SerializeField] public Animator playerAnim;
     private bool isWalkingAnim = false;
@@ -51,6 +55,17 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         baseCharacter = GetComponent<BaseCharacter>();
         
+        if (GameObject.FindWithTag("PlayerData") == null)
+        {
+            if (playerDataPrefab != null) {
+                Debug.Log("No Player Data Found, Creating New Player Data!");
+                Instantiate(playerDataPrefab);
+            } else
+            {
+                Debug.LogError("No Player Data Found, Cannot create new Data without Prefab! Check Player Controller fields!");
+            }
+        }
+
         if (enableDebugLogs)
         {
             Debug.Log("PlayerController: Awake - CharacterController: " + (characterController != null) + 

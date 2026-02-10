@@ -75566,6 +75566,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24b8e6ce04545e44c86e247e70f8ece7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2123165350}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24b8e6ce04545e44c86e247e70f8ece7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2123165357}
     - targetCorrespondingSourceObject: {fileID: 5233112405309087440, guid: 24b8e6ce04545e44c86e247e70f8ece7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 32356732}
@@ -77265,6 +77268,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 24b8e6ce04545e44c86e247e70f8ece7, type: 3}
   m_PrefabInstance: {fileID: 2075843321}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2123165357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123165349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81b460d147a1c14c82eb435eeba3fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
+  maxHealthPotions: 10
+  maxManaPotions: 10
+  healthPotionType: {fileID: 11400000, guid: 7b41e92e8d49a894eb8d4eecf95be2d5, type: 2}
+  manaPotionType: {fileID: 11400000, guid: 6acd2cf4619a63c47a33abc8db01625b, type: 2}
+  healthPotionKey: 49
+  manaPotionKey: 50
+  character: {fileID: 2123165353}
+  showDebugLogs: 1
 --- !u!43 &2124668504
 Mesh:
   m_ObjectHideFlags: 0

@@ -60,13 +60,22 @@ public class PlayerData : MonoBehaviour
         {
 
 
-            GameObject plantBoss = GameObject.Find("PlantBoss");
+            GameObject plantBoss = GameObject.Find("TreeBoss");
             if (plantBoss != null) // Spawn Plant Boss in Town
             {
                 plantBoss.SetActive(true);
             } else
             {
                 Debug.LogError("PlayerData can't find PlantBoss!");
+            }
+
+            GameObject bossPotions = GameObject.Find("BossPotions");
+            if (bossPotions != null) // Spawn Plant Boss in Town
+            {
+                bossPotions.SetActive(true);
+            } else
+            {
+                Debug.LogError("PlayerData can't find BossPotions!");
             }
 
             GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
@@ -108,7 +117,7 @@ public class PlayerData : MonoBehaviour
 
         } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
-            GameObject plantBoss = GameObject.Find("PlantBoss");
+            GameObject plantBoss = GameObject.Find("TreeBoss");
             if (plantBoss != null) // Despawn Plant Boss in Town
             {
                 plantBoss.SetActive(false);
@@ -117,6 +126,14 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find PlantBoss!");
             }
 
+            GameObject bossPotions = GameObject.Find("BossPotions");
+            if (bossPotions != null) // Despawn Boss Potions in Town
+            {
+                bossPotions.SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find BossPotions!");
+            }
 
             if (GameObject.Find("DoorNPC") != null) // Hide Door NPC
             {

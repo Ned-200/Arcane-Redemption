@@ -66,6 +66,9 @@ public class TreeBoss : EnemyCharacter
     [Header("Boss Debug")]
     [SerializeField] private bool showBossGizmos = true;
 
+    [Header("Change Terrain")]
+    [SerializeField] private TerrainSwap terrainSwap;
+
     #endregion
 
     #region Private Fields
@@ -1130,6 +1133,14 @@ public class TreeBoss : EnemyCharacter
         StopProjectileVolley();
         StopMovementActions();
         StopDashRetreat();
+
+        //change the terrain from sand to grass
+         if (terrainSwap != null){
+             terrainSwap.SetCheckpointReached(true);
+         }
+       
+       //disintegration animation
+         disintegrate.TriggerDisintegration();
     }
 
     protected override void OnStateChanged(EnemyState newState)

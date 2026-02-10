@@ -45,7 +45,7 @@ public class EnemyCharacter : BaseCharacter
     public bool IsDead => isDead;
 
     //accessing disintegrate script
-    [SerializeField] private Disintegrate disintegrate;
+    [SerializeField] public Disintegrate disintegrate;
 
     protected override void Awake()
     {

@@ -56,14 +56,14 @@ public abstract class WeaponBase : MonoBehaviour
             // Check stamina
             if (staminaCost > 0f && !owner.HasEnoughStamina(staminaCost))
             {
-                Debug.LogWarning($"[{weaponName}] ❌ NOT ENOUGH STAMINA! Need {staminaCost}, have {owner.CurrentStamina:F1}");
+                Debug.LogWarning($"[{weaponName}]  NOT ENOUGH STAMINA! Need {staminaCost}, have {owner.CurrentStamina:F1}");
                 return false;
             }
 
             // Check mana - FIXED: Actually prevent attack if not enough mana
             if (manaCost > 0f && !owner.HasEnoughMana(manaCost))
             {
-                Debug.LogWarning($"[{weaponName}] ❌ NOT ENOUGH MANA! Need {manaCost}, have {owner.CurrentMana:F1}");
+                Debug.LogWarning($"[{weaponName}]  NOT ENOUGH MANA! Need {manaCost}, have {owner.CurrentMana:F1}");
                 return false;
             }
 

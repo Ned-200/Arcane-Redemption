@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PotionType
   potionName: Health Potion
   icon: {fileID: 0}
-  isHealthPotion: 1
-  isManaPotion: 0
+  isHealthPotion: 0
+  isManaPotion: 1
   restoreAmount: 50
-  potionColor: {r: 1, g: 0, b: 0, a: 1}
+  potionColor: {r: 0.2971698, g: 0.60350883, b: 1, a: 1}

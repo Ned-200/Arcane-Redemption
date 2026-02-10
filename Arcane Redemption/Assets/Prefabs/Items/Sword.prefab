@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 765315409585706629}
   - component: {fileID: 2989688541222272693}
   - component: {fileID: 2155663342828683365}
+  - component: {fileID: 7647061998384148810}
+  - component: {fileID: 1184526139028198291}
   m_Layer: 0
   m_Name: SwordMesh
   m_TagString: Untagged
@@ -107,7 +109,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -115,6 +117,50 @@ CapsuleCollider:
   m_Height: 2.938458
   m_Direction: 1
   m_Center: {x: -0.0013351142, y: 0.56478405, z: -0.001067251}
+--- !u!114 &7647061998384148810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249880503390541164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e84cd53321f2443990105d89aa7f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponCollisionDamage
+  damageMultiplier: 1
+  preventMultiHit: 1
+  showDebugLogs: 1
+  visualizeCollider: 1
+  debugCollisions: 1
+--- !u!54 &1184526139028198291
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249880503390541164}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6419169386153921354
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2937317401163361864}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,14 +217,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8037376752946883172}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.33107, y: 1.2829597, z: -38.503887}
+  m_LocalRotation: {x: 0.012852097, y: 0.0038779739, z: 0.011326927, w: 0.99984574}
+  m_LocalPosition: {x: 57.34401, y: 1.2832928, z: -38.518726}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7085361314431940012}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.468, y: 0.461, z: 1.304}
 --- !u!114 &3157900751506382457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +250,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackPoint: {fileID: 2335413524624424645, guid: f662c8ee3262e2a4b853996704ffc7bb, type: 3}
+  useCollisionDamage: 1
+  collisionDamage: {fileID: 7647061998384148810}
+  collisionDamageDuration: 0.3
   slashEffect: {fileID: 0}
   weaponTrail: {fileID: 0}
   swordAnimator: {fileID: 0}

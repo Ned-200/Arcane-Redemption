@@ -36,4 +36,17 @@ public class SwordWeapon : MeleeWeapon
         // TODO: Add screen shake
         // TODO: Add hit VFX
     }
+
+    /// <summary>
+    /// Called when collision damage system hits a target
+    /// </summary>
+    protected override void OnCollisionHit(BaseCharacter target)
+    {
+        base.OnCollisionHit(target);
+        
+        Debug.Log($"[COLLISION] Sword blade physically hit {target.gameObject.name}!");
+        
+        // Add special collision-specific effects here
+        // e.g., sparks, blood, etc.
+    }
 }

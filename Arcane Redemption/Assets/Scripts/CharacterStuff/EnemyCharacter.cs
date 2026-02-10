@@ -173,7 +173,14 @@ public class EnemyCharacter : BaseCharacter
     /// </summary>
     public override void TakeDamage(float damage)
     {
-        if (isDead) return;
+        // Debug entry point
+        Debug.Log($"[{gameObject.name}] 🎯 EnemyCharacter.TakeDamage CALLED! Damage: {damage}, CurrentHealth: {CurrentHealth:F1}, IsDead: {isDead}");
+
+        if (isDead)
+        {
+            Debug.LogWarning($"[{gameObject.name}] Already dead, ignoring {damage} damage");
+            return;
+        }
 
         // Store health before damage
         float healthBefore = CurrentHealth;
@@ -182,23 +189,23 @@ public class EnemyCharacter : BaseCharacter
         base.TakeDamage(damage);
 
         // Log detailed damage information
-        
-        Debug.Log($"Damage Taken: {damage}");
-        
+        float healthLost = healthBefore - CurrentHealth;
+        Debug.Log($"[{gameObject.name}] ⚔️ Damage Applied: {damage} | Health: {healthBefore:F1} → {CurrentHealth:F1} (-{healthLost:F1}) | {HealthPercent * 100:F1}%");
         
         // Show status indicator
         if (HealthPercent <= 0.2f)
         {
-            Debug.LogWarning($"[{gameObject.name}] CRITICAL HEALTH!");
+            Debug.LogWarning($"[{gameObject.name}] ⚠️ CRITICAL HEALTH! ({HealthPercent * 100:F1}%)");
         }
         else if (HealthPercent <= 0.5f)
         {
-            Debug.Log($"[{gameObject.name}] Low Health");
+            Debug.Log($"[{gameObject.name}] ⚠️ Low Health ({HealthPercent * 100:F1}%)");
         }
 
         // Check if enemy died from this damage
         if (!IsAlive && !isDead)
         {
+            Debug.LogError($"[{gameObject.name}] 💀 Health reached ZERO! Triggering death sequence...");
             Die();
         }
     }

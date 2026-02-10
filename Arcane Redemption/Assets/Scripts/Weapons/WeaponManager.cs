@@ -11,6 +11,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private List<GameObject> weaponPrefabs = new List<GameObject>();
     [SerializeField] private int startingWeaponIndex = 0;
 
+    private PlayerData playerData;
+
     [Header("References")]
     [SerializeField] private Transform weaponSlot;
     [SerializeField] private BaseCharacter character;
@@ -42,6 +44,9 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
+        GameObject playerDataObject = GameObject.FindWithTag("PlayerData");
+        playerData = playerDataObject.GetComponent<PlayerData>();
+
         if (weaponPrefabs.Count > 0)
         {
             EquipWeapon(startingWeaponIndex);
@@ -90,7 +95,7 @@ public class WeaponManager : MonoBehaviour
 
     private void HandleWeaponSwitching()
     {
-        if (Input.GetKeyDown(switchWeaponKey))
+        if (Input.GetKeyDown(switchWeaponKey) && playerData.fireGemObtained)
         {
             SwitchToNextWeapon();
         }
@@ -101,7 +106,7 @@ public class WeaponManager : MonoBehaviour
         if (currentWeapon == null) return;
 
         // Primary attack (Left Mouse Button)
-        if (Input.GetMouseButtonDown(0) & playerController.canMove)
+        if (Input.GetMouseButtonDown(0) && playerController.canMove)
         {
             currentWeapon.TryPrimaryAttack();
 

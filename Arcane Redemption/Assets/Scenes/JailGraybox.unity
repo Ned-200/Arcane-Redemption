@@ -37043,6 +37043,9 @@ MonoBehaviour:
   weaponSlotTransform: {fileID: 0}
   SpeakImage: {fileID: 1990336118}
   FadeUI: {fileID: 158327202}
+  cutsceneCamera: {fileID: 0}
+  cutsceneLine: 0
+  endCutsceneLine: 0
   DialogueBox: {fileID: 1604035662}
   textComponent: {fileID: 2120958496}
   lines:
@@ -77116,7 +77119,7 @@ MonoBehaviour:
   weaponPrefabs:
   - {fileID: 1682700829595047671, guid: 1a01495179a80504fa8523ac9b190ef7, type: 3}
   - {fileID: 8037376752946883172, guid: b11086daff582154f87b33cd8828f71d, type: 3}
-  startingWeaponIndex: 0
+  startingWeaponIndex: 1
   weaponSlot: {fileID: 1286290316}
   character: {fileID: 2123165353}
   playerController: {fileID: 2123165352}

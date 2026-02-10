@@ -17657,7 +17657,7 @@ MonoBehaviour:
   weaponPrefabs:
   - {fileID: 1682700829595047671, guid: 1a01495179a80504fa8523ac9b190ef7, type: 3}
   - {fileID: 8037376752946883172, guid: b11086daff582154f87b33cd8828f71d, type: 3}
-  startingWeaponIndex: 0
+  startingWeaponIndex: 1
   weaponSlot: {fileID: 1005380933}
   character: {fileID: 636905169}
   playerController: {fileID: 636905168}
@@ -39330,6 +39330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b490b342a638b449b3cdde4444ad45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionPickup
+  potionType: {fileID: 0}
   interactImage: {fileID: 331193587}
 --- !u!135 &1362000572
 SphereCollider:
@@ -89431,6 +89432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b490b342a638b449b3cdde4444ad45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionPickup
+  potionType: {fileID: 0}
   interactImage: {fileID: 331193587}
 --- !u!135 &1889484285
 SphereCollider:

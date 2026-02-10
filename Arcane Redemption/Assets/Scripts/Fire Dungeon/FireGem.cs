@@ -4,8 +4,9 @@ using System.Collections;
 public class FireGem : MonoBehaviour
 {
     [SerializeField] GameObject interactImage;
-
     private bool playerInRange = false;
+
+    private PlayerData playerData;
 
     [SerializeField] GameObject gemDoor;
     private BoxCollider boxCollider;
@@ -15,6 +16,9 @@ public class FireGem : MonoBehaviour
     
     void Start()
     {
+        GameObject playerDataObject = GameObject.FindWithTag("PlayerData");
+        playerData = playerDataObject.GetComponent<PlayerData>();
+
         if (interactImage == null)
         {
             Debug.LogError("FireGem can't find interactImage!");
@@ -38,6 +42,7 @@ public class FireGem : MonoBehaviour
             Debug.Log("Fire Gem Obtained!");
 
             // GIVE PLAYER FIRE ABILITIES HERE
+            playerData.fireGemObtained = true;
 
             // Start the tweening coroutine
             boxCollider.enabled = true;

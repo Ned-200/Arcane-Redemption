@@ -88,18 +88,34 @@ public class DoorNPC : NPC_Character
             index++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
+
+            // If a cutscene camera exists, enable it on the right line
+            if (cutsceneCamera != null && index == cutsceneLine) {
+                cutsceneCamera.SetActive(true);
+            }
+
         } else
         {
             // Change Dialogue if player speaks with NPC again
             System.Array.Resize(ref lines, 2);
             lines[0] = "What are you still standing here for, help us!!";
             lines[1] = "I know there's still some good left in you..";
+
             // End dialogue
             Debug.Log("Dialogue End");
             playerInRange = false;   
             DialogueBox.SetActive(false);
             CinemachineCamera.SetActive(false);
             NPC_Speaking = false;
+
+            // Disable cutscene camera at the end of dialogue if it exists
+            if (cutsceneCamera != null) {
+                cutsceneCamera.SetActive(false);
+            }
+
+            // Since dialogue is changed, remove disable the cutscene camera references. AFTER camera is deactivated!
+            cutsceneCamera = null;
+            cutsceneLine = -1;
 
             // Re-enable player movement
             playerController.canMove = true;

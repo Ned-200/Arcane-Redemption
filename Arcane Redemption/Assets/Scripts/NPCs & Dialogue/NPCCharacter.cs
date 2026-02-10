@@ -14,6 +14,10 @@ public class NPC_Character : BaseCharacter
     [SerializeField] protected GameObject SpeakImage;
     [SerializeField] protected GameObject FadeUI;
 
+    [Header("Cutscene Camera")]
+    [SerializeField] protected GameObject cutsceneCamera;
+    [SerializeField] protected int cutsceneLine;
+
     [Header("Text")]
     [SerializeField] protected GameObject DialogueBox;
     public TextMeshProUGUI textComponent;
@@ -165,6 +169,12 @@ public class NPC_Character : BaseCharacter
             index++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
+
+            // If a cutscene camera exists, enable it on the right line
+            if (cutsceneCamera != null && index == cutsceneLine) {
+                cutsceneCamera.SetActive(true);
+            }
+
         } else
         {
             // End dialogue
@@ -173,6 +183,11 @@ public class NPC_Character : BaseCharacter
             DialogueBox.SetActive(false);
             CinemachineCamera.SetActive(false);
             NPC_Speaking = false;
+
+            // Disable cutscene camera at the end of dialogue if it exists
+            if (cutsceneCamera != null) {
+                cutsceneCamera.SetActive(false);
+            }
 
             // Re-enable player movement
             playerController.canMove = true;

@@ -104,6 +104,12 @@ public class MayorCharacter : NPC_Character
             index++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
+
+            // If a cutscene camera exists, enable it on the right line
+            if (cutsceneCamera != null && index == cutsceneLine) {
+                cutsceneCamera.SetActive(true);
+            }
+
         } else
         {
             // Change Dialogue if player speaks with NPC again
@@ -111,12 +117,21 @@ public class MayorCharacter : NPC_Character
             lines[0] = "What are you waiting around for? Go save my town and earn your darn freedom!";
             lines[1] = "Ahem... ...Please.";
 
+            // Since dialogue is changed, remove disable the cutscene camera references
+            cutsceneCamera = null;
+            cutsceneLine = -1;
+
             // End dialogue
             Debug.Log("Dialogue End");
             playerInRange = false;   
             DialogueBox.SetActive(false);
             CinemachineCamera.SetActive(false);
             NPC_Speaking = false;
+
+            // Disable cutscene camera at the end of dialogue if it exists
+            if (cutsceneCamera != null) {
+                cutsceneCamera.SetActive(false);
+            }
 
             // Re-enable player movement
             playerController.canMove = true;

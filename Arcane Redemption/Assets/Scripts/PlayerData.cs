@@ -43,8 +43,7 @@ public class PlayerData : MonoBehaviour
     // called fourth
     void Start()
     {
-        Debug.Log("Start"); 
-        RunCheck(); // INCLUDE ALL THE SAME CODE AS NEW SCENE, IN CASE PLAYER DATA WAS JUST CREATED
+        Debug.Log("Start");
     }
 
     // called when the game is terminated
@@ -59,25 +58,38 @@ public class PlayerData : MonoBehaviour
 
         if (lastScene == "FireDungeonGraybox") // If coming from Fire Dungeon
         {
-            if (GameObject.Find("FireDungeonTeleportDoor") != null) // Prevent player from re-entering fire dungeon
+
+
+            GameObject plantBoss = GameObject.Find("PlantBoss");
+            if (plantBoss != null) // Spawn Plant Boss in Town
             {
-                GameObject.Find("FireDungeonTeleportDoor").SetActive(false);
+                plantBoss.SetActive(true);
+            } else
+            {
+                Debug.LogError("PlayerData can't find PlantBoss!");
+            }
+
+            GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
+            if (fireDungeonTeleportDoor != null) // Prevent player from re-entering fire dungeon
+            {
+                fireDungeonTeleportDoor.SetActive(false);
             } else
             {
                 Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
             }
 
-            if (GameObject.Find("TownNPC") != null) // Hide town NPC
+            GameObject townNPC = GameObject.Find("TownNPC");
+            if (townNPC != null) // Hide town NPC
             {
-                GameObject.Find("TownNPC").SetActive(false);
+                townNPC.SetActive(false);
             } else
             {
                 Debug.LogError("PlayerData can't find TownNPC!");
             }
 
-            if (GameObject.FindWithTag("Player") != null)
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
             {
-                GameObject player = GameObject.FindWithTag("Player");
                 CharacterController characterController = player.GetComponent<CharacterController>();
 
                 if (characterController != null) {
@@ -96,6 +108,16 @@ public class PlayerData : MonoBehaviour
 
         } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
+            GameObject plantBoss = GameObject.Find("PlantBoss");
+            if (plantBoss != null) // Despawn Plant Boss in Town
+            {
+                plantBoss.SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find PlantBoss!");
+            }
+
+
             if (GameObject.Find("DoorNPC") != null) // Hide Door NPC
             {
                 GameObject.Find("DoorNPC").SetActive(false);
@@ -103,6 +125,7 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("PlayerData can't find DoorNPC!");
             }
+            
         }
     }
 

@@ -94,6 +94,11 @@ public class DoorNPC : NPC_Character
                 cutsceneCamera.SetActive(true);
             }
 
+            // If a cutscene camera exists, disable it on the right line
+            if (cutsceneCamera != null && index == endCutsceneLine) {
+                cutsceneCamera.SetActive(false);
+            }
+
         } else
         {
             // Change Dialogue if player speaks with NPC again
@@ -116,6 +121,7 @@ public class DoorNPC : NPC_Character
             // Since dialogue is changed, remove disable the cutscene camera references. AFTER camera is deactivated!
             cutsceneCamera = null;
             cutsceneLine = -1;
+            endCutsceneLine = -1;
 
             // Re-enable player movement
             playerController.canMove = true;

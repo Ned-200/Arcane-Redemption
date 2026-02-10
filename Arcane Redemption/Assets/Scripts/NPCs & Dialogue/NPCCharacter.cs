@@ -17,6 +17,7 @@ public class NPC_Character : BaseCharacter
     [Header("Cutscene Camera")]
     [SerializeField] protected GameObject cutsceneCamera;
     [SerializeField] protected int cutsceneLine;
+    [SerializeField] protected int endCutsceneLine;
 
     [Header("Text")]
     [SerializeField] protected GameObject DialogueBox;
@@ -173,6 +174,11 @@ public class NPC_Character : BaseCharacter
             // If a cutscene camera exists, enable it on the right line
             if (cutsceneCamera != null && index == cutsceneLine) {
                 cutsceneCamera.SetActive(true);
+            }
+
+            // If a cutscene camera exists, disable it on the right line
+            if (cutsceneCamera != null && index == endCutsceneLine) {
+                cutsceneCamera.SetActive(false);
             }
 
         } else

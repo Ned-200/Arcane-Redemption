@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
             
             if (enableDebugLogs)
             {
-                Debug.Log($"Sprinting - Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
+                // Debug.Log($"Sprinting - Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
             }
         }
 

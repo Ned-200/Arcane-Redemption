@@ -17698,6 +17698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107d04dbae649014f8830afacc31a086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  playerDataPrefab: {fileID: 6304225515165161262, guid: 7e799c43644a2884b9f82d7b0e8c7923, type: 3}
   playerAnim: {fileID: 636905171}
   canMove: 1
   walkSpeed: 6

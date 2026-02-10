@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlantWall
   - PlayerAccessory
+  - PlayerData
   layers:
   - Default
   - TransparentFX

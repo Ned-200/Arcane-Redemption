@@ -27,10 +27,15 @@ public class PlayerCharacter : BaseCharacter
     private float yawVelocity;
     private float pitchVelocity;
     private float currentDistance;
+    
+    private InventorySystem inventorySystem;
 
     protected override void Awake()
     {
         base.Awake();
+        
+        // Get inventory system
+        inventorySystem = GetComponent<InventorySystem>();
         
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -184,5 +189,12 @@ public class PlayerCharacter : BaseCharacter
         GUI.Label(new Rect(10, 10, 300, 20), $"Health: {CurrentHealth}/{MaxHealth}");
         GUI.Label(new Rect(10, 40, 300, 20), $"Stamina: {CurrentStamina}/{MaxStamina}");
         GUI.Label(new Rect(10, 70, 300, 20), $"Mana: {CurrentMana}/{MaxMana}");
+        
+        // Display potion counts
+        if (inventorySystem != null)
+        {
+            GUI.Label(new Rect(10, 100, 300, 20), $"Health Potions (1): {inventorySystem.HealthPotionCount}");
+            GUI.Label(new Rect(10, 130, 300, 20), $"Mana Potions (2): {inventorySystem.ManaPotionCount}");
+        }
     }
 }

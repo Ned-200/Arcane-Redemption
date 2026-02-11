@@ -3328,7 +3328,7 @@ Transform:
   m_GameObject: {fileID: 89262320}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.19000022, y: -0.8333333, z: 0.7400055}
+  m_LocalPosition: {x: -0.19000022, y: -0.8333333, z: -0.04}
   m_LocalScale: {x: 0.16666667, y: 0.8333333, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17568,7 +17568,6 @@ MonoBehaviour:
   weaponSlot: {fileID: 1005380933}
   character: {fileID: 636905169}
   playerController: {fileID: 636905168}
-  playerAnim: {fileID: 636905171}
   switchWeaponKey: 113
 --- !u!136 &636905167
 CapsuleCollider:
@@ -31062,7 +31061,7 @@ Transform:
   m_GameObject: {fileID: 1062806502}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.17333317, y: -0.8333333, z: 0.7400055}
+  m_LocalPosition: {x: 0.17333317, y: -0.8333333, z: -0.04}
   m_LocalScale: {x: 0.16666667, y: 0.8333333, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []

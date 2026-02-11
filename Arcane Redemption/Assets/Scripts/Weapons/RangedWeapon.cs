@@ -28,6 +28,9 @@ public abstract class RangedWeapon : WeaponBase
 
     protected override void PerformPrimaryAttack()
     {
+        // Play attack animation
+        PlayAttackAnimation();
+
         if (projectilePrefab == null)
         {
             Debug.LogError($"{weaponName}: Projectile prefab not assigned!");
@@ -103,7 +106,7 @@ public abstract class RangedWeapon : WeaponBase
 
     protected virtual void OnAimStateChanged(bool aiming)
     {
-        // Override for custom behavior (UI crosshair, animations, etc.)
+        // Override for custom behavior (UI crosshair, aim animations, etc.)
     }
 
     public override void OnUnequipped()
@@ -120,4 +123,10 @@ public abstract class RangedWeapon : WeaponBase
             }
         }
     }
+
+    protected virtual void PlayAttackAnimation()
+    {
+        // Override in derived classes to trigger specific animations
+    }
+
 }

@@ -34,7 +34,7 @@ public abstract class MeleeWeapon : WeaponBase
 
     protected override void PerformPrimaryAttack()
     {
-        // Play attack animation trigger
+        // Play attack animation
         PlayAttackAnimation();
 
         // Enable weapon trail

@@ -7,23 +7,26 @@ using UnityEngine;
 public class SwordWeapon : MeleeWeapon
 {
     [Header("Sword Specific")]
-    [SerializeField] private Animator swordAnimator;
+    [SerializeField] private Animator playerAnim;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        if (swordAnimator == null)
+        if (playerAnim == null)
         {
-            swordAnimator = GetComponent<Animator>();
+            playerAnim = owner.transform.GetComponent<Animator>();
         }
     }
 
     protected override void PlayAttackAnimation()
     {
-        if (swordAnimator != null)
+        if (playerAnim != null)
         {
-            swordAnimator.SetTrigger("Attack");
+            playerAnim.Play("Sword Slash");
+        } else
+        {
+            Debug.LogError("Sword could not find Player Animator");
         }
     }
 

@@ -9,6 +9,28 @@ public class StaffWeapon : RangedWeapon
     [Header("Staff Specific")]
     [SerializeField] private ParticleSystem chargingEffect;
     [SerializeField] private Light staffGlow;
+    [SerializeField] private Animator playerAnim;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (playerAnim == null)
+        {
+            playerAnim = owner.transform.GetComponent<Animator>();
+        }
+    }
+
+    protected override void PlayAttackAnimation()
+    {
+        if (playerAnim != null)
+        {
+            playerAnim.Play("Spell Cast");
+        } else
+        {
+            Debug.LogError("Staff could not find Player Animator");
+        }
+    }
 
     protected override void OnProjectileFired(ProjectileBase projectile)
     {

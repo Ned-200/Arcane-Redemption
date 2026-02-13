@@ -36,7 +36,7 @@ public class NPC_Character : BaseCharacter
     protected GameObject playerAccessory;
  
 
-    void Start()
+    protected void Start()
     {
         CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
 

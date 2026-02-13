@@ -4,15 +4,15 @@ using UnityEngine.SceneManagement;
 
 public class TeleportDoor : MonoBehaviour
 {
-    private GameObject playerDataObject;
-    private PlayerData playerData;
-    [SerializeField] string destinationSceneName;
-    [SerializeField] GameObject interactImage;
-    [SerializeField] GameObject LoadingUI;
-    private bool teleporting = false;
-    private bool playerInRange = false;
+    protected private GameObject playerDataObject;
+    protected private PlayerData playerData;
+    [SerializeField] protected string destinationSceneName;
+    [SerializeField] protected GameObject interactImage;
+    [SerializeField] protected GameObject LoadingUI;
+    protected private bool teleporting = false;
+    protected private bool playerInRange = false;
 
-    void Start()
+    protected void Start()
     {
         playerDataObject = GameObject.FindWithTag("PlayerData");
 
@@ -25,7 +25,7 @@ public class TeleportDoor : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E) && !teleporting)
         {
@@ -36,7 +36,7 @@ public class TeleportDoor : MonoBehaviour
         }
     }
 
-    void Teleport()
+    protected void Teleport()
     {
         Debug.Log("Teleporting Player to new Scene");
 
@@ -49,7 +49,7 @@ public class TeleportDoor : MonoBehaviour
         teleporting = true;
     }
 
-    void OnTriggerEnter(Collider collision)
+    protected void OnTriggerEnter(Collider collision)
     {
         GameObject other = collision.gameObject;
 

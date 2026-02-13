@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JailGraybox.unity
     guid: 845989fe2b137cf459828df94b85fd54
+  - enabled: 1
+    path: Assets/Scenes/WaterDungeonGraybox.unity
+    guid: 951cea531adf11d48a29341e0476225c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

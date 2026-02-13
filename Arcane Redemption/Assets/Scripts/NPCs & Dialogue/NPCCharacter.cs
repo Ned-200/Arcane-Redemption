@@ -10,6 +10,8 @@ public class NPC_Character : BaseCharacter
     protected private bool playerInRange = false;
     protected private bool NPC_Speaking = false;
 
+    protected private Coroutine TypeLineCoroutine;
+
     [Header("UI")]
     [SerializeField] protected GameObject SpeakImage;
     [SerializeField] protected GameObject FadeUI;
@@ -44,7 +46,15 @@ public class NPC_Character : BaseCharacter
         
         if (player == null) 
         {   
-            Debug.Log("PLAYER NOT FOUND BY DOOR NPC! Check Player Tag.");
+            Debug.Log("PLAYER NOT FOUND BY NPC! Check Player Tag.");
+        }
+
+        if (SpeakImage == null || DialogueBox == null || textComponent == null)
+        {
+            GameObject mainCanvas = GameObject.FindWithTag("MainCanvas").gameObject;
+            SpeakImage = mainCanvas.transform.Find("SpeakImage").gameObject;
+            DialogueBox = mainCanvas.transform.Find("DialogueBox").gameObject;
+            textComponent = DialogueBox.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         }
     }
 
@@ -120,7 +130,7 @@ public class NPC_Character : BaseCharacter
     {
         textComponent.text = string.Empty;
         index = 0;
-        StartCoroutine(TypeLine());
+        TypeLineCoroutine = StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
         CinemachineCamera.SetActive(true);
 
@@ -169,7 +179,7 @@ public class NPC_Character : BaseCharacter
         {
             index++;
             textComponent.text = string.Empty;
-            StartCoroutine(TypeLine());
+            TypeLineCoroutine = StartCoroutine(TypeLine());
 
             // If a cutscene camera exists, enable it on the right line
             if (cutsceneCamera != null && index == cutsceneLine) {

@@ -205,6 +205,7 @@ public class EnemyCharacter : BaseCharacter
         // Check if enemy died from this damage
         if (!IsAlive && !isDead)
         {
+            isDead = true;
             Debug.LogError($"[{gameObject.name}] 💀 Health reached ZERO! Triggering death sequence...");
             Die();
         }
@@ -215,7 +216,6 @@ public class EnemyCharacter : BaseCharacter
     /// </summary>
     private void Die()
     {
-        isDead = true;
         currentState = EnemyState.Dead;
 
         // Drop equipped weapon

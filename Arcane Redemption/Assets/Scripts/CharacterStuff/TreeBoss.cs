@@ -69,6 +69,10 @@ public class TreeBoss : EnemyCharacter
     [Header("Change Terrain")]
     [SerializeField] private TerrainSwap terrainSwap;
 
+    [Header("Boss Ghost NPC")]
+    [SerializeField] private GameObject PlantGhostPrefab;
+    private bool ghostSpawned = false;
+
     #endregion
 
     #region Private Fields
@@ -1135,11 +1139,17 @@ public class TreeBoss : EnemyCharacter
         StopDashRetreat();
 
         //change the terrain from sand to grass
-         if (terrainSwap != null){
-             terrainSwap.SetCheckpointReached(true);
-         }
-       
-       //disintegration animation
+        if (terrainSwap != null){
+            terrainSwap.SetCheckpointReached(true);
+        }
+
+        //spawn boss's ghost NPC for dialogue
+        if (!ghostSpawned) {
+            ghostSpawned = true;
+            Instantiate(PlantGhostPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        }
+
+        //disintegration animation
          disintegrate.TriggerDisintegration();
     }
 

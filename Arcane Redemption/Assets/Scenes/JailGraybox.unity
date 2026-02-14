@@ -36921,7 +36921,7 @@ GameObject:
   - component: {fileID: 1217585143}
   - component: {fileID: 1217585147}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: MayorNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37043,8 +37043,9 @@ MonoBehaviour:
   weaponSlotTransform: {fileID: 0}
   SpeakImage: {fileID: 1990336118}
   FadeUI: {fileID: 158327202}
-  cutsceneCamera: {fileID: 0}
-  cutsceneLine: 0
+  cutsceneCamera:
+  - {fileID: 0}
+  cutsceneLine: 
   endCutsceneLine: 0
   DialogueBox: {fileID: 1604035662}
   textComponent: {fileID: 2120958496}
@@ -37064,6 +37065,10 @@ MonoBehaviour:
   - Take this sword and head to the Dungeon of Flames to the East, you can start
     your journey there.
   - Good luck, Crim- ...Maguso.
+  hasSecondaryLines: 1
+  secondaryLines:
+  - What are you waiting around for? Go save my town and earn your darn freedom!
+  - Ahem... ...Please.
   textSpeed: 0.05
 --- !u!43 &1239483350
 Mesh:
@@ -77126,7 +77131,6 @@ MonoBehaviour:
   weaponSlot: {fileID: 1286290316}
   character: {fileID: 2123165353}
   playerController: {fileID: 2123165352}
-  playerAnim: {fileID: 2123165355}
   switchWeaponKey: 113
 --- !u!136 &2123165351
 CapsuleCollider:

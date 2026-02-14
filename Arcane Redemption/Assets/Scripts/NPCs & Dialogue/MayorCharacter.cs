@@ -8,7 +8,7 @@ using Unity.Cinemachine;
 public class MayorCharacter : NPC_Character
 {
 
-    void Start()
+    protected override void Start()
     {
         CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
 
@@ -46,34 +46,7 @@ public class MayorCharacter : NPC_Character
         FadeUI.GetComponent<Image>().CrossFadeAlpha(0, 8.0f, true);
         Debug.Log("FADING UI");
     }
-
-    protected override void Update()
-    {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !NPC_Speaking)
-        {
-            Debug.Log("Dialogue Begin");
-            SpeakImage.SetActive(false);
-            StartDialogue();
-            NPC_Speaking = true;
-
-            // Disable player movement
-            playerController.canMove = false;
-            playerMesh.SetActive(false);
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            } else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-        }
-    }
-
+    
     protected override void OnTriggerEnter(Collider collision)
     {
         GameObject other = collision.gameObject;
@@ -97,51 +70,5 @@ public class MayorCharacter : NPC_Character
             SpeakImage.SetActive(true);
         }
     }
-    protected override void NextLine()
-    {
-        if (index < lines.Length - 1)
-        {
-            index++;
-            textComponent.text = string.Empty;
-            StartCoroutine(TypeLine());
-
-            // If a cutscene camera exists, enable it on the right line
-            if (cutsceneCamera != null && index == cutsceneLine) {
-                cutsceneCamera.SetActive(true);
-            }
-
-        } else
-        {
-            // Change Dialogue if player speaks with NPC again
-            System.Array.Resize(ref lines, 2);
-            lines[0] = "What are you waiting around for? Go save my town and earn your darn freedom!";
-            lines[1] = "Ahem... ...Please.";
-
-            // Since dialogue is changed, remove disable the cutscene camera references
-            cutsceneCamera = null;
-            cutsceneLine = -1;
-
-            // End dialogue
-            Debug.Log("Dialogue End");
-            playerInRange = false;   
-            DialogueBox.SetActive(false);
-            CinemachineCamera.SetActive(false);
-            NPC_Speaking = false;
-
-            // Disable cutscene camera at the end of dialogue if it exists
-            if (cutsceneCamera != null) {
-                cutsceneCamera.SetActive(false);
-            }
-
-            // Re-enable player movement
-            playerController.canMove = true;
-            // Un-hide player mesh
-            playerMesh.SetActive(true);
-            playerAccessory.SetActive(true);
-            weaponMesh.SetActive(true);
-        }
-    }
-
-
 
 }

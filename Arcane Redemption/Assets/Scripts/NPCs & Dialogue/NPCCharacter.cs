@@ -17,16 +17,19 @@ public class NPC_Character : BaseCharacter
     [SerializeField] protected GameObject FadeUI;
 
     [Header("Cutscene Camera")]
-    [SerializeField] protected GameObject cutsceneCamera;
-    [SerializeField] protected int cutsceneLine;
+    [SerializeField] protected GameObject[] cutsceneCamera;
+    [SerializeField] protected int[] cutsceneLine;
     [SerializeField] protected int endCutsceneLine;
 
     [Header("Text")]
     [SerializeField] protected GameObject DialogueBox;
     public TextMeshProUGUI textComponent;
     public string[] lines;
+    [SerializeField] protected bool hasSecondaryLines;
+    public string[] secondaryLines;
     public float textSpeed;
     protected int index;
+    protected int cutsceneIndex;
 
     
     protected GameObject CinemachineCamera;
@@ -38,7 +41,7 @@ public class NPC_Character : BaseCharacter
     protected GameObject playerAccessory;
  
 
-    protected void Start()
+    protected virtual void Start()
     {
         CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
 
@@ -129,6 +132,7 @@ public class NPC_Character : BaseCharacter
     protected void StartDialogue()
     {
         textComponent.text = string.Empty;
+        cutsceneIndex = 0;
         index = 0;
         TypeLineCoroutine = StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
@@ -181,18 +185,39 @@ public class NPC_Character : BaseCharacter
             textComponent.text = string.Empty;
             TypeLineCoroutine = StartCoroutine(TypeLine());
 
+            Debug.Log(cutsceneIndex);
+
             // If a cutscene camera exists, enable it on the right line
-            if (cutsceneCamera != null && index == cutsceneLine) {
-                cutsceneCamera.SetActive(true);
+            if (cutsceneLine.Length > 0) {
+                if (index == cutsceneLine[cutsceneIndex]) // If current line is a cutscene line enable cutscene camera
+                {
+                    cutsceneCamera[cutsceneIndex].SetActive(true);
+                    if (cutsceneIndex < cutsceneCamera.Length - 1) // only go to next cutscene index if there is more (it breaks otherwise!)
+                    {       
+                        cutsceneIndex++;
+                    }
+                }
             }
 
             // If a cutscene camera exists, disable it on the right line
-            if (cutsceneCamera != null && index == endCutsceneLine) {
-                cutsceneCamera.SetActive(false);
+            if (index == endCutsceneLine) {
+                foreach (GameObject cam in cutsceneCamera)
+                {
+                    if (cam != null)
+                    {
+                        cam.SetActive(false);
+                    }
+                }
             }
 
         } else
         {
+            // Change Dialogue if player speaks with NPC again  
+            if (hasSecondaryLines) {
+                System.Array.Resize(ref lines, secondaryLines.Length);
+                lines = secondaryLines;
+            }
+
             // End dialogue
             Debug.Log("Dialogue End");
             playerInRange = false;   
@@ -201,8 +226,19 @@ public class NPC_Character : BaseCharacter
             NPC_Speaking = false;
 
             // Disable cutscene camera at the end of dialogue if it exists
-            if (cutsceneCamera != null) {
-                cutsceneCamera.SetActive(false);
+            foreach (GameObject cam in cutsceneCamera)
+            {
+                if (cam != null)
+                {
+                    cam.SetActive(false);
+                }
+            }
+
+            // Since dialogue is changed, remove disable the cutscene camera references. AFTER camera is deactivated!
+            if (hasSecondaryLines) {
+                cutsceneCamera = new GameObject[0];
+                cutsceneLine = new int[0];
+                endCutsceneLine = -1;
             }
 
             // Re-enable player movement

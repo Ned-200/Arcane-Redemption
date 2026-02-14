@@ -7,7 +7,7 @@ using Unity.Cinemachine;
 
 public class GhostNPC : NPC_Character
 {
-    void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -21,10 +21,6 @@ public class GhostNPC : NPC_Character
         } else
         {
             Debug.Log("NPC Could Not Find/Hide Player Mesh!");
-        }
-
-        if (cutsceneCamera == null) {
-            cutsceneCamera = gameObject.transform.Find("CutsceneCamera").gameObject;
         }
 
         Invoke(nameof(BeginGhostDialogue), 3);
@@ -57,7 +53,7 @@ public class GhostNPC : NPC_Character
             {
                 NextLine();
 
-                if (index == cutsceneLine)
+                if (index == cutsceneLine[cutsceneIndex])
                 {
                     StartCoroutine(TweenPosition(gameObject, new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y+5, gameObject.transform.localPosition.z), 2));
                 } else if (index == lines.Length - 1) // last line

@@ -115,8 +115,9 @@ MonoBehaviour:
   weaponSlotTransform: {fileID: 0}
   SpeakImage: {fileID: 0}
   FadeUI: {fileID: 0}
-  cutsceneCamera: {fileID: 2523529956305888260}
-  cutsceneLine: 5
+  cutsceneCamera:
+  - {fileID: 2523529956305888260}
+  cutsceneLine: 05000000
   endCutsceneLine: 0
   DialogueBox: {fileID: 0}
   textComponent: {fileID: 0}

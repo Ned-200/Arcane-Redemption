@@ -13,11 +13,10 @@ public class DoorNPC : NPC_Character
     protected GameObject ReturnToTownCamera2;
 
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
 
-        
         ReturnToTownCamera1 = this.transform.Find("ReturnToTownCamera1").gameObject;
         ReturnToTownCamera2 = this.transform.Find("ReturnToTownCamera2").gameObject;
 
@@ -125,58 +124,5 @@ public class DoorNPC : NPC_Character
             }
         }
     }
-
-    protected override void NextLine()
-    {
-        if (index < lines.Length - 1)
-        {
-            index++;
-            textComponent.text = string.Empty;
-            StartCoroutine(TypeLine());
-
-            // If a cutscene camera exists, enable it on the right line
-            if (cutsceneCamera != null && index == cutsceneLine) {
-                cutsceneCamera.SetActive(true);
-            }
-
-            // If a cutscene camera exists, disable it on the right line
-            if (cutsceneCamera != null && index == endCutsceneLine) {
-                cutsceneCamera.SetActive(false);
-            }
-
-        } else
-        {
-            // Change Dialogue if player speaks with NPC again
-            System.Array.Resize(ref lines, 2);
-            lines[0] = "What are you still standing here for, help us!!";
-            lines[1] = "I know there's still some good left in you..";
-
-            // End dialogue
-            Debug.Log("Dialogue End");
-            playerInRange = false;   
-            DialogueBox.SetActive(false);
-            CinemachineCamera.SetActive(false);
-            NPC_Speaking = false;
-
-            // Disable cutscene camera at the end of dialogue if it exists
-            if (cutsceneCamera != null) {
-                cutsceneCamera.SetActive(false);
-            }
-
-            // Since dialogue is changed, remove disable the cutscene camera references. AFTER camera is deactivated!
-            cutsceneCamera = null;
-            cutsceneLine = -1;
-            endCutsceneLine = -1;
-
-            // Re-enable player movement
-            playerController.canMove = true;
-            // Un-hide player mesh
-            playerMesh.SetActive(true);
-            playerAccessory.SetActive(true);
-            weaponMesh.SetActive(true);
-        }
-    }
-
-
 
 }

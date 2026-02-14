@@ -58,28 +58,9 @@ public class PlayerData : MonoBehaviour
 
         if (lastScene == "FireDungeonGraybox") // If coming from Fire Dungeon
         {
-
-
-            GameObject plantBoss = GameObject.Find("TreeBoss");
-            if (plantBoss != null) // Spawn Plant Boss in Town
-            {
-                plantBoss.SetActive(true);
-            } else
-            {
-                Debug.LogError("PlayerData can't find PlantBoss!");
-            }
-
-            GameObject bossPotions = GameObject.Find("BossPotions");
-            if (bossPotions != null) // Spawn Plant Boss in Town
-            {
-                bossPotions.SetActive(true);
-            } else
-            {
-                Debug.LogError("PlayerData can't find BossPotions!");
-            }
-
+            // Prevent player from re-entering fire dungeon
             GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
-            if (fireDungeonTeleportDoor != null) // Prevent player from re-entering fire dungeon
+            if (fireDungeonTeleportDoor != null) 
             {
                 fireDungeonTeleportDoor.SetActive(false);
             } else
@@ -87,8 +68,37 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
             }
 
+            // Hide Mayor NPC
+            if (GameObject.Find("MayorNPC") != null) 
+            {
+                GameObject.Find("MayorNPC").SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find MayorNPC!");
+            }
+
+            // Spawn Plant Boss in Town
+            GameObject plantBoss = GameObject.Find("TreeBoss");
+            if (plantBoss != null) 
+            {
+                plantBoss.SetActive(true);
+            } else
+            {
+                Debug.LogError("PlayerData can't find PlantBoss!");
+            }
+            // Spawn Potions in Town
+            GameObject bossPotions = GameObject.Find("BossPotions");
+            if (bossPotions != null) 
+            {
+                bossPotions.SetActive(true);
+            } else
+            {
+                Debug.LogError("PlayerData can't find BossPotions!");
+            }
+
+            // Hide town NPC
             GameObject townNPC = GameObject.Find("TownNPC");
-            if (townNPC != null) // Hide town NPC
+            if (townNPC != null) 
             {
                 townNPC.SetActive(false);
             } else
@@ -96,6 +106,7 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find TownNPC!");
             }
 
+            // Get Player
             GameObject player = GameObject.FindWithTag("Player");
             if (player != null)
             {
@@ -117,17 +128,18 @@ public class PlayerData : MonoBehaviour
 
         } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
+            // Despawn Plant Boss in Town
             GameObject plantBoss = GameObject.Find("TreeBoss");
-            if (plantBoss != null) // Despawn Plant Boss in Town
+            if (plantBoss != null) 
             {
                 plantBoss.SetActive(false);
             } else
             {
                 Debug.LogError("PlayerData can't find PlantBoss!");
             }
-
+            // Despawn Boss Potions in Town
             GameObject bossPotions = GameObject.Find("BossPotions");
-            if (bossPotions != null) // Despawn Boss Potions in Town
+            if (bossPotions != null) 
             {
                 bossPotions.SetActive(false);
             } else
@@ -135,12 +147,22 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find BossPotions!");
             }
 
-            if (GameObject.Find("DoorNPC") != null) // Hide Door NPC
+            // Hide Door NPC
+            if (GameObject.Find("DoorNPC") != null) 
             {
                 GameObject.Find("DoorNPC").SetActive(false);
             } else
             {
                 Debug.LogError("PlayerData can't find DoorNPC!");
+            }
+
+            // Hide Mayor NPC
+            if (GameObject.Find("MayorNPC") != null) 
+            {
+                GameObject.Find("MayorNPC").SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find MayorNPC!");
             }
             
         }

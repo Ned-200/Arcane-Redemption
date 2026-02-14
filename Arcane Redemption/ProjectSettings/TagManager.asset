@@ -8,7 +8,6 @@ TagManager:
   - PlayerAccessory
   - PlayerData
   - MainCanvas
-  - MayorNPC
   layers:
   - Default
   - TransparentFX

@@ -73,6 +73,9 @@ public class TreeBoss : EnemyCharacter
     [SerializeField] private GameObject PlantGhostPrefab;
     private bool ghostSpawned = false;
 
+    [Header("Mayor NPC")]
+    [SerializeField] private GameObject MayorNPC;
+
     #endregion
 
     #region Private Fields
@@ -1146,7 +1149,21 @@ public class TreeBoss : EnemyCharacter
         //spawn boss's ghost NPC for dialogue
         if (!ghostSpawned) {
             ghostSpawned = true;
-            Instantiate(PlantGhostPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            if (PlantGhostPrefab != null) {
+                Instantiate(PlantGhostPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            } else
+            {
+                Debug.LogError("TreeBoss not assigned a Ghost NPC Prefab! Check Fields!");
+            }
+            
+            // Unhide MayorNPC too
+            if (MayorNPC != null) {
+                MayorNPC.SetActive(true);
+            } else
+            {
+                Debug.LogError("TreeBoss not assigned MayorNPC! Check Fields!");
+            }
+            
         }
 
         //disintegration animation

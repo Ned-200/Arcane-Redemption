@@ -2,19 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class FireDungeonKeyDoor : MonoBehaviour
+public class DungeonKeyDoor : MonoBehaviour
 {
     [SerializeField] GameObject interactImage;
-    [SerializeField] GameObject fireDungeonKey;
+    [SerializeField] GameObject DungeonKey;
+    [SerializeField] Vector3 targetPosition;
     private bool playerInRange = false;
-
     private bool movedOrMoving;
-    private Vector3 targetPosition = new Vector3(17, 10, -10);
     [SerializeField] float moveDuration;
 
     void Start()
     {
-        if (fireDungeonKey == null)
+        if (DungeonKey == null)
         {
             Debug.LogError("Dungeon door can't find key!");
         }
@@ -27,7 +26,7 @@ public class FireDungeonKeyDoor : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E) & fireDungeonKey == null & !movedOrMoving)
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) & DungeonKey == null & !movedOrMoving)
         {
             movedOrMoving = true;
             Debug.Log("Key opened door");
@@ -62,7 +61,7 @@ public class FireDungeonKeyDoor : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player") & fireDungeonKey == null & !movedOrMoving)
+        if (other.CompareTag("Player") & DungeonKey == null & !movedOrMoving)
         {   
             playerInRange = true;
             Debug.Log("Entered Door range");
@@ -74,7 +73,7 @@ public class FireDungeonKeyDoor : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player") & fireDungeonKey == null & !movedOrMoving)
+        if (other.CompareTag("Player") & DungeonKey == null & !movedOrMoving)
         {
             playerInRange = false;
             Debug.Log("Left Door range");

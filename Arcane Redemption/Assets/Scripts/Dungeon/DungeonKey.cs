@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FireDungeonKey : MonoBehaviour
+public class DungeonKey : MonoBehaviour
 {
     [SerializeField] GameObject interactImage;
 
@@ -10,7 +10,7 @@ public class FireDungeonKey : MonoBehaviour
     {
         if (interactImage == null)
         {
-            Debug.LogError("FireDungeonKey can't find interactImage!");
+            Debug.LogError("DungeonKey can't find interactImage!");
         }
     }
 

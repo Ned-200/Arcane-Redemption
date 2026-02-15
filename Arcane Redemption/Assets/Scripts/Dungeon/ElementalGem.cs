@@ -1,14 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class FireGem : MonoBehaviour
+public class ElementalGem : MonoBehaviour
 {
+    
+    [SerializeField] int gemElement; // 1 = Fire Ruby, 2 = Water Sapphire, 3 = Plant Emerald
     [SerializeField] GameObject interactImage;
     private bool playerInRange = false;
 
     private PlayerData playerData;
 
     [SerializeField] GameObject gemDoor;
+    [SerializeField] int gemDoorHeight; // Y position to set door when it seals after gem is picked up!
     private BoxCollider boxCollider;
 
     private bool movedOrMoving;
@@ -21,15 +24,15 @@ public class FireGem : MonoBehaviour
 
         if (interactImage == null)
         {
-            Debug.LogError("FireGem can't find interactImage!");
+            Debug.LogError("ElementalGem can't find interactImage!");
         }
 
         if (gemDoor == null)
         {
-            Debug.LogError("FireGem can't find gemDoor!");
+            Debug.LogError("ElementalGem can't find gemDoor!");
         } else
         {
-            boxCollider = gemDoor.GetComponent<BoxCollider>();
+            boxCollider = gemDoor.GetComponent<BoxCollider>(); // Invisible barricade to prevent player from running past closing gem door
         }
     }
 
@@ -39,15 +42,23 @@ public class FireGem : MonoBehaviour
         {
             movedOrMoving = true;
             interactImage.SetActive(false);
-            Debug.Log("Fire Gem Obtained!");
+            Debug.Log("Gem Obtained!");
 
-            // GIVE PLAYER FIRE ABILITIES HERE
-            playerData.fireGemObtained = true;
+            // GIVE PLAYER ABILITIES HERE
+            if (gemElement == 1) {
+                playerData.fireGemObtained = true;
+            } else if (gemElement == 2) {
+                playerData.waterGemObtained = true;
+            } else if (gemElement == 3) {
+                playerData.plantGemObtained = true;
+            } else {
+                Debug.LogError("Gem element int not recognized! Check ElementalGem Script");
+            }
 
             // Start the tweening coroutine
             boxCollider.enabled = true;
-            StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, 3, gemDoor.transform.localPosition.z), moveDuration));
-            Invoke(nameof(DestroyFireGem), moveDuration);
+            StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
+            Invoke(nameof(DestroyGem), moveDuration);
         }
     }
     IEnumerator TweenPosition(Vector3 targetPos, float duration)
@@ -72,7 +83,7 @@ public class FireGem : MonoBehaviour
         Debug.Log("Gem Door Sealed!");
     }
 
-    void DestroyFireGem()
+    void DestroyGem()
     {
         Destroy(gameObject);
     }

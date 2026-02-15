@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerCharacter : BaseCharacter
 {
@@ -30,6 +31,14 @@ public class PlayerCharacter : BaseCharacter
     
     private InventorySystem inventorySystem;
 
+
+    [Header("UI Bars")]
+    private GameObject HealthBar;
+    private GameObject ManaBar;
+    private GameObject StaminaBar;
+    private GameObject HealthPotionCounter;
+    private GameObject ManaPotionCounter;
+
     protected override void Awake()
     {
         base.Awake();
@@ -55,7 +64,22 @@ public class PlayerCharacter : BaseCharacter
                 Debug.Log("PlayerCharacter: Camera found and connected successfully!");
             }
         }
-        
+
+        // UI Stuff
+        HealthBar = GameObject.Find("HealthBar");
+        ManaBar = GameObject.Find("ManaBar");
+        StaminaBar = GameObject.Find("StaminaBar");
+        HealthPotionCounter = GameObject.Find("HealthPotionCounter");
+        ManaPotionCounter = GameObject.Find("ManaPotionCounter");
+        if (HealthBar == null || ManaBar == null || StaminaBar == null)
+        {
+            Debug.LogError("PlayerCharacter: Player health, stamina, or mana bar UI not found!! Check Canvas Gameobject.");
+        }
+        if (HealthPotionCounter == null || ManaPotionCounter == null)
+        {
+            Debug.LogError("PlayerCharacter: Player potions UI not found!! Check Canvas Gameobject.");
+        }
+
         // Initialize camera rotation to match player
         currentYaw = transform.eulerAngles.y;
         currentPitch = 0f;
@@ -186,15 +210,40 @@ public class PlayerCharacter : BaseCharacter
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 300, 20), $"Health: {CurrentHealth}/{MaxHealth}");
-        GUI.Label(new Rect(10, 40, 300, 20), $"Stamina: {CurrentStamina}/{MaxStamina}");
-        GUI.Label(new Rect(10, 70, 300, 20), $"Mana: {CurrentMana}/{MaxMana}");
+
+        if (HealthBar != null && ManaBar != null && StaminaBar != null)
+        {
+            GameObject Health = HealthBar.transform.Find("Health").gameObject;
+            GameObject Mana = ManaBar.transform.Find("Mana").gameObject;
+            GameObject Stamina = StaminaBar.transform.Find("Stamina").gameObject;
+
+            RectTransform HealthRect = Health.GetComponent<RectTransform>();
+            RectTransform ManaRect = Mana.GetComponent<RectTransform>();
+            RectTransform StaminaRect = Stamina.GetComponent<RectTransform>();
+
+            float newWidth = (CurrentHealth / MaxHealth) * 800;
+            HealthRect.sizeDelta = new Vector2(newWidth, 30);
+
+            newWidth = (CurrentMana / MaxMana) * 600;
+            ManaRect.sizeDelta = new Vector2(newWidth, 30);
+
+            newWidth = (CurrentStamina / MaxStamina) * 1000;
+            StaminaRect.sizeDelta = new Vector2(newWidth, 30);
+
+        }
+
+        // GUI.Label(new Rect(10, 10, 300, 20), $"Health: {CurrentHealth}/{MaxHealth}");
+        // GUI.Label(new Rect(10, 40, 300, 20), $"Stamina: {CurrentStamina}/{MaxStamina}");
+        // GUI.Label(new Rect(10, 70, 300, 20), $"Mana: {CurrentMana}/{MaxMana}");
         
         // Display potion counts
         if (inventorySystem != null)
         {
-            GUI.Label(new Rect(10, 100, 300, 20), $"Health Potions (1): {inventorySystem.HealthPotionCount}");
-            GUI.Label(new Rect(10, 130, 300, 20), $"Mana Potions (2): {inventorySystem.ManaPotionCount}");
+            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Health Potions (1): {inventorySystem.HealthPotionCount}";
+            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Mana Potions (2): {inventorySystem.ManaPotionCount}";
+            
+            // GUI.Label(new Rect(10, 100, 300, 20), $"Health Potions (1): {inventorySystem.HealthPotionCount}");
+            // GUI.Label(new Rect(10, 130, 300, 20), $"Mana Potions (2): {inventorySystem.ManaPotionCount}");
         }
     }
 }

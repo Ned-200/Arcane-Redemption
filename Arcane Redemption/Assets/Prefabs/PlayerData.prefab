@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8744716289957609442}
   - component: {fileID: 7197226518992691927}
+  - component: {fileID: 4898066629817857422}
   m_Layer: 0
   m_Name: PlayerData
   m_TagString: PlayerData
@@ -53,3 +54,24 @@ MonoBehaviour:
   healthPotions: 0
   manaPotions: 0
   lastScene: 
+--- !u!114 &4898066629817857422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6304225515165161262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81b460d147a1c14c82eb435eeba3fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
+  maxHealthPotions: 10
+  maxManaPotions: 10
+  healthPotionType: {fileID: 11400000, guid: 7b41e92e8d49a894eb8d4eecf95be2d5, type: 2}
+  manaPotionType: {fileID: 11400000, guid: 6acd2cf4619a63c47a33abc8db01625b, type: 2}
+  healthPotionKey: 49
+  manaPotionKey: 50
+  showDebugLogs: 1
+  healthPotionCount: 0
+  manaPotionCount: 0

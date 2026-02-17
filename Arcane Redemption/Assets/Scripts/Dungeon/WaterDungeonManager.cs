@@ -5,6 +5,8 @@ public class WaterDungeonManager : MonoBehaviour
 {
     [SerializeField] GameObject[] battleLockedDoors;
     [SerializeField] GameObject[] enemies;
+    [SerializeField] public Transform checkpoint;
+
     // [SerializeField] GameObject bridge;
     // [SerializeField] GameObject vinesWall2;
     [SerializeField] GameObject dungeonEntrance;
@@ -92,9 +94,9 @@ public class WaterDungeonManager : MonoBehaviour
         if (enemies[3] == null & !doorsOpened[2])
         {
             doorsOpened[2] = true;
-            StartCoroutine(TweenPosition(battleLockedDoors[2], new Vector3(battleLockedDoors[2].transform.localPosition.x, -8, battleLockedDoors[2].transform.localPosition.z), 3));
-            StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, -11, battleLockedDoors[3].transform.localPosition.z), 3));
-            StartCoroutine(TweenPosition(battleLockedDoors[4], new Vector3(battleLockedDoors[4].transform.localPosition.x, -18, battleLockedDoors[4].transform.localPosition.z), 3));
+            StartCoroutine(TweenPosition(battleLockedDoors[2], new Vector3(battleLockedDoors[2].transform.localPosition.x, -23, battleLockedDoors[2].transform.localPosition.z), 2));
+            StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, -25, battleLockedDoors[3].transform.localPosition.z), 3));
+            StartCoroutine(TweenPosition(battleLockedDoors[4], new Vector3(battleLockedDoors[4].transform.localPosition.x, -32, battleLockedDoors[4].transform.localPosition.z), 4));
             Debug.Log("Opening door");
         }
 
@@ -118,14 +120,14 @@ public class WaterDungeonManager : MonoBehaviour
             Debug.Log("Player fell in pit!");
             playerController = other.GetComponent<PlayerController>();
             
-            Invoke("SpawnPlayerAtopPit", 2);
+            Invoke(nameof(SpawnPlayerAtopPit), 2);
             drowningEffect = Instantiate(drowningPrefab, characterController.transform.position, drowningPrefab.transform.rotation);
             drowningEffect.transform.SetParent(other.transform);
             // playerController.canMove = false;
             playerController.gravity = 7.5f;
 
 
-            Invoke("DestroyDrowningEffect", 2);
+            Invoke(nameof(DestroyDrowningEffect), 2);
         }
     }
 
@@ -138,7 +140,7 @@ public class WaterDungeonManager : MonoBehaviour
     {
         playerController.gravity = -9.81f;
         characterController.enabled = false;
-        characterController.transform.position = new Vector3(45,-22, 90);
+        characterController.transform.position = checkpoint.position;
         characterController.enabled = true;
         // playerController.canMove = true;
     }

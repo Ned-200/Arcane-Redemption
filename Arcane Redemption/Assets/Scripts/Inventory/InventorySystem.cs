@@ -19,24 +19,25 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private KeyCode manaPotionKey = KeyCode.Alpha2;
     
     [Header("References")]
-    [SerializeField] private BaseCharacter character;
+    private BaseCharacter character;
     
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = true;
     
     // Current potion counts
-    private int healthPotionCount = 0;
-    private int manaPotionCount = 0;
+    [SerializeField] private int healthPotionCount = 0;
+    [SerializeField] private int manaPotionCount = 0;
     
     public int HealthPotionCount => healthPotionCount;
     public int ManaPotionCount => manaPotionCount;
     
     private void Awake()
     {
-        if (character == null)
+        // Get Player
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
         {
-            character = GetComponent<BaseCharacter>();
-            
+            character = player.GetComponent<BaseCharacter>();
             if (character == null)
             {
                 Debug.LogError("InventorySystem: No BaseCharacter component found!");

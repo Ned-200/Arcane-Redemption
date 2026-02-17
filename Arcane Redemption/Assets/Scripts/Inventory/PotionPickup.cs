@@ -60,11 +60,19 @@ public class PotionPickup : MonoBehaviour
             playerInRange = true;
             
             // Get the player's inventory system
-            playerInventory = other.GetComponent<InventorySystem>();
+            GameObject playerData = GameObject.FindWithTag("PlayerData");
             
+            if (playerData == null)
+            {
+                Debug.LogError("PotionPickup: PlayerData was not found! Check PlayerData object Tag!");
+            } else
+            {
+                playerInventory = playerData.GetComponent<InventorySystem>();
+            }
+
             if (playerInventory == null)
             {
-                Debug.LogError("PotionPickup: Player does not have an InventorySystem component!");
+                Debug.LogError("PotionPickup: PlayerData does not have an InventorySystem component!");
             }
             
             Debug.Log("Entered Potion range");

@@ -44,7 +44,20 @@ public class PlayerCharacter : BaseCharacter
         base.Awake();
         
         // Get inventory system
-        inventorySystem = GetComponent<InventorySystem>();
+        GameObject playerData = GameObject.FindWithTag("PlayerData");
+        
+        if (playerData == null)
+        {
+            Debug.LogError("PlayerCharacter: PlayerData was not found! Check PlayerData object Tag!");
+        } else
+        {
+            inventorySystem = playerData.GetComponent<InventorySystem>();
+        }
+
+        if (inventorySystem == null)
+        {
+            Debug.LogError("PlayerCharacter: PlayerData does not have an InventorySystem component!");
+        }
         
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;

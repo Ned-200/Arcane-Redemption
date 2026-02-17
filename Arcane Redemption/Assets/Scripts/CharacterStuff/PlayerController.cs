@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float jumpHeight = 2f;
-    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] public float gravity = -9.81f;
     [SerializeField] private float jumpStaminaCost = 15f;
 
     [Header("Dash")]

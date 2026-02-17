@@ -18,10 +18,10 @@ MonoBehaviour:
     m_Value: {x: 0.9920822, y: 1, z: 0.9677803, w: 0}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.9720255, y: 0.97901917, z: 1, w: 0.13004053}
+    m_Value: {x: 0.9720255, y: 0.97901917, z: 1, w: -0.05157127}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.8853419, z: 0.99828535, w: -0.36322296}
+    m_Value: {x: 0.9799914, y: 1, z: 0.8829066, w: 0}
 --- !u!114 &-7893295128165547882
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -112,16 +112,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
   m_Name: SplitToning
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.SplitToning
-  active: 1
+  active: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {r: 0.36245638, g: 0.5068187, b: 0.8037735, a: 1}
+    m_Value: {r: 0.53678846, g: 0, b: 1, a: 1}
   highlights:
     m_OverrideState: 1
     m_Value: {r: 0.5946501, g: 1, b: 0.39999998, a: 1}
   balance:
     m_OverrideState: 1
-    m_Value: -3
+    m_Value: 28
 --- !u!114 &-1371764405073420915
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -165,13 +165,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.23638481, y: 1, z: 0.75588113, w: -0.17964067}
+    m_Value: {x: 0.688831, y: 1, z: 0.7868708, w: 0.12231926}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9539646, z: 0, w: 0.33825183}
+    m_Value: {x: 0.5804739, y: 1, z: 0.99041533, w: 0.06471177}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.7452001, z: 0.07555312, w: 0.12476165}
+    m_Value: {x: 1, y: 0.9242221, z: 0.68749905, w: 0.77856463}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0.12
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ColorCurves
-  active: 0
+  active: 1
   master:
     m_OverrideState: 1
     m_Value:
@@ -491,40 +491,13 @@ MonoBehaviour:
   lumVsSat:
     m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 3
+      <length>k__BackingField: 0
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0.041904766
-          value: 0.42993164
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.35682538
-          value: 0.6857146
-          inSlope: 1.5784407
-          outSlope: 1.5784407
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.62857145
-          value: 0.5551027
-          inSlope: 1.2970024
-          outSlope: 1.2970024
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
+        m_Curve: []
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4

@@ -32,10 +32,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_929a664f8119484c94f7aae6a4e5794b_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_a80d6ee8e8cd48e69c361c59c737458e_Texture_1_Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -62,9 +58,8 @@ Material:
     - Vector1_95BBCBE0: 0.61
     - Vector1_C5543ECF: 3.1
     - Vector1_E23798DE: 0.05
-    - _Distance: 31
+    - _Distance: 4.3
     - _Distort_Speed: 47.36
-    - _Emission_Intensity: 0.8
     - _Noise_Scale: 147.3
     - _Noise_Speed: 142.43
     - _Noise_Strength: 176.9
@@ -76,7 +71,7 @@ Material:
     - _QueueOffset: 0
     - _Refracted_Scale: 0.9
     - _Refracted_Speed: 0.2
-    - _Refracted_Strength: 0.4
+    - _Refracted_Strength: 0.2
     - _Refraction_Amount: 0.76
     - _Refration_Strength: 0.001
     - _Steps: 0
@@ -90,7 +85,6 @@ Material:
     - _Deep: {r: 0.045176204, g: 0.17735851, b: 0.13498679, a: 0.8352941}
     - _Deep_Colour: {r: 0.007843138, g: 0.34509805, b: 0.2392157, a: 0.5294118}
     - _DistortDir: {r: -0.67, g: 1.1, b: 0, a: 0}
-    - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _Noise_Direction: {r: 14.7, g: 1, b: 0, a: 0}
     - _Normal_Direction: {r: 1, g: 1, b: 0, a: 0}
     - _Shallow: {r: 0.28627455, g: 1, b: 0.47827065, a: 0.44313726}

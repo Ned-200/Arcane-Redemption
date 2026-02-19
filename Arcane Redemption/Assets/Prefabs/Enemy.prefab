@@ -75,9 +75,9 @@ GameObject:
   - component: {fileID: 6850646860509350827}
   - component: {fileID: 4748964793363452052}
   - component: {fileID: 75984173828103380}
-  - component: {fileID: 7294200311582072778}
   - component: {fileID: 3143092087721740648}
   - component: {fileID: -4757602470988403817}
+  - component: {fileID: 3049563181757570976}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -172,28 +172,6 @@ MonoBehaviour:
   usePatrol: 0
   patrolPoints: []
   retreatHealthPercent: 0.2
---- !u!64 &7294200311582072778
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824414575673759372}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8659943070623925175, guid: 507178d8a96900640a4cb79d22726a42, type: 3}
 --- !u!137 &3143092087721740648
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -288,7 +266,28 @@ MonoBehaviour:
   delay: 1.2
   duration: 5
   destroyAfter: 1
-  destroyDelay: 0.2
+  destroyDelay: 1
+--- !u!135 &3049563181757570976
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824414575673759372}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.25
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &2206114752399411082
 GameObject:
   m_ObjectHideFlags: 0

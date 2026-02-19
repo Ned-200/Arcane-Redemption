@@ -59,7 +59,11 @@ public class EnemyCharacter : BaseCharacter
         if (enemyAnim == null)
         {
             Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached animator!");
+        } else
+        {
+            enemyAnim.Play("Idle", 0, Random.Range(0.0f, 1.0f));
         }
+
         if (disintegrate == null)
         {
             Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached disintegration script!");
@@ -68,11 +72,6 @@ public class EnemyCharacter : BaseCharacter
         // Equip default weapon
         EquipDefaultWeapon();
 
-    }
-
-    private void Start()
-    {
-        
     }
 
     protected override void Update()

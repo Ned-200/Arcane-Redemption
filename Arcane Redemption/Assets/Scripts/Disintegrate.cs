@@ -12,7 +12,7 @@ public class Disintegrate : MonoBehaviour
 
     [Header("After")]
     [SerializeField] private bool destroyAfter = true;
-    [SerializeField] private float destroyDelay = 0.2f;
+    [SerializeField] private float destroyDelay = 0.5f;
 
     Renderer rend;
     MaterialPropertyBlock mpb;

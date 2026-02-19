@@ -246,8 +246,8 @@ public class PlayerCharacter : BaseCharacter
         // Display potion counts
         if (playerInventory != null)
         {
-            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Health Potions (1): {playerInventory.HealthPotionCount}";
-            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Mana Potions (2): {playerInventory.ManaPotionCount}";
+            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = playerInventory.HealthPotionCount.ToString();
+            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = playerInventory.ManaPotionCount.ToString();
         }
     }
 }

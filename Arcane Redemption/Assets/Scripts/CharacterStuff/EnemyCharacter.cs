@@ -8,6 +8,9 @@ public class EnemyCharacter : BaseCharacter
     [Header("Enemy Settings")]
     [SerializeField] private GameObject defaultWeapon;
 
+    [Header("Animation")]
+    private Animator enemyAnim;
+
     [Header("AI Settings")]
     [SerializeField] private float detectionRadius = 15f;
     [SerializeField] private float combatRadius = 3f;
@@ -23,7 +26,7 @@ public class EnemyCharacter : BaseCharacter
     [SerializeField] private float attackCooldown = 2f;
 
     [Header("Death Settings")]
-    [SerializeField] private float deathDelay = 2f;
+    [SerializeField] private float deathDelay = 3f;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugGizmos = true;
@@ -45,16 +48,32 @@ public class EnemyCharacter : BaseCharacter
     public bool IsDead => isDead;
 
     //accessing disintegrate script
-    [SerializeField] public Disintegrate disintegrate;
+    public Disintegrate disintegrate;
 
     protected override void Awake()
     {
         base.Awake(); // Initialize stats and weapon slot
 
+        enemyAnim = this.gameObject.GetComponent<Animator>();
+        disintegrate = this.gameObject.GetComponent<Disintegrate>();
+        if (enemyAnim == null)
+        {
+            Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached animator!");
+        }
+        if (disintegrate == null)
+        {
+            Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached disintegration script!");
+        }
+
         // Equip default weapon
         EquipDefaultWeapon();
 
-           }
+    }
+
+    private void Start()
+    {
+        
+    }
 
     protected override void Update()
     {
@@ -206,7 +225,7 @@ public class EnemyCharacter : BaseCharacter
         if (!IsAlive && !isDead)
         {
             isDead = true;
-            Debug.LogError($"[{gameObject.name}] 💀 Health reached ZERO! Triggering death sequence...");
+            Debug.Log($"[{gameObject.name}] 💀 Health reached ZERO! Triggering death sequence...");
             Die();
         }
     }
@@ -226,9 +245,6 @@ public class EnemyCharacter : BaseCharacter
 
         // Call death event (animations, sounds, VFX)
         OnDeath();
-
-        //Trigger disintegration material
-        disintegrate.TriggerDisintegration();
 
         // Destroy the GameObject after a delay
         Destroy(gameObject, deathDelay);
@@ -287,6 +303,15 @@ public class EnemyCharacter : BaseCharacter
     {
         Debug.Log($"{gameObject.name} state changed to: {newState}");
         // Override for custom behavior (animations, sounds, etc.)
+
+        if (newState == EnemyState.Idle || newState == EnemyState.Combat) 
+        {
+            enemyAnim.SetBool("isWalking", false);
+        } 
+        else if (newState == EnemyState.Alert || newState == EnemyState.Patrol) 
+        {
+            enemyAnim.SetBool("isWalking", true);
+        }
     }
 
     /// <summary>
@@ -295,6 +320,7 @@ public class EnemyCharacter : BaseCharacter
     protected virtual void OnAttackPerformed()
     {
         // Override for custom behavior (play attack animation, sound, etc.)
+        enemyAnim.Play("Attack");
     }
 
     /// <summary>
@@ -314,9 +340,14 @@ public class EnemyCharacter : BaseCharacter
     {
         base.OnDeath();
         
-        Debug.LogError($" [{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
+        Debug.Log($" [{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
         
-        // TODO: Play death animation 
+        // Play death animation 
+        enemyAnim.Play("Death");
+
+        //Trigger disintegration material
+        disintegrate.TriggerDisintegration();
+
         // TODO: Play death sound
         // TODO: Spawn particle effects (blood, dissolve effect, etc.)
         // TODO: Spawn loot drops

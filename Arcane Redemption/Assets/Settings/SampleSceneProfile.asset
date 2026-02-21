@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
   m_Name: LiftGammaGain
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.LiftGammaGain
-  active: 0
+  active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 0.9920822, y: 1, z: 0.9677803, w: 0}
+    m_Value: {x: 1, y: 0.9073669, z: 0.3356629, w: 0}
   gamma:
     m_OverrideState: 1
     m_Value: {x: 0.9720255, y: 0.97901917, z: 1, w: 0.13004053}
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 1
   scatter:
     m_OverrideState: 1
     m_Value: 0.228
@@ -52,7 +52,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.98771685, b: 0.7377358, a: 1}
+    m_Value: {r: 0.9924528, g: 0.9341265, b: 0.37263784, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -112,16 +112,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
   m_Name: SplitToning
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.SplitToning
-  active: 1
+  active: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {r: 0.36245638, g: 0.5068187, b: 0.8037735, a: 1}
+    m_Value: {r: 0.5038634, g: 0.49501604, b: 0.509434, a: 1}
   highlights:
     m_OverrideState: 1
-    m_Value: {r: 0.5946501, g: 1, b: 0.39999998, a: 1}
+    m_Value: {r: 0.8415094, g: 0.5592332, b: 0.08097541, a: 1}
   balance:
     m_OverrideState: 1
-    m_Value: -3
+    m_Value: 17
 --- !u!114 &-1371764405073420915
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -137,7 +137,7 @@ MonoBehaviour:
   active: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.74
   contrast:
     m_OverrideState: 0
     m_Value: 0
@@ -165,19 +165,19 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.23638481, y: 1, z: 0.75588113, w: -0.17964067}
+    m_Value: {x: 0.76265836, y: 0.1606949, z: 1, w: 0.26548663}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9539646, z: 0, w: 0.33825183}
+    m_Value: {x: 1, y: 0.8117824, z: 0.59832007, w: -0.18292682}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.7452001, z: 0.07555312, w: 0.12476165}
+    m_Value: {x: 0.9886811, y: 1, z: 0, w: -0.16940518}
   shadowsStart:
     m_OverrideState: 0
-    m_Value: 0.12
+    m_Value: 0.33
   shadowsEnd:
     m_OverrideState: 0
-    m_Value: 0.14
+    m_Value: 0.33
   highlightsStart:
     m_OverrideState: 0
     m_Value: 0.55
@@ -463,15 +463,42 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   hueVsSat:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 3
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.20851062
+          value: 0.5221376
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.47517732
+          value: 0.5
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.80709225
+          value: 0.5
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -499,8 +526,8 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.041904766
-          value: 0.42993164
+          time: 0.004255322
+          value: 0.3267179
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -508,10 +535,10 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.35682538
-          value: 0.6857146
-          inSlope: 1.5784407
-          outSlope: 1.5784407
+          time: 0.31063828
+          value: 0.6503813
+          inSlope: 1.0839666
+          outSlope: 1.0839666
           tangentMode: 0
           weightedMode: 0
           inWeight: 0

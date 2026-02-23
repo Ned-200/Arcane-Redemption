@@ -7,6 +7,7 @@ public class TreeBoss : EnemyCharacter
     #region Serialized Fields
 
     [Header("Boss Detection Settings")]
+    [SerializeField] private float bossDetectionRadius = 30f;
     [SerializeField] private float spawnDetectionDelay = 4f;
     [SerializeField] private float advanceStopDistance = 7f;
     [SerializeField] private float advanceSpeed = 2f;
@@ -63,6 +64,9 @@ public class TreeBoss : EnemyCharacter
     [Header("Animation")]
     [SerializeField] private Animator bossAnimator;
 
+    [Header("Boss UI")]
+    [SerializeField] private string bossDisplayName = "Ancient Tree Guardian";
+
     [Header("Boss Debug")]
     [SerializeField] private bool showBossGizmos = true;
 
@@ -116,6 +120,8 @@ public class TreeBoss : EnemyCharacter
     private Vector3 desiredMovementDirection = Vector3.zero;
     private float desiredMovementSpeed = 0f;
 
+    private BossHealthBarUI healthBarUI;
+
     #endregion
 
     #region Properties
@@ -130,6 +136,8 @@ public class TreeBoss : EnemyCharacter
     public int ConsecutiveVolleyCount => consecutiveVolleyCount;
     public int CurrentVolleyLimit => currentVolleyLimit;
     public int HitsTakenInMeleeZone => hitsTakenInMeleeZone;
+
+    public new float DetectionRadius => bossDetectionRadius;
 
     #endregion
 
@@ -168,6 +176,7 @@ public class TreeBoss : EnemyCharacter
         InitializeCounters();
         InitializeRigidbody();
         InitializeComponents();
+        InitializeHealthBarUI();
     }
 
     private void InitializeState()
@@ -213,7 +222,7 @@ public class TreeBoss : EnemyCharacter
         rb.angularDamping = angularDamping;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         
-        Debug.Log($"[{gameObject.name}] Rigidbody configured - Mass: {rb.mass}, LinearDamping: {rb.linearDamping}, AngularDamping: {rb.angularDamping}");
+        Debug.Log($"[{gameObject.name}] Rigidbody configured - Mass: {rb.mass}, Detection Radius: {bossDetectionRadius}");
     }
 
     private void InitializeComponents()
@@ -238,7 +247,17 @@ public class TreeBoss : EnemyCharacter
             Debug.LogError($"[{gameObject.name}] Tracking projectile prefab not assigned!");
         }
 
-        Debug.Log($"[{gameObject.name}] Initialized with volley limit: {currentVolleyLimit}");
+        Debug.Log($"[{gameObject.name}] TreeBoss initialized - Detection: {bossDetectionRadius}m, Melee: {meleeAttackRange}m, Projectile: {projectileMinRange}-{projectileMaxRange}m");
+    }
+
+    private void InitializeHealthBarUI()
+    {
+        healthBarUI = FindFirstObjectByType<BossHealthBarUI>();
+        
+        if (healthBarUI == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] BossHealthBarUI not found in scene! Boss health bar will not display.");
+        }
     }
 
     #endregion
@@ -269,6 +288,15 @@ public class TreeBoss : EnemyCharacter
     protected override void OnDamageTaken(float damage)
     {
         base.OnDamageTaken(damage);
+
+        if (currentBossState == BossState.Spawning)
+        {
+            Debug.Log($"[{gameObject.name}] Boss took damage while spawning - activating!");
+            if (TryFindPlayer())
+            {
+                TransitionToFightingState();
+            }
+        }
 
         if (TargetPlayer != null && !isEnraged)
         {
@@ -425,6 +453,11 @@ public class TreeBoss : EnemyCharacter
             bossAnimator.SetTrigger("Enrage");
         }
 
+        if (currentBossState == BossState.Spawning && TryFindPlayer())
+        {
+            TransitionToFightingState();
+        }
+
         OnEnragedModeEntered();
     }
 
@@ -496,17 +529,11 @@ public class TreeBoss : EnemyCharacter
 
     private void HandleSpawningState()
     {
-        spawnTimer += Time.deltaTime;
-
-        if (DetectPlayerInRadius(DetectionRadius))
+        if (DetectPlayerInRadius(bossDetectionRadius))
         {
+            Debug.Log($"[{gameObject.name}] Player entered detection range ({bossDetectionRadius}m) - activating boss!");
             TransitionToFightingState();
             return;
-        }
-
-        if (spawnTimer >= spawnDetectionDelay && !isAdvancingToPlayer)
-        {
-            InitiateAdvanceTowardsPlayer();
         }
     }
 
@@ -520,7 +547,7 @@ public class TreeBoss : EnemyCharacter
 
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        if (distanceToPlayer <= DetectionRadius)
+        if (distanceToPlayer <= bossDetectionRadius)
         {
             TransitionToFightingState();
             return;
@@ -601,13 +628,14 @@ public class TreeBoss : EnemyCharacter
             ResetHitCounter();
             HandleProjectileCombatBehavior(distanceToPlayer);
         }
-        else if (distanceToPlayer > projectileMaxRange && distanceToPlayer <= DetectionRadius)
+        else if (distanceToPlayer > projectileMaxRange && distanceToPlayer <= bossDetectionRadius)
         {
             ResetHitCounter();
             MoveTowardsTarget(TargetPlayer.position, advanceSpeed);
         }
-        else if (distanceToPlayer > DetectionRadius)
+        else if (distanceToPlayer > bossDetectionRadius)
         {
+            Debug.Log($"[{gameObject.name}] Player escaped detection range ({distanceToPlayer:F1}m > {bossDetectionRadius}m)");
             TransitionToSpawningState();
         }
     }
@@ -797,6 +825,13 @@ public class TreeBoss : EnemyCharacter
 
         ResetVolleyCounter();
         ResetHitCounter();
+        
+        if (healthBarUI != null)
+        {
+            healthBarUI.HideBossHealthBar();
+        }
+        
+        Debug.Log($"[{gameObject.name}] Returned to Spawning state (waiting for player)");
     }
 
     private void TransitionToFightingState()
@@ -808,6 +843,13 @@ public class TreeBoss : EnemyCharacter
         {
             SetTarget(playerTransform);
         }
+        
+        if (healthBarUI != null)
+        {
+            healthBarUI.ShowBossHealthBar(this, bossDisplayName);
+        }
+        
+        Debug.Log($"[{gameObject.name}] ⚔️ Transitioned to Fighting state! Target: {TargetPlayer?.name ?? "NULL"}");
     }
 
     private void InitiateAdvanceTowardsPlayer()
@@ -816,6 +858,7 @@ public class TreeBoss : EnemyCharacter
         {
             currentBossState = BossState.Advancing;
             isAdvancingToPlayer = true;
+            Debug.Log($"[{gameObject.name}] Started advancing towards player");
         }
     }
 
@@ -825,6 +868,7 @@ public class TreeBoss : EnemyCharacter
 
         isAdvancingToPlayer = false;
         currentBossState = BossState.Spawning;
+        Debug.Log($"[{gameObject.name}] Stopped advancing (player within stop distance)");
     }
 
     #endregion
@@ -1141,33 +1185,39 @@ public class TreeBoss : EnemyCharacter
         StopMovementActions();
         StopDashRetreat();
 
-        //change the terrain from sand to grass
-        if (terrainSwap != null){
+        if (healthBarUI != null)
+        {
+            healthBarUI.HideBossHealthBar();
+        }
+
+        if (terrainSwap != null)
+        {
             terrainSwap.SetCheckpointReached(true);
         }
 
-        //spawn boss's ghost NPC for dialogue
-        if (!ghostSpawned) {
+        if (!ghostSpawned)
+        {
             ghostSpawned = true;
-            if (PlantGhostPrefab != null) {
+            if (PlantGhostPrefab != null)
+            {
                 Instantiate(PlantGhostPrefab, gameObject.transform.position, gameObject.transform.rotation);
-            } else
+            }
+            else
             {
                 Debug.LogError("TreeBoss not assigned a Ghost NPC Prefab! Check Fields!");
             }
             
-            // Unhide MayorNPC too
-            if (MayorNPC != null) {
+            if (MayorNPC != null)
+            {
                 MayorNPC.SetActive(true);
-            } else
+            }
+            else
             {
                 Debug.LogError("TreeBoss not assigned MayorNPC! Check Fields!");
             }
-            
         }
 
-        //disintegration animation
-         disintegrate.TriggerDisintegration();
+        disintegrate.TriggerDisintegration();
     }
 
     protected override void OnStateChanged(EnemyState newState)
@@ -1184,7 +1234,7 @@ public class TreeBoss : EnemyCharacter
         if (!showBossGizmos) return;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, DetectionRadius);
+        Gizmos.DrawWireSphere(transform.position, bossDetectionRadius);
 
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, projectileMaxRange);

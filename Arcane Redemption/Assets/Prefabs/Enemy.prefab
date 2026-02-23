@@ -143,6 +143,14 @@ MonoBehaviour:
   usePatrol: 0
   patrolPoints: []
   retreatHealthPercent: 0.2
+  requireLineOfSight: 1
+  obstructionLayers:
+    serializedVersion: 2
+    m_Bits: 247
+  eyeHeight: 1.5
+  sightAngle: 90
+  showLineOfSightDebug: 1
+  memoryDuration: 3
 --- !u!64 &7294200311582072778
 MeshCollider:
   m_ObjectHideFlags: 0

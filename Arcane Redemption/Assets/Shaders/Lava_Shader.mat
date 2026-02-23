@@ -63,7 +63,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AngleChangeSpeed: 0.1
+    - _AngleChangeSpeed: 0.2
     - _AngleOffset: 2.97
     - _FlowSpeed: 0.042
     - _FlowStrength: 0

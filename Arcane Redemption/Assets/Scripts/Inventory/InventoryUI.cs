@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
+    private Canvas canvas;
     private PlayerController playerController;
     private InventorySystem playerInventory;
     private PlayerData playerData;
@@ -17,6 +18,16 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
+        // Get and enable canvas, so it can be left disabled in scenes to not get in the way while editing
+        canvas = GetComponent<Canvas>();
+        if (canvas != null)
+        {
+            canvas.enabled = true;
+        } else
+        {
+            Debug.LogError("InventoryUI: Canvas component was not found!");
+        }
+
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         if (playerController == null)
         {

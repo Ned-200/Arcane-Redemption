@@ -50359,6 +50359,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2430308256837125085, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6317585681194538646, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -83553,22 +83557,66 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 271054557}
+    - target: {fileID: 97319124960113463, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1273
+      objectReference: {fileID: 0}
+    - target: {fileID: 277059445562688271, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 990381104}
+    - target: {fileID: 1834566579306394502, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 358975200}
+    - target: {fileID: 3207081297848009827, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 236582793}
+    - target: {fileID: 3330495581848883896, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 236582793}
     - target: {fileID: 4730799365596990406, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 990381104}
+    - target: {fileID: 4730799365596990406, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4879773025458505124, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1772074728}
+    - target: {fileID: 5324962129568754055, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 271054557}
     - target: {fileID: 6417768701000493126, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1772074728}
+    - target: {fileID: 6417768701000493126, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2107
+      objectReference: {fileID: 0}
     - target: {fileID: 6752126948831569986, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 358975200}
+    - target: {fileID: 6752126948831569986, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1270
+      objectReference: {fileID: 0}
     - target: {fileID: 6934801065810264869, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 236582793}
+    - target: {fileID: 6934801065810264869, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: m_VersionIndex
+      value: 3950
+      objectReference: {fileID: 0}
     - target: {fileID: 8249410594196841501, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
       propertyPath: m_Name
       value: Player
@@ -83613,6 +83661,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9204052427823874392, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 2144774176}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -90457,6 +90509,37 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &2144774175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2144774176}
+  m_Layer: 3
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2144774176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144774175}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 16.47, y: 1.5, z: 66.03}
+  m_LocalScale: {x: 0.5000001, y: 0.5, z: 0.5000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &232583540975648072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91169,6 +91252,7 @@ SceneRoots:
   - {fileID: 1541047049}
   - {fileID: 1157543717}
   - {fileID: 1723487260}
+  - {fileID: 2144774176}
   - {fileID: 138205580}
   - {fileID: 1729672090}
   - {fileID: 1426869016}

@@ -35440,6 +35440,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -130.11, z: 0}
+--- !u!1 &368234931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 368234932}
+  m_Layer: 3
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &368234932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368234931}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.99045813, z: -0, w: 0.13781422}
+  m_LocalPosition: {x: 103.02, y: 85.04, z: 244.95}
+  m_LocalScale: {x: 0.5000002, y: 0.5, z: 0.5000002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &390621105
 GameObject:
   m_ObjectHideFlags: 0
@@ -140005,6 +140036,10 @@ PrefabInstance:
       propertyPath: m_RotationOffset.z
       value: 0.00007052688
       objectReference: {fileID: 0}
+    - target: {fileID: 9204052427823874392, guid: 4189fbb3f6d40d041b2360ab56881961, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 368234932}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -145370,7 +145405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 586581472729798208, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1106739712975502354, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -145454,6 +145489,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6317585681194538646, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7683215186282256387, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -154934,6 +154973,7 @@ SceneRoots:
   - {fileID: 280224285}
   - {fileID: 1353991161}
   - {fileID: 2081104915}
+  - {fileID: 368234932}
   - {fileID: 2067729460}
   - {fileID: 214607235}
   - {fileID: 28664434}

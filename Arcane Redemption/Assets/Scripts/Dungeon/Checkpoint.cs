@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private BoxCollider boxCollider;
-    private Transform spawnPoint;
-    [SerializeField] private WaterDungeonManager waterDungeonManager;
+    protected private BoxCollider boxCollider;
+    protected private Transform spawnPoint;
 
-    void Start()
+    protected void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
         if (boxCollider == null)
@@ -21,19 +20,23 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
-    void OnTriggerEnter(Collider collision)
+    protected virtual void OnTriggerEnter(Collider collision)
     {
         GameObject other = collision.gameObject;
 
         if (other.CompareTag("Player"))
         {   
             Debug.Log("Player reached checkpoint!");
-            waterDungeonManager.checkpoint = spawnPoint;
+
+            PlayerCharacter playerCharacter = other.GetComponent<PlayerCharacter>();
+            if (playerCharacter != null)
+            {
+                playerCharacter.respawnPoint = spawnPoint;
+            } else
+            {
+                Debug.LogError("Checkpoint cound not find player character!");
+            }
+
             boxCollider.enabled = false;
         }
     }

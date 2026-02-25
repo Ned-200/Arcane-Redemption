@@ -31,8 +31,16 @@ public class PlayerCharacter : BaseCharacter
     
     private InventorySystem playerInventory;
 
+    
+    [Header("Respawn Stuff")]
+    [SerializeField] public Transform respawnPoint;
+    private PlayerController playerController;
+
 
     [Header("UI Bars")]
+    private float respawnCooldown = 1.0f;
+    private bool canRespawn;
+    private GameObject DeathScreen;
     private GameObject HealthBar;
     private GameObject ManaBar;
     private GameObject StaminaBar;
@@ -57,6 +65,13 @@ public class PlayerCharacter : BaseCharacter
             Debug.LogError("PlayerCharacter: No PlayerData found!");
         }
         
+        // Get player controller
+        playerController = GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("PlayerCharacter: Player Controller component not found!!! Are both character and controller parented to same player object?");
+        }
+
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -77,11 +92,19 @@ public class PlayerCharacter : BaseCharacter
         }
 
         // UI Stuff
+        DeathScreen = GameObject.Find("DeathScreen");
         HealthBar = GameObject.Find("HealthBar");
         ManaBar = GameObject.Find("ManaBar");
         StaminaBar = GameObject.Find("StaminaBar");
         HealthPotionCounter = GameObject.Find("HealthPotionCounter");
         ManaPotionCounter = GameObject.Find("ManaPotionCounter");
+        if (DeathScreen == null)
+        {
+            Debug.LogError("PlayerCharacter: DeathScreen UI not found!! Check Canvas Gameobject.");
+        } else
+        {
+            DeathScreen.SetActive(false); // Set to inactive on start if found
+        }
         if (HealthBar == null || ManaBar == null || StaminaBar == null)
         {
             Debug.LogError("PlayerCharacter: Player health, stamina, or mana bar UI not found!! Check Canvas Gameobject.");
@@ -104,6 +127,13 @@ public class PlayerCharacter : BaseCharacter
     {
         base.Update();
         HandleCameraInput();
+
+        // Handle death
+        if (!IsAlive)
+        {
+            HandleDeathScreen();
+        }
+
     }
 
     private void LateUpdate()
@@ -182,13 +212,51 @@ public class PlayerCharacter : BaseCharacter
     {
         base.OnDeath();
         
-        
-        Debug.LogError($"Player '{gameObject.name}' health reached zero!");
+        Debug.Log($"Player '{gameObject.name}' health reached zero!");
       
+        if (playerController != null)
+        {
+            playerController.canMove = false; // disable canMove
+        }
+
+        if (DeathScreen != null)
+        {
+            DeathScreen.SetActive(true);
+        }
         
-        // TODO: Trigger death screen/respawn logic
+        Invoke(nameof(SetRespawnCooldown), respawnCooldown);
         // TODO: Play death animation
-        // TODO: Disable player controls
+    }
+
+
+    // Use invoke to set after a delay
+    private void SetRespawnCooldown()
+    {
+        canRespawn = true;
+    }
+
+    // Runs while not alive
+    private void HandleDeathScreen()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && canRespawn)
+        {
+            canRespawn = false;
+            DeathScreen.SetActive(false);
+            playerController.canMove = true; // re-enable canMove
+            
+            currentHealth = maxHealth;
+            currentMana = maxMana;
+            currentStamina = maxStamina;
+
+            if (respawnPoint != null) {
+                playerController.enabled = false;
+                playerController.transform.position = respawnPoint.position;
+                playerController.enabled = true;
+            } else
+            {
+                Debug.LogError("PlayerCharacter: No respawn position found!");
+            }
+        }
     }
 
     // Optional: Allow player to unlock cursor with Escape

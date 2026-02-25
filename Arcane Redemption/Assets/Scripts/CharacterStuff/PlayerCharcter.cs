@@ -35,6 +35,7 @@ public class PlayerCharacter : BaseCharacter
     [Header("Respawn Stuff")]
     [SerializeField] public Transform respawnPoint;
     private PlayerController playerController;
+    [SerializeField] private GameObject damagedEffectPrefab;
 
 
     [Header("UI Bars")]
@@ -200,6 +201,7 @@ public class PlayerCharacter : BaseCharacter
         
         Debug.Log($"[PlayerCharacter] TOOK DAMAGE: {damage} | Health: {CurrentHealth}/{MaxHealth} ({HealthPercent * 100:F1}%)");
         
+        Instantiate(damagedEffectPrefab, new Vector3(transform.position.x, transform.position.y+1, transform.position.z), damagedEffectPrefab.transform.rotation);
         // TODO: Play hurt sound
         // TODO: Screen shake effect
         // TODO: Damage VFX

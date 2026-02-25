@@ -70625,6 +70625,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   showDebugInfo: 1
+  respawnPoint: {fileID: 0}
+  damagedEffectPrefab: {fileID: 261948290644060713, guid: 63b554969f4eb7c489d76691456b3ad2, type: 3}
 --- !u!114 &2372775444460092331
 MonoBehaviour:
   m_ObjectHideFlags: 0

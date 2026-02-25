@@ -7,11 +7,12 @@ public class Disintegrate : MonoBehaviour
     [SerializeField] private string weightProp = "_Weight";
 
     [Header("Timing")]
+    [SerializeField] private float delay = 1.2f;
     [SerializeField] private float duration = 1.2f;
 
     [Header("After")]
     [SerializeField] private bool destroyAfter = true;
-    [SerializeField] private float destroyDelay = 0.2f;
+    [SerializeField] private float destroyDelay = 0.5f;
 
     Renderer rend;
     MaterialPropertyBlock mpb;
@@ -28,6 +29,11 @@ public class Disintegrate : MonoBehaviour
     {
         if (running) return;
         running = true;
+        Invoke(nameof(StartDisintigrating), delay);
+    }
+
+    private void StartDisintigrating()
+    {
         StartCoroutine(DisintegrateRoutine());
     }
 

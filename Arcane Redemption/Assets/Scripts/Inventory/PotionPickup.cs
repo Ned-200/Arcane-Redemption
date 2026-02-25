@@ -13,6 +13,21 @@ public class PotionPickup : MonoBehaviour
 
     void Start()
     {
+
+        // Get Inventory
+        GameObject PlayerData = GameObject.FindWithTag("PlayerData");
+        if (PlayerData != null)
+        {
+            playerInventory = PlayerData.GetComponent<InventorySystem>();
+            if (playerInventory == null)
+            {
+                Debug.LogError("PotionPickup: No InventorySystem component found!");
+            }
+        } else
+        {
+            Debug.LogError("PotionPickup: No PlayerData found!");
+        }
+
         if (interactImage == null)
         {
             Debug.LogError("PotionPickup: interactImage not assigned!");
@@ -59,22 +74,6 @@ public class PotionPickup : MonoBehaviour
         {   
             playerInRange = true;
             
-            // Get the player's inventory system
-            GameObject playerData = GameObject.FindWithTag("PlayerData");
-            
-            if (playerData == null)
-            {
-                Debug.LogError("PotionPickup: PlayerData was not found! Check PlayerData object Tag!");
-            } else
-            {
-                playerInventory = playerData.GetComponent<InventorySystem>();
-            }
-
-            if (playerInventory == null)
-            {
-                Debug.LogError("PotionPickup: PlayerData does not have an InventorySystem component!");
-            }
-            
             Debug.Log("Entered Potion range");
             
             if (interactImage != null)
@@ -91,7 +90,6 @@ public class PotionPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            playerInventory = null;
             
             Debug.Log("Left Potion range");
             

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8744716289957609442}
   - component: {fileID: 7197226518992691927}
-  - component: {fileID: 3218634719116313576}
+  - component: {fileID: 4898066629817857422}
   m_Layer: 0
   m_Name: PlayerData
   m_TagString: PlayerData
@@ -54,7 +54,7 @@ MonoBehaviour:
   healthPotions: 0
   manaPotions: 0
   lastScene: 
---- !u!114 &3218634719116313576
+--- !u!114 &4898066629817857422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,5 +72,6 @@ MonoBehaviour:
   manaPotionType: {fileID: 11400000, guid: 6acd2cf4619a63c47a33abc8db01625b, type: 2}
   healthPotionKey: 49
   manaPotionKey: 50
-  character: {fileID: 0}
   showDebugLogs: 1
+  healthPotionCount: 0
+  manaPotionCount: 0

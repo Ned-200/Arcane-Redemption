@@ -29,7 +29,7 @@ public class PlayerCharacter : BaseCharacter
     private float pitchVelocity;
     private float currentDistance;
     
-    private InventorySystem inventorySystem;
+    private InventorySystem playerInventory;
 
 
     [Header("UI Bars")]
@@ -44,19 +44,17 @@ public class PlayerCharacter : BaseCharacter
         base.Awake();
         
         // Get inventory system
-        GameObject playerData = GameObject.FindWithTag("PlayerData");
-        
-        if (playerData == null)
+        GameObject PlayerData = GameObject.FindWithTag("PlayerData");
+        if (PlayerData != null)
         {
-            Debug.LogError("PlayerCharacter: PlayerData was not found! Check PlayerData object Tag!");
+            playerInventory = PlayerData.GetComponent<InventorySystem>();
+            if (playerInventory == null)
+            {
+                Debug.LogError("PlayerCharacter: No InventorySystem component found!");
+            }
         } else
         {
-            inventorySystem = playerData.GetComponent<InventorySystem>();
-        }
-
-        if (inventorySystem == null)
-        {
-            Debug.LogError("PlayerCharacter: PlayerData does not have an InventorySystem component!");
+            Debug.LogError("PlayerCharacter: No PlayerData found!");
         }
         
         // Lock cursor
@@ -244,19 +242,12 @@ public class PlayerCharacter : BaseCharacter
             StaminaRect.sizeDelta = new Vector2(newWidth, 30);
 
         }
-
-        // GUI.Label(new Rect(10, 10, 300, 20), $"Health: {CurrentHealth}/{MaxHealth}");
-        // GUI.Label(new Rect(10, 40, 300, 20), $"Stamina: {CurrentStamina}/{MaxStamina}");
-        // GUI.Label(new Rect(10, 70, 300, 20), $"Mana: {CurrentMana}/{MaxMana}");
         
         // Display potion counts
-        if (inventorySystem != null)
+        if (playerInventory != null)
         {
-            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Health Potions (1): {inventorySystem.HealthPotionCount}";
-            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Mana Potions (2): {inventorySystem.ManaPotionCount}";
-            
-            // GUI.Label(new Rect(10, 100, 300, 20), $"Health Potions (1): {inventorySystem.HealthPotionCount}");
-            // GUI.Label(new Rect(10, 130, 300, 20), $"Mana Potions (2): {inventorySystem.ManaPotionCount}");
+            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = playerInventory.HealthPotionCount.ToString();
+            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = playerInventory.ManaPotionCount.ToString();
         }
     }
 }

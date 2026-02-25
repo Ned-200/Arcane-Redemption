@@ -35973,8 +35973,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeleportDoor
   destinationSceneName: GrayboxingV1
-  interactImage: {fileID: 0}
-  LoadingUI: {fileID: 0}
+  interactImage: {fileID: 1604713097}
+  LoadingUI: {fileID: 1604713096}
 --- !u!43 &874901889
 Mesh:
   m_ObjectHideFlags: 0
@@ -66400,6 +66400,16 @@ GameObject:
 --- !u!1 &1604713095 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7784456726024964196, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+  m_PrefabInstance: {fileID: 1604713091}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1604713096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8228579451975015981, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+  m_PrefabInstance: {fileID: 1604713091}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1604713097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8519387214375629713, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
   m_PrefabInstance: {fileID: 1604713091}
   m_PrefabAsset: {fileID: 0}
 --- !u!43 &1610043693

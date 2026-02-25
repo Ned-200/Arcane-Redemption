@@ -11,9 +11,6 @@ public class PlayerData : MonoBehaviour
     public bool waterBossDefeated;
     public bool plantBossDefeated;
 
-    public int healthPotions;
-    public int manaPotions;
-
     public string lastScene;
 
     // called first

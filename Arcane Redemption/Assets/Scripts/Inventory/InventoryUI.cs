@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     private Canvas canvas;
+    private GameObject Player;
+    private PlayerCharacter playerCharacter;
     private PlayerController playerController;
     private InventorySystem playerInventory;
     private PlayerData playerData;
@@ -14,6 +17,10 @@ public class InventoryUI : MonoBehaviour
     private GameObject Sapphire;
     private GameObject Emerald;
 
+    private Image MagusoIcon;
+    private Sprite MagusoIconHealthy;
+    private Sprite MagusoIconInjured;
+    
     private bool InventoryOpen;
 
     void Start()
@@ -28,12 +35,28 @@ public class InventoryUI : MonoBehaviour
             Debug.LogError("InventoryUI: Canvas component was not found!");
         }
 
-        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        if (playerController == null)
+        // Get Player
+        Player = GameObject.FindWithTag("Player");
+        if (Player == null)
         {
-            Debug.LogError("InventoryUI: Player or playerController component was not found!");
+            Debug.LogError("InventoryUI: Player game object was not found!");
+        } else
+        {
+            // Get Player Controller
+            playerController = Player.GetComponent<PlayerController>();
+            if (playerController == null)
+            {
+                Debug.LogError("InventoryUI: playerController component was not found!");
+            }
+            // Get Player Character
+            playerCharacter = Player.GetComponent<PlayerCharacter>();
+            if (playerCharacter == null)
+            {
+                Debug.LogError("InventoryUI: playerCharacter component was not found!");
+            }
         }
 
+        // Get PlayerData
         playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
         if (playerData != null)
         {
@@ -47,6 +70,7 @@ public class InventoryUI : MonoBehaviour
             Debug.LogError("InventoryUI: No playerData found!");
         }
 
+        // Get inventory UI components
         inventoryMenu = this.gameObject.transform.Find("InventoryMenu").gameObject;
         if (inventoryMenu == null)
         {
@@ -59,6 +83,16 @@ public class InventoryUI : MonoBehaviour
             Ruby = inventoryMenu.transform.Find("Ruby").gameObject;
             Sapphire = inventoryMenu.transform.Find("Sapphire").gameObject;
             Emerald = inventoryMenu.transform.Find("Emerald").gameObject;
+
+            //Get Maguso Icon
+            MagusoIcon = inventoryMenu.transform.Find("MagusoIcon").GetComponent<Image>();
+            MagusoIconHealthy = Resources.Load<Sprite>("MagusoIcon");
+            MagusoIconInjured = Resources.Load<Sprite>("MagusoIcon_LowHealth");
+            
+            if (MagusoIcon == null || MagusoIconHealthy == null || MagusoIconInjured == null)
+            {
+                Debug.LogError("InventoryUI: MagusoIcon UI not found!! Check Canvas Gameobject.");
+            }
 
             if (Fire == null || Water == null || Plant == null || Ruby == null || Sapphire == null || Emerald == null)
             {
@@ -100,6 +134,20 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
+        //Show injured icon when below half health
+        if (playerCharacter.HealthPercent*100 > 50)
+        {
+            if (MagusoIcon.sprite != MagusoIconHealthy) {
+                Debug.Log("PlayerCharacter: Set Maguso Icon to Healthy");
+                MagusoIcon.sprite = MagusoIconHealthy;
+            }
+        } 
+        else if (MagusoIcon.sprite != MagusoIconInjured) 
+        {
+            Debug.Log("PlayerCharacter: Set Maguso Icon to Injured");
+            MagusoIcon.sprite = MagusoIconInjured;
+        }
+
         if (Input.GetKeyDown(KeyCode.I) && playerController.canMove)
         {
             if (InventoryOpen)

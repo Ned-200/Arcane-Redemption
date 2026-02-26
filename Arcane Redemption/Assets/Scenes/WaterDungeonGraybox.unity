@@ -35240,6 +35240,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1126368187}
+    - target: {fileID: 1380480452138661623, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1270
+      objectReference: {fileID: 0}
     - target: {fileID: 2217232845408095805, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -35248,6 +35252,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1168111371}
+    - target: {fileID: 4079309000226144807, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2104
+      objectReference: {fileID: 0}
     - target: {fileID: 4476809959923919536, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -88507,6 +88515,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1650062401}
+    - target: {fileID: 223164209239987856, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1273
+      objectReference: {fileID: 0}
     - target: {fileID: 1486847877415097613, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
       propertyPath: m_Name
       value: ManaPotion
@@ -88563,6 +88575,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1856234397}
+    - target: {fileID: 5658052450638443225, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2107
+      objectReference: {fileID: 0}
     - target: {fileID: 7612088144557771246, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
       propertyPath: m_Mesh
       value: 

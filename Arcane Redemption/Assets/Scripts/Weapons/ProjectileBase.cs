@@ -63,7 +63,15 @@ public class ProjectileBase : MonoBehaviour
             OnTargetHit(targetCharacter);
         } else if (other.gameObject.tag == "PlantWall") // If a plant wall - ADD TEST WHETHER PROJECTILE IS FIRE MAGIC
         {
-            Destroy(other.gameObject);
+            Disintegrate disintegrate = other.gameObject.GetComponent<Disintegrate>();
+            if (disintegrate == null)
+            {
+                Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
+            } else
+            {
+                //Trigger disintegration material
+                disintegrate.TriggerDisintegration();
+            }
         }
 
         // Spawn impact effect

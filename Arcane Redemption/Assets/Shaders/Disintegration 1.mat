@@ -55,7 +55,7 @@ Material:
     - _ptlRadius: 0.1
     m_Colors:
     - _AmbientColor: {r: 0.06415099, g: 0.06415099, b: 0.06415099, a: 0.003921569}
-    - _Color: {r: 0.5801709, g: 0.67434305, b: 0.8113208, a: 1}
+    - _Color: {r: 0.6754716, g: 0.6754716, b: 0.6754716, a: 0}
     - _Direction: {r: 0, g: 0, b: 0, a: 0.1}
     - _DisintegrationColor: {r: 0, g: 136.99207, b: 0, a: 1}
     - _DissolveColor: {r: 1, g: 0, b: 0, a: 1}

@@ -68,6 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: ead28d7af1fa415459e3ebafd3a4c324, type: 2}
   - {fileID: 2100000, guid: 961ea911784b4e34fbed98ac4b1f508e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -104,6 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
   weightProp: _Weight
   delay: 0.25
   duration: 1.2

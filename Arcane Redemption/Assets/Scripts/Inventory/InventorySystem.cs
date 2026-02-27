@@ -24,6 +24,11 @@ public class InventorySystem : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = true;
     
+    [Header("Effects")]
+    [SerializeField] private GameObject healEffectPrefab;
+    [SerializeField] private GameObject manaEffectPrefab;
+
+
     // Current potion counts
     [SerializeField] private int healthPotionCount = 0;
     [SerializeField] private int manaPotionCount = 0;
@@ -179,6 +184,9 @@ public class InventorySystem : MonoBehaviour
             Debug.Log($"InventorySystem: Used Health Potion! Restored {restoreAmount} HP. ({healthPotionCount}/{maxHealthPotions} remaining)");
         }
         
+        Transform playerTransform = character.gameObject.transform;
+        GameObject healEffectObject = Instantiate(healEffectPrefab, new Vector3(playerTransform.position.x, playerTransform.position.y+1, playerTransform.position.z), healEffectPrefab.transform.rotation);
+        healEffectObject.transform.parent = playerTransform;
         // TODO: Play potion use sound
         // TODO: Play potion use VFX
     }
@@ -225,6 +233,9 @@ public class InventorySystem : MonoBehaviour
             Debug.Log($"InventorySystem: Used Mana Potion! Restored {restoreAmount} Mana. ({manaPotionCount}/{maxManaPotions} remaining)");
         }
         
+        Transform playerTransform = character.gameObject.transform;
+        GameObject manaEffectObject = Instantiate(manaEffectPrefab, new Vector3(playerTransform.position.x, playerTransform.position.y+1, playerTransform.position.z), manaEffectPrefab.transform.rotation);
+        manaEffectObject.transform.parent = playerTransform;
         // TODO: Play potion use sound
         // TODO: Play potion use VFX
     }

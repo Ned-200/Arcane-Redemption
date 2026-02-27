@@ -51,8 +51,6 @@ MonoBehaviour:
   fireBossDefeated: 0
   waterBossDefeated: 0
   plantBossDefeated: 0
-  healthPotions: 0
-  manaPotions: 0
   lastScene: 
 --- !u!114 &4898066629817857422
 MonoBehaviour:
@@ -73,5 +71,7 @@ MonoBehaviour:
   healthPotionKey: 49
   manaPotionKey: 50
   showDebugLogs: 1
+  healEffectPrefab: {fileID: 261948290644060713, guid: 6c6b5f680258a5d4ab6c0f16a0f48109, type: 3}
+  manaEffectPrefab: {fileID: 8737831217019480111, guid: f5854d348e946d945bd6bcb5caedce7c, type: 3}
   healthPotionCount: 0
   manaPotionCount: 0

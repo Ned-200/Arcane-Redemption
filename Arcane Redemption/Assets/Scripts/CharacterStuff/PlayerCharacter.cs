@@ -47,6 +47,7 @@ public class PlayerCharacter : BaseCharacter
     private GameObject StaminaBar;
     private GameObject HealthPotionCounter;
     private GameObject ManaPotionCounter;
+    private LowHealthPostProcess lowHealthEffects;
 
     protected override void Awake()
     {
@@ -99,6 +100,7 @@ public class PlayerCharacter : BaseCharacter
         StaminaBar = GameObject.Find("StaminaBar");
         HealthPotionCounter = GameObject.Find("HealthPotionCounter");
         ManaPotionCounter = GameObject.Find("ManaPotionCounter");
+        lowHealthEffects = GetComponent<LowHealthPostProcess>();
 
         if (DeathScreen == null)
         {
@@ -135,6 +137,12 @@ public class PlayerCharacter : BaseCharacter
         {
             HandleDeathScreen();
         }
+
+        //Handles vignette pulse
+        if (lowHealthEffects != null){
+            lowHealthEffects.SetHealthPercent(HealthPercent);
+        }
+        
 
     }
 
@@ -201,6 +209,12 @@ public class PlayerCharacter : BaseCharacter
         base.OnDamageTaken(damage);
         
         Debug.Log($"[PlayerCharacter] TOOK DAMAGE: {damage} | Health: {CurrentHealth}/{MaxHealth} ({HealthPercent * 100:F1}%)");
+
+        //if player is about to die
+        if (lowHealthEffects != null)
+    {
+        lowHealthEffects.SetHealthPercent(HealthPercent);
+    }
         
         Instantiate(damagedEffectPrefab, new Vector3(transform.position.x, transform.position.y+1, transform.position.z), damagedEffectPrefab.transform.rotation);
         // TODO: Play hurt sound
@@ -226,6 +240,11 @@ public class PlayerCharacter : BaseCharacter
         {
             DeathScreen.SetActive(true);
         }
+
+          if (lowHealthEffects != null)
+        {
+            lowHealthEffects.SetHealthPercent(HealthPercent);
+        }
         
         Invoke(nameof(SetRespawnCooldown), respawnCooldown);
         // TODO: Play death animation
@@ -250,6 +269,7 @@ public class PlayerCharacter : BaseCharacter
             currentHealth = maxHealth;
             currentMana = maxMana;
             currentStamina = maxStamina;
+          
 
             if (respawnPoint != null) {
                 playerController.enabled = false;
@@ -259,6 +279,12 @@ public class PlayerCharacter : BaseCharacter
             {
                 Debug.LogError("PlayerCharacter: No respawn position found!");
             }
+        }
+
+        
+          if (lowHealthEffects != null)
+        {
+          lowHealthEffects.SetHealthPercent(HealthPercent);
         }
     }
 

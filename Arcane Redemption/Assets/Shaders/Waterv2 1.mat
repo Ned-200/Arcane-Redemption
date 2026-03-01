@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Waterv2 1
+  m_Shader: {fileID: -6465566751694194690, guid: a9489f805c54ca840becaefe0ef378b5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Normal_Texture:
+        m_Texture: {fileID: 2800000, guid: 5501eeaf9f7b0ed4eb2b214ec95ac461, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PlanarReflectionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_a80d6ee8e8cd48e69c361c59c737458e_Texture_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e9b7919e8f9a44f485ef567e533ac673_Texture_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_53B9698E: 9.9
+    - Vector1_95BBCBE0: 0.61
+    - Vector1_C5543ECF: 3.1
+    - Vector1_E23798DE: 1.23
+    - _Distance: 4.3
+    - _Distort_Speed: 47.36
+    - _Noise_Scale: 147.3
+    - _Noise_Speed: 142.43
+    - _Noise_Strength: 176.9
+    - _Normal_Scale: 12.9
+    - _Normal_Speed: 81.88
+    - _Normal_Strength: 0.75
+    - _Normal_Tiling: 0.13
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Refracted_Scale: 0.9
+    - _Refracted_Speed: 2
+    - _Refracted_Strength: 0.2
+    - _Refraction_Amount: 0.76
+    - _Refration_Strength: 0.001
+    - _Steps: 0
+    - _Warp_Direction: 0
+    - _warp_Speed: 39.57
+    - _warp_scale: 20
+    - _warp_strength: 0.008
+    m_Colors:
+    - Color_AFFD055F: {r: 0.30779633, g: 1.245283, b: 0.5189811, a: 1}
+    - _Color: {r: 0.8490566, g: 0.024029758, b: 0.024029758, a: 1}
+    - _Deep: {r: 0.045176204, g: 0.17735851, b: 0.13498679, a: 0.8352941}
+    - _Deep_Colour: {r: 0.007843138, g: 0.34509805, b: 0.2392157, a: 0.5294118}
+    - _DistortDir: {r: -0.67, g: 1.1, b: 0, a: 0}
+    - _Noise_Direction: {r: 14.7, g: 1, b: 0, a: 0}
+    - _Normal_Direction: {r: 1, g: 1, b: 0, a: 0}
+    - _Shallow: {r: 0.28627455, g: 1, b: 0.47827065, a: 0.44313726}
+    - _Shallow_Colour: {r: 0.09055884, g: 0.6075471, b: 0.4452369, a: 0.5568628}
+    - _Warp_Direction: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &8287494072019790707
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10

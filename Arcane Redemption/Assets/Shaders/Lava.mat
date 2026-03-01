@@ -58,10 +58,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Vector1_53B9698E: 21.9
+    - Vector1_53B9698E: 0.6
     - Vector1_95BBCBE0: 0.61
     - Vector1_C5543ECF: 0.88
-    - Vector1_E23798DE: 1.227
+    - Vector1_E23798DE: 1.12
     - _Distance: 10.5
     - _Distort_Speed: 47.36
     - _Emission_Intensity: 0
@@ -74,9 +74,9 @@ Material:
     - _Normal_Tiling: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Refracted_Scale: 98.54
-    - _Refracted_Speed: 0.58
-    - _Refracted_Strength: 22.96
+    - _Refracted_Scale: 6.1
+    - _Refracted_Speed: 2.36
+    - _Refracted_Strength: 19.8
     - _Refraction_Amount: 0
     - _Refration_Strength: 0
     - _Steps: 0

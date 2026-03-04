@@ -19,6 +19,10 @@ public class PlayerCharacter : BaseCharacter
     [SerializeField] private float cameraRadius = 0.3f;
     [SerializeField] private LayerMask collisionLayers;
 
+    [Header("Respawn System")]
+    [SerializeField] private Transform defaultRespawnPoint;
+    public Transform respawnPoint;
+
     [Header("Debug")]
     [SerializeField] private bool showDebugInfo = true;
 
@@ -29,56 +33,43 @@ public class PlayerCharacter : BaseCharacter
     private float pitchVelocity;
     private float currentDistance;
     
-    private InventorySystem playerInventory;
+    private InventorySystem inventorySystem;
 
-    
-    [Header("Respawn Stuff")]
-    [SerializeField] public Transform respawnPoint;
-    private PlayerController playerController;
-    [SerializeField] private GameObject damagedEffectPrefab;
-
-
-    [Header("UI")]
-    private float respawnCooldown = 1.0f;
-    private bool canRespawn;
-    private GameObject DeathScreen;
+    [Header("UI Bars")]
     private GameObject HealthBar;
     private GameObject ManaBar;
     private GameObject StaminaBar;
     private GameObject HealthPotionCounter;
     private GameObject ManaPotionCounter;
-    private LowHealthPostProcess lowHealthEffects;
 
     protected override void Awake()
     {
         base.Awake();
-
-        // Get inventory system
-        GameObject PlayerData = GameObject.FindWithTag("PlayerData");
-        if (PlayerData != null)
+        
+        if (respawnPoint == null)
         {
-            playerInventory = PlayerData.GetComponent<InventorySystem>();
-            if (playerInventory == null)
-            {
-                Debug.LogError("PlayerCharacter: No InventorySystem component found!");
-            }
-        } else
-        {
-            Debug.LogError("PlayerCharacter: No PlayerData found!");
+            respawnPoint = defaultRespawnPoint != null ? defaultRespawnPoint : transform;
         }
         
-        // Get player controller
-        playerController = GetComponent<PlayerController>();
-        if (playerController == null)
+        GameObject playerData = GameObject.FindWithTag("PlayerData");
+        
+        if (playerData == null)
         {
-            Debug.LogError("PlayerCharacter: Player Controller component not found!!! Are both character and controller parented to same player object?");
+            Debug.LogError("PlayerCharacter: PlayerData was not found! Check PlayerData object Tag!");
+        }
+        else
+        {
+            inventorySystem = playerData.GetComponent<InventorySystem>();
         }
 
-        // Lock cursor
+        if (inventorySystem == null)
+        {
+            Debug.LogError("PlayerCharacter: PlayerData does not have an InventorySystem component!");
+        }
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Get or create camera
         cameraTransform = Camera.main.transform;
         
         if (cameraTransform == null)
@@ -93,22 +84,11 @@ public class PlayerCharacter : BaseCharacter
             }
         }
 
-        // UI Stuff
-        DeathScreen = GameObject.Find("DeathScreen");
         HealthBar = GameObject.Find("HealthBar");
         ManaBar = GameObject.Find("ManaBar");
         StaminaBar = GameObject.Find("StaminaBar");
         HealthPotionCounter = GameObject.Find("HealthPotionCounter");
         ManaPotionCounter = GameObject.Find("ManaPotionCounter");
-        lowHealthEffects = GetComponent<LowHealthPostProcess>();
-
-        if (DeathScreen == null)
-        {
-            Debug.LogError("PlayerCharacter: DeathScreen UI not found!! Check Canvas Gameobject.");
-        } else
-        {
-            DeathScreen.SetActive(false); // Set to inactive on start if found
-        }
         if (HealthBar == null || ManaBar == null || StaminaBar == null)
         {
             Debug.LogError("PlayerCharacter: Player health, stamina, or mana bar UI not found!! Check Canvas Gameobject.");
@@ -118,12 +98,10 @@ public class PlayerCharacter : BaseCharacter
             Debug.LogError("PlayerCharacter: Player potions UI not found!! Check Canvas Gameobject.");
         }
 
-        // Initialize camera rotation to match player
         currentYaw = transform.eulerAngles.y;
         currentPitch = 0f;
         currentDistance = cameraDistance;
 
-        // Debug initial health
         Debug.Log($"[PlayerCharacter] Initialized - Health: {CurrentHealth}/{MaxHealth}");
     }
 
@@ -131,19 +109,6 @@ public class PlayerCharacter : BaseCharacter
     {
         base.Update();
         HandleCameraInput();
-
-        // Handle death
-        if (!IsAlive)
-        {
-            HandleDeathScreen();
-        }
-
-        //Handles vignette pulse
-        if (lowHealthEffects != null){
-            lowHealthEffects.SetHealthPercent(HealthPercent);
-        }
-        
-
     }
 
     private void LateUpdate()
@@ -153,18 +118,14 @@ public class PlayerCharacter : BaseCharacter
 
     private void HandleCameraInput()
     {
-        // Get mouse input
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Update yaw (horizontal rotation)
         currentYaw += mouseX;
 
-        // Update pitch (vertical rotation) with clamping
         currentPitch -= mouseY;
         currentPitch = Mathf.Clamp(currentPitch, minPitch, maxPitch);
 
-        // Rotate player body to match camera yaw
         transform.rotation = Quaternion.Euler(0f, currentYaw, 0f);
     }
 
@@ -172,16 +133,12 @@ public class PlayerCharacter : BaseCharacter
     {
         if (cameraTransform == null) return;
 
-        // Calculate the pivot point (slightly above and to the side of player)
         Vector3 pivotPosition = transform.position + Vector3.up * cameraHeight + transform.right * shoulderOffset;
 
-        // Calculate camera rotation
         Quaternion rotation = Quaternion.Euler(currentPitch, currentYaw, 0f);
 
-        // Calculate desired camera position (behind the player)
         Vector3 desiredPosition = pivotPosition - rotation * Vector3.forward * cameraDistance;
 
-        // Handle camera collision
         Vector3 direction = desiredPosition - pivotPosition;
         float desiredDistance = direction.magnitude;
         
@@ -195,100 +152,48 @@ public class PlayerCharacter : BaseCharacter
             currentDistance = Mathf.Lerp(currentDistance, cameraDistance, Time.deltaTime * cameraSmoothSpeed);
         }
 
-        // Apply final position
         Vector3 finalPosition = pivotPosition - rotation * Vector3.forward * currentDistance;
         cameraTransform.position = finalPosition;
         cameraTransform.rotation = rotation;
     }
 
-    /// <summary>
-    /// Called when player takes damage - Override for debug logging
-    /// </summary>
     protected override void OnDamageTaken(float damage)
     {
         base.OnDamageTaken(damage);
         
         Debug.Log($"[PlayerCharacter] TOOK DAMAGE: {damage} | Health: {CurrentHealth}/{MaxHealth} ({HealthPercent * 100:F1}%)");
-
-        //if player is about to die
-        if (lowHealthEffects != null)
-    {
-        lowHealthEffects.SetHealthPercent(HealthPercent);
-    }
-        
-        Instantiate(damagedEffectPrefab, new Vector3(transform.position.x, transform.position.y+1, transform.position.z), damagedEffectPrefab.transform.rotation);
-        // TODO: Play hurt sound
-        // TODO: Screen shake effect
-        // TODO: Damage VFX
     }
 
-    /// <summary>
-    /// Called when player health reaches zero
-    /// </summary>
     protected override void OnDeath()
     {
         base.OnDeath();
         
-        Debug.Log($"Player '{gameObject.name}' health reached zero!");
-      
-        if (playerController != null)
-        {
-            playerController.canMove = false; // disable canMove
-        }
-
-        if (DeathScreen != null)
-        {
-            DeathScreen.SetActive(true);
-        }
-
-          if (lowHealthEffects != null)
-        {
-            lowHealthEffects.SetHealthPercent(HealthPercent);
-        }
+        Debug.LogError($"Player '{gameObject.name}' health reached zero!");
         
-        Invoke(nameof(SetRespawnCooldown), respawnCooldown);
-        // TODO: Play death animation
-    }
-
-
-    // Use invoke to set after a delay
-    private void SetRespawnCooldown()
-    {
-        canRespawn = true;
-    }
-
-    // Runs while not alive
-    private void HandleDeathScreen()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && canRespawn)
+        if (respawnPoint != null)
         {
-            canRespawn = false;
-            DeathScreen.SetActive(false);
-            playerController.canMove = true; // re-enable canMove
-            
-            currentHealth = maxHealth;
-            currentMana = maxMana;
-            currentStamina = maxStamina;
-          
-
-            if (respawnPoint != null) {
-                playerController.enabled = false;
-                playerController.transform.position = respawnPoint.position;
-                playerController.enabled = true;
-            } else
-            {
-                Debug.LogError("PlayerCharacter: No respawn position found!");
-            }
-        }
-
-        
-          if (lowHealthEffects != null)
-        {
-          lowHealthEffects.SetHealthPercent(HealthPercent);
+            Respawn();
         }
     }
 
-    // Optional: Allow player to unlock cursor with Escape
+    public void Respawn()
+    {
+        if (respawnPoint == null)
+        {
+            Debug.LogWarning("[PlayerCharacter] No respawn point set - respawning at current location");
+            respawnPoint = transform;
+        }
+
+        transform.position = respawnPoint.position;
+        transform.rotation = respawnPoint.rotation;
+
+        Heal(MaxHealth);
+        RestoreStamina(MaxStamina);
+        RestoreMana(MaxMana);
+
+        Debug.Log($"[PlayerCharacter] Respawned at {respawnPoint.name}");
+    }
+
     private void OnApplicationFocus(bool hasFocus)
     {
         if (hasFocus)
@@ -298,17 +203,14 @@ public class PlayerCharacter : BaseCharacter
         }
     }
 
-    // Visualize camera setup in Scene view
     private void OnDrawGizmos()
     {
         if (!showDebugInfo) return;
 
-        // Draw pivot point
         Vector3 pivotPosition = transform.position + Vector3.up * cameraHeight + transform.right * shoulderOffset;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(pivotPosition, 0.2f);
 
-        // Draw camera distance
         if (Application.isPlaying && cameraTransform != null)
         {
             Gizmos.color = Color.cyan;
@@ -336,14 +238,12 @@ public class PlayerCharacter : BaseCharacter
 
             newWidth = (CurrentStamina / MaxStamina) * 1000;
             StaminaRect.sizeDelta = new Vector2(newWidth, 30);
-
         }
         
-        // Display potion counts
-        if (playerInventory != null)
+        if (inventorySystem != null)
         {
-            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = playerInventory.HealthPotionCount.ToString();
-            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = playerInventory.ManaPotionCount.ToString();
+            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Health Potions (1): {inventorySystem.HealthPotionCount}";
+            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Mana Potions (2): {inventorySystem.ManaPotionCount}";
         }
     }
 }

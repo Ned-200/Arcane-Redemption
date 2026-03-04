@@ -37,6 +37,11 @@ public class ProjectileBase : MonoBehaviour
         // Debug.Log($"Projectile expired from lifetime!");
     }
 
+    public BaseCharacter GetOwner()
+    {
+        return owner;
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (hasHit) return;

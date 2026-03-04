@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5649549302569254809}
   - component: {fileID: 907333691612357113}
   - component: {fileID: 1911119451317736253}
-  - component: {fileID: 6396263054869556899}
   - component: {fileID: -1999294816065245334}
   m_Layer: 0
   m_Name: MagicProj
@@ -162,18 +161,6 @@ MonoBehaviour:
     m_Bits: 64
   impactEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   trail: {fileID: 0}
---- !u!114 &6396263054869556899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6124905989408069561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edbedf4397af34643b41e338d030f366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageEffect
 --- !u!114 &-1999294816065245334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
   weightProp: _Weight
   delay: 1.2
   duration: 1.2

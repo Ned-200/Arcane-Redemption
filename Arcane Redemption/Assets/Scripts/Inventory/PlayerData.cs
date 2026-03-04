@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour
 {
+    private Transform fireDungeonSpawn;
+    private Transform waterDungeonSpawn;
+
     public bool fireGemObtained;
     public bool waterGemObtained;
     public bool plantGemObtained;
@@ -11,7 +14,10 @@ public class PlayerData : MonoBehaviour
     public bool waterBossDefeated;
     public bool plantBossDefeated;
 
-    public string lastScene;
+    private GameObject Player;
+    private CharacterController characterController;
+
+    public string lastScene = "No Scene";
 
     // called first
     void Awake()
@@ -53,9 +59,23 @@ public class PlayerData : MonoBehaviour
     private void RunCheck() {
         Debug.Log("Player Data is running a scene check");
 
+        // Get Player
+        Player = GameObject.FindWithTag("Player");
+        if (Player != null)
+        {
+            characterController = Player.GetComponent<CharacterController>();
+
+            if (characterController == null) {
+                Debug.LogError("PlayerData can't find Character Controller!");
+            }
+        } else
+        {
+            Debug.LogError("PlayerData can't find Player!");
+        }
+
         if (lastScene == "FireDungeonGraybox") // If coming from Fire Dungeon
         {
-            // Prevent player from re-entering fire dungeon
+            // Prevent Player from re-entering fire dungeon
             GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
             if (fireDungeonTeleportDoor != null) 
             {
@@ -103,28 +123,35 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find TownNPC!");
             }
 
-            // Get Player
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                CharacterController characterController = player.GetComponent<CharacterController>();
-
-                if (characterController != null) {
-                    characterController.enabled = false;
-                    characterController.transform.position = new Vector3(-180, 4, -6);
-                    characterController.enabled = true;
-                } else
-                {
-                    Debug.LogError("PlayerData can't find Character Controller!");
-                }
+            // Set player spawn position
+            fireDungeonSpawn = GameObject.Find("FireDungeonSpawn").transform;
+            if (fireDungeonSpawn != null) {
+                characterController.enabled = false;
+                characterController.transform.position = fireDungeonSpawn.position;
+                characterController.enabled = true;
             } else
             {
-                Debug.LogError("PlayerData can't find Player!");
+                Debug.LogError("PlayerData can't find fireDungeonSpawn!");
             }
-
 
         } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
+            // MAKE NECESSARY CHANGES FOR ALL OTHER SCENES
+
+            if (lastScene == "WaterDungeonGraybox") { // If coming from Water Dungeon
+
+                // Set player spawn position
+                waterDungeonSpawn = GameObject.Find("WaterDungeonSpawn").transform;
+                if (waterDungeonSpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = waterDungeonSpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find waterDungeonSpawn!");
+                }
+            }
+
             // Despawn Plant Boss in Town
             GameObject plantBoss = GameObject.Find("TreeBoss");
             if (plantBoss != null) 

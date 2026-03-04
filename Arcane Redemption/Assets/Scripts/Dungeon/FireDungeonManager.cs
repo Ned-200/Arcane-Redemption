@@ -110,8 +110,8 @@ public class FireDungeonManager : MonoBehaviour
             entranceOpened = true;
             teleportDoor.SetActive(true);
             // Start the tweening coroutine
-            StartCoroutine(TweenPosition(dungeonEntrance, new Vector3(-28, 8, -12.5f), 10));
-            dungeonEntrance.transform.position = new Vector3(-28, 8, -12.5f);
+            StartCoroutine(TweenPosition(dungeonEntrance, new Vector3(dungeonEntrance.transform.localPosition.x, 0, dungeonEntrance.transform.localPosition.z), 10));
+            dungeonEntrance.transform.localPosition = new Vector3(dungeonEntrance.transform.localPosition.x, 0, dungeonEntrance.transform.localPosition.z);
         }
         
     }

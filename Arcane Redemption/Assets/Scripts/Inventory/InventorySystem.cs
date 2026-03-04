@@ -156,6 +156,8 @@ public class InventorySystem : MonoBehaviour
             return;
         }
         
+
+        
         if (character == null)
         {
             Debug.LogError("InventorySystem: No character reference to heal!");
@@ -207,7 +209,17 @@ public class InventorySystem : MonoBehaviour
         
         if (character == null)
         {
-            Debug.LogError("InventorySystem: No character reference to restore mana!");
+            // Re-get player, likely lost in scene change
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                character = player.GetComponent<BaseCharacter>();
+                if (character == null) // check if character is still null
+                {
+                    Debug.LogError("InventorySystem: No character reference to restore mana!");
+                }
+            }
+            
             return;
         }
         

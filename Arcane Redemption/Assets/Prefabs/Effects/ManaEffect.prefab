@@ -4849,3 +4849,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edbedf4397af34643b41e338d030f366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageEffect
+  destroyDelay: 1.25

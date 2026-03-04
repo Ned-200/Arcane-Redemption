@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6249205623051834528}
   - component: {fileID: 2767159692171265394}
   - component: {fileID: 2530173732460555917}
+  - component: {fileID: 8454989420960442488}
   m_Layer: 0
   m_Name: BurningCharacter
   m_TagString: Untagged
@@ -4932,3 +4933,16 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &8454989420960442488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7038505790271449214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edbedf4397af34643b41e338d030f366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageEffect
+  destroyDelay: 2.5

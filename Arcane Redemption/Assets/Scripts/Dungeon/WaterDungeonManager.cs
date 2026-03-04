@@ -6,28 +6,21 @@ public class WaterDungeonManager : MonoBehaviour
     [SerializeField] GameObject[] battleLockedDoors;
     [SerializeField] GameObject[] enemies;
     [SerializeField] public Transform checkpoint;
-
-    // [SerializeField] GameObject bridge;
-    // [SerializeField] GameObject vinesWall2;
-    [SerializeField] GameObject dungeonEntrance;
+    [SerializeField] Collider exitFireWall;
+    [SerializeField] GameObject dungeonExit;
     [SerializeField] GameObject teleportDoor;
     [SerializeField] CharacterController characterController;    
     private PlayerController playerController;
     [SerializeField] GameObject drowningPrefab;
     private GameObject drowningEffect;
     private bool movedOrMoving;
-    private bool entranceOpened;
+    private bool exitOpened;
     [SerializeField] float moveDuration;
 
     private bool[] doorsOpened = new bool[5];
 
     void Start()
     {
-        // if (bridge == null)
-        // {
-        //     Debug.LogError("Fire dungeon manager can't find bridge!");
-        // }
-
         if (characterController == null)
         {
             Debug.LogError("Fire dungeon manager can't find characterController!");
@@ -38,14 +31,14 @@ public class WaterDungeonManager : MonoBehaviour
             Debug.LogError("Fire dungeon manager can't find drowningPrefab!");
         }
         
-        // if (vinesWall2 == null)
-        // {
-        //     Debug.LogError("Fire dungeon manager can't find vinesWall2!");
-        // }
-
-        if (dungeonEntrance == null)
+        if (exitFireWall == null)
         {
-            Debug.LogError("Fire dungeon manager can't find dungeonEntrance!");
+            Debug.LogError("Fire dungeon manager can't find exitFireWall!");
+        }
+
+        if (dungeonExit == null)
+        {
+            Debug.LogError("Fire dungeon manager can't find dungeonExit!");
         }
         
         if (teleportDoor == null)
@@ -95,19 +88,20 @@ public class WaterDungeonManager : MonoBehaviour
         {
             doorsOpened[2] = true;
             StartCoroutine(TweenPosition(battleLockedDoors[2], new Vector3(battleLockedDoors[2].transform.localPosition.x, -23, battleLockedDoors[2].transform.localPosition.z), 2));
-            StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, -25, battleLockedDoors[3].transform.localPosition.z), 3));
-            StartCoroutine(TweenPosition(battleLockedDoors[4], new Vector3(battleLockedDoors[4].transform.localPosition.x, -32, battleLockedDoors[4].transform.localPosition.z), 4));
+            StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, -26, battleLockedDoors[3].transform.localPosition.z), 3));
+            StartCoroutine(TweenPosition(battleLockedDoors[4], new Vector3(battleLockedDoors[4].transform.localPosition.x, -33, battleLockedDoors[4].transform.localPosition.z), 4));
             Debug.Log("Opening door");
         }
 
-        // if (vinesWall2 == null & !entranceOpened)
-        // {
-        //     entranceOpened = true;
-        //     teleportDoor.SetActive(true);
-        //     // Start the tweening coroutine
-        //     StartCoroutine(TweenPosition(dungeonEntrance, new Vector3(-28, 8, -12.5f), 10));
-        //     dungeonEntrance.transform.position = new Vector3(-28, 8, -12.5f);
-        // }
+        // Dungeon Exit
+        if (!exitFireWall.enabled & !exitOpened)
+        {
+            exitOpened = true;
+            teleportDoor.SetActive(true);
+            // Start the tweening coroutine
+            StartCoroutine(TweenPosition(dungeonExit, new Vector3(dungeonExit.transform.localPosition.x, dungeonExit.transform.localPosition.y+12, dungeonExit.transform.localPosition.z), 10));
+            dungeonExit.transform.localPosition = new Vector3(dungeonExit.transform.localPosition.x, dungeonExit.transform.localPosition.y+12, dungeonExit.transform.localPosition.z);
+        }
         
     }
 
@@ -125,15 +119,7 @@ public class WaterDungeonManager : MonoBehaviour
             drowningEffect.transform.SetParent(other.transform);
             // playerController.canMove = false;
             playerController.gravity = 7.5f;
-
-
-            Invoke(nameof(DestroyDrowningEffect), 2);
         }
-    }
-
-    void DestroyDrowningEffect()
-    {
-        Destroy(drowningEffect);
     }
 
     void SpawnPlayerAtopPit()

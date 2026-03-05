@@ -1,31 +1,86 @@
+using System.Collections;
 using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
-    [SerializeField] float despawnDelay;
-    [SerializeField] GameObject breakableEffectPrefab;
-    [SerializeField] GameObject healthPotionPrefab;
-    [SerializeField] GameObject manaPotionPrefab;
+    [Header("Despawn")]
+    [SerializeField] private float despawnDelay = 3f;
+
+    [Header("VFX / Drops")]
+    [SerializeField] private GameObject breakableEffectPrefab;
+    [SerializeField] private GameObject healthPotionPrefab;
+    [SerializeField] private GameObject manaPotionPrefab;
+
+    [Header("Pieces (children)")]
+    [Tooltip("If empty, will use all direct children as pieces.")]
+    [SerializeField] private Transform[] pieces;
+
+    [Tooltip("Auto-add Rigidbody/Collider to pieces if missing.")]
+    [SerializeField] private bool autoSetupPieces = true;
+
+    [Tooltip("Disable piece colliders while intact (prevents 'default explosion' from collider overlap).")]
+    [SerializeField] private bool disablePieceCollidersWhileIntact = true;
+
+    [Header("Break force (optional)")]
+    [Tooltip("Impulse strength. Set to 0 if you only want gravity fall.")]
+    [SerializeField] private float explosionForce = 3.5f;
+
+    [Tooltip("How wide the push spreads.")]
+    [SerializeField] private float explosionRadius = 1.2f;
+
+    [Tooltip("Extra upward lift.")]
+    [SerializeField] private float upwardModifier = 0.6f;
+
+    [Tooltip("Limits physics depenetration 'pop' if pieces start overlapping.")]
+    [SerializeField] private float maxDepenetrationVelocity = 0.5f;
+
     private int potionChance;
-    private bool broken = false; // to prevent running multiple times
+    private bool broken = false;
+    private Collider[] parentColliders;
 
-
-    void Start()
+    private void Awake()
     {
-        if (healthPotionPrefab == null)
+        parentColliders = GetComponents<Collider>();
+
+        // If not assigned, take all direct children as pieces
+        if (pieces == null || pieces.Length == 0)
         {
-            Debug.LogError("Breakable: No healthPotionPrefab found!");
-        }
-        if (manaPotionPrefab == null)
-        {
-            Debug.LogError("Breakable: No manaPotionPrefab found!");
-        }
-        if (breakableEffectPrefab == null)
-        {
-            Debug.LogError("Breakable: No breaking particle prefab found!");
+            pieces = new Transform[transform.childCount];
+            for (int i = 0; i < transform.childCount; i++)
+                pieces[i] = transform.GetChild(i);
         }
 
+        // Setup pieces so they don't fall apart before breaking
+        foreach (var p in pieces)
+        {
+            if (p == null) continue;
 
+            Rigidbody rb = p.GetComponent<Rigidbody>();
+            Collider col = p.GetComponent<Collider>();
+
+            if (autoSetupPieces)
+            {
+                if (col == null)
+                    col = p.gameObject.AddComponent<BoxCollider>(); // simplest default collider
+
+                if (rb == null)
+                    rb = p.gameObject.AddComponent<Rigidbody>();
+            }
+
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
+                rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                rb.maxDepenetrationVelocity = maxDepenetrationVelocity;
+            }
+
+            if (disablePieceCollidersWhileIntact && col != null)
+            {
+                col.enabled = false;
+            }
+        }
     }
 
     public void Break()
@@ -33,55 +88,78 @@ public class Breakable : MonoBehaviour
         if (broken) return;
         broken = true;
 
-        // Spawn breaking particle effect
+        // Spawn break VFX
         if (breakableEffectPrefab != null)
-        {
             Instantiate(breakableEffectPrefab, transform.position, breakableEffectPrefab.transform.rotation);
-        } else
+
+        // Stop the intact barrel from blocking
+        foreach (var c in parentColliders)
+            c.enabled = false;
+
+        // Turn pieces into physics objects + detach + schedule despawn
+        foreach (var p in pieces)
         {
-            Debug.LogError("Breakable: No breaking particle prefab found!");
+            if (p == null) continue;
+
+            Rigidbody rb = p.GetComponent<Rigidbody>();
+            Collider col = p.GetComponent<Collider>();
+
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+                rb.useGravity = true;
+                rb.maxDepenetrationVelocity = maxDepenetrationVelocity;
+            }
+
+            // Detach so parent can be destroyed without deleting pieces immediately
+            p.SetParent(null, true);
+
+            // Despawn each piece
+            Destroy(p.gameObject, despawnDelay);
         }
 
+        // Enable colliders + apply explosion NEXT physics tick to avoid overlap "default explosion"
+        StartCoroutine(EnableCollidersAndOptionalExplosionNextFixed());
 
-        potionChance = Random.Range(0, 10); // One in 5 chance for a potion, 50/50 whether its health or mana
-
+        // Drops
+        potionChance = Random.Range(0, 10); // 0/1 = drop
         if (potionChance == 0 || potionChance == 1)
-        {
-            Invoke(nameof(SpawnPotion), despawnDelay);
-        } else
-        {
-            Destroy(this.gameObject, despawnDelay);
-        }
+            Invoke(nameof(SpawnPotion), 0.05f);
 
+        // Destroy the parent (colliders already disabled)
+        Destroy(gameObject, despawnDelay);
     }
 
-    private void SpawnPotion() // 0 for health, 1 for mana
+    private IEnumerator EnableCollidersAndOptionalExplosionNextFixed()
     {
-        if (potionChance == 0)
+        yield return new WaitForFixedUpdate();
+
+        foreach (var p in pieces)
         {
+            if (p == null) continue;
 
-            if (healthPotionPrefab != null)
+            Collider col = p.GetComponent<Collider>();
+            if (col != null) col.enabled = true;
+
+            // Optional explosion impulse. If all values are 0, it will do nothing.
+            if (explosionForce > 0f && explosionRadius > 0f)
             {
-                Instantiate(healthPotionPrefab, new Vector3(transform.position.x, transform.position.y-0.6f, transform.position.z), healthPotionPrefab.transform.rotation);
-                Debug.Log("Breakable: spawned health potion!");
-            } else
-            {
-                Debug.LogError("Breakable: No health potion prefab found!");
+                Rigidbody rb = p.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardModifier, ForceMode.Impulse);
+                }
             }
-
-        } else if (potionChance == 1)
-        {
-            
-            if (manaPotionPrefab != null)
-            {
-                Instantiate(manaPotionPrefab, new Vector3(transform.position.x, transform.position.y-0.6f, transform.position.z), manaPotionPrefab.transform.rotation);
-            } else
-            {
-                Debug.Log("Breakable: spawned mana potion!");
-            }
-
         }
+    }
 
-        Destroy(this.gameObject, 0.1f); // Destroy breakable once potion has spawned, with minor delay to be safe
+    private void SpawnPotion()
+    {
+        Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
+
+        if (potionChance == 0 && healthPotionPrefab != null)
+            Instantiate(healthPotionPrefab, spawnPos, healthPotionPrefab.transform.rotation);
+        else if (potionChance == 1 && manaPotionPrefab != null)
+            Instantiate(manaPotionPrefab, spawnPos, manaPotionPrefab.transform.rotation);
     }
 }

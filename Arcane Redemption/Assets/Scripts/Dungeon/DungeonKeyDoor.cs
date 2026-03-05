@@ -4,7 +4,7 @@ using System.Collections;
 
 public class DungeonKeyDoor : MonoBehaviour
 {
-    [SerializeField] GameObject interactImage;
+    private Image interactImage;
     [SerializeField] GameObject DungeonKey;
     [SerializeField] Vector3 targetPosition;
     private bool playerInRange = false;
@@ -18,6 +18,8 @@ public class DungeonKeyDoor : MonoBehaviour
             Debug.LogError("Dungeon door can't find key!");
         }
 
+        GameObject canvas = GameObject.FindWithTag("MainCanvas");
+        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
         if (interactImage == null)
         {
             Debug.LogError("Dungeon door can't find interact image!");
@@ -30,7 +32,7 @@ public class DungeonKeyDoor : MonoBehaviour
         {
             movedOrMoving = true;
             Debug.Log("Key opened door");
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
             StartCoroutine(TweenPosition(targetPosition, moveDuration));
         }
     }
@@ -65,7 +67,7 @@ public class DungeonKeyDoor : MonoBehaviour
         {   
             playerInRange = true;
             Debug.Log("Entered Door range");
-            interactImage.SetActive(true);
+            interactImage.enabled = true;
         }
     }
 
@@ -77,7 +79,7 @@ public class DungeonKeyDoor : MonoBehaviour
         {
             playerInRange = false;
             Debug.Log("Left Door range");
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
         }
     }
 }

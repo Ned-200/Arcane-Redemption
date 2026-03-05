@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ElementalGem : MonoBehaviour
 {
     
     [SerializeField] int gemElement; // 1 = Fire Ruby, 2 = Water Sapphire, 3 = Plant Emerald
-    [SerializeField] GameObject interactImage;
+    private Image interactImage;
     private bool playerInRange = false;
 
     private PlayerData playerData;
@@ -22,6 +23,8 @@ public class ElementalGem : MonoBehaviour
         GameObject playerDataObject = GameObject.FindWithTag("PlayerData");
         playerData = playerDataObject.GetComponent<PlayerData>();
 
+        GameObject canvas = GameObject.FindWithTag("MainCanvas");
+        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
         if (interactImage == null)
         {
             Debug.LogError("ElementalGem can't find interactImage!");
@@ -41,7 +44,7 @@ public class ElementalGem : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.E) & !movedOrMoving)
         {
             movedOrMoving = true;
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
             Debug.Log("Gem Obtained!");
 
             // GIVE PLAYER ABILITIES HERE
@@ -96,7 +99,7 @@ public class ElementalGem : MonoBehaviour
         {   
             playerInRange = true;
             Debug.Log("Entered Gem range");
-            interactImage.SetActive(true);
+            interactImage.enabled = true;
         }
     }
 
@@ -108,7 +111,7 @@ public class ElementalGem : MonoBehaviour
         {
             playerInRange = false;
             Debug.Log("Left Gem range");
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
         }
     }
 }

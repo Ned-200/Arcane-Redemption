@@ -150,9 +150,24 @@ public class WeaponCollisionDamage : MonoBehaviour
             Debug.Log($"[{gameObject.name}] Looking for BaseCharacter on: {other.gameObject.name}");
         }
 
+
+        // START BREAKABLE CHECK
+        // Check if the collider has a Breakable component
+        Breakable breakable = other.GetComponent<Breakable>();
+        if (breakable)
+        {
+            breakable.Break();
+            if (debugCollisions)
+            {
+                Debug.Log($"[{gameObject.name}] Found Breakable Object directly: {breakable.gameObject.name}");
+            }
+        }
+        // END BREAKABLE CHECK
+        
+
         // Check if the collider has a BaseCharacter component
         BaseCharacter target = other.GetComponent<BaseCharacter>();
-        
+
         if (target == null)
         {
             // Try to find in parent

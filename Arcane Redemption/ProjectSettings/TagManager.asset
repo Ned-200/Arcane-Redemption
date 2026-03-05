@@ -9,6 +9,7 @@ TagManager:
   - PlayerData
   - MainCanvas
   - FlameWall
+  - Breakable
   layers:
   - Default
   - TransparentFX

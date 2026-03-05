@@ -1,13 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DungeonKey : MonoBehaviour
 {
-    [SerializeField] GameObject interactImage;
+    private Image interactImage;
 
     private bool playerInRange = false;
 
     void Start()
     {
+        GameObject canvas = GameObject.FindWithTag("MainCanvas");
+        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
         if (interactImage == null)
         {
             Debug.LogError("DungeonKey can't find interactImage!");
@@ -19,7 +22,7 @@ public class DungeonKey : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             Destroy(gameObject);
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
         }
     }
 
@@ -31,7 +34,7 @@ public class DungeonKey : MonoBehaviour
         {   
             playerInRange = true;
             Debug.Log("Entered Key range");
-            interactImage.SetActive(true);
+            interactImage.enabled = true;
         }
     }
 
@@ -43,7 +46,7 @@ public class DungeonKey : MonoBehaviour
         {
             playerInRange = false;
             Debug.Log("Left Key range");
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
         }
     }
 }

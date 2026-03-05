@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PotionPickup : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class PotionPickup : MonoBehaviour
     [SerializeField] private PotionType potionType;
     
     [Header("UI")]
-    [SerializeField] private GameObject interactImage;
+    private Image interactImage;
 
     private bool playerInRange = false;
     private InventorySystem playerInventory;
@@ -28,9 +29,12 @@ public class PotionPickup : MonoBehaviour
             Debug.LogError("PotionPickup: No PlayerData found!");
         }
 
+
+        GameObject canvas = GameObject.FindWithTag("MainCanvas");
+        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
         if (interactImage == null)
         {
-            Debug.LogError("PotionPickup: interactImage not assigned!");
+            Debug.LogError("PotionPickup: interactImage component not found!");
         }
         
         if (potionType == null)
@@ -53,7 +57,7 @@ public class PotionPickup : MonoBehaviour
                     // Successfully picked up - destroy the pickup
                     if (interactImage != null)
                     {
-                        interactImage.SetActive(false);
+                        interactImage.enabled = false;
                     }
                     Destroy(gameObject);
                 }
@@ -78,7 +82,7 @@ public class PotionPickup : MonoBehaviour
             
             if (interactImage != null)
             {
-                interactImage.SetActive(true);
+                interactImage.enabled = true;
             }
         }
     }
@@ -95,7 +99,7 @@ public class PotionPickup : MonoBehaviour
             
             if (interactImage != null)
             {
-                interactImage.SetActive(false);
+                interactImage.enabled = false;
             }
         }
     }

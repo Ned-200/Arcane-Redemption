@@ -242,8 +242,8 @@ public class PlayerCharacter : BaseCharacter
         
         if (inventorySystem != null)
         {
-            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Health Potions (1): {inventorySystem.HealthPotionCount}";
-            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"Mana Potions (2): {inventorySystem.ManaPotionCount}";
+            HealthPotionCounter.GetComponent<TextMeshProUGUI>().text = $"{inventorySystem.HealthPotionCount}";
+            ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"{inventorySystem.ManaPotionCount}";
         }
     }
 }

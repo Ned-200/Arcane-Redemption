@@ -103,7 +103,22 @@ public class ProjectileBase : MonoBehaviour
                 flameCollider.enabled = false;
                 flameLight.enabled = false;
             }
+        } else if (other.gameObject.tag == "Breakable") // If a breakable object
+        {
+            GameObject BreakableObject = other.gameObject;
+
+            //Play damaged effect
+            Breakable breakableScript = BreakableObject.GetComponent<Breakable>();
+            if (breakableScript != null)
+            {
+                breakableScript.Break();
+            } else
+            {
+                Debug.LogError(BreakableObject.name + ": Breakable - no breakableScript found!");
+            }
         }
+
+        
 
         // Spawn impact effect
         if (impactEffectPrefab != null)

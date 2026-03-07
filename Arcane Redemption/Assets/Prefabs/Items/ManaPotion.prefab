@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8249201319250177155}
   - component: {fileID: 2010111048357396026}
   - component: {fileID: 2186506962485169155}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ManaPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34135,7 +34135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionPickup
   potionType: {fileID: 11400000, guid: 6acd2cf4619a63c47a33abc8db01625b, type: 2}
-  interactImage: {fileID: 0}
 --- !u!1 &6649142021449323820
 GameObject:
   m_ObjectHideFlags: 0

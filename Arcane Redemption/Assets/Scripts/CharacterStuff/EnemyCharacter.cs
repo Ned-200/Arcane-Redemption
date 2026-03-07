@@ -305,11 +305,16 @@ public class EnemyCharacter : BaseCharacter
 
         if (newState == EnemyState.Idle || newState == EnemyState.Combat) 
         {
-            enemyAnim.SetBool("isWalking", false);
+            if (enemyAnim != null) {
+                enemyAnim.SetBool("isWalking", false);
+            }
         } 
         else if (newState == EnemyState.Alert || newState == EnemyState.Patrol) 
         {
-            enemyAnim.SetBool("isWalking", true);
+            
+            if (enemyAnim != null) {
+                enemyAnim.SetBool("isWalking", true);
+            }
         }
     }
 
@@ -319,7 +324,9 @@ public class EnemyCharacter : BaseCharacter
     protected virtual void OnAttackPerformed()
     {
         // Override for custom behavior (play attack animation, sound, etc.)
-        enemyAnim.Play("Attack");
+        if (enemyAnim != null) {
+            enemyAnim.Play("Attack");
+        }
     }
 
     /// <summary>
@@ -342,7 +349,9 @@ public class EnemyCharacter : BaseCharacter
         Debug.Log($" [{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
         
         // Play death animation 
-        enemyAnim.Play("Death");
+        if (enemyAnim != null) {
+            enemyAnim.Play("Death");
+        }
 
         //Trigger disintegration material
         disintegrate.TriggerDisintegration();

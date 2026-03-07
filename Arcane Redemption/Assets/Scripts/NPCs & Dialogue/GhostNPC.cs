@@ -15,7 +15,6 @@ public class GhostNPC : NPC_Character
         if (player.transform.Find("PlayerMesh").gameObject)
         {
             playerMesh = player.transform.Find("PlayerMesh").gameObject;
-            playerAccessory = player.transform.Find("Hat").gameObject;
             weaponMesh = player.transform.Find("WeaponSlot").gameObject;
         
         } else
@@ -39,7 +38,6 @@ public class GhostNPC : NPC_Character
         playerController.canMove = false;
         // hide player mesh
         playerMesh.SetActive(false);
-        playerAccessory.SetActive(false);
         weaponMesh.SetActive(false);
     }
 

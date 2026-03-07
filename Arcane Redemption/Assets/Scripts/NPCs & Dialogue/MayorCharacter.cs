@@ -58,7 +58,6 @@ public class MayorCharacter : NPC_Character
             if (other.transform.Find("PlayerMesh").gameObject)
             {
                 playerMesh = other.transform.Find("PlayerMesh").gameObject;
-                playerAccessory = other.transform.Find("Hat").gameObject;
                 weaponMesh = other.transform.Find("WeaponSlot").gameObject;
             } else
             {

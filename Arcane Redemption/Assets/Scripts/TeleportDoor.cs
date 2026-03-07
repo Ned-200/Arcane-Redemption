@@ -7,7 +7,7 @@ public class TeleportDoor : MonoBehaviour
     protected private GameObject playerDataObject;
     protected private PlayerData playerData;
     [SerializeField] protected string destinationSceneName;
-    [SerializeField] protected GameObject interactImage;
+    protected private Image interactImage;
     [SerializeField] protected GameObject LoadingUI;
     protected private bool teleporting = false;
     protected private bool playerInRange = false;
@@ -22,6 +22,13 @@ public class TeleportDoor : MonoBehaviour
         } else
         {
             Debug.LogError("No Player Data in Scene! Check Tag!");
+        }
+
+        GameObject canvas = GameObject.FindWithTag("MainCanvas");
+        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
+        if (interactImage == null)
+        {
+            Debug.LogError("TeleportDoor: interactImage component not found!");
         }
     }
 
@@ -57,7 +64,7 @@ public class TeleportDoor : MonoBehaviour
         {   
             playerInRange = true;
             Debug.Log("Entered Door range");
-            interactImage.SetActive(true);
+            interactImage.enabled = true;
         }
     }
 
@@ -69,7 +76,7 @@ public class TeleportDoor : MonoBehaviour
         {
             playerInRange = false;
             Debug.Log("Left Door range");
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
         }
     }
 }

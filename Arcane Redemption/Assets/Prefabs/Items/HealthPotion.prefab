@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4476809959923919536}
   - component: {fileID: 5461861056343032787}
   - component: {fileID: 8345784779976277098}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HealthPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34135,7 +34135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionPickup
   potionType: {fileID: 11400000, guid: 7b41e92e8d49a894eb8d4eecf95be2d5, type: 2}
-  interactImage: {fileID: 0}
 --- !u!1 &3914116212425438647
 GameObject:
   m_ObjectHideFlags: 0

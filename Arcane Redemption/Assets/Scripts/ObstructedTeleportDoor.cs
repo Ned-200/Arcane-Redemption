@@ -24,7 +24,7 @@ public class ObstructedTeleportDoor : TeleportDoor
         {   
             playerInRange = true;
             Debug.Log("Entered Door range");
-            interactImage.SetActive(true);
+            interactImage.enabled = true;
         }
     }
 
@@ -36,7 +36,7 @@ public class ObstructedTeleportDoor : TeleportDoor
         {
             playerInRange = false;
             Debug.Log("Left Door range");
-            interactImage.SetActive(false);
+            interactImage.enabled = false;
         }
     }
 }

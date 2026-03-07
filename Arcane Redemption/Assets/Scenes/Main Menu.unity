@@ -666,14 +666,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IntroCutscene
   CutsceneImageObject: {fileID: 1011820483}
   images:
-  - {fileID: 21300000, guid: 1df261234fa01434181121e3b427c1e0, type: 3}
-  - {fileID: 21300000, guid: 1df261234fa01434181121e3b427c1e0, type: 3}
-  - {fileID: 21300000, guid: 1df261234fa01434181121e3b427c1e0, type: 3}
-  - {fileID: 21300000, guid: 546428b64f10a464d9f42abd0c36dc9f, type: 3}
-  - {fileID: 21300000, guid: 80ba36367016927428504783958e392b, type: 3}
-  - {fileID: 21300000, guid: c975dea1fcc175a4c92ba03af135f899, type: 3}
-  - {fileID: 21300000, guid: 1595fa0e4fe43d34b9ac51b4a1a0b6c8, type: 3}
-  - {fileID: 21300000, guid: b8646d6f79cf91347a12c452b9860c6b, type: 3}
+  - {fileID: 21300000, guid: 08bf64e4304f34e45bb0bc876fbc0cef, type: 3}
+  - {fileID: 21300000, guid: 08bf64e4304f34e45bb0bc876fbc0cef, type: 3}
+  - {fileID: 21300000, guid: 08bf64e4304f34e45bb0bc876fbc0cef, type: 3}
+  - {fileID: 21300000, guid: 7859b301be73c124bba99f1b42bb000d, type: 3}
+  - {fileID: 21300000, guid: 9f1845eb27d61cc48a157ebf2d126d28, type: 3}
+  - {fileID: 21300000, guid: c1af458de09a82b4797cf00f8be875e0, type: 3}
+  - {fileID: 21300000, guid: c1af458de09a82b4797cf00f8be875e0, type: 3}
+  - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
+  - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
+  - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
+  - {fileID: 21300000, guid: 0ee7eefcc3e711c42b53d9eac3ace40c, type: 3}
   DialogueBox: {fileID: 1757549207}
   textComponent: {fileID: 2137143597}
   lines:
@@ -690,9 +693,9 @@ MonoBehaviour:
     to be seen again.
   - As a reward for their loyalty, he bestowed the power of each element to three
     of the Shadow Gang members.
-  - The fourth member was left with nothing, Skar denying him the share of power
-    he was promised at the start and showing how little his loyalty meant.
-  - Cast aside and left without any power, Maguso, was caught by bounty hunters and
+  - The fourth member, Maguso, was left with nothing. Skar denied him his promised
+    share of power, proving how little his loyalty meant.
+  - Cast aside and left without any power, Maguso was caught by bounty hunters and
     imprisoned by Mayor Dinkleberry.
   - This is his story of redemption...
   textSpeed: 0.05
@@ -1011,15 +1014,15 @@ RectTransform:
   m_GameObject: {fileID: 1011820483}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 507582007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 1720, y: 600}
+  m_AnchoredPosition: {x: 0, y: 196}
+  m_SizeDelta: {x: 3839.9998, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1011820485
 MonoBehaviour:
@@ -1041,7 +1044,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 80ba36367016927428504783958e392b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7859b301be73c124bba99f1b42bb000d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

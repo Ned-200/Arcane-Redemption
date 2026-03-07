@@ -38,7 +38,6 @@ public class NPC_Character : BaseCharacter
     protected PlayerController playerController;
     protected GameObject playerMesh;
     protected GameObject weaponMesh;
-    protected GameObject playerAccessory;
  
 
     protected virtual void Start()
@@ -74,7 +73,6 @@ public class NPC_Character : BaseCharacter
             playerController.canMove = false;
             // hide player mesh
             playerMesh.SetActive(false);
-            playerAccessory.SetActive(false);
             weaponMesh.SetActive(false);
         }
 
@@ -103,7 +101,6 @@ public class NPC_Character : BaseCharacter
             if (player.transform.Find("PlayerMesh").gameObject)
             {
                 playerMesh = player.transform.Find("PlayerMesh").gameObject;
-                playerAccessory = player.transform.Find("Hat").gameObject;
                 weaponMesh = player.transform.Find("WeaponSlot").gameObject;
               
             } else
@@ -152,7 +149,6 @@ public class NPC_Character : BaseCharacter
         if (player.transform.Find("PlayerMesh").gameObject)
         {
             playerMesh = player.transform.Find("PlayerMesh").gameObject;
-            playerAccessory = player.transform.Find("Hat").gameObject;
             weaponMesh = player.transform.Find("WeaponSlot").gameObject;
               
         } else
@@ -164,7 +160,6 @@ public class NPC_Character : BaseCharacter
         playerController.canMove = false;
         // hide player mesh
         playerMesh.SetActive(false);
-        playerAccessory.SetActive(false);
         weaponMesh.SetActive(false);
     }
 
@@ -245,7 +240,6 @@ public class NPC_Character : BaseCharacter
             playerController.canMove = true;
             // Un-hide player mesh
             playerMesh.SetActive(true);
-            playerAccessory.SetActive(true);
             weaponMesh.SetActive(true);
         
         }

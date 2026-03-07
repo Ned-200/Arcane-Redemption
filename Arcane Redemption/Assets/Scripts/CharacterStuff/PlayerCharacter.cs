@@ -51,22 +51,6 @@ public class PlayerCharacter : BaseCharacter
             respawnPoint = defaultRespawnPoint != null ? defaultRespawnPoint : transform;
         }
         
-        GameObject playerData = GameObject.FindWithTag("PlayerData");
-        
-        if (playerData == null)
-        {
-            Debug.LogError("PlayerCharacter: PlayerData was not found! Check PlayerData object Tag!");
-        }
-        else
-        {
-            inventorySystem = playerData.GetComponent<InventorySystem>();
-        }
-
-        if (inventorySystem == null)
-        {
-            Debug.LogError("PlayerCharacter: PlayerData does not have an InventorySystem component!");
-        }
-        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -103,6 +87,25 @@ public class PlayerCharacter : BaseCharacter
         currentDistance = cameraDistance;
 
         Debug.Log($"[PlayerCharacter] Initialized - Health: {CurrentHealth}/{MaxHealth}");
+    }
+
+    private void Start()
+    {
+        GameObject playerData = GameObject.FindWithTag("PlayerData");
+        
+        if (playerData == null)
+        {
+            Debug.LogError("PlayerCharacter: PlayerData was not found! Check PlayerData object Tag!");
+        }
+        else
+        {
+            inventorySystem = playerData.GetComponent<InventorySystem>();
+        }
+
+        if (inventorySystem == null)
+        {
+            Debug.LogError("PlayerCharacter: PlayerData does not have an InventorySystem component!");
+        }
     }
 
     protected override void Update()

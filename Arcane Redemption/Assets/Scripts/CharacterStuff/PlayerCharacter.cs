@@ -23,7 +23,7 @@ public class PlayerCharacter : BaseCharacter
     [Header("Respawn System")]
     [SerializeField] private Transform defaultRespawnPoint;
     public Transform respawnPoint;
-    [SerializeField] private float respawnCooldown = 1.0f;
+    [SerializeField] private float respawnCooldown = 3.0f;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugInfo = true;
@@ -175,7 +175,19 @@ public class PlayerCharacter : BaseCharacter
     private IEnumerator EnableRespawnAfterDelay()
     {
         canRespawn = false;
+
         yield return new WaitForSeconds(respawnCooldown);
+
+        if (DeathScreen != null)
+        {
+            Debug.Log("DeathScreen found, showing it now.");
+            DeathScreen.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("DeathScreen is NULL in OnDeath.");
+        }
+
         canRespawn = true;
         Debug.Log("Player can respawn now. Press space!");
     }
@@ -200,6 +212,8 @@ public class PlayerCharacter : BaseCharacter
             playerController.canMove = true;
             playerController.enabled = false;
             playerController.enabled = true;
+            
+            playerController.playerAnim.SetBool("Died", false);
         }
 
         if (lowHealthEffects != null)
@@ -263,27 +277,18 @@ public class PlayerCharacter : BaseCharacter
     }
 
     protected override void OnDeath()
-{
+    {
     base.OnDeath();
 
     if (deathHandled) return;
     deathHandled = true;
 
-    Debug.LogError($"Player '{gameObject.name}' health reached zero!");
-
-    if (DeathScreen != null)
-    {
-        Debug.Log("DeathScreen found, showing it now.");
-        DeathScreen.SetActive(true);
-    }
-    else
-    {
-        Debug.LogError("DeathScreen is NULL in OnDeath.");
-    }
+    Debug.Log($"Player '{gameObject.name}' health reached zero!");
 
     if (playerController != null)
     {
         playerController.canMove = false;
+        playerController.playerAnim.SetBool("Died", true);
     }
     else
     {

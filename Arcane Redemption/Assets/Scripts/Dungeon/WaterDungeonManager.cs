@@ -9,11 +9,12 @@ public class WaterDungeonManager : MonoBehaviour
     [SerializeField] Collider exitFireWall;
     [SerializeField] GameObject dungeonExit;
     [SerializeField] GameObject teleportDoor;
-    [SerializeField] CharacterController characterController;    
+    [SerializeField] CharacterController characterController;
     private PlayerController playerController;
     [SerializeField] GameObject drowningPrefab;
     private GameObject drowningEffect;
     private bool movedOrMoving;
+    private bool drowning;
     private bool exitOpened;
     [SerializeField] float moveDuration;
 
@@ -109,14 +110,17 @@ public class WaterDungeonManager : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !drowning)
         {   
+            drowning = true;
             Debug.Log("Player fell in pit!");
             playerController = other.GetComponent<PlayerController>();
             
             Invoke(nameof(SpawnPlayerAtopPit), 2);
             drowningEffect = Instantiate(drowningPrefab, characterController.transform.position, drowningPrefab.transform.rotation);
             drowningEffect.transform.SetParent(other.transform);
+
+            playerController.playerAnim.SetBool("Drowned", true);
             // playerController.canMove = false;
             playerController.gravity = 7.5f;
         }
@@ -129,5 +133,8 @@ public class WaterDungeonManager : MonoBehaviour
         characterController.transform.position = checkpoint.position;
         characterController.enabled = true;
         // playerController.canMove = true;
+        
+        playerController.playerAnim.SetBool("Drowned", false);
+        drowning = false;
     }
 }

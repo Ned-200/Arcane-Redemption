@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: bb05e35d804bbce41bdfa6a90c129e02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,9 +215,15 @@ MonoBehaviour:
   impactEffectPrefab: {fileID: 0}
   trail: {fileID: 0}
   trackingDuration: 4
-  trackingRadius: 4
   trackingStrength: 3
   maxTurnRate: 180
+  accelerationRate: 20
   centerMassOffset: {x: 0, y: 1, z: 0}
   useBoundsCenter: 1
   trackImmediately: 1
+  predictiveTracking: 1
+  predictionMultiplier: 0.3
+  minDistanceForPrediction: 10
+  useAggressiveTracking: 1
+  showDebugLogs: 0
+  showTrackingGizmos: 1

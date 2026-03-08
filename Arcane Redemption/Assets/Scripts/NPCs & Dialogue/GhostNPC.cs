@@ -7,9 +7,17 @@ using Unity.Cinemachine;
 
 public class GhostNPC : NPC_Character
 {
+    private GameObject NPC_Mesh;
+
     protected override void Start()
     {
         base.Start();
+
+        NPC_Mesh = gameObject.transform.Find("NPC_Mesh").gameObject;
+        if (NPC_Mesh == null)
+        {
+            Debug.LogError("GhostNPC: Can't find NPC mesh gameobject");
+        }
 
         playerController = player.GetComponent<PlayerController>();
         if (player.transform.Find("PlayerMesh").gameObject)
@@ -53,11 +61,17 @@ public class GhostNPC : NPC_Character
 
                 if (index == cutsceneLine[cutsceneIndex])
                 {
-                    StartCoroutine(TweenPosition(gameObject, new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y+5, gameObject.transform.localPosition.z), 2));
+                    StartCoroutine(TweenPosition(NPC_Mesh, new Vector3(NPC_Mesh.transform.localPosition.x, NPC_Mesh.transform.localPosition.y+8, NPC_Mesh.transform.localPosition.z), 2));
                 } else if (index == lines.Length - 1) // last line
                 {
-                    MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
-                    meshRenderer.enabled = false;
+                    MeshRenderer meshRenderer = NPC_Mesh.GetComponent<MeshRenderer>();
+                    if (meshRenderer != null)
+                    {
+                        meshRenderer.enabled = false;
+                    } else
+                    {
+                        Debug.LogError("GhostNPC: Can't find meshRenderer component!");
+                    }
                 }
 
             } else

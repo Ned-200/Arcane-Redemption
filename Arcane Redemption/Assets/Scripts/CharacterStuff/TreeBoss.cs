@@ -55,6 +55,10 @@ public class TreeBoss : EnemyCharacter
     [SerializeField] private float enragedMeleeCooldown = 0.8f;
     [SerializeField] private float enragedDamageMultiplier = 1.3f;
 
+    [Header("Vine Attack System")]
+    [SerializeField] private VineSpawner vineSpawner;
+    [SerializeField] private float vineSpawnDelay = 0.2f;
+
     [Header("Physics Settings")]
     [SerializeField] private float bossMass = 500f;
     [SerializeField] private float linearDamping = 5f;
@@ -177,6 +181,7 @@ public class TreeBoss : EnemyCharacter
         InitializeRigidbody();
         InitializeComponents();
         InitializeHealthBarUI();
+        InitializeVineSpawner();
     }
 
     private void InitializeState()
@@ -257,6 +262,19 @@ public class TreeBoss : EnemyCharacter
         if (healthBarUI == null)
         {
             Debug.LogWarning($"[{gameObject.name}] BossHealthBarUI not found in scene! Boss health bar will not display.");
+        }
+    }
+
+    private void InitializeVineSpawner()
+    {
+        if (vineSpawner == null)
+        {
+            vineSpawner = GetComponent<VineSpawner>();
+        }
+
+        if (vineSpawner == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] VineSpawner component not found! Vine attacks will not spawn.");
         }
     }
 
@@ -1042,6 +1060,10 @@ public class TreeBoss : EnemyCharacter
             float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
             if (distanceToPlayer <= meleeAttackRange)
             {
+                SpawnVineAttackAtBoss();
+                
+                yield return new WaitForSeconds(vineSpawnDelay);
+                
                 DealMeleeDamageToPlayer(slamType, isEnragedAttack);
             }
         }
@@ -1063,6 +1085,17 @@ public class TreeBoss : EnemyCharacter
         };
 
         bossAnimator.SetTrigger(animationTrigger);
+    }
+
+    private void SpawnVineAttackAtBoss()
+    {
+        if (vineSpawner == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] VineSpawner not assigned - cannot spawn vines!");
+            return;
+        }
+
+        vineSpawner.SpawnVine(transform.position);
     }
 
     private void DealMeleeDamageToPlayer(ArmSlamType slamType, bool isEnragedAttack)

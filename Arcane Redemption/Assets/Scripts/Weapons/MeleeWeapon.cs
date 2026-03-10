@@ -21,6 +21,13 @@ public abstract class MeleeWeapon : WeaponBase
     [SerializeField] protected ParticleSystem slashEffect;
     [SerializeField] protected TrailRenderer weaponTrail;
 
+    [Header("Combo Animation")]
+    protected private float timeOfLastAttack;
+    [SerializeField] protected private float comboWindow = 2.0f;
+    protected private int comboStack;
+    [SerializeField] protected private int maxComboStack = 2; // starts at 0
+
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -111,6 +118,22 @@ public abstract class MeleeWeapon : WeaponBase
 
     protected virtual void PlayAttackAnimation()
     {
+        if (timeOfLastAttack + comboWindow > Time.time)
+        {
+            if (comboStack < maxComboStack)
+            {
+                comboStack++; // play next combo animation if not at final animation
+            } else
+            {
+                comboStack = 0; // play first combo animation if just played final one
+            }
+        } else
+        {
+            comboStack = 0; // play first combo animation if been too long since last attack
+        }
+
+        timeOfLastAttack = Time.time;
+
         // Override in derived classes to trigger specific animations
     }
 

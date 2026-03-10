@@ -23,9 +23,13 @@ public class StaffWeapon : RangedWeapon
 
     protected override void PlayAttackAnimation()
     {
+
+        base.PlayAttackAnimation();
+        
         if (playerAnim != null)
         {
-            playerAnim.Play("Spell Cast");
+            playerAnim.Play("SpellCast" + comboStack);
+            Debug.Log("Playing animation " + "SpellCast" + comboStack);
         } else
         {
             Debug.LogError("Staff could not find Player Animator");

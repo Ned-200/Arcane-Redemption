@@ -21,9 +21,12 @@ public class SwordWeapon : MeleeWeapon
 
     protected override void PlayAttackAnimation()
     {
+        base.PlayAttackAnimation();
+        
         if (playerAnim != null)
         {
-            playerAnim.Play("Sword Slash");
+            playerAnim.Play("SwordSlash" + comboStack);
+            Debug.Log("Playing animation " + "SwordSlash" + comboStack);
         } else
         {
             Debug.LogError("Sword could not find Player Animator");

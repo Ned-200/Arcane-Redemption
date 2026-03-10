@@ -85,14 +85,14 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
             }
 
-            // Make tree angry during boss fight (by hiding sad tree)
-            GameObject SadTree = GameObject.Find("SadTree");
-            if (SadTree != null) 
+            // Make tree sad during boss fight (by hiding calm tree)
+            GameObject CalmTree = GameObject.Find("CalmTree");
+            if (CalmTree != null) 
             {
-                SadTree.SetActive(false);
+                CalmTree.SetActive(false);
             } else
             {
-                Debug.LogError("PlayerData can't find SadTree!");
+                Debug.LogError("PlayerData can't find CalmTree!");
             }
 
             // Hide Mayor NPC
@@ -149,14 +149,26 @@ public class PlayerData : MonoBehaviour
             // MAKE NECESSARY CHANGES FOR ALL OTHER SCENES
 
 
-            // Make tree sad before and after boss fight (by hiding angry tree)
-            GameObject AngryTree = GameObject.Find("AngryTree");
-            if (AngryTree != null) 
+            // Make tree calm after boss fight (by hiding sad tree)
+            if (fireGemObtained) { // to ensure not before
+                GameObject SadTree = GameObject.Find("SadTree");
+                if (SadTree != null) 
+                {
+                    SadTree.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find SadTree!");
+                }
+            } else // Make tree sad before boss fight (by hiding calm tree)
             {
-                AngryTree.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find AngryTree!");
+                GameObject CalmTree = GameObject.Find("CalmTree");
+                if (CalmTree != null) 
+                {
+                    CalmTree.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find CalmTree!");
+                }
             }
 
             if (lastScene == "WaterDungeonGraybox") { // If coming from Water Dungeon

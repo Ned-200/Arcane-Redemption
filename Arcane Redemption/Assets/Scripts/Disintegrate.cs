@@ -66,7 +66,7 @@ public class Disintegrate : MonoBehaviour
         if (disMatInstance.HasProperty(weightProp))
             disMatInstance.SetFloat(weightProp, 0f);
 
-        // ✅ "Delete" material 0 by replacing the renderer materials array with ONLY the disintegrate material
+        // "Delete" material 0 by replacing the renderer materials array with ONLY the disintegrate material
         rend.materials = new[] { disMatInstance };
 
         float t = 0f;

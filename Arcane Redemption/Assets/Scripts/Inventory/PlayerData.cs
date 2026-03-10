@@ -85,6 +85,16 @@ public class PlayerData : MonoBehaviour
                 Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
             }
 
+            // Make tree angry during boss fight (by hiding sad tree)
+            GameObject SadTree = GameObject.Find("SadTree");
+            if (SadTree != null) 
+            {
+                SadTree.SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find SadTree!");
+            }
+
             // Hide Mayor NPC
             if (GameObject.Find("MayorNPC") != null) 
             {
@@ -137,6 +147,17 @@ public class PlayerData : MonoBehaviour
         } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
             // MAKE NECESSARY CHANGES FOR ALL OTHER SCENES
+
+
+            // Make tree sad before and after boss fight (by hiding angry tree)
+            GameObject AngryTree = GameObject.Find("AngryTree");
+            if (AngryTree != null) 
+            {
+                AngryTree.SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find AngryTree!");
+            }
 
             if (lastScene == "WaterDungeonGraybox") { // If coming from Water Dungeon
 

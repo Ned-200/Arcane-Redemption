@@ -13,6 +13,7 @@ public class FireDungeonManager : MonoBehaviour
     private PlayerController playerController;
     [SerializeField] GameObject burningPrefab;
     private GameObject burningEffect;
+    private bool burning;
     private bool movedOrMoving;
     private bool entranceOpened;
     [SerializeField] float moveDuration;
@@ -122,12 +123,14 @@ public class FireDungeonManager : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {   
+            burning = true;
             Debug.Log("Player fell in pit!");
             playerController = other.GetComponent<PlayerController>();
             
             Invoke("SpawnPlayerAtopPit", 2);
             burningEffect = Instantiate(burningPrefab, characterController.transform.position, burningPrefab.transform.rotation);
             playerController.canMove = false;
+            playerController.playerAnim.SetBool("Burned", true);
 
             Invoke("DestroyBurningEffect", 3);
         }
@@ -143,6 +146,9 @@ public class FireDungeonManager : MonoBehaviour
         characterController.enabled = false;
         characterController.transform.position = new Vector3(60,0,18);
         characterController.enabled = true;
-        playerController.canMove = true;
+
+        playerController.canMove = true; 
+        burning = false;
+        playerController.playerAnim.SetBool("Burned", false);
     }
 }

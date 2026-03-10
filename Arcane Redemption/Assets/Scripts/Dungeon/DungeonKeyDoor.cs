@@ -7,6 +7,7 @@ public class DungeonKeyDoor : MonoBehaviour
     private Image interactImage;
     [SerializeField] GameObject DungeonKey;
     [SerializeField] Vector3 targetPosition;
+    [SerializeField] GameObject MovingDoorPart;
     private bool playerInRange = false;
     private bool movedOrMoving;
     [SerializeField] float moveDuration;
@@ -39,7 +40,7 @@ public class DungeonKeyDoor : MonoBehaviour
 
     IEnumerator TweenPosition(Vector3 targetPos, float duration)
     {
-        Vector3 startPosition = gameObject.transform.localPosition;
+        Vector3 startPosition = MovingDoorPart.transform.localPosition;
         float timeElapsed = 0.0f;
 
         while (timeElapsed < duration)
@@ -48,14 +49,14 @@ public class DungeonKeyDoor : MonoBehaviour
             float t = timeElapsed / duration;
 
             // Interpolate the position
-            gameObject.transform.localPosition = Vector3.Lerp(startPosition, targetPos, t);
+            MovingDoorPart.transform.localPosition = Vector3.Lerp(startPosition, targetPos, t);
             
             // Increment time and wait for the next frame
             timeElapsed += Time.deltaTime;
             yield return null; // Wait until the next frame
         }
         // Ensure the object reaches the exact target position
-        gameObject.transform.localPosition  = targetPos;
+        MovingDoorPart.transform.localPosition  = targetPos;
         Debug.Log("Gem Door Sealed!");
     }
 

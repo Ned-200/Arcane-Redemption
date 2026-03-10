@@ -20,6 +20,7 @@ public class InventorySystem : MonoBehaviour
     
     [Header("References")]
     private BaseCharacter character;
+    private Animator playerAnim;
     
     [Header("Debug")]
     [SerializeField] private bool showDebugLogs = true;
@@ -43,9 +44,14 @@ public class InventorySystem : MonoBehaviour
         if (player != null)
         {
             character = player.GetComponent<BaseCharacter>();
+            playerAnim = player.GetComponent<Animator>();
             if (character == null)
             {
                 Debug.LogError("InventorySystem: No BaseCharacter component found!");
+            }
+            if (playerAnim == null)
+            {
+                Debug.LogError("InventorySystem: No playerAnim component found!");
             }
         }
     }
@@ -163,10 +169,14 @@ public class InventorySystem : MonoBehaviour
             if (player != null)
             {
                 character = player.GetComponent<BaseCharacter>();
+                playerAnim = player.GetComponent<Animator>();
                 if (character == null) // check if character is still null
                 {
-                    Debug.LogError("InventorySystem: No character reference to restore mana!");
-                    return;
+                    Debug.LogError("InventorySystem: No BaseCharacter component found!");
+                }
+                if (playerAnim == null)
+                {
+                    Debug.LogError("InventorySystem: No playerAnim component found!");
                 }
             }
         }
@@ -196,6 +206,10 @@ public class InventorySystem : MonoBehaviour
         Transform playerTransform = character.gameObject.transform;
         GameObject healEffectObject = Instantiate(healEffectPrefab, new Vector3(playerTransform.position.x, playerTransform.position.y+1, playerTransform.position.z), healEffectPrefab.transform.rotation);
         healEffectObject.transform.parent = playerTransform;
+
+        // Play Drinking Animation
+        playerAnim.Play("HealthPotionDrink");
+
         // TODO: Play potion use sound
         // TODO: Play potion use VFX
     }
@@ -221,10 +235,14 @@ public class InventorySystem : MonoBehaviour
             if (player != null)
             {
                 character = player.GetComponent<BaseCharacter>();
+                playerAnim = player.GetComponent<Animator>();
                 if (character == null) // check if character is still null
                 {
-                    Debug.LogError("InventorySystem: No character reference to restore mana!");
-                    return;
+                    Debug.LogError("InventorySystem: No BaseCharacter component found!");
+                }
+                if (playerAnim == null)
+                {
+                    Debug.LogError("InventorySystem: No playerAnim component found!");
                 }
             }
         }
@@ -254,6 +272,11 @@ public class InventorySystem : MonoBehaviour
         Transform playerTransform = character.gameObject.transform;
         GameObject manaEffectObject = Instantiate(manaEffectPrefab, new Vector3(playerTransform.position.x, playerTransform.position.y+1, playerTransform.position.z), manaEffectPrefab.transform.rotation);
         manaEffectObject.transform.parent = playerTransform;
+
+        
+        // Play Drinking Animation
+        playerAnim.Play("ManaPotionDrink");
+
         // TODO: Play potion use sound
         // TODO: Play potion use VFX
     }

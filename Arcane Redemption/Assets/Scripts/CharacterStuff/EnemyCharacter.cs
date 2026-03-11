@@ -379,6 +379,10 @@ public class EnemyCharacter : BaseCharacter
 
         //Trigger disintegration material
         disintegrate.TriggerDisintegration();
+        if (this.gameObject.transform.Find("Feet"))
+        {
+            this.gameObject.transform.Find("Feet").GetComponent<Disintegrate>().TriggerDisintegration();
+        }
 
         // TODO: Play death sound
         // TODO: Spawn particle effects (blood, dissolve effect, etc.)

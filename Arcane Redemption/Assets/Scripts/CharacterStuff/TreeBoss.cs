@@ -1224,6 +1224,15 @@ public class TreeBoss : EnemyCharacter
             {
                 Debug.LogError("TreeBoss not assigned MayorNPC! Check Fields!");
             }
+
+            if (GameObject.Find("Sandstorm"))
+            {
+                GameObject.Find("Sandstorm").SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("TreeBoss couldn't find Sandstorm!");
+            }
         }
 
         disintegrate.TriggerDisintegration();

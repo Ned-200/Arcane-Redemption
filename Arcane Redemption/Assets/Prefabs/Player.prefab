@@ -37586,7 +37586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   weaponPrefabs:
   - {fileID: 1682700829595047671, guid: 1a01495179a80504fa8523ac9b190ef7, type: 3}
-  - {fileID: 8037376752946883172, guid: b11086daff582154f87b33cd8828f71d, type: 3}
+  - {fileID: 479882517435553165, guid: 0546c9335f0f694409a8cd551b47ad09, type: 3}
   startingWeaponIndex: 1
   weaponSlot: {fileID: 39723029630920527}
   character: {fileID: 8074217898286727442}
@@ -37611,8 +37611,8 @@ MonoBehaviour:
   healthPotionKey: 49
   manaPotionKey: 50
   showDebugLogs: 1
-  healEffectPrefab: {fileID: 0}
-  manaEffectPrefab: {fileID: 0}
+  healEffectPrefab: {fileID: 261948290644060713, guid: 6c6b5f680258a5d4ab6c0f16a0f48109, type: 3}
+  manaEffectPrefab: {fileID: 8737831217019480111, guid: f5854d348e946d945bd6bcb5caedce7c, type: 3}
   healthPotionCount: 0
   manaPotionCount: 0
 --- !u!114 &7065954753341959028

@@ -18,11 +18,11 @@ public class TreeBoss : EnemyCharacter
     [SerializeField] private float projectileMaxRange = 25f;
 
     [Header("Boss Attack Damage")]
-    [SerializeField] private float armSlamDamage = 25f;
+    [SerializeField] private float vineRingDamage = 30f;
     [SerializeField] private float projectileDamage = 15f;
 
     [Header("Boss Attack Cooldowns")]
-    [SerializeField] private float meleeAttackCooldown = 1.5f;
+    [SerializeField] private float meleeAttackCooldown = 2f;
     [SerializeField] private float rangedAttackCooldown = 3f;
 
     [Header("Projectile Settings")]
@@ -52,12 +52,14 @@ public class TreeBoss : EnemyCharacter
     [Header("Enraged Mode (20% HP)")]
     [SerializeField] private float enrageHealthThreshold = 0.2f;
     [SerializeField] private float enrageChargeSpeed = 6f;
-    [SerializeField] private float enragedMeleeCooldown = 0.8f;
+    [SerializeField] private float enragedMeleeCooldown = 1.2f;
     [SerializeField] private float enragedDamageMultiplier = 1.3f;
 
-    [Header("Vine Attack System")]
-    [SerializeField] private VineSpawner vineSpawner;
-    [SerializeField] private float vineSpawnDelay = 0.2f;
+    [Header("Vine Ring Attack System")]
+    [SerializeField] private GameObject vineRingPrefab;
+    [SerializeField] private float vineRingSpawnDelay = 0.3f;
+    [SerializeField] private float vineRingDamageDelay = 0.5f;
+    [SerializeField] private float vineRingLifetime = 2f;
 
     [Header("Physics Settings")]
     [SerializeField] private float bossMass = 500f;
@@ -99,9 +101,8 @@ public class TreeBoss : EnemyCharacter
     private bool isAdvancingToPlayer;
     private Transform playerTransform;
 
-    private bool isPerformingCombo;
-    private Queue<ArmSlamType> currentComboQueue = new Queue<ArmSlamType>();
-    private Coroutine currentComboCoroutine;
+    private bool isPerformingMeleeAttack;
+    private Coroutine meleeAttackCoroutine;
 
     private bool isFiringProjectileVolley;
     private Coroutine projectileVolleyCoroutine;
@@ -132,7 +133,7 @@ public class TreeBoss : EnemyCharacter
 
     public BossState CurrentBossState => currentBossState;
     public BossAttackState CurrentAttackState => currentAttackState;
-    public bool IsPerformingCombo => isPerformingCombo;
+    public bool IsPerformingMeleeAttack => isPerformingMeleeAttack;
     public bool IsFiringProjectileVolley => isFiringProjectileVolley;
     public bool IsRetreating => isRetreating;
     public bool IsEnraged => isEnraged;
@@ -181,7 +182,6 @@ public class TreeBoss : EnemyCharacter
         InitializeRigidbody();
         InitializeComponents();
         InitializeHealthBarUI();
-        InitializeVineSpawner();
     }
 
     private void InitializeState()
@@ -194,6 +194,7 @@ public class TreeBoss : EnemyCharacter
         isDashRetreating = false;
         isEnraged = false;
         hasEnteredEnragedMode = false;
+        isPerformingMeleeAttack = false;
     }
 
     private void InitializeCounters()
@@ -252,6 +253,11 @@ public class TreeBoss : EnemyCharacter
             Debug.LogError($"[{gameObject.name}] Tracking projectile prefab not assigned!");
         }
 
+        if (vineRingPrefab == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] Vine ring prefab not assigned! Vine ring attack will not display.");
+        }
+
         Debug.Log($"[{gameObject.name}] TreeBoss initialized - Detection: {bossDetectionRadius}m, Melee: {meleeAttackRange}m, Projectile: {projectileMinRange}-{projectileMaxRange}m");
     }
 
@@ -262,19 +268,6 @@ public class TreeBoss : EnemyCharacter
         if (healthBarUI == null)
         {
             Debug.LogWarning($"[{gameObject.name}] BossHealthBarUI not found in scene! Boss health bar will not display.");
-        }
-    }
-
-    private void InitializeVineSpawner()
-    {
-        if (vineSpawner == null)
-        {
-            vineSpawner = GetComponent<VineSpawner>();
-        }
-
-        if (vineSpawner == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] VineSpawner component not found! Vine attacks will not spawn.");
         }
     }
 
@@ -346,7 +339,7 @@ public class TreeBoss : EnemyCharacter
     {
         if (TargetPlayer == null) return;
 
-        StopCurrentCombo();
+        StopMeleeAttack();
         ResetDashRetreat();
         
         Vector3 dashTargetPosition = CalculateDashTargetPosition();
@@ -357,13 +350,13 @@ public class TreeBoss : EnemyCharacter
         StartDashRetreatCoroutine(dashTargetPosition);
     }
 
-    private void StopCurrentCombo()
+    private void StopMeleeAttack()
     {
-        if (currentComboCoroutine != null)
+        if (meleeAttackCoroutine != null)
         {
-            StopCoroutine(currentComboCoroutine);
-            isPerformingCombo = false;
-            currentComboCoroutine = null;
+            StopCoroutine(meleeAttackCoroutine);
+            isPerformingMeleeAttack = false;
+            meleeAttackCoroutine = null;
             LockBossPosition(false);
         }
     }
@@ -481,7 +474,7 @@ public class TreeBoss : EnemyCharacter
 
     private void StopAllBossActions()
     {
-        StopCurrentCombo();
+        StopMeleeAttack();
         StopProjectileVolley();
         StopMovementActions();
         StopDashRetreat();
@@ -617,7 +610,7 @@ public class TreeBoss : EnemyCharacter
             isAdvancingAfterVolley = false;
         }
 
-        if (isPerformingCombo || isFiringProjectileVolley) return;
+        if (isPerformingMeleeAttack || isFiringProjectileVolley) return;
 
         if (isEnraged)
         {
@@ -634,7 +627,7 @@ public class TreeBoss : EnemyCharacter
         {                                                                               
             if (distanceToPlayer <= meleeAttackRange)
             {
-                TryPerformMeleeAttack();
+                TryPerformVineRingAttack();
             }
             else
             {
@@ -666,7 +659,7 @@ public class TreeBoss : EnemyCharacter
         }
         else
         {
-            TryPerformEnragedMeleeAttack();
+            TryPerformEnragedVineRingAttack();
         }
     }
 
@@ -971,149 +964,132 @@ public class TreeBoss : EnemyCharacter
 
     #endregion
 
-    #region Melee Attack System
+    #region Vine Ring Attack System
 
-    private void TryPerformMeleeAttack()
+    private void TryPerformVineRingAttack()
     {
         if (Time.time - lastMeleeAttackTime < meleeAttackCooldown) return;
-        if (isPerformingCombo) return;
+        if (isPerformingMeleeAttack) return;
 
         isAdvancingAfterVolley = false;
 
-        MeleeCombo combo = GenerateRandomMeleeCombo();
-        ExecuteMeleeCombo(combo, false);
+        ExecuteVineRingAttack(false);
 
         lastMeleeAttackTime = Time.time;
     }
 
-    private void TryPerformEnragedMeleeAttack()
+    private void TryPerformEnragedVineRingAttack()
     {
         if (Time.time - lastMeleeAttackTime < enragedMeleeCooldown) return;
-        if (isPerformingCombo) return;
+        if (isPerformingMeleeAttack) return;
 
-        MeleeCombo combo = GenerateRandomMeleeCombo();
-        ExecuteMeleeCombo(combo, true);
+        ExecuteVineRingAttack(true);
 
         lastMeleeAttackTime = Time.time;
     }
 
-    private MeleeCombo GenerateRandomMeleeCombo()
+    private void ExecuteVineRingAttack(bool isEnragedAttack)
     {
-        int[] possibleLengths = { 1, 3, 5 };
-        int comboLength = possibleLengths[Random.Range(0, possibleLengths.Length)];
-
-        MeleeCombo combo = new MeleeCombo();
-
-        for (int i = 0; i < comboLength; i++)
+        if (meleeAttackCoroutine != null)
         {
-            ArmSlamType slamType = (ArmSlamType)Random.Range(0, System.Enum.GetValues(typeof(ArmSlamType)).Length);
-            combo.AddAttack(slamType);
+            StopCoroutine(meleeAttackCoroutine);
         }
 
-        return combo;
+        meleeAttackCoroutine = StartCoroutine(PerformVineRingAttackSequence(isEnragedAttack));
     }
 
-    private void ExecuteMeleeCombo(MeleeCombo combo, bool isEnragedAttack)
+    private IEnumerator PerformVineRingAttackSequence(bool isEnragedAttack)
     {
-        if (currentComboCoroutine != null)
-        {
-            StopCoroutine(currentComboCoroutine);
-        }
-
-        currentComboCoroutine = StartCoroutine(PerformMeleeComboSequence(combo, isEnragedAttack));
-    }
-
-    private IEnumerator PerformMeleeComboSequence(MeleeCombo combo, bool isEnragedAttack)
-    {
-        isPerformingCombo = true;
+        isPerformingMeleeAttack = true;
         currentAttackState = BossAttackState.MeleeAttacking;
         
-        LockBossPosition(true);
+        // Remove position locking for melee attacks
+        // LockBossPosition(true);
 
         string modeText = isEnragedAttack ? "ENRAGED" : "NORMAL";
-        Debug.Log($"[{gameObject.name}] Starting {modeText} melee combo with {combo.AttackCount} attacks");
+        Debug.Log($"[{gameObject.name}] 🌿 Performing {modeText} Vine Ring Attack!");
 
-        foreach (ArmSlamType slamType in combo.Attacks)
-        {
-            yield return StartCoroutine(PerformArmSlam(slamType, isEnragedAttack));
-            
-            float comboDelay = isEnragedAttack ? 0.15f : 0.3f;
-            yield return new WaitForSeconds(comboDelay);
-        }
+        TriggerVineRingAnimation();
 
-        isPerformingCombo = false;
-        currentAttackState = BossAttackState.Idle;
-        currentComboCoroutine = null;
-        
-        LockBossPosition(false);
-    }
+        yield return new WaitForSeconds(vineRingSpawnDelay);
 
-    private IEnumerator PerformArmSlam(ArmSlamType slamType, bool isEnragedAttack)
-    {
-        TriggerArmSlamAnimation(slamType);
+        SpawnVineRing();
 
-        float animationWait = isEnragedAttack ? 0.3f : 0.5f;
-        yield return new WaitForSeconds(animationWait);
+        yield return new WaitForSeconds(vineRingDamageDelay);
 
-        if (TargetPlayer != null)
-        {
-            float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
-            if (distanceToPlayer <= meleeAttackRange)
-            {
-                SpawnVineAttackAtBoss();
-                
-                yield return new WaitForSeconds(vineSpawnDelay);
-                
-                DealMeleeDamageToPlayer(slamType, isEnragedAttack);
-            }
-        }
+        DealVineRingDamage(isEnragedAttack);
 
-        float recoveryTime = isEnragedAttack ? 0.15f : 0.3f;
+        float recoveryTime = isEnragedAttack ? 0.3f : 0.5f;
         yield return new WaitForSeconds(recoveryTime);
+
+        isPerformingMeleeAttack = false;
+        currentAttackState = BossAttackState.Idle;
+        meleeAttackCoroutine = null;
+        
+        // No need to unlock since we never locked
+        // LockBossPosition(false);
     }
 
-    private void TriggerArmSlamAnimation(ArmSlamType slamType)
+    private void TriggerVineRingAnimation()
     {
-        if (bossAnimator == null) return;
-
-        string animationTrigger = slamType switch
+        if (bossAnimator != null)
         {
-            ArmSlamType.RightArm => "RightArmSlam",
-            ArmSlamType.LeftArm => "LeftArmSlam",
-            ArmSlamType.BothArms => "BothArmsSlam",
-            _ => "RightArmSlam"
-        };
-
-        bossAnimator.SetTrigger(animationTrigger);
+            bossAnimator.SetTrigger("VineRingAttack");
+        }
     }
 
-    private void SpawnVineAttackAtBoss()
+    private void SpawnVineRing()
     {
-        if (vineSpawner == null)
+        if (vineRingPrefab == null)
         {
-            Debug.LogWarning($"[{gameObject.name}] VineSpawner not assigned - cannot spawn vines!");
+            Debug.LogWarning($"[{gameObject.name}] Vine ring prefab not assigned!");
             return;
         }
 
-        vineSpawner.SpawnVine(transform.position);
+        Vector3 spawnPosition = transform.position;
+        
+        // Raycast downward from boss to find ground
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * 2f, Vector3.down, out hit, 20f))
+        {
+            // Spawn at exact ground point beneath boss (centered on XZ, grounded on Y)
+            spawnPosition = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+            Debug.Log($"[{gameObject.name}] Ground found at Y={hit.point.y}");
+        }
+        else
+        {
+            // Fallback: use Y=0 if no ground detected
+            spawnPosition.y = 0f;
+            Debug.LogWarning($"[{gameObject.name}] No ground found beneath boss! Using Y=0 fallback.");
+        }
+
+        GameObject vineRingInstance = Instantiate(vineRingPrefab, spawnPosition, Quaternion.identity);
+
+        Destroy(vineRingInstance, vineRingLifetime);
+
+        Debug.Log($"[{gameObject.name}] 🌿 Spawned vine ring centered at {spawnPosition}");
     }
 
-    private void DealMeleeDamageToPlayer(ArmSlamType slamType, bool isEnragedAttack)
+    private void DealVineRingDamage(bool isEnragedAttack)
     {
-        if (TargetPlayer == null) return;
+        Collider[] hits = Physics.OverlapSphere(transform.position, meleeAttackRange);
 
-        BaseCharacter targetCharacter = TargetPlayer.GetComponent<BaseCharacter>();
-        if (targetCharacter != null)
+        foreach (Collider hit in hits)
         {
-            float damageMultiplier = slamType == ArmSlamType.BothArms ? 1.5f : 1f;
-            
-            if (isEnragedAttack)
+            PlayerCharacter player = hit.GetComponent<PlayerCharacter>();
+            if (player != null)
             {
-                damageMultiplier *= enragedDamageMultiplier;
+                BaseCharacter targetCharacter = player.GetComponent<BaseCharacter>();
+                if (targetCharacter != null)
+                {
+                    float damageMultiplier = isEnragedAttack ? enragedDamageMultiplier : 1f;
+                    float totalDamage = vineRingDamage * damageMultiplier;
+                    
+                    targetCharacter.TakeDamage(totalDamage);
+                    
+                    Debug.Log($"[{gameObject.name}] 💥 Vine Ring hit {player.name} for {totalDamage} damage!");
+                }
             }
-
-            float totalDamage = armSlamDamage * damageMultiplier;
-            targetCharacter.TakeDamage(totalDamage);
         }
     }
 
@@ -1213,7 +1189,7 @@ public class TreeBoss : EnemyCharacter
         base.OnDeath();
         currentBossState = BossState.BossDefeated;
         
-        StopCurrentCombo();
+        StopMeleeAttack();
         StopProjectileVolley();
         StopMovementActions();
         StopDashRetreat();
@@ -1394,31 +1370,6 @@ public enum BossAttackState
     Idle,
     MeleeAttacking,
     RangedAttacking
-}
-
-public enum ArmSlamType
-{
-    RightArm,
-    LeftArm,
-    BothArms
-}
-
-public class MeleeCombo
-{
-    private List<ArmSlamType> attacks = new List<ArmSlamType>();
-
-    public IReadOnlyList<ArmSlamType> Attacks => attacks;
-    public int AttackCount => attacks.Count;
-
-    public void AddAttack(ArmSlamType attackType)
-    {
-        attacks.Add(attackType);
-    }
-
-    public void Clear()
-    {
-        attacks.Clear();
-    }
 }
 
 #endregion

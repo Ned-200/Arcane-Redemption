@@ -55,7 +55,6 @@ public class EnemyCharacter : BaseCharacter
         base.Awake(); // Initialize stats and weapon slot
 
         enemyAnim = this.gameObject.GetComponent<Animator>();
-        disintegrate = this.gameObject.GetComponent<Disintegrate>();
         if (enemyAnim == null)
         {
             Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached animator!");
@@ -64,9 +63,20 @@ public class EnemyCharacter : BaseCharacter
             enemyAnim.Play("Idle", 0, Random.Range(0.0f, 1.0f));
         }
 
-        if (disintegrate == null)
+        if (disintegrate == null) // if not already set in fields
         {
-            Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached disintegration script!");
+            if (this.gameObject.GetComponent<Disintegrate>() != null)
+            {
+                disintegrate = this.gameObject.GetComponent<Disintegrate>();
+            } else
+            {
+                disintegrate = this.gameObject.transform.Find("Body").GetComponent<Disintegrate>(); // try to find it from a body gameobject instead
+            }
+
+            if (disintegrate == null) // if still can't find disintegrate
+            {
+                Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached disintegration script!");
+            }
         }
 
         // Equip default weapon
@@ -205,6 +215,20 @@ public class EnemyCharacter : BaseCharacter
 
         // Call base class TakeDamage which handles health reduction and events
         base.TakeDamage(damage);
+
+        // Remove phyiscal detail
+        if (gameObject.transform.Find("Leaf1") && HealthPercent <= 0.9f)
+        {
+            gameObject.transform.Find("Leaf1").GetComponent<Renderer>().enabled = false;
+        }
+        if (gameObject.transform.Find("Leaf2") && HealthPercent <= 0.5f)
+        {
+            gameObject.transform.Find("Leaf2").GetComponent<Renderer>().enabled = false;
+        }
+        if (gameObject.transform.Find("Leaf3") && HealthPercent <= 0.3f)
+        {
+            gameObject.transform.Find("Leaf3").GetComponent<Renderer>().enabled = false;
+        }
 
         // Log detailed damage information
         float healthLost = healthBefore - CurrentHealth;

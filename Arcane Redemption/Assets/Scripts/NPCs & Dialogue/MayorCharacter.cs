@@ -14,7 +14,10 @@ public class MayorCharacter : NPC_Character
         base.Start();
 
         Debug.Log("Dialogue Begin");
-        SpeakImage.SetActive(false);
+        if (SpeakImage != null)
+        {
+            Destroy(SpeakImage);
+        }
         StartDialogue();
         NPC_Speaking = true;
 

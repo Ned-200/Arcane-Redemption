@@ -89477,6 +89477,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &1412323118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1412323119}
+  m_Layer: 0
+  m_Name: promptPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1412323119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412323118}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -1, y: -3, z: 3.22}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1723487260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1416547092 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8179275911351851646, guid: 936f62d292b41d442a08683d2abaccb3, type: 3}
@@ -104068,6 +104099,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeleportDoor
   destinationSceneName: GrayboxingV1
+  interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
+  promptPosition: {fileID: 1412323119}
   LoadingUI: {fileID: 115697237}
 --- !u!135 &1723487254
 SphereCollider:
@@ -104145,7 +104178,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 09a80b52f421b0c41a2b0c97c83cc9cc, type: 3}
+  - {fileID: 2100000, guid: ae66eb2130a4f3643a9f7383a728c395, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104422,7 +104455,8 @@ Transform:
   m_LocalPosition: {x: 8.8, y: 2.4998646, z: 63.078644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1412323119}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1725071787 stripped
@@ -133460,6 +133494,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1993013258655059674, guid: dc22f836e738a17449cccf9e0b1e383b, type: 3}
   m_PrefabInstance: {fileID: 2067847957209317522}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &919132147595998590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 339832137465942837, guid: dc22f836e738a17449cccf9e0b1e383b, type: 3}
+  m_PrefabInstance: {fileID: 2067847957209317522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147595998588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9641501e3b20076449bdb04764d59192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireDungeonKey
 --- !u!1001 &1272161766050431714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133501,6 +133546,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 919132147595998588}
     - target: {fileID: 2413009015307611046, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
+      propertyPath: dungeonKey
+      value: 
+      objectReference: {fileID: 919132147595998590}
+    - target: {fileID: 2413009015307611046, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: interactImage
       value: 
       objectReference: {fileID: 1652493346}
@@ -133520,13 +133569,17 @@ PrefabInstance:
       propertyPath: targetPosition.z
       value: -0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 2413009015307611046, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
+      propertyPath: interactPromptPrefab
+      value: 
+      objectReference: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
     - target: {fileID: 4385797977045260204, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1536671135}
     - target: {fileID: 4385797977045260204, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_VersionIndex
-      value: 4411
+      value: 4450
       objectReference: {fileID: 0}
     - target: {fileID: 4407070695179342706, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_LocalPosition.x

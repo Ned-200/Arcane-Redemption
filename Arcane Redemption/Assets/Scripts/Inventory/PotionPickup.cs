@@ -7,7 +7,8 @@ public class PotionPickup : MonoBehaviour
     [SerializeField] private PotionType potionType;
     
     [Header("UI")]
-    private Image interactImage;
+    [SerializeField] private GameObject interactPromptPrefab;
+    private GameObject interactPrompt;
 
     private bool playerInRange = false;
     private InventorySystem playerInventory;
@@ -29,12 +30,9 @@ public class PotionPickup : MonoBehaviour
             Debug.LogError("PotionPickup: No PlayerData found!");
         }
 
-
-        GameObject canvas = GameObject.FindWithTag("MainCanvas");
-        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
-        if (interactImage == null)
+        if (interactPromptPrefab == null)
         {
-            Debug.LogError("PotionPickup: interactImage component not found!");
+            Debug.LogError("PotionPickup: interactPromptPrefab not assigned! Please assign the prefab.");
         }
         
         if (potionType == null)
@@ -55,9 +53,9 @@ public class PotionPickup : MonoBehaviour
                 if (added)
                 {
                     // Successfully picked up - destroy the pickup
-                    if (interactImage != null)
+                    if (interactPrompt != null)
                     {
-                        interactImage.enabled = false;
+                        Destroy(interactPrompt);
                     }
                     Destroy(gameObject);
                 }
@@ -80,9 +78,11 @@ public class PotionPickup : MonoBehaviour
             
             Debug.Log("Entered Potion range");
             
-            if (interactImage != null)
+            if (interactPromptPrefab != null)
             {
-                interactImage.enabled = true;
+                interactPrompt = Instantiate(interactPromptPrefab, new Vector3(this.transform.position.x, this.transform.position.y+1.5f, this.transform.position.z), this.transform.rotation);
+            } else {
+                Debug.LogError("PotionPickup: Interact Prompt prefab not assigned! " + this.gameObject.name);
             }
         }
     }
@@ -97,9 +97,9 @@ public class PotionPickup : MonoBehaviour
             
             Debug.Log("Left Potion range");
             
-            if (interactImage != null)
+            if (interactPrompt != null)
             {
-                interactImage.enabled = false;
+                Destroy(interactPrompt);
             }
         }
     }

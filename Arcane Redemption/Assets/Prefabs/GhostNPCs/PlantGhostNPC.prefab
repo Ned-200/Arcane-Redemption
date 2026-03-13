@@ -116,7 +116,7 @@ MonoBehaviour:
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
   lowHealthEffects: {fileID: 0}
-  SpeakImage: {fileID: 0}
+  SpeakImagePrefab: {fileID: 5010717163584122740, guid: 5435685a6e1c9a34d9185f2794b50ad8, type: 3}
   FadeUI: {fileID: 0}
   cutsceneCamera:
   - {fileID: 2523529956305888260}

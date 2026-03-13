@@ -13,7 +13,8 @@ public class NPC_Character : BaseCharacter
     protected private Coroutine TypeLineCoroutine;
 
     [Header("UI")]
-    [SerializeField] protected GameObject SpeakImage;
+    [SerializeField] protected GameObject SpeakImagePrefab;
+    protected GameObject SpeakImage;
     [SerializeField] protected GameObject FadeUI;
 
     [Header("Cutscene Camera")]
@@ -66,7 +67,7 @@ public class NPC_Character : BaseCharacter
             playerController = player.GetComponent<PlayerController>();
             if (playerController == null)
             {
-                Debug.LogError("playerController NOT FOUND BY NPC! Check Player Hierarchy.");
+                Debug.LogError("NPC_Character: playerController NOT FOUND BY NPC! Check Player Hierarchy.");
             }
             // Get PlayerMesh
             if (player.transform.Find("PlayerMesh").gameObject)
@@ -78,16 +79,19 @@ public class NPC_Character : BaseCharacter
                 Debug.Log("NPC Could Not Find/Hide Player Mesh!");
             }
         } else {   
-            Debug.LogError("PLAYER NOT FOUND BY NPC! Check Player Tag.");
+            Debug.LogError("NPC_Character: PLAYER NOT FOUND BY NPC! Check Player Tag.");
         }
 
         // Get UI if it is not assigned
-        if (SpeakImage == null || DialogueBox == null || textComponent == null)
+        if ( DialogueBox == null || textComponent == null)
         {
             GameObject mainCanvas = GameObject.FindWithTag("MainCanvas").gameObject;
-            SpeakImage = mainCanvas.transform.Find("SpeakImage").gameObject;
             DialogueBox = mainCanvas.transform.Find("DialogueBox").gameObject;
             textComponent = DialogueBox.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+        }
+        if (SpeakImagePrefab == null)
+        {
+            Debug.LogError("NPC_Character: Speak Prompt prefab not assigned! " + this.gameObject.name);
         }
     }
 
@@ -99,12 +103,13 @@ public class NPC_Character : BaseCharacter
             lookDirection.Normalize();
             NPCMesh.transform.rotation = Quaternion.Slerp(NPCMesh.transform.rotation, Quaternion.LookRotation(lookDirection), lookSpeed * Time.deltaTime);
 
-            // NPCMesh.transform.LookAt(new Vector3(player.transform.position.x, NPCMesh.transform.position.y, player.transform.position.z));
-
             if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking)
             {
                 Debug.Log("Dialogue Begin");
-                SpeakImage.SetActive(false);
+                if (SpeakImage != null)
+                {
+                    Destroy(SpeakImage);
+                }
                 StartDialogue();
             }
         }
@@ -136,7 +141,7 @@ public class NPC_Character : BaseCharacter
                 playerController = player.GetComponent<PlayerController>();
                 if (playerController == null)
                 {
-                    Debug.LogError("playerController NOT FOUND BY NPC! Check Player Hierarchy.");
+                    Debug.LogError("NPC_Character: playerController NOT FOUND BY NPC! Check Player Hierarchy.");
                 }
 
                 // Get PlayerMesh
@@ -146,16 +151,23 @@ public class NPC_Character : BaseCharacter
                     weaponMesh = player.transform.Find("WeaponSlot").gameObject;
                 } else
                 {
-                    Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+                    Debug.LogError("NPC_Character: NPC Could Not Find/Hide Player Mesh!");
                 }
 
             } else {   
-                Debug.LogError("PLAYER NOT FOUND BY NPC! Check Player Tag.");
+                Debug.LogError("NPC_Character: PLAYER NOT FOUND BY NPC! Check Player Tag.");
             }
             
             playerInRange = true;
             Debug.Log("Entered NPC range");
-            SpeakImage.SetActive(true);
+            
+            if (SpeakImagePrefab != null)
+            {
+                SpeakImage = Instantiate(SpeakImagePrefab, new Vector3(NPCMesh.transform.position.x, NPCMesh.transform.position.y+3, NPCMesh.transform.position.z), NPCMesh.transform.rotation);
+            } else
+            {
+                Debug.LogError("NPC_Character: Speak Prompt prefab not assigned!");
+            }
         }
     }
 
@@ -167,7 +179,10 @@ public class NPC_Character : BaseCharacter
         {
             playerInRange = false;
             Debug.Log("Left NPC range");
-            SpeakImage.SetActive(false);
+            if (SpeakImage != null)
+            {
+                Destroy(SpeakImage);
+            }
         }
     }
 

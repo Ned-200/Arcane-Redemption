@@ -34120,7 +34120,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3.0118947
+  m_Radius: 4
   m_Center: {x: 0.018909931, y: 0.6639457, z: 0}
 --- !u!114 &2186506962485169155
 MonoBehaviour:
@@ -34135,6 +34135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionPickup
   potionType: {fileID: 11400000, guid: 6acd2cf4619a63c47a33abc8db01625b, type: 2}
+  interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
 --- !u!1 &6649142021449323820
 GameObject:
   m_ObjectHideFlags: 0

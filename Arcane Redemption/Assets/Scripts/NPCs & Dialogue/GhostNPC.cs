@@ -39,7 +39,10 @@ public class GhostNPC : NPC_Character
         CinemachineCamera.SetActive(true);
 
         Debug.Log("Dialogue Begin");
-        SpeakImage.SetActive(false);
+        if (SpeakImage != null)
+        {
+            Destroy(SpeakImage);
+        }
         StartDialogue();
         NPC_Speaking = true;
 

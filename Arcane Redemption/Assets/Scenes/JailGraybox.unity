@@ -38511,11 +38511,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417737480192260437, guid: c3f6735a21e96ce48b17409f99d5f8a7, type: 3}
       propertyPath: m_Name
-      value: Mayor_NPC
+      value: NPCMesh
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1728380474671179207, guid: c3f6735a21e96ce48b17409f99d5f8a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1422582076}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3f6735a21e96ce48b17409f99d5f8a7, type: 3}
 --- !u!1 &991604094
@@ -47233,7 +47236,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1027763112}
-  - {fileID: 1422582076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1217585147
@@ -47256,6 +47258,7 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  lowHealthEffects: {fileID: 0}
   SpeakImage: {fileID: 1604713095}
   FadeUI: {fileID: 1604713092}
   cutsceneCamera:
@@ -47272,7 +47275,7 @@ MonoBehaviour:
   - But without the elements, the fine people of my town are facing great hardship.
   - Without flames, our nights are dark and unprotected.
   - The townsfolk must travel far just to get a drink of water.
-  - We're lucky that we atleast have our Great Tree to give us food and shelter,
+  - We're lucky that we at least have our Great Tree to give us food and shelter,
     but were surrounded by desert.
   - We need the elements back, and you're our best hope.
   - I can't believe I'm doing this but... If you reclaim the elements, I shall use
@@ -55964,12 +55967,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1422582075}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0573868, y: -0.9300302, z: 0.16522203, w: -0.32319084}
-  m_LocalPosition: {x: -4.076524, y: 0.57451624, z: 5.1517787}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.0030978504, y: -0.98443377, z: 0.17487699, w: 0.017285526}
+  m_LocalPosition: {x: 3.5252013, y: 3.5470328, z: 13.165976}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1217585146}
+  m_Father: {fileID: 1027763112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1422582077
 MonoBehaviour:
@@ -91606,15 +91609,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_RotationOffset.x
-      value: 75.00003
+      value: 75.00007
       objectReference: {fileID: 0}
     - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_RotationOffset.y
-      value: -59.999886
+      value: -59.99985
       objectReference: {fileID: 0}
     - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_RotationOffset.z
-      value: -45
+      value: -44.99996
       objectReference: {fileID: 0}
     - target: {fileID: 2287780413625707029, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
@@ -91634,31 +91637,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.26
+      value: -9.105
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000004053116
+      value: 0.071
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.27
+      value: 10.267
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6065921
+      value: -0.19077314
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.79501325
+      value: -0.98163414
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -91666,7 +91669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -105.313
+      value: -201.996
       objectReference: {fileID: 0}
     - target: {fileID: 3120081821781954241, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -91742,7 +91745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4818591495709312724, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.x
-      value: 0.17614508
+      value: 0.17614603
       objectReference: {fileID: 0}
     - target: {fileID: 4818591495709312724, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.y
@@ -91750,7 +91753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4818591495709312724, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.z
-      value: 0.060052663
+      value: 0.060050666
       objectReference: {fileID: 0}
     - target: {fileID: 5331459119020749177, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: playerAnim
@@ -91766,11 +91769,11 @@ PrefabInstance:
       objectReference: {fileID: 1845147051}
     - target: {fileID: 5832026475385575172, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.x
-      value: 0.015999613
+      value: 0.016000597
       objectReference: {fileID: 0}
     - target: {fileID: 5832026475385575172, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.z
-      value: -0.015910596
+      value: -0.015910149
       objectReference: {fileID: 0}
     - target: {fileID: 7347822102702317493, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
@@ -91797,8 +91800,12 @@ PrefabInstance:
       value: 2.6231751
       objectReference: {fileID: 0}
     - target: {fileID: 8356516978262426242, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.y
+      value: -172.28496
+      objectReference: {fileID: 0}
+    - target: {fileID: 8356516978262426242, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_RotationOffset.z
-      value: 1.5612596
+      value: 1.5612594
       objectReference: {fileID: 0}
     - target: {fileID: 8866390142278909826, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh

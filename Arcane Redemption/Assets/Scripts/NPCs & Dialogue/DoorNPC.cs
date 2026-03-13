@@ -55,21 +55,26 @@ public class DoorNPC : NPC_Character
 
     protected override void Update()
     {
-        if (playerInRange && !NPC_Speaking && Input.GetKeyDown(KeyCode.E) && hasSeenIntro)
-        {
-            Debug.Log("Dialogue Begin");
-            SpeakImage.SetActive(false);
-            StartDialogue();
-            NPC_Speaking = true;
+        if (playerInRange) {
+            //Make NPC face player
+            NPCMesh.transform.LookAt(new Vector3(player.transform.position.x, NPCMesh.transform.position.y, player.transform.position.z));
 
-            // disable player movement
-            playerController.canMove = false;
-            // hide player mesh
-            playerMesh.SetActive(false);
-            weaponMesh.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking && hasSeenIntro)
+            {
+                Debug.Log("Dialogue Begin");
+                SpeakImage.SetActive(false);
+                StartDialogue();
+                NPC_Speaking = true;
+
+                // disable player movement
+                playerController.canMove = false;
+                // hide player mesh
+                playerMesh.SetActive(false);
+                weaponMesh.SetActive(false);
+            }
         }
 
-        if (Input.GetMouseButtonDown(0) & NPC_Speaking)
+        if (Input.GetMouseButtonDown(0) && NPC_Speaking)
         {
             if (textComponent.text == lines[index])
             {

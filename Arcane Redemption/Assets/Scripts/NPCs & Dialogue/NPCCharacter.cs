@@ -32,7 +32,9 @@ public class NPC_Character : BaseCharacter
     protected int cutsceneIndex;
 
     
+    protected GameObject NPCMesh;
     protected GameObject CinemachineCamera;
+    protected float lookSpeed = 3.0f; // speed of NPC rotation when facing player
 
     // Reference to player controller to block movement
     protected PlayerController playerController;
@@ -42,15 +44,44 @@ public class NPC_Character : BaseCharacter
 
     protected virtual void Start()
     {
-        CinemachineCamera = this.transform.Find("CinemachineCamera").gameObject;
-
-        player = GameObject.FindWithTag("Player");
-        
-        if (player == null) 
-        {   
-            Debug.Log("PLAYER NOT FOUND BY NPC! Check Player Tag.");
+        // Get NPC Mesh and Cinemachine Camera
+        NPCMesh = this.transform.Find("NPCMesh").gameObject;
+        if (NPCMesh != null)
+        {
+            CinemachineCamera = NPCMesh.transform.Find("CinemachineCamera").gameObject;
+            if (CinemachineCamera == null)
+            {
+                Debug.LogError("CinemachineCamera NOT FOUND BY NPC! Check CinemachineCamera Hierarchy, it should be within mesh.");
+            }
+        } else
+        {
+            Debug.LogError("NPCMesh NOT FOUND BY NPC! Check NPCMesh Name.");
         }
 
+        // Get Player
+        player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            // Get playerController
+            playerController = player.GetComponent<PlayerController>();
+            if (playerController == null)
+            {
+                Debug.LogError("playerController NOT FOUND BY NPC! Check Player Hierarchy.");
+            }
+            // Get PlayerMesh
+            if (player.transform.Find("PlayerMesh").gameObject)
+            {
+                playerMesh = player.transform.Find("PlayerMesh").gameObject;
+                weaponMesh = player.transform.Find("WeaponSlot").gameObject;
+            } else
+            {
+                Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+            }
+        } else {   
+            Debug.LogError("PLAYER NOT FOUND BY NPC! Check Player Tag.");
+        }
+
+        // Get UI if it is not assigned
         if (SpeakImage == null || DialogueBox == null || textComponent == null)
         {
             GameObject mainCanvas = GameObject.FindWithTag("MainCanvas").gameObject;
@@ -62,21 +93,23 @@ public class NPC_Character : BaseCharacter
 
     protected override void Update()
     {
-        if (playerInRange & Input.GetKeyDown(KeyCode.E) & !NPC_Speaking)
-        {
-            Debug.Log("Dialogue Begin");
-            SpeakImage.SetActive(false);
-            StartDialogue();
-            NPC_Speaking = true;
+        if (playerInRange) {
+            //Make NPC face player
+            Vector3 lookDirection = player.transform.position - NPCMesh.transform.position;
+            lookDirection.Normalize();
+            NPCMesh.transform.rotation = Quaternion.Slerp(NPCMesh.transform.rotation, Quaternion.LookRotation(lookDirection), lookSpeed * Time.deltaTime);
 
-            // disable player movement
-            playerController.canMove = false;
-            // hide player mesh
-            playerMesh.SetActive(false);
-            weaponMesh.SetActive(false);
+            // NPCMesh.transform.LookAt(new Vector3(player.transform.position.x, NPCMesh.transform.position.y, player.transform.position.z));
+
+            if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking)
+            {
+                Debug.Log("Dialogue Begin");
+                SpeakImage.SetActive(false);
+                StartDialogue();
+            }
         }
 
-        if (Input.GetMouseButtonDown(0) & NPC_Speaking)
+        if (Input.GetMouseButtonDown(0) && NPC_Speaking)
         {
             if (textComponent.text == lines[index])
             {
@@ -93,21 +126,33 @@ public class NPC_Character : BaseCharacter
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !NPC_Speaking)
         {   
             // Get player from collision
             player = other;
-            playerController = player.GetComponent<PlayerController>();
-            if (player.transform.Find("PlayerMesh").gameObject)
+            if (player != null)
             {
-                playerMesh = player.transform.Find("PlayerMesh").gameObject;
-                weaponMesh = player.transform.Find("WeaponSlot").gameObject;
-              
-            } else
-            {
-                Debug.Log("NPC Could Not Find/Hide Player Mesh!");
-            }
+                // Get playerController
+                playerController = player.GetComponent<PlayerController>();
+                if (playerController == null)
+                {
+                    Debug.LogError("playerController NOT FOUND BY NPC! Check Player Hierarchy.");
+                }
 
+                // Get PlayerMesh
+                if (player.transform.Find("PlayerMesh").gameObject)
+                {
+                    playerMesh = player.transform.Find("PlayerMesh").gameObject;
+                    weaponMesh = player.transform.Find("WeaponSlot").gameObject;
+                } else
+                {
+                    Debug.Log("NPC Could Not Find/Hide Player Mesh!");
+                }
+
+            } else {   
+                Debug.LogError("PLAYER NOT FOUND BY NPC! Check Player Tag.");
+            }
+            
             playerInRange = true;
             Debug.Log("Entered NPC range");
             SpeakImage.SetActive(true);
@@ -134,27 +179,7 @@ public class NPC_Character : BaseCharacter
         TypeLineCoroutine = StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
         CinemachineCamera.SetActive(true);
-
-        if (player == null)
-        {
-            // Get player by tag
-            player = GameObject.FindWithTag("Player");
-            
-            if (player != null) 
-            {   
-                playerController = player.GetComponent<PlayerController>();
-            }
-        }
-
-        if (player.transform.Find("PlayerMesh").gameObject)
-        {
-            playerMesh = player.transform.Find("PlayerMesh").gameObject;
-            weaponMesh = player.transform.Find("WeaponSlot").gameObject;
-              
-        } else
-        {
-            Debug.Log("NPC Could Not Find/Hide Player Mesh!");
-        }
+        NPC_Speaking = true;
 
         // disable player movement
         playerController.canMove = false;
@@ -215,7 +240,6 @@ public class NPC_Character : BaseCharacter
 
             // End dialogue
             Debug.Log("Dialogue End");
-            playerInRange = false;   
             DialogueBox.SetActive(false);
             CinemachineCamera.SetActive(false);
             NPC_Speaking = false;

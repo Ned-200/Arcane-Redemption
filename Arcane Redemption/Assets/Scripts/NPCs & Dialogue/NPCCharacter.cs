@@ -9,7 +9,9 @@ public class NPC_Character : BaseCharacter
     protected private GameObject player;
     protected private bool playerInRange = false;
     protected private bool NPC_Speaking = false;
-
+    protected private int markUp; // whether text is actually used to augment other text. ex <b> for bold, and shouldn't appear 
+    // (0 == is NOT marked up, 1 == IS marked up, 2 has the first ">", 3 has the second ">" and should close)
+    protected private string markedUpString;
     protected private Coroutine TypeLineCoroutine;
 
     [Header("UI")]
@@ -207,8 +209,36 @@ public class NPC_Character : BaseCharacter
     {
         foreach (char c in lines[index].ToCharArray())
         {
-            textComponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
+            
+            if (markUp > 0)
+            {
+                markedUpString += c;
+
+                if (c == '>') { // increase markUp until second ">" which ends it
+                    markUp++;
+                }
+                
+                if (markUp == 5)
+                {
+                    // Debug.Log(markedUpString);
+                    textComponent.text += markedUpString; // add the whole marked up string at once
+                    // reset markup for next one
+                    markUp = 0;
+                    markedUpString = string.Empty; 
+                }
+
+            } else {
+                if (c == '<') // start a marked up string
+                {
+                    markUp = 1;
+                    markedUpString += '<';
+                } else 
+                { // If not marked up
+                    textComponent.text += c;
+                    yield return new WaitForSeconds(textSpeed);
+                }
+            }
+            
         }
     }
 
@@ -256,7 +286,9 @@ public class NPC_Character : BaseCharacter
             // End dialogue
             Debug.Log("Dialogue End");
             DialogueBox.SetActive(false);
-            CinemachineCamera.SetActive(false);
+            if (CinemachineCamera != null) {
+                CinemachineCamera.SetActive(false);
+            }
             NPC_Speaking = false;
 
             // Disable cutscene camera at the end of dialogue if it exists
@@ -275,11 +307,14 @@ public class NPC_Character : BaseCharacter
                 endCutsceneLine = -1;
             }
 
-            // Re-enable player movement
-            playerController.canMove = true;
-            // Un-hide player mesh
-            playerMesh.SetActive(true);
-            weaponMesh.SetActive(true);
+            
+            if (player != null) {
+                // Re-enable player movement
+                playerController.canMove = true;
+                // Un-hide player mesh
+                playerMesh.SetActive(true);
+                weaponMesh.SetActive(true);
+            }
         
         }
     }

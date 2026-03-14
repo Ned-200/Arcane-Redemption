@@ -67,7 +67,7 @@ public class DungeonKey : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !pickedUp)
         {   
             playerInRange = true;
             Debug.Log("Entered Key range");

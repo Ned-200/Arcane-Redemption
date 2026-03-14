@@ -47423,19 +47423,19 @@ MonoBehaviour:
   lines:
   - Hey you, you're finally awake. Listen here, criminal scum.
   - I don't like you, nor do I trust you... but we're desperate.
-  - I know you haven't really seen the effects of what your former Shadow Wizard
-    Gang has done, being in here and all...
+  - I know you haven't really seen the effects of what your former <b><color=#541834>Shadow
+    Gang</color></b> has done, being in here and all...
   - But without the elements, the fine people of my town are facing great hardship.
-  - Without flames, our nights are dark and unprotected.
-  - The townsfolk must travel far just to get a drink of water.
-  - We're lucky that we at least have our Great Tree to give us food and shelter,
-    but were surrounded by desert.
+  - Without <b><color=#ff3300>flames</color></b>, our nights are dark and unprotected.
+  - The townsfolk must travel far just to get a drink of <b><color=#0073bf>water</color></b>.
+  - We're lucky that we at least have our <b><color=#1c8c20>Great Tree</color></b>
+    to give us food and shelter, but were surrounded by desert.
   - We need the elements back, and you're our best hope.
   - I can't believe I'm doing this but... If you reclaim the elements, I shall use
     my Mayoral powers to waive your crimes against us.
-  - Take this sword and head to the Dungeon of Flames to the East, you can start
-    your journey there.
-  - Good luck, Crim- ...Maguso.
+  - Take this sword and head to the <b><color=#ff3300>Dungeon of Flames</color></b>
+    to the north, you can start your journey there.
+  - Good luck, Crim- ...<b><color=#8134ad>Maguso</color></b>.
   hasSecondaryLines: 1
   secondaryLines:
   - What are you waiting around for? Go save my town and earn your darn freedom!

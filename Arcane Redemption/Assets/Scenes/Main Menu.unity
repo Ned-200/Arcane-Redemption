@@ -675,7 +675,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c1af458de09a82b4797cf00f8be875e0, type: 3}
   - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
   - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
-  - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
   - {fileID: 21300000, guid: 0ee7eefcc3e711c42b53d9eac3ace40c, type: 3}
   DialogueBox: {fileID: 1757549207}
   textComponent: {fileID: 2137143597}
@@ -683,21 +682,22 @@ MonoBehaviour:
   - Long long ago, scholars of the arcane lived in harmony with the natural world.
   - A guild of these arcane scholars, known as the Elemental Wizards, had mastered
     controlling the natural world using magic.
-  - They used these powers to help the people of our realm, using fire to bring warmth
-    and water to quench thirst.
-  - Everything changed when one day, the guild leader Skar decided to harness the
-    natural elements for himself and his guild.
+  - They used these powers to help the people of our realm, using <b><color=#ff3300>Fire</color></b>
+    to bring warmth and <b><color=#0073bf>Water</color></b> to quench thirst.
+  - Everything changed when one day, the guild leader <b><color=#541834>Skar</color></b>
+    decided to harness the natural elements for himself and his guild.
   - He sealed the elements in set regions under only his control, guarded by Arcane
     Golems of his creation.
-  - The guild became known as the Shadow Gang, and fled to these locations never
-    to be seen again.
+  - The guild became known as the <b><color=#541834>Shadow Gang</color></b>, and
+    fled to these locations never to be seen again.
   - As a reward for their loyalty, he bestowed the power of each element to three
-    of the Shadow Gang members.
-  - The fourth member, Maguso, was left with nothing. Skar denied him his promised
-    share of power, proving how little his loyalty meant.
-  - Cast aside and left without any power, Maguso was caught by bounty hunters and
-    imprisoned by Mayor Dinkleberry.
-  - This is his story of redemption...
+    of the <b><color=#541834>Shadow Gang</color></b> members.
+  - The fourth member, <b><color=#8134ad>Maguso</color></b>, was left with nothing.
+    <b><color=#541834>Skar</color></b> denied him his promised share of power, proving
+    how little his loyalty meant.
+  - Cast aside and left without any power, <b><color=#8134ad>Maguso</color></b> was
+    caught by bounty hunters and imprisoned by Mayor Dinkleberry.
+  - This is <b><color=#8134ad>his</color></b> story of redemption...
   textSpeed: 0.05
 --- !u!1 &592886345
 GameObject:

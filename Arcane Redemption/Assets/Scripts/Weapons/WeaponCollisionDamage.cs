@@ -163,7 +163,19 @@ public class WeaponCollisionDamage : MonoBehaviour
             }
         }
         // END BREAKABLE CHECK
-        
+
+        // START FLOWER TOGGLE CHECK
+        SwordHitToggle toggle = other.GetComponent<SwordHitToggle>();
+        if (toggle)
+        {
+            toggle.Toggle();
+
+            if (debugCollisions)
+            {
+                Debug.Log($"[{gameObject.name}] Found Toggle Object directly: {toggle.gameObject.name}");
+            }
+        }
+                
 
         // Check if the collider has a BaseCharacter component
         BaseCharacter target = other.GetComponent<BaseCharacter>();

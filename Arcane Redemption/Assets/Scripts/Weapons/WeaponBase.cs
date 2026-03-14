@@ -60,6 +60,7 @@ public abstract class WeaponBase : MonoBehaviour
             {
                 owner.ConsumeMana(manaCost);
             }
+            
 
             Debug.Log($"[{weaponName}] ✓ Attack Success! AFTER Attack - Stamina: {owner.CurrentStamina:F1}/{owner.MaxStamina} (-{staminaCost}) | Mana: {owner.CurrentMana:F1}/{owner.MaxMana} (-{manaCost})");
         }

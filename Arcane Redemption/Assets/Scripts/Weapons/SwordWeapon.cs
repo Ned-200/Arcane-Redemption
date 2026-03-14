@@ -9,6 +9,10 @@ public class SwordWeapon : MeleeWeapon
     [Header("Sword Specific")]
     [SerializeField] private Animator playerAnim;
 
+    //For hitting flower
+    [SerializeField] private SwordHitToggle swordHitToggle;
+    
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -51,7 +55,8 @@ public class SwordWeapon : MeleeWeapon
         base.OnCollisionHit(target);
         
         Debug.Log($"[COLLISION] Sword blade physically hit {target.gameObject.name}!");
-        
+
+                
         // Add special collision-specific effects here
         // e.g., sparks, blood, etc.
     }

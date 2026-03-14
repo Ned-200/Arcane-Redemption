@@ -10,6 +10,8 @@ TagManager:
   - MainCanvas
   - FlameWall
   - Breakable
+  - Flower
+  - Sword
   layers:
   - Default
   - TransparentFX

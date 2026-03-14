@@ -116,7 +116,19 @@ public class ProjectileBase : MonoBehaviour
             {
                 Debug.LogError(BreakableObject.name + ": Breakable - no breakableScript found!");
             }
+        }else if (other.gameObject.tag == "Flower") //if it's a flower for plant dungeon
+        {
+           // START FLOWER TOGGLE CHECK
+           GameObject ToggleObject = other.gameObject;
+        SwordHitToggle toggle = ToggleObject.GetComponent<SwordHitToggle>();
+        if (toggle !=null)
+        {
+            toggle.Toggle();
+
+        } 
         }
+
+        
 
         
 

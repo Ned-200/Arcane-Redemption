@@ -18,10 +18,10 @@ MonoBehaviour:
     m_Value: {x: 1, y: 0.93542814, z: 0.7523407, w: -0.07415983}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.26621872, y: 1, z: 0.369779, w: 0}
+    m_Value: {x: 0.6924343, y: 0.98120093, z: 1, w: 0.01854005}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 0.7483176, y: 1, z: 0.34596145, w: 0}
+    m_Value: {x: 0.7483176, y: 1, z: 0.34596145, w: 0.0556198}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 3
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ColorCurves
-  active: 1
+  active: 0
   master:
     m_OverrideState: 0
     m_Value:
@@ -235,15 +235,33 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   hueVsSat:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 2
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.22167182
+          value: 0.43443692
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.73931897
+          value: 0.54039717
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4

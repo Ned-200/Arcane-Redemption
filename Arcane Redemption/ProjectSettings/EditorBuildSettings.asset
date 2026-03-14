@@ -17,9 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FireDungeonGraybox.unity
     guid: 0e1521a02dc6e684ba642cd4563b167b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/WaterDungeonGraybox.unity
     guid: dc6f82f791a148e4f9be8919cecb5e71
+  - enabled: 1
+    path: Assets/Scenes/VolcanoGraybox.unity
+    guid: a7bcb2f84b296a246b89a19d308e0b45
+  - enabled: 1
+    path: Assets/Scenes/PlantDungeonGraybox.unity
+    guid: 72c4fdea3a700d64daf392499add9442
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

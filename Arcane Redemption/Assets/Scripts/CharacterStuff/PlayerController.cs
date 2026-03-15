@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private float dashStaminaCost = 20f;
     [SerializeField] private float dashCooldown = 1f;
+    [SerializeField] private float dashInvincibilityDuration = 1.5f;
 
     [Header("Ground Check")]
     [SerializeField] private float groundCheckDistance = 0.2f;
@@ -278,9 +279,12 @@ public class PlayerController : MonoBehaviour
             dashTimeRemaining = dashDuration;
             dashCooldownRemaining = dashCooldown;
 
+            // Grant invincibility frames for the dash
+            baseCharacter.GrantInvincibility(dashInvincibilityDuration);
+
             if (enableDebugLogs)
             {
-                Debug.Log($"Dashing! Direction: {dashDirection}, Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
+                Debug.Log($"Dashing! Direction: {dashDirection}, Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}, Invincible for {dashInvincibilityDuration}s");
             }
         }
         else if (enableDebugLogs)

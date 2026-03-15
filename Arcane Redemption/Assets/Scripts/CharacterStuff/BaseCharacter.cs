@@ -39,6 +39,10 @@ public class BaseCharacter : MonoBehaviour
     // Single weapon slot
     protected HandSlot weaponSlot;
 
+    // Invincibility state
+    private bool isInvincible;
+    private float invincibilityTimeRemaining;
+
     #endregion
 
     #region Public Properties
@@ -64,6 +68,9 @@ public class BaseCharacter : MonoBehaviour
     public GameObject EquippedWeapon => weaponSlot?.EquippedItem;
     public bool IsWeaponSlotEmpty => weaponSlot?.IsEmpty ?? true;
 
+    // Invincibility properties
+    public bool IsInvincible => isInvincible;
+
     #endregion
 
     #region Unity Lifecycle
@@ -78,6 +85,7 @@ public class BaseCharacter : MonoBehaviour
     {
         UpdateStaminaRegeneration();
         UpdateManaRegeneration();
+        UpdateInvincibility();
     }
 
     #endregion
@@ -91,6 +99,8 @@ public class BaseCharacter : MonoBehaviour
         currentMana = maxMana;
         staminaRegenTimer = 0f;
         manaRegenTimer = 0f;
+        isInvincible = false;
+        invincibilityTimeRemaining = 0f;
     }
 
     protected virtual void InitializeWeaponSlot()
@@ -279,6 +289,13 @@ public class BaseCharacter : MonoBehaviour
 
         if (!IsAlive) return;
 
+        // Check invincibility - damage is ignored if character is invincible
+        if (isInvincible)
+        {
+            OnDamageBlocked(damage);
+            return;
+        }
+
         float previousHealth = currentHealth;
         currentHealth -= damage;
         currentHealth = Mathf.Max(0f, currentHealth);
@@ -307,6 +324,59 @@ public class BaseCharacter : MonoBehaviour
         if (currentHealth > previousHealth)
         {
             OnHealed(currentHealth - previousHealth);
+        }
+    }
+
+    #endregion
+
+    #region Invincibility Management
+
+    /// <summary>
+    /// Grants invincibility for a specified duration. Perfect for i-frames during dashes/rolls.
+    /// </summary>
+    /// <param name="duration">How long the character should be invincible in seconds</param>
+    public virtual void GrantInvincibility(float duration)
+    {
+        if (duration < 0f)
+        {
+            Debug.LogWarning($"{gameObject.name}: Cannot grant negative invincibility duration: {duration}", this);
+            return;
+        }
+
+        bool wasInvincible = isInvincible;
+        isInvincible = true;
+        invincibilityTimeRemaining = Mathf.Max(invincibilityTimeRemaining, duration);
+
+        if (!wasInvincible)
+        {
+            OnInvincibilityStarted();
+        }
+    }
+
+    /// <summary>
+    /// Immediately removes invincibility
+    /// </summary>
+    public virtual void RemoveInvincibility()
+    {
+        if (isInvincible)
+        {
+            isInvincible = false;
+            invincibilityTimeRemaining = 0f;
+            OnInvincibilityEnded();
+        }
+    }
+
+    private void UpdateInvincibility()
+    {
+        if (!isInvincible) return;
+
+        invincibilityTimeRemaining -= Time.deltaTime;
+
+        if (invincibilityTimeRemaining <= 0f)
+        {
+            isInvincible = false;
+            invincibilityTimeRemaining = 0f;
+            OnInvincibilityEnded();
         }
     }
 
@@ -361,6 +431,11 @@ public class BaseCharacter : MonoBehaviour
     protected virtual void OnDamageTaken(float damage) { }
     protected virtual void OnHealed(float amount) { }
     protected virtual void OnDeath() { }
+    protected virtual void OnDamageBlocked(float damage) { }
+
+    // Invincibility events
+    protected virtual void OnInvincibilityStarted() { }
+    protected virtual void OnInvincibilityEnded() { }
 
     // Weapon events
     protected virtual void OnWeaponEquipped(GameObject weapon) { }

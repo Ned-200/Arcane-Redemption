@@ -7,15 +7,19 @@ public class TeleportDoor : MonoBehaviour
     protected private GameObject playerDataObject;
     protected private PlayerData playerData;
     [SerializeField] protected string destinationSceneName;
-    protected private Image interactImage;
+
+    [Header("UI")]
+    [SerializeField] private GameObject interactPromptPrefab;
+    private GameObject interactPrompt;
+    [SerializeField] private Transform promptPosition;
     [SerializeField] protected GameObject LoadingUI;
     protected private bool teleporting = false;
     protected private bool playerInRange = false;
 
     protected void Start()
     {
+        // Get player data
         playerDataObject = GameObject.FindWithTag("PlayerData");
-
         if (playerDataObject != null)
         {
             playerData = playerDataObject.GetComponent<PlayerData>();
@@ -24,11 +28,10 @@ public class TeleportDoor : MonoBehaviour
             Debug.LogError("No Player Data in Scene! Check Tag!");
         }
 
-        GameObject canvas = GameObject.FindWithTag("MainCanvas");
-        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
-        if (interactImage == null)
+        // Get interactPrompt prefab
+        if (interactPromptPrefab == null)
         {
-            Debug.LogError("TeleportDoor: interactImage component not found!");
+            Debug.LogError("DungeonKeyDoor: interactPromptPrefab not assigned! Please assign the prefab.");
         }
     }
 
@@ -56,7 +59,7 @@ public class TeleportDoor : MonoBehaviour
         teleporting = true;
     }
 
-    protected void OnTriggerEnter(Collider collision)
+    protected virtual void OnTriggerEnter(Collider collision)
     {
         GameObject other = collision.gameObject;
 
@@ -64,11 +67,16 @@ public class TeleportDoor : MonoBehaviour
         {   
             playerInRange = true;
             Debug.Log("Entered Door range");
-            interactImage.enabled = true;
+            if (interactPromptPrefab != null)
+            {
+                interactPrompt = Instantiate(interactPromptPrefab, new Vector3(promptPosition.position.x, promptPosition.position.y, promptPosition.position.z), promptPosition.rotation);
+            } else {
+                Debug.LogError("PotionPickup: Interact Prompt prefab not assigned! " + this.gameObject.name);
+            }
         }
     }
 
-    protected void OnTriggerExit(Collider collision)
+    protected virtual void OnTriggerExit(Collider collision)
     {
         GameObject other = collision.gameObject;
 
@@ -76,7 +84,7 @@ public class TeleportDoor : MonoBehaviour
         {
             playerInRange = false;
             Debug.Log("Left Door range");
-            interactImage.enabled = false;
+            Destroy(interactPrompt);
         }
     }
 }

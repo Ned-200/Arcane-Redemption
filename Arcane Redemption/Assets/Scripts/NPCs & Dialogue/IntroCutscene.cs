@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
-public class IntroCutscene : MonoBehaviour
+public class IntroCutscene : NPC_Character
 {
 
     [Header("UI")]
@@ -12,14 +12,7 @@ public class IntroCutscene : MonoBehaviour
     private Image cutsceneImage;
     public Sprite[] images;
 
-    [Header("Text")]
-    [SerializeField] private GameObject DialogueBox;
-    [SerializeField] public TextMeshProUGUI textComponent;
-    public string[] lines;
-    public float textSpeed;
-    private int index;
-
-    void Start()
+    protected override void Start()
     {
         cutsceneImage = CutsceneImageObject.GetComponent<Image>();
 
@@ -28,20 +21,20 @@ public class IntroCutscene : MonoBehaviour
         StartIntro();
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            } else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         if (textComponent.text == lines[index])
+    //         {
+    //             NextLine();
+    //         } else
+    //         {
+    //             StopAllCoroutines();
+    //             textComponent.text = lines[index];
+    //         }
+    //     }
+    // }
 
     void StartIntro()
     {
@@ -51,18 +44,19 @@ public class IntroCutscene : MonoBehaviour
         StartCoroutine(TypeLine());
         DialogueBox.SetActive(true);
         CutsceneImageObject.SetActive(true);
+        NPC_Speaking = true;
     }
 
-    IEnumerator TypeLine()
-    {
-        foreach (char c in lines[index].ToCharArray())
-        {
-            textComponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-    }
+    // IEnumerator TypeLine()
+    // {
+    //     foreach (char c in lines[index].ToCharArray())
+    //     {
+    //         textComponent.text += c;
+    //         yield return new WaitForSeconds(textSpeed);
+    //     }
+    // }
 
-    void NextLine()
+    protected override void NextLine()
     {
         if (index < lines.Length - 1)
         {
@@ -72,8 +66,8 @@ public class IntroCutscene : MonoBehaviour
             cutsceneImage.sprite = images[index];
         } else
         {
-            // End dialogue
-            Debug.Log("Dialogue End");
+            // End introduction
+            Debug.Log("Introduction End");
             DialogueBox.SetActive(false);
             CutsceneImageObject.SetActive(false);
             gameObject.SetActive(false);

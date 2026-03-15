@@ -115,7 +115,8 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
-  SpeakImage: {fileID: 0}
+  lowHealthEffects: {fileID: 0}
+  SpeakImagePrefab: {fileID: 5010717163584122740, guid: 5435685a6e1c9a34d9185f2794b50ad8, type: 3}
   FadeUI: {fileID: 0}
   cutsceneCamera:
   - {fileID: 2523529956305888260}
@@ -127,13 +128,16 @@ MonoBehaviour:
   - ...Maguso? ...Is that you?
   - Thank you... old friend... You have freed me...
   - ...Our old leader Skar... He betrayed us... He wanted the power all to himself...
-  - He turned us into these <i>things</i>... sealing us and the elements away...
+  - He turned us into these... things... sealing us and the elements away...
   - ...Made us into monsters... And forced us to gaurd the elements for him...
   - But now... my soul is free and I can finally move on... Thank you...
   - ...And good luck against the others...
+  - ...
+  - Hey you! Over here!
   hasSecondaryLines: 0
   secondaryLines: []
-  textSpeed: 0.1
+  textSpeed: 0.75
+  mayorIndex: 8
 --- !u!1 &2523529956305888260
 GameObject:
   m_ObjectHideFlags: 0

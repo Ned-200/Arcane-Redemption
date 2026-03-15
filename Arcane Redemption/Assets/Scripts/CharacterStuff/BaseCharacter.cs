@@ -52,6 +52,7 @@ public class BaseCharacter : MonoBehaviour
     public float MaxHealth => maxHealth;
     public float HealthPercent => maxHealth > 0 ? currentHealth / maxHealth : 0f;
     public bool IsAlive => currentHealth > 0f;
+    public LowHealthPostProcess lowHealthEffects;
 
     // Stamina properties
     public float CurrentStamina => currentStamina;
@@ -101,6 +102,7 @@ public class BaseCharacter : MonoBehaviour
         manaRegenTimer = 0f;
         isInvincible = false;
         invincibilityTimeRemaining = 0f;
+        lowHealthEffects = FindObjectOfType<LowHealthPostProcess>();
     }
 
     protected virtual void InitializeWeaponSlot()
@@ -324,6 +326,7 @@ public class BaseCharacter : MonoBehaviour
         if (currentHealth > previousHealth)
         {
             OnHealed(currentHealth - previousHealth);
+             lowHealthEffects.SetHealthPercent(HealthPercent);
         }
     }
 

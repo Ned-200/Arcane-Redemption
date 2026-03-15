@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9641501e3b20076449bdb04764d59192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireDungeonKey
+  interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
 --- !u!135 &2923976231085527622
 SphereCollider:
   m_ObjectHideFlags: 0

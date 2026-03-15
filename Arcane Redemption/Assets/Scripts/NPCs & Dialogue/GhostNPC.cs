@@ -8,7 +8,8 @@ using Unity.Cinemachine;
 public class GhostNPC : NPC_Character
 {
     private GameObject NPC_Mesh;
-
+    [SerializeField] protected int mayorIndex;
+    private GameObject mayorCamera;
     protected override void Start()
     {
         base.Start();
@@ -38,7 +39,10 @@ public class GhostNPC : NPC_Character
         CinemachineCamera.SetActive(true);
 
         Debug.Log("Dialogue Begin");
-        SpeakImage.SetActive(false);
+        if (SpeakImage != null)
+        {
+            Destroy(SpeakImage);
+        }
         StartDialogue();
         NPC_Speaking = true;
 
@@ -62,16 +66,6 @@ public class GhostNPC : NPC_Character
                 if (index == cutsceneLine[cutsceneIndex])
                 {
                     StartCoroutine(TweenPosition(NPC_Mesh, new Vector3(NPC_Mesh.transform.localPosition.x, NPC_Mesh.transform.localPosition.y+8, NPC_Mesh.transform.localPosition.z), 2));
-                } else if (index == lines.Length - 1) // last line
-                {
-                    MeshRenderer meshRenderer = NPC_Mesh.GetComponent<MeshRenderer>();
-                    if (meshRenderer != null)
-                    {
-                        meshRenderer.enabled = false;
-                    } else
-                    {
-                        Debug.LogError("GhostNPC: Can't find meshRenderer component!");
-                    }
                 }
 
             } else
@@ -81,6 +75,105 @@ public class GhostNPC : NPC_Character
                 }
                 textComponent.text = lines[index];
             }
+        }
+    }
+
+    protected override void NextLine()
+    {
+        if (index < lines.Length - 1)
+        {
+            index++;
+            textComponent.text = string.Empty;
+            TypeLineCoroutine = StartCoroutine(TypeLine());
+
+            Debug.Log(cutsceneIndex);
+
+            // If a cutscene camera exists, enable it on the right line
+            if (cutsceneLine.Length > 0) {
+                if (index == cutsceneLine[cutsceneIndex]) // If current line is a cutscene line enable cutscene camera
+                {
+                    cutsceneCamera[cutsceneIndex].SetActive(true);
+                    if (cutsceneIndex < cutsceneCamera.Length - 1) // only go to next cutscene index if there is more (it breaks otherwise!)
+                    {       
+                        cutsceneIndex++;
+                    }
+                }
+            }
+
+            // If a cutscene camera exists, disable it on the right line
+            if (index == endCutsceneLine) {
+                foreach (GameObject cam in cutsceneCamera)
+                {
+                    if (cam != null)
+                    {
+                        cam.SetActive(false);
+                    }
+                }
+            }
+
+            if (index == mayorIndex && mayorIndex != 0)
+            {
+                MeshRenderer meshRenderer = NPC_Mesh.GetComponent<MeshRenderer>();
+                if (meshRenderer != null)
+                {
+                    meshRenderer.enabled = false;
+                } else
+                {
+                    Debug.LogError("GhostNPC: Can't find meshRenderer component!");
+                }
+
+                mayorCamera = GameObject.Find("MayorNPC").transform.Find("CinemachineCamera").gameObject;
+                if (mayorCamera != null)
+                {
+                    mayorCamera.SetActive(true);
+                } else
+                {
+                    Debug.LogError("GhostNPC: Can't find mayorCamera gameobject!");
+                }
+            }
+
+        } else
+        {
+            // Change Dialogue if player speaks with NPC again  
+            if (hasSecondaryLines) {
+                System.Array.Resize(ref lines, secondaryLines.Length);
+                lines = secondaryLines;
+            }
+
+            // End dialogue
+            Debug.Log("Dialogue End");
+            playerInRange = false;   
+            DialogueBox.SetActive(false);
+            CinemachineCamera.SetActive(false);
+            NPC_Speaking = false;
+
+            if (mayorCamera != null) // last line
+            {
+                mayorCamera.SetActive(false);
+            }
+
+            // Disable cutscene camera at the end of dialogue if it exists
+            foreach (GameObject cam in cutsceneCamera)
+            {
+                if (cam != null)
+                {
+                    cam.SetActive(false);
+                }
+            }
+
+            // Since dialogue is changed, remove disable the cutscene camera references. AFTER camera is deactivated!
+            if (hasSecondaryLines) {
+                cutsceneCamera = new GameObject[0];
+                cutsceneLine = new int[0];
+                endCutsceneLine = -1;
+            }
+
+            // Re-enable player movement
+            playerController.canMove = true;
+            // Un-hide player mesh
+            playerMesh.SetActive(true);
+            weaponMesh.SetActive(true);
+        
         }
     }
 

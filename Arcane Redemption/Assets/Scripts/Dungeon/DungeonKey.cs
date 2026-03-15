@@ -3,17 +3,35 @@ using UnityEngine.UI;
 
 public class DungeonKey : MonoBehaviour
 {
-    private Image interactImage;
-
     private bool playerInRange = false;
+
+    [Header("UI")]
+    [SerializeField] private GameObject interactPromptPrefab;
+    private GameObject keyUI;
+    private GameObject interactPrompt;
+    public bool pickedUp;
+
 
     void Start()
     {
+        // Get Key UI
         GameObject canvas = GameObject.FindWithTag("MainCanvas");
-        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
-        if (interactImage == null)
+        GameObject inventoryMenu = canvas.transform.Find("InventoryMenu").gameObject;
+        if (inventoryMenu != null)
         {
-            Debug.LogError("DungeonKey can't find interactImage!");
+            keyUI = inventoryMenu.transform.Find("Key").gameObject;
+            if (keyUI == null)
+            {
+                Debug.LogError("DungeonKey: Could not find keyUI! Check naming and children!");
+            }
+        } else {
+            Debug.LogError("DungeonKey: Could not find InventoryMenu! Check naming and children!");
+        }
+        
+        // Get interactPrompt prefab
+        if (interactPromptPrefab == null)
+        {
+            Debug.LogError("DungeonKey: interactPromptPrefab not assigned! Please assign the prefab.");
         }
     }
 
@@ -21,8 +39,27 @@ public class DungeonKey : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            Destroy(gameObject);
-            interactImage.enabled = false;
+            // Remove prompt
+            if (interactPrompt != null)
+            {
+                Destroy(interactPrompt);
+            }
+
+            // Hide
+            Renderer rend = GetComponent<Renderer>();
+            if (rend != null)
+            {
+                rend.enabled = false;
+            } else
+            {
+                Debug.LogError("DungeonKey: Could not find own mesh renderer!");
+            }
+            
+            // Show Key in UI
+            keyUI.GetComponent<Image>().enabled = true;
+
+            pickedUp = true;
+            
         }
     }
 
@@ -30,11 +67,16 @@ public class DungeonKey : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !pickedUp)
         {   
             playerInRange = true;
             Debug.Log("Entered Key range");
-            interactImage.enabled = true;
+            if (interactPromptPrefab != null)
+            {
+                interactPrompt = Instantiate(interactPromptPrefab, new Vector3(this.transform.position.x, this.transform.position.y+1.5f, this.transform.position.z), this.transform.rotation);
+            } else {
+                Debug.LogError("PotionPickup: Interact Prompt prefab not assigned! " + this.gameObject.name);
+            }
         }
     }
 
@@ -42,11 +84,11 @@ public class DungeonKey : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !pickedUp)
         {
             playerInRange = false;
             Debug.Log("Left Key range");
-            interactImage.enabled = false;
+            Destroy(interactPrompt);
         }
     }
 }

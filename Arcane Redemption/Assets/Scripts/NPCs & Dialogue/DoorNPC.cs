@@ -55,21 +55,29 @@ public class DoorNPC : NPC_Character
 
     protected override void Update()
     {
-        if (playerInRange && !NPC_Speaking && Input.GetKeyDown(KeyCode.E) && hasSeenIntro)
-        {
-            Debug.Log("Dialogue Begin");
-            SpeakImage.SetActive(false);
-            StartDialogue();
-            NPC_Speaking = true;
+        if (playerInRange) {
+            //Make NPC face player
+            NPCMesh.transform.LookAt(new Vector3(player.transform.position.x, NPCMesh.transform.position.y, player.transform.position.z));
 
-            // disable player movement
-            playerController.canMove = false;
-            // hide player mesh
-            playerMesh.SetActive(false);
-            weaponMesh.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking && hasSeenIntro)
+            {
+                Debug.Log("Dialogue Begin");
+                if (SpeakImage != null)
+                {
+                    Destroy(SpeakImage);
+                }
+                StartDialogue();
+                NPC_Speaking = true;
+
+                // disable player movement
+                playerController.canMove = false;
+                // hide player mesh
+                playerMesh.SetActive(false);
+                weaponMesh.SetActive(false);
+            }
         }
 
-        if (Input.GetMouseButtonDown(0) & NPC_Speaking)
+        if (Input.GetMouseButtonDown(0) && NPC_Speaking)
         {
             if (textComponent.text == lines[index])
             {
@@ -105,7 +113,10 @@ public class DoorNPC : NPC_Character
                 hasSeenIntro = true;
                 StartDialogue();
                 Debug.Log("Dialogue Begin");
-                SpeakImage.SetActive(false);
+                if (SpeakImage != null)
+                {
+                    Destroy(SpeakImage);
+                }
                 NPC_Speaking = true;
 
                 // disable player movement
@@ -117,7 +128,13 @@ public class DoorNPC : NPC_Character
             }else{
                 playerInRange = true;
                 Debug.Log("Entered NPC range");
-                SpeakImage.SetActive(true);
+                if (SpeakImagePrefab != null)
+                {
+                    SpeakImage = Instantiate(SpeakImagePrefab, new Vector3(NPCMesh.transform.position.x, NPCMesh.transform.position.y+3, NPCMesh.transform.position.z), NPCMesh.transform.rotation);
+                } else
+                {
+                    Debug.LogError("NPC_Character: Speak Prompt prefab not assigned!");
+                }
             }
         }
     }

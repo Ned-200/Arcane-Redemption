@@ -3032,7 +3032,7 @@
     "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
-        "x": 1.1200000047683716,
+        "x": 0.0,
         "y": 2.0
     },
     "m_SliderType": 0,
@@ -3574,7 +3574,7 @@
     "m_Title": "Surface Reflection",
     "m_Position": {
         "x": 3322.39990234375,
-        "y": 356.8000793457031
+        "y": 356.8000183105469
     }
 }
 
@@ -4938,7 +4938,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 4.400000095367432,
+    "m_Value": 0.0,
     "m_FloatType": 0,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -9198,7 +9198,7 @@
     "m_ObjectId": "994bdbcb80ec415a9625a3769757fba0",
     "m_Title": "Normals",
     "m_Position": {
-        "x": 591.2001953125,
+        "x": 591.2000122070313,
         "y": 1942.39990234375
     }
 }
@@ -11154,7 +11154,7 @@
     "m_Title": "Color test",
     "m_Position": {
         "x": -2104.0,
-        "y": -115.20000457763672
+        "y": -115.19998168945313
     }
 }
 
@@ -12360,8 +12360,8 @@
     "m_ObjectId": "cf36c4e158a84f0cba3bccdf1515e60b",
     "m_Title": "Foam",
     "m_Position": {
-        "x": -1203.199951171875,
-        "y": 1379.9998779296875
+        "x": -1203.2001953125,
+        "y": 1379.999755859375
     }
 }
 

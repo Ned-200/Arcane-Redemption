@@ -10,6 +10,7 @@ public class InventoryUI : MonoBehaviour
     private InventorySystem playerInventory;
     private PlayerData playerData;
     private GameObject inventoryMenu;
+    private GameObject Key;
     private GameObject Fire;
     private GameObject Water;
     private GameObject Plant;
@@ -76,6 +77,8 @@ public class InventoryUI : MonoBehaviour
         {
             Debug.LogError("InventoryUI: Could not find InventoryMenu! Check naming and children!");
         } else {
+            Key = inventoryMenu.transform.Find("Key").gameObject;
+
             Fire = inventoryMenu.transform.Find("Fire").gameObject;
             Water = inventoryMenu.transform.Find("Water").gameObject;
             Plant = inventoryMenu.transform.Find("Plant").gameObject;

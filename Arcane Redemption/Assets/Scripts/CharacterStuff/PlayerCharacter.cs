@@ -35,7 +35,7 @@ public class PlayerCharacter : BaseCharacter
     private float pitchVelocity;
     private float currentDistance;
 
-    private LowHealthPostProcess lowHealthEffects;
+   // private LowHealthPostProcess lowHealthEffects;
     private PlayerController playerController;
     private InventorySystem inventorySystem;
 
@@ -56,7 +56,7 @@ public class PlayerCharacter : BaseCharacter
         base.Awake();
 
         playerController = GetComponent<PlayerController>();
-        lowHealthEffects = FindObjectOfType<LowHealthPostProcess>();
+       // lowHealthEffects = FindObjectOfType<LowHealthPostProcess>();
 
         if (respawnPoint == null)
         {

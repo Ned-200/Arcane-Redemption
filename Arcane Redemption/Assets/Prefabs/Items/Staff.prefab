@@ -48,7 +48,7 @@ MonoBehaviour:
   weaponName: Weapon
   damage: 10
   attackCooldown: 1
-  staminaCost: 5
+  staminaCost: 3
   manaCost: 5
   attackSound: {fileID: 0}
   impactSound: {fileID: 0}
@@ -59,8 +59,11 @@ MonoBehaviour:
   aimFOV: 40
   normalFOV: 60
   aimSpeed: 5
+  comboWindow: 2
+  maxComboStack: 1
   chargingEffect: {fileID: 0}
   staffGlow: {fileID: 0}
+  playerAnim: {fileID: 0}
 --- !u!1 &2447751459986926964
 GameObject:
   m_ObjectHideFlags: 0

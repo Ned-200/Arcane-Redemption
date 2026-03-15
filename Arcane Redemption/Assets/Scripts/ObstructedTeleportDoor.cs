@@ -16,27 +16,19 @@ public class ObstructedTeleportDoor : TeleportDoor
         }
     }
 
-    protected void OnTriggerEnter(Collider collision)
+    protected override void OnTriggerEnter(Collider collision)
     {
-        GameObject other = collision.gameObject;
-
-        if (other.CompareTag("Player") && obstruction == null)
-        {   
-            playerInRange = true;
-            Debug.Log("Entered Door range");
-            interactImage.enabled = true;
+        if (obstruction == null)
+        {
+            base.OnTriggerEnter(collision);
         }
     }
 
-    protected void OnTriggerExit(Collider collision)
+    protected override void OnTriggerExit(Collider collision)
     {
-        GameObject other = collision.gameObject;
-
-        if (other.CompareTag("Player") && obstruction == null)
+        if (obstruction == null)
         {
-            playerInRange = false;
-            Debug.Log("Left Door range");
-            interactImage.enabled = false;
+            base.OnTriggerExit(collision);
         }
     }
 }

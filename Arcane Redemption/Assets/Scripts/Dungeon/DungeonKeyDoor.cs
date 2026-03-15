@@ -3,9 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class DungeonKeyDoor : MonoBehaviour
-{
-    private Image interactImage;
-    [SerializeField] GameObject DungeonKey;
+{    
+    [Header("UI")]
+    [SerializeField] private GameObject interactPromptPrefab;
+    private GameObject interactPrompt;
+    [SerializeField] private Transform promptPosition;
+    private GameObject keyUI;
+    
+    [Header("References")]
+    [SerializeField] DungeonKey dungeonKey;
     [SerializeField] Vector3 targetPosition;
     [SerializeField] GameObject MovingDoorPart;
     private bool playerInRange = false;
@@ -14,26 +20,40 @@ public class DungeonKeyDoor : MonoBehaviour
 
     void Start()
     {
-        if (DungeonKey == null)
+        if (dungeonKey == null)
         {
-            Debug.LogError("Dungeon door can't find key!");
+            Debug.LogError("DungeonKeyDoor: dungeonKey not assigned!");
         }
 
+        // Get Key UI
         GameObject canvas = GameObject.FindWithTag("MainCanvas");
-        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
-        if (interactImage == null)
+        GameObject inventoryMenu = canvas.transform.Find("InventoryMenu").gameObject;
+        if (inventoryMenu != null)
         {
-            Debug.LogError("Dungeon door can't find interact image!");
+            keyUI = inventoryMenu.transform.Find("Key").gameObject;
+            if (keyUI == null)
+            {
+                Debug.LogError("DungeonKeyDoor: Could not find keyUI! Check naming and children!");
+            }
+        } else {
+            Debug.LogError("DungeonKeyDoor: Could not find InventoryMenu! Check naming and children!");
+        }
+
+        // Get interactPrompt prefab
+        if (interactPromptPrefab == null)
+        {
+            Debug.LogError("DungeonKeyDoor: interactPromptPrefab not assigned! Please assign the prefab.");
         }
     }
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E) & DungeonKey == null & !movedOrMoving)
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && dungeonKey.pickedUp && !movedOrMoving)
         {
-            movedOrMoving = true;
+            movedOrMoving = true; // prevent repeated interaction
+            keyUI.GetComponent<Image>().enabled = true; // hide key once more, since it was used
             Debug.Log("Key opened door");
-            interactImage.enabled = false;
+            Destroy(interactPrompt);
             StartCoroutine(TweenPosition(targetPosition, moveDuration));
         }
     }
@@ -64,11 +84,16 @@ public class DungeonKeyDoor : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player") & DungeonKey == null & !movedOrMoving)
+        if (other.CompareTag("Player") && dungeonKey.pickedUp & !movedOrMoving)
         {   
             playerInRange = true;
             Debug.Log("Entered Door range");
-            interactImage.enabled = true;
+            if (interactPromptPrefab != null)
+            {
+                interactPrompt = Instantiate(interactPromptPrefab, new Vector3(promptPosition.position.x, promptPosition.position.y, promptPosition.position.z), promptPosition.rotation);
+            } else {
+                Debug.LogError("PotionPickup: Interact Prompt prefab not assigned! " + this.gameObject.name);
+            }
         }
     }
 
@@ -76,11 +101,11 @@ public class DungeonKeyDoor : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player") & DungeonKey == null & !movedOrMoving)
+        if (other.CompareTag("Player") && dungeonKey.pickedUp & !movedOrMoving)
         {
             playerInRange = false;
             Debug.Log("Left Door range");
-            interactImage.enabled = false;
+            Destroy(interactPrompt);
         }
     }
 }

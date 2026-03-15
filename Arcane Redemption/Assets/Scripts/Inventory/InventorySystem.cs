@@ -33,6 +33,7 @@ public class InventorySystem : MonoBehaviour
     // Current potion counts
     [SerializeField] private int healthPotionCount = 0;
     [SerializeField] private int manaPotionCount = 0;
+ 
     
     public int HealthPotionCount => healthPotionCount;
     public int ManaPotionCount => manaPotionCount;
@@ -67,6 +68,7 @@ public class InventorySystem : MonoBehaviour
         if (Input.GetKeyDown(healthPotionKey))
         {
             UseHealthPotion();
+            
         }
         
         // Press 2 to use mana potion

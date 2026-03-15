@@ -30,7 +30,7 @@ public class BossArmorPiece : MonoBehaviour
     [SerializeField] private LayerMask groundLayer = ~0;
 
     [Header("Disintegration Settings")]
-    [SerializeField] private float disintegrationDelay = 0.5f;
+    [SerializeField] private float disintegrationDelay = 0f;
     [SerializeField] private bool useDisintegrationScript = true;
 
     [Header("Destruction Effects")]

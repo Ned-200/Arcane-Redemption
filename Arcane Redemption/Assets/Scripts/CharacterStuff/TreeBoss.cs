@@ -86,6 +86,13 @@ public class TreeBoss : EnemyCharacter
     [Header("Mayor NPC")]
     [SerializeField] private GameObject MayorNPC;
 
+    [Header("Eye Colour")]
+    [SerializeField] private Renderer eyeRenderer;
+    [SerializeField] private Renderer normalEye;
+    [SerializeField] private Material enragedEyeMaterial;
+
+
+
     #endregion
 
     #region Private Fields
@@ -163,6 +170,12 @@ public class TreeBoss : EnemyCharacter
         CheckEnrageCondition();
         UpdateBossStateMachine();
     }
+
+    private void ChangeEyeColourToRed()
+{
+    Renderer eyeRenderer = normalEye.GetComponent<Renderer>();
+    eyeRenderer.material = enragedEyeMaterial;
+}
 
     private void FixedUpdate()
     {
@@ -405,9 +418,13 @@ public class TreeBoss : EnemyCharacter
         while (isDashRetreating && Time.time - dashStartTime < dashRetreatDuration)
         {
             if (isEnraged)
-            {
+            {   
+    
                 isDashRetreating = false;
                 yield break;
+
+                //change eye colour to red
+
             }
 
             float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
@@ -462,6 +479,7 @@ public class TreeBoss : EnemyCharacter
         if (bossAnimator != null)
         {
             bossAnimator.SetTrigger("Enrage");
+            ChangeEyeColourToRed();
         }
 
         if (currentBossState == BossState.Spawning && TryFindPlayer())

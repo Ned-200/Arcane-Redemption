@@ -10,11 +10,13 @@ public class GhostNPC : NPC_Character
     [SerializeField] protected int mayorIndex;
     private GameObject mayorCamera;
     private bool movedOrMoving;
+    private Vector3 targetPosition;
     protected override void Start()
     {
         base.Start();
 
         Invoke(nameof(BeginGhostDialogue), 3);
+        targetPosition = new Vector3(NPCMesh.transform.localPosition.x, NPCMesh.transform.localPosition.y+8, NPCMesh.transform.localPosition.z);
     }
 
     private void BeginGhostDialogue()
@@ -39,6 +41,7 @@ public class GhostNPC : NPC_Character
 
     protected override void Update()
     {
+
         base.Update();
 
         if (Input.GetMouseButtonDown(0) & NPC_Speaking)
@@ -47,7 +50,12 @@ public class GhostNPC : NPC_Character
             if (index == cutsceneLine[cutsceneIndex] && !movedOrMoving)
             {
                 movedOrMoving = true;
-                StartCoroutine(TweenPosition(NPCMesh, new Vector3(NPCMesh.transform.localPosition.x, NPCMesh.transform.localPosition.y+8, NPCMesh.transform.localPosition.z), 2));
+                StartCoroutine(TweenPosition(NPCMesh, targetPosition, 2));
+            }
+            // if never made it to target position, set it to it.
+            if (movedOrMoving && NPCMesh.transform.localPosition != targetPosition) 
+            {
+                NPCMesh.transform.localPosition = targetPosition;
             }
             // If index is the index where the camera must pan to the mayor, do that
             if (index == mayorIndex && mayorIndex != 0)
@@ -61,7 +69,15 @@ public class GhostNPC : NPC_Character
                     Debug.LogError("GhostNPC: Can't find meshRenderer component!");
                 }
 
-                mayorCamera = GameObject.Find("MayorNPC").transform.Find("CinemachineCamera").gameObject;
+                Transform mayorMesh = GameObject.Find("MayorNPC").transform.Find("NPCMesh");
+                if (mayorMesh != null)
+                {
+                    mayorCamera = mayorMesh.Find("CinemachineCamera").gameObject;
+                } else
+                {
+                    Debug.LogError("GhostNPC: Can't find mayor's NPCMesh, so could not get camera within!");
+                }
+
                 if (mayorCamera != null)
                 {
                     mayorCamera.SetActive(true);
@@ -69,6 +85,18 @@ public class GhostNPC : NPC_Character
                 {
                     Debug.LogError("GhostNPC: Can't find mayorCamera gameobject!");
                 }
+            }
+        }
+    }
+
+    protected override void NextLine()
+    {
+        base.NextLine();
+
+        if (mayorCamera != null) {
+            if (!CinemachineCamera.activeSelf && mayorCamera.activeSelf) //if ghost cam inactive but mayor camera is, disable mayor camera
+            {
+                mayorCamera.SetActive(false);
             }
         }
     }

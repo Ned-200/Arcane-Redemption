@@ -37500,6 +37500,7 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 39723029630920527}
+  lowHealthEffects: {fileID: 0}
   mouseSensitivity: 500
   cameraDistance: 5
   cameraHeight: 1.8
@@ -37542,6 +37543,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashStaminaCost: 20
   dashCooldown: 1
+  dashInvincibilityDuration: 1.5
   groundCheckDistance: 0.2
   groundCheckRadius: 0.3
   groundMask:
@@ -37591,6 +37593,7 @@ MonoBehaviour:
   weaponSlot: {fileID: 39723029630920527}
   character: {fileID: 8074217898286727442}
   playerController: {fileID: 5331459119020749177}
+  weaponSwapEffectPrefab: {fileID: 261948290644060713, guid: a882d2c1d06f1a342908a3b61078ec18, type: 3}
   switchWeaponKey: 113
 --- !u!114 &6466121563640481464
 MonoBehaviour:

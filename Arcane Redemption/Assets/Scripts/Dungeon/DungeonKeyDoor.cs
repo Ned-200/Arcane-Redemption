@@ -10,10 +10,13 @@ public class DungeonKeyDoor : MonoBehaviour
     [SerializeField] private Transform promptPosition;
     private GameObject keyUI;
     
+    
     [Header("References")]
+    private bool glowingKeyHole;
     [SerializeField] DungeonKey dungeonKey;
     [SerializeField] Vector3 targetPosition;
-    [SerializeField] GameObject MovingDoorPart;
+    [SerializeField] GameObject movingDoorPart;
+    [SerializeField] GameObject keyHolePart;
     private bool playerInRange = false;
     public bool movedOrMoving;
     [SerializeField] float moveDuration;
@@ -56,11 +59,25 @@ public class DungeonKeyDoor : MonoBehaviour
             Destroy(interactPrompt);
             StartCoroutine(TweenPosition(targetPosition, moveDuration));
         }
+        if (dungeonKey.pickedUp && !glowingKeyHole)
+        {
+            Renderer keyRend = dungeonKey.gameObject.GetComponent<Renderer>();
+            Renderer keyHoleRend = keyHolePart.GetComponent<Renderer>();
+
+            if (keyRend == null || keyHolePart == null)
+            {
+                Debug.LogError("DungeonKeyDoor: Could not find dungeonKey or keyHole renderer!");
+            } else
+            {
+                keyHoleRend.material = keyRend.material;
+                glowingKeyHole = true;
+            }
+        }
     }
 
     IEnumerator TweenPosition(Vector3 targetPos, float duration)
     {
-        Vector3 startPosition = MovingDoorPart.transform.localPosition;
+        Vector3 startPosition = movingDoorPart.transform.localPosition;
         float timeElapsed = 0.0f;
 
         while (timeElapsed < duration)
@@ -69,14 +86,14 @@ public class DungeonKeyDoor : MonoBehaviour
             float t = timeElapsed / duration;
 
             // Interpolate the position
-            MovingDoorPart.transform.localPosition = Vector3.Lerp(startPosition, targetPos, t);
+            movingDoorPart.transform.localPosition = Vector3.Lerp(startPosition, targetPos, t);
             
             // Increment time and wait for the next frame
             timeElapsed += Time.deltaTime;
             yield return null; // Wait until the next frame
         }
         // Ensure the object reaches the exact target position
-        MovingDoorPart.transform.localPosition  = targetPos;
+        movingDoorPart.transform.localPosition = targetPos;
         Debug.Log("Gem Door Sealed!");
     }
 

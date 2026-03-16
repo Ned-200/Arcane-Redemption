@@ -17,6 +17,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform weaponSlot;
     [SerializeField] private BaseCharacter character;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private GameObject weaponSwapEffectPrefab;
+
 
     [Header("Input")]
     [SerializeField] private KeyCode switchWeaponKey = KeyCode.Q;
@@ -152,6 +154,10 @@ public class WeaponManager : MonoBehaviour
         currentWeaponIndex = index;
         currentWeapon = instantiatedWeapons[index];
         currentWeapon.OnEquipped();
+
+        // Play Equip Effect
+        GameObject swapEffect = Instantiate(weaponSwapEffectPrefab, weaponSlot.position, weaponSwapEffectPrefab.transform.rotation);
+        swapEffect.transform.SetParent(weaponSlot);
 
         Debug.Log($"WeaponManager: Equipped {currentWeapon.WeaponName}");
     }

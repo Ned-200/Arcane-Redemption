@@ -79,12 +79,12 @@ public class TreeBoss : EnemyCharacter
     [Header("Change Terrain")]
     [SerializeField] private TerrainSwap terrainSwap;
 
-    [Header("Boss Ghost NPC")]
+    [Header("NPCs and Other")]
     [SerializeField] private GameObject PlantGhostPrefab;
-    private bool ghostSpawned = false;
-
-    [Header("Mayor NPC")]
     [SerializeField] private GameObject MayorNPC;
+    [SerializeField] private GameObject OpenDoors;
+    [SerializeField] private GameObject ClosedDoors;
+    private bool ghostSpawned = false;
 
     [Header("Eye Colour")]
     [SerializeField] private Renderer eyeRenderer;
@@ -591,6 +591,7 @@ public class TreeBoss : EnemyCharacter
         float currentSpeed = isEnraged ? enrageChargeSpeed : advanceSpeed;
         MoveTowardsTarget(playerTransform.position, currentSpeed);
         RotateTowardsTarget(playerTransform.position);
+
     }
 
     private void HandleFightingState()
@@ -949,6 +950,20 @@ public class TreeBoss : EnemyCharacter
 
         desiredMovementDirection = direction;
         desiredMovementSpeed = speed;
+
+        HandleDoorClosing();
+    }
+
+    private void HandleDoorClosing()
+    {
+        //CLOSE DOORS IN TOWN WHEN FIRST ADVANCING TO PLAYER
+        if (OpenDoors == null || ClosedDoors == null)
+        {
+            Debug.LogError("Tree Boss: Town doors not assigned!");
+        } else if (OpenDoors.activeSelf) {
+            OpenDoors.SetActive(false);
+            ClosedDoors.SetActive(true);
+        }
     }
 
     private void ApplyPhysicsMovement()

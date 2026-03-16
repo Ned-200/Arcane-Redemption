@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 1168029236934955320}
   - component: {fileID: 2413009015307611046}
   - component: {fileID: 1176122239874806097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: KeyLockedDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,8 +407,9 @@ MonoBehaviour:
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   promptPosition: {fileID: 7882741817263899855}
   dungeonKey: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 0, y: 6.5, z: 0}
   MovingDoorPart: {fileID: 3918940770551368136}
+  movedOrMoving: 0
   moveDuration: 3
 --- !u!135 &1176122239874806097
 SphereCollider:

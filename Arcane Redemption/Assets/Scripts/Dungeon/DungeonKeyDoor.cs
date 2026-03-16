@@ -15,7 +15,7 @@ public class DungeonKeyDoor : MonoBehaviour
     [SerializeField] Vector3 targetPosition;
     [SerializeField] GameObject MovingDoorPart;
     private bool playerInRange = false;
-    private bool movedOrMoving;
+    public bool movedOrMoving;
     [SerializeField] float moveDuration;
 
     void Start()

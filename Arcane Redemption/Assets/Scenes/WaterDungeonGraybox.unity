@@ -99876,7 +99876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c75912bea9022f4e880697946fc1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonCheckpoint
-  waterDungeonManager: {fileID: 1993126107}
+  DungeonManager: {fileID: 1993126107}
 --- !u!1 &845836737
 GameObject:
   m_ObjectHideFlags: 0
@@ -146242,7 +146242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c75912bea9022f4e880697946fc1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonCheckpoint
-  waterDungeonManager: {fileID: 1993126107}
+  DungeonManager: {fileID: 1993126107}
 --- !u!1 &1439510280
 GameObject:
   m_ObjectHideFlags: 0
@@ -148682,15 +148682,15 @@ PrefabInstance:
       objectReference: {fileID: 709492343}
     - target: {fileID: 2413009015307611046, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: targetPosition.x
-      value: 65.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2413009015307611046, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: targetPosition.y
-      value: -10
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2413009015307611046, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: targetPosition.z
-      value: 27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4385797977045260204, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_Mesh
@@ -148698,7 +148698,7 @@ PrefabInstance:
       objectReference: {fileID: 664327171}
     - target: {fileID: 4385797977045260204, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_VersionIndex
-      value: 3925
+      value: 3928
       objectReference: {fileID: 0}
     - target: {fileID: 4535148347297124938, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -192750,24 +192750,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e34a30b23445a4598890946ca2e470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonManager
+  enemies:
+  - {fileID: 919132149593041827}
+  - {fileID: 1284826389}
+  - {fileID: 103276430}
+  - {fileID: 1539385248}
   battleLockedDoors:
   - {fileID: 147973185}
   - {fileID: 1102164406}
   - {fileID: 61920627}
   - {fileID: 1987346864}
   - {fileID: 798726735}
-  enemies:
-  - {fileID: 919132149593041827}
-  - {fileID: 1284826389}
-  - {fileID: 103276430}
-  - {fileID: 1539385248}
+  teleportDoor: {fileID: 1723487252}
+  moveDuration: 2
+  characterController: {fileID: 1453777675}
+  environmentDeathEffectPrefab: {fileID: 261948290644060713, guid: 5f32dbfb26a037f409a8ecbbaad87f11, type: 3}
+  drownedOrBurned: 1
   checkpoint: {fileID: 767697268}
   exitFireWall: {fileID: 6454036268755014798}
   dungeonExit: {fileID: 718269622}
-  teleportDoor: {fileID: 1723487252}
-  characterController: {fileID: 1453777675}
-  drowningPrefab: {fileID: 261948290644060713, guid: 5f32dbfb26a037f409a8ecbbaad87f11, type: 3}
-  moveDuration: 2
 --- !u!4 &1993126108
 Transform:
   m_ObjectHideFlags: 0
@@ -193986,7 +193987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c75912bea9022f4e880697946fc1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonCheckpoint
-  waterDungeonManager: {fileID: 1993126107}
+  DungeonManager: {fileID: 1993126107}
 --- !u!1 &2042509379
 GameObject:
   m_ObjectHideFlags: 0
@@ -239148,6 +239149,7 @@ SceneRoots:
   - {fileID: 1007829303}
   - {fileID: 602033884}
   - {fileID: 1723487260}
+  - {fileID: 1993126108}
   - {fileID: 2042509380}
   - {fileID: 1477604569}
   - {fileID: 4145841236098307662}
@@ -239190,7 +239192,6 @@ SceneRoots:
   - {fileID: 1526356110}
   - {fileID: 337463967}
   - {fileID: 435013322}
-  - {fileID: 1993126108}
   - {fileID: 1832459402992304481}
   - {fileID: 8108062}
   - {fileID: 2143059294}

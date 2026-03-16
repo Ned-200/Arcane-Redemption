@@ -188,7 +188,7 @@ public class NPC_Character : BaseCharacter
         }
     }
 
-    protected void StartDialogue()
+    protected virtual void StartDialogue()
     {
         textComponent.text = string.Empty;
         cutsceneIndex = 0;

@@ -37173,7 +37173,7 @@ Transform:
   m_GameObject: {fileID: 587306405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.49, y: -10, z: 45.9}
+  m_LocalPosition: {x: 47.82, y: -10, z: 45.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45054,6 +45054,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &728920473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728920474}
+  m_Layer: 3
+  m_Name: FirePitSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &728920474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728920473}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 60, y: 1, z: 18}
+  m_LocalScale: {x: 0.5000001, y: 0.5, z: 0.5000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &729979091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4535148347297124938, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
@@ -105419,11 +105450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54d38bd50ae215429bdd3b703027b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireDungeonManager
-  battleLockedDoors:
-  - {fileID: 879704951}
-  - {fileID: 472769993}
-  - {fileID: 1120861895}
-  - {fileID: 1389128071}
   enemies:
   - {fileID: 1000975759}
   - {fileID: 714877516}
@@ -105437,13 +105463,20 @@ MonoBehaviour:
   - {fileID: 1935806899}
   - {fileID: 1725071787}
   - {fileID: 2043987210}
+  battleLockedDoors:
+  - {fileID: 879704951}
+  - {fileID: 472769993}
+  - {fileID: 1120861895}
+  - {fileID: 1389128071}
+  teleportDoor: {fileID: 1723487252}
+  moveDuration: 5
+  characterController: {fileID: 4174744767507445671}
+  environmentDeathEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
+  drownedOrBurned: 0
+  checkpoint: {fileID: 728920474}
   bridge: {fileID: 1199737605}
   vinesWall2: {fileID: 1940523241}
   dungeonEntrance: {fileID: 1488122221}
-  teleportDoor: {fileID: 1723487252}
-  characterController: {fileID: 4174744767507445671}
-  burningPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-  moveDuration: 5
 --- !u!4 &1755734535
 Transform:
   m_ObjectHideFlags: 0
@@ -134160,6 +134193,7 @@ SceneRoots:
   - {fileID: 1157543717}
   - {fileID: 1723487260}
   - {fileID: 2144774176}
+  - {fileID: 728920474}
   - {fileID: 138205580}
   - {fileID: 1729672090}
   - {fileID: 1070031564}

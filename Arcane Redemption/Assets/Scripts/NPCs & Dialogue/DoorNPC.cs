@@ -7,10 +7,9 @@ using Unity.Cinemachine;
 
 public class DoorNPC : NPC_Character
 {
-    private bool hasSeenIntro = false;
-
     protected GameObject ReturnToTownCamera1;
     protected GameObject ReturnToTownCamera2;
+    private bool notFirstInteraction;
 
 
     protected override void Start()
@@ -28,7 +27,26 @@ public class DoorNPC : NPC_Character
         playerController = player.GetComponent<PlayerController>();
         Invoke(nameof(EnableCamera2), 2);
         playerController.canMove = false;
+    }
 
+    protected override void Update()
+    {
+        if (!notFirstInteraction && playerInRange)
+        {
+            Debug.Log("Dialogue Begin");
+            if (SpeakImage != null)
+            {
+                Destroy(SpeakImage);
+            }
+            StartDialogue();
+        }
+
+        base.Update();
+    }
+    protected override void StartDialogue()
+    {
+        base.StartDialogue();
+        notFirstInteraction = true;
     }
 
     private void EnableCamera2()
@@ -52,91 +70,4 @@ public class DoorNPC : NPC_Character
         ReturnToTownCamera1.SetActive(false);
         playerController.canMove = true;
     }
-
-    protected override void Update()
-    {
-        if (playerInRange) {
-            //Make NPC face player
-            NPCMesh.transform.LookAt(new Vector3(player.transform.position.x, NPCMesh.transform.position.y, player.transform.position.z));
-
-            if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking && hasSeenIntro)
-            {
-                Debug.Log("Dialogue Begin");
-                if (SpeakImage != null)
-                {
-                    Destroy(SpeakImage);
-                }
-                StartDialogue();
-                NPC_Speaking = true;
-
-                // disable player movement
-                playerController.canMove = false;
-                // hide player mesh
-                playerMesh.SetActive(false);
-                weaponMesh.SetActive(false);
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0) && NPC_Speaking)
-        {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            } else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-        }
-    }
-
-    protected override void OnTriggerEnter(Collider collision)
-    {
-        GameObject other = collision.gameObject;
-
-        if (other.CompareTag("Player") && !NPC_Speaking)
-        {   
-            // Get player from collision
-            player = other;
-            playerController = player.GetComponent<PlayerController>();
-            if (player.transform.Find("PlayerMesh").gameObject)
-            {
-                playerMesh = player.transform.Find("PlayerMesh").gameObject;
-                weaponMesh = player.transform.Find("WeaponSlot").gameObject;
-              
-            } else
-            {
-                Debug.Log("NPC Could Not Find/Hide Player Mesh!");
-            }
-
-            if (!hasSeenIntro){
-                hasSeenIntro = true;
-                StartDialogue();
-                Debug.Log("Dialogue Begin");
-                if (SpeakImage != null)
-                {
-                    Destroy(SpeakImage);
-                }
-                NPC_Speaking = true;
-
-                // disable player movement
-                playerController.canMove = false;
-                // hide player mesh
-                playerMesh.SetActive(false);
-                weaponMesh.SetActive(false);
-
-            }else{
-                playerInRange = true;
-                Debug.Log("Entered NPC range");
-                if (SpeakImagePrefab != null)
-                {
-                    SpeakImage = Instantiate(SpeakImagePrefab, new Vector3(NPCMesh.transform.position.x, NPCMesh.transform.position.y+3, NPCMesh.transform.position.z), NPCMesh.transform.rotation);
-                } else
-                {
-                    Debug.LogError("NPC_Character: Speak Prompt prefab not assigned!");
-                }
-            }
-        }
-    }
-
 }

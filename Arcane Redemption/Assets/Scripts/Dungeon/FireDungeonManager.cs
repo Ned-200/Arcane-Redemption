@@ -1,22 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class FireDungeonManager : MonoBehaviour
+public class FireDungeonManager : DungeonManager
 {
-    [SerializeField] GameObject[] battleLockedDoors;
-    [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject bridge;
     [SerializeField] GameObject vinesWall2;
     [SerializeField] GameObject dungeonEntrance;
-    [SerializeField] GameObject teleportDoor;
-    [SerializeField] CharacterController characterController;    
-    private PlayerController playerController;
-    [SerializeField] GameObject burningPrefab;
-    private GameObject burningEffect;
-    private bool burning;
-    private bool movedOrMoving;
     private bool entranceOpened;
-    [SerializeField] float moveDuration;
 
     private bool[] doorsOpened = new bool[5];
 
@@ -32,9 +22,9 @@ public class FireDungeonManager : MonoBehaviour
             Debug.LogError("Fire dungeon manager can't find characterController!");
         }
 
-        if (burningPrefab == null)
+        if (environmentDeathEffectPrefab == null)
         {
-            Debug.LogError("Fire dungeon manager can't find burningPrefab!");
+            Debug.LogError("Fire dungeon manager can't find environmentDeathEffectPrefab!");
         }
         
         if (vinesWall2 == null)
@@ -51,28 +41,6 @@ public class FireDungeonManager : MonoBehaviour
         {
             Debug.LogError("Fire dungeon manager can't find teleportDoor!");
         }
-    }
-
-    IEnumerator TweenPosition(GameObject movingObject, Vector3 targetPos, float duration)
-    {
-        Vector3 startPosition = movingObject.transform.localPosition;
-        float timeElapsed = 0.0f;
-
-        while (timeElapsed < duration)
-        {
-            // Calculate the interpolation percentage (0 to 1)
-            float t = timeElapsed / duration;
-
-            // Interpolate the position
-            movingObject.transform.localPosition = Vector3.Lerp(startPosition, targetPos, t);
-            
-            // Increment time and wait for the next frame
-            timeElapsed += Time.deltaTime;
-            yield return null; // Wait until the next frame
-        }
-
-        // Ensure the object reaches the exact target position
-        movingObject.transform.localPosition = targetPos;
     }
 
     private void Update() {
@@ -115,40 +83,5 @@ public class FireDungeonManager : MonoBehaviour
             dungeonEntrance.transform.localPosition = new Vector3(dungeonEntrance.transform.localPosition.x, 0, dungeonEntrance.transform.localPosition.z);
         }
         
-    }
-
-    void OnTriggerEnter(Collider collision)
-    {
-        GameObject other = collision.gameObject;
-
-        if (other.CompareTag("Player"))
-        {   
-            burning = true;
-            Debug.Log("Player fell in pit!");
-            playerController = other.GetComponent<PlayerController>();
-            
-            Invoke("SpawnPlayerAtopPit", 2);
-            burningEffect = Instantiate(burningPrefab, characterController.transform.position, burningPrefab.transform.rotation);
-            playerController.canMove = false;
-            playerController.playerAnim.SetBool("Burned", true);
-
-            Invoke("DestroyBurningEffect", 3);
-        }
-    }
-
-    void DestroyBurningEffect()
-    {
-        Destroy(burningEffect);
-    }
-
-    void SpawnPlayerAtopPit()
-    {
-        characterController.enabled = false;
-        characterController.transform.position = new Vector3(60,0,18);
-        characterController.enabled = true;
-
-        playerController.canMove = true; 
-        burning = false;
-        playerController.playerAnim.SetBool("Burned", false);
     }
 }

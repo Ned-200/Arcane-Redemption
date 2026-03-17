@@ -116,16 +116,26 @@ public class ProjectileBase : MonoBehaviour
             {
                 Debug.LogError(BreakableObject.name + ": Breakable - no breakableScript found!");
             }
-        }else if (other.gameObject.tag == "Flower") //if it's a flower for plant dungeon
+        } else if (other.gameObject.tag == "Flower") //if it's a flower for plant dungeon
         {
-           // START FLOWER TOGGLE CHECK
-           GameObject ToggleObject = other.gameObject;
-        SwordHitToggle toggle = ToggleObject.GetComponent<SwordHitToggle>();
-        if (toggle !=null)
+            // START FLOWER TOGGLE CHECK
+            GameObject ToggleObject = other.gameObject;
+            SwordHitToggle toggle = ToggleObject.GetComponent<SwordHitToggle>();
+            if (toggle !=null)
+            {
+                toggle.Toggle();
+            } 
+        } else if (other.gameObject.tag == "PlantBridge") // if it's a plant bridge cast point
         {
-            toggle.Toggle();
-
-        } 
+            // START FLOWER TOGGLE CHECK
+            PlantBridge plantBridge = other.GetComponent<PlantBridge>();
+            if (plantBridge != null)
+            {
+                plantBridge.GrowBridge();
+            } else
+            {
+                Debug.LogError("ProjectileBase: Could not fetch plant bridge component from tagged object!");
+            }
         }
 
         

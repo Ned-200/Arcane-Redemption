@@ -12,6 +12,7 @@ TagManager:
   - Breakable
   - Flower
   - Sword
+  - PlantBridge
   layers:
   - Default
   - TransparentFX

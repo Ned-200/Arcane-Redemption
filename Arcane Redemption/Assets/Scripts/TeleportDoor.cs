@@ -31,7 +31,7 @@ public class TeleportDoor : MonoBehaviour
         // Get interactPrompt prefab
         if (interactPromptPrefab == null)
         {
-            Debug.LogError("DungeonKeyDoor: interactPromptPrefab not assigned! Please assign the prefab.");
+            Debug.LogError("TeleportDoor: interactPromptPrefab not assigned! Please assign the prefab.");
         }
     }
 
@@ -71,7 +71,7 @@ public class TeleportDoor : MonoBehaviour
             {
                 interactPrompt = Instantiate(interactPromptPrefab, new Vector3(promptPosition.position.x, promptPosition.position.y, promptPosition.position.z), promptPosition.rotation);
             } else {
-                Debug.LogError("PotionPickup: Interact Prompt prefab not assigned! " + this.gameObject.name);
+                Debug.LogError("TeleportDoor: Interact Prompt prefab not assigned! " + this.gameObject.name);
             }
         }
     }

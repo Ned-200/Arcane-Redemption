@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class DungeonKeyDoor : MonoBehaviour
 {    
@@ -58,6 +59,11 @@ public class DungeonKeyDoor : MonoBehaviour
             Debug.Log("Key opened door");
             Destroy(interactPrompt);
             StartCoroutine(TweenPosition(targetPosition, moveDuration));
+            
+            CinemachineImpulseSource impulseSource = movingDoorPart.GetComponent<CinemachineImpulseSource>();
+            if (impulseSource) {
+                impulseSource.GenerateImpulse(0.5f);
+            }
         }
         if (dungeonKey.pickedUp && !glowingKeyHole)
         {

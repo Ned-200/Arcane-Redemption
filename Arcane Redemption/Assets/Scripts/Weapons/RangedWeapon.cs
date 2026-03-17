@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 /// <summary>
 /// Base class for ranged weapons (Staff, Bow, etc.)
@@ -24,12 +25,12 @@ public abstract class RangedWeapon : WeaponBase
     [SerializeField] protected private int maxComboStack = 1; // starts at 0
 
     protected bool isAiming = false;
-    protected Camera playerCamera;
+    protected CinemachineCamera playerCamera;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        playerCamera = Camera.main;
+        playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineCamera>();
     }
 
     protected override void PerformPrimaryAttack()
@@ -93,7 +94,7 @@ public abstract class RangedWeapon : WeaponBase
         {
             // Smoothly transition FOV when aiming
             float targetFOV = isAiming ? aimFOV : normalFOV;
-            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * aimSpeed);
+            playerCamera.Lens.FieldOfView = Mathf.Lerp(playerCamera.Lens.FieldOfView, targetFOV, Time.deltaTime * aimSpeed);
         }
     }
 
@@ -125,7 +126,7 @@ public abstract class RangedWeapon : WeaponBase
             isAiming = false;
             if (playerCamera != null)
             {
-                playerCamera.fieldOfView = normalFOV;
+                playerCamera.Lens.FieldOfView = normalFOV;
             }
         }
     }

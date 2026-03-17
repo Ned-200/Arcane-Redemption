@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class FireDungeonManager : DungeonManager
 {
@@ -49,13 +50,26 @@ public class FireDungeonManager : DungeonManager
             doorsOpened[0] = true;
             StartCoroutine(TweenPosition(battleLockedDoors[0], new Vector3(battleLockedDoors[0].transform.localPosition.x, 8, battleLockedDoors[0].transform.localPosition.z), 3));
             StartCoroutine(TweenPosition(battleLockedDoors[1], new Vector3(battleLockedDoors[1].transform.localPosition.x, 8, battleLockedDoors[1].transform.localPosition.z), 3));
+            
+            CinemachineImpulseSource impulseSource = battleLockedDoors[0].GetComponent<CinemachineImpulseSource>();
+            if (impulseSource) {
+                battleLockedDoors[0].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+            }
+            
             Debug.Log("Opening doors");
         }
 
         if (enemies[2] == null & enemies[3] == null & !doorsOpened[1])
         {
             doorsOpened[1] = true;
+            
             StartCoroutine(TweenPosition(battleLockedDoors[2], new Vector3(battleLockedDoors[2].transform.localPosition.x, 8, battleLockedDoors[2].transform.localPosition.z), 3));
+            
+            CinemachineImpulseSource impulseSource = battleLockedDoors[2].GetComponent<CinemachineImpulseSource>();
+            if (impulseSource) {
+                battleLockedDoors[2].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+            }
+
             Debug.Log("Opening door");
         }
 
@@ -63,6 +77,12 @@ public class FireDungeonManager : DungeonManager
         {
             doorsOpened[2] = true;
             StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, 8, battleLockedDoors[3].transform.localPosition.z), 3));
+            
+            CinemachineImpulseSource impulseSource = battleLockedDoors[3].GetComponent<CinemachineImpulseSource>();
+            if (impulseSource) {
+                battleLockedDoors[3].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+            }
+
             Debug.Log("Opening door");
         }
 
@@ -71,6 +91,12 @@ public class FireDungeonManager : DungeonManager
             movedOrMoving = true;
             // Start the tweening coroutine
             StartCoroutine(TweenPosition(bridge, new Vector3(17,-19,-60), moveDuration));
+            
+            CinemachineImpulseSource impulseSource = bridge.GetComponent<CinemachineImpulseSource>();
+            if (impulseSource) {
+                bridge.GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+            }
+
             bridge.transform.position = new Vector3(17,-19,-60);
         }
 

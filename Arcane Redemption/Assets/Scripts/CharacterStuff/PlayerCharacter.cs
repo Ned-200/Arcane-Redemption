@@ -66,9 +66,9 @@ public class PlayerCharacter : BaseCharacter
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        if (Camera.main != null)
+        if (GameObject.FindWithTag("MainCamera"))
         {
-            cameraTransform = Camera.main.transform;
+            cameraTransform = GameObject.FindWithTag("MainCamera").transform;
             if (showDebugInfo)
             {
                 Debug.Log("PlayerCharacter: Camera found and connected successfully!");

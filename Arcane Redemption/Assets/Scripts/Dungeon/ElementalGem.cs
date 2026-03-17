@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class ElementalGem : MonoBehaviour
 {
@@ -61,6 +62,12 @@ public class ElementalGem : MonoBehaviour
             // Start the tweening coroutine
             boxCollider.enabled = true;
             StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
+            
+            CinemachineImpulseSource impulseSource = gemDoor.GetComponent<CinemachineImpulseSource>();
+            if (impulseSource) {
+                impulseSource.GenerateImpulse(0.5f);
+            }
+            
             Invoke(nameof(DestroyGem), moveDuration);
         }
     }

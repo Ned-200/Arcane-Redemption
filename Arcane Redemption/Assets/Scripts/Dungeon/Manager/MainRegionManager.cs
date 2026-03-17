@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class MainRegionManager : DungeonManager
 {
@@ -43,6 +44,11 @@ public class MainRegionManager : DungeonManager
                 StartCoroutine(TweenPosition(battleLockedDoors[doorsOpened], new Vector3(battleLockedDoors[doorsOpened].transform.localPosition.x, battleLockedDoors[doorsOpened].transform.localPosition.y+bridgeElevation, battleLockedDoors[doorsOpened].transform.localPosition.z), moveDuration));
                 Debug.Log("Opening door " + doorsOpened);
                 
+                CinemachineImpulseSource impulseSource = battleLockedDoors[doorsOpened].GetComponent<CinemachineImpulseSource>();
+                if (impulseSource) {
+                    battleLockedDoors[doorsOpened].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+                }
+
                 doorsOpened++; // move to next bridge
             }
         }

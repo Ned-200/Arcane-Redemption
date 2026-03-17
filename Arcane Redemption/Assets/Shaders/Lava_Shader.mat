@@ -65,7 +65,7 @@ Material:
     m_Floats:
     - _AngleChangeSpeed: 0.2
     - _AngleOffset: 2.97
-    - _FlowSpeed: 0.042
+    - _FlowSpeed: 0.046
     - _FlowStrength: 0
     - _HeightMapStrength: 2
     - _IslandDensity: 0.1

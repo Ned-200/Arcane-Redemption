@@ -74,7 +74,7 @@ Material:
     - _QueueOffset: 0
     - _Refracted_Scale: 0.12
     - _Refracted_Speed: 0.4
-    - _Refracted_Strength: 0.61
+    - _Refracted_Strength: 0.25
     - _Refraction_Amount: 0
     - _Refration_Strength: 0
     - _warp_Speed: 0

@@ -52,7 +52,9 @@ MonoBehaviour:
   manaCost: 5
   attackSound: {fileID: 0}
   impactSound: {fileID: 0}
-  projectilePrefab: {fileID: 6124905989408069561, guid: 136e17a693dcd054794e40c32e676b7a, type: 3}
+  fireProjectilePrefab: {fileID: 6124905989408069561, guid: a199a21b18389f647ac730efca9436b8, type: 3}
+  waterProjectilePrefab: {fileID: 6124905989408069561, guid: b49cfbac1796da3489f856be113a1a75, type: 3}
+  plantProjectilePrefab: {fileID: 6124905989408069561, guid: 8c074a6a059be764ebd4c76e9c4d0da0, type: 3}
   firePoint: {fileID: 1341648528550171454}
   projectileSpeed: 20
   hasAimMode: 1
@@ -257,7 +259,7 @@ GameObject:
   - component: {fileID: 9148617121411137712}
   - component: {fileID: 1002436130225098687}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

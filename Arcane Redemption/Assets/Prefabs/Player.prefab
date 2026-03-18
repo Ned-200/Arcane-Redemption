@@ -37595,6 +37595,12 @@ MonoBehaviour:
   character: {fileID: 8074217898286727442}
   playerController: {fileID: 5331459119020749177}
   weaponSwapEffectPrefab: {fileID: 261948290644060713, guid: a882d2c1d06f1a342908a3b61078ec18, type: 3}
+  fireOrb: {fileID: 2100000, guid: 7d919fbdf906eb1458c4f4e85de12bcc, type: 2}
+  fireFirePoint: {fileID: 2100000, guid: 5facfb72e3d3030489fec5847f99f351, type: 2}
+  waterOrb: {fileID: 2100000, guid: c115d44a9203c624192ebbf52b4b1fc7, type: 2}
+  waterFirePoint: {fileID: 2100000, guid: e5d372b80b03e9c4488024b02be2f693, type: 2}
+  plantOrb: {fileID: 2100000, guid: 28c2ee56bcc5be048be10429f975a6a7, type: 2}
+  plantFirePoint: {fileID: 2100000, guid: 3baf4bda5e349c64998a45d9f7d1cc16, type: 2}
   switchWeaponKey: 113
 --- !u!114 &6466121563640481464
 MonoBehaviour:

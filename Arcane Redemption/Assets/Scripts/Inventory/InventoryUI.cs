@@ -23,6 +23,9 @@ public class InventoryUI : MonoBehaviour
     private Sprite MagusoIconInjured;
     
     private bool InventoryOpen;
+    private GameObject pauseMenu;
+    private GameObject controls;
+    private bool gamePaused;
 
     void Start()
     {
@@ -71,8 +74,23 @@ public class InventoryUI : MonoBehaviour
             Debug.LogError("InventoryUI: No playerData found!");
         }
 
+        // Get pause screen
+        pauseMenu = this.transform.Find("PauseMenu").gameObject;
+        if (pauseMenu == null)
+        {
+            Debug.LogError("InventoryUI: Could not find PauseMenu! Check naming and children!");
+        } else
+        {
+            pauseMenu.SetActive(false);
+            controls = pauseMenu.transform.Find("Controls").gameObject;
+            if (controls == null)
+            {
+                Debug.LogError("InventoryUI: Could not find Controls! Check naming and children!");
+            }
+        }
+        
         // Get inventory UI components
-        inventoryMenu = this.gameObject.transform.Find("InventoryMenu").gameObject;
+        inventoryMenu = this.transform.Find("InventoryMenu").gameObject;
         if (inventoryMenu == null)
         {
             Debug.LogError("InventoryUI: Could not find InventoryMenu! Check naming and children!");
@@ -150,7 +168,12 @@ public class InventoryUI : MonoBehaviour
             Debug.Log("PlayerCharacter: Set Maguso Icon to Injured");
             MagusoIcon.sprite = MagusoIconInjured;
         }
-
+        // Pause Game
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+        // Toggle Inventory
         if (Input.GetKeyDown(KeyCode.I) && playerController.canMove)
         {
             if (InventoryOpen)
@@ -162,6 +185,11 @@ public class InventoryUI : MonoBehaviour
                 InventoryOpen = true;
                 inventoryMenu.SetActive(true);
             }
+        }
+        // Hide controls
+        if (Input.GetMouseButtonDown(0) && controls.activeSelf)
+        {
+            controls.SetActive(false);
         }
 
         // Activate if during playthrough, they were activated. 
@@ -191,5 +219,36 @@ public class InventoryUI : MonoBehaviour
         {
             Water.SetActive(true);
         }
-}
+    }
+
+    public void ToggleControls()
+    {
+        if (controls.activeSelf) {
+            controls.SetActive(false);
+        } else
+        {
+            controls.SetActive(true);
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (gamePaused)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1;
+            gamePaused = false;
+            pauseMenu.SetActive(false);
+            playerController.canMove = true;
+        } else if (playerController.canMove) // to pause, check if player can move
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            gamePaused = true;
+            pauseMenu.SetActive(true);
+            playerController.canMove = false;
+        }
+    }
 }

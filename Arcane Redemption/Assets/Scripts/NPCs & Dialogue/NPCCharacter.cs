@@ -33,6 +33,12 @@ public class NPC_Character : BaseCharacter
     public float textSpeed;
     protected int index;
     protected int cutsceneIndex;
+    
+    [SerializeField] protected int happyIndex = -1;
+    [SerializeField] protected int angryIndex = -1;
+    [SerializeField] protected int secondaryHappyIndex = -1;
+    [SerializeField] protected int secondaryAngryIndex = -1;
+
 
     
     protected GameObject NPCMesh;
@@ -124,6 +130,7 @@ public class NPC_Character : BaseCharacter
             } else
             {
                 StopAllCoroutines();
+                TalkingAnim(false);
                 textComponent.text = lines[index];
             }
         }
@@ -188,6 +195,16 @@ public class NPC_Character : BaseCharacter
         }
     }
 
+    protected virtual void TalkingAnim(bool isTalking)
+    {
+        if (NPCMesh.GetComponent<Animator>())
+        {
+            Animator NPC_Anim = NPCMesh.GetComponent<Animator>();
+            
+            NPC_Anim.SetBool("isTalking", isTalking);
+        }
+    }
+
     protected virtual void StartDialogue()
     {
         textComponent.text = string.Empty;
@@ -207,9 +224,26 @@ public class NPC_Character : BaseCharacter
 
     protected IEnumerator TypeLine()
     {
+        TalkingAnim(true);
+
+        // If an angry index exists, play the animation on the right line
+        if (index == angryIndex) {
+            if (NPCMesh.GetComponent<Animator>()) {
+                Animator NPC_Anim = NPCMesh.GetComponent<Animator>();
+                NPC_Anim.Play("Angry");
+            }
+        }
+
+        // If an angry index exists, play the animation on the right line
+        if (index == happyIndex) {
+            if (NPCMesh.GetComponent<Animator>()) {
+                Animator NPC_Anim = NPCMesh.GetComponent<Animator>();
+                NPC_Anim.Play("Happy");
+            }    
+        }
+
         foreach (char c in lines[index].ToCharArray())
         {
-            
             if (markUp > 0)
             {
                 markedUpString += c;
@@ -238,8 +272,8 @@ public class NPC_Character : BaseCharacter
                     yield return new WaitForSeconds(textSpeed);
                 }
             }
-            
         }
+        TalkingAnim(false);
     }
 
     protected virtual void NextLine()
@@ -305,6 +339,17 @@ public class NPC_Character : BaseCharacter
                 cutsceneCamera = new GameObject[0];
                 cutsceneLine = new int[0];
                 endCutsceneLine = -1;
+                happyIndex = secondaryHappyIndex;
+                angryIndex = secondaryAngryIndex;
+
+                // Spawn SpeakImage to talk again if there is secondary dialogue
+                if (SpeakImagePrefab != null)
+                {
+                    SpeakImage = Instantiate(SpeakImagePrefab, new Vector3(NPCMesh.transform.position.x, NPCMesh.transform.position.y+3, NPCMesh.transform.position.z), NPCMesh.transform.rotation);
+                } else
+                {
+                    Debug.LogError("NPC_Character: Speak Prompt prefab not assigned!");
+                }
             }
 
             

@@ -26,8 +26,13 @@ public class MayorCharacter : NPC_Character
         
         // Fade out of black
         FadeUI.SetActive(true);
-        FadeUI.GetComponent<Image>().CrossFadeAlpha(0, 8.0f, true);
+        Invoke(nameof(Fade), 2);
         Debug.Log("FADING UI");
+    }
+
+    private void Fade()
+    {
+        FadeUI.GetComponent<Image>().CrossFadeAlpha(0, 5.0f, true);
     }
 
 }

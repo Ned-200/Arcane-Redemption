@@ -42,8 +42,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Circle_Size: 283.8
-    - _Drop: 374.4
+    - _Circle_Size: 248.5
+    - _Drop: 107.8
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Speed: 0.1

@@ -8,9 +8,13 @@ using Unity.Cinemachine;
 public abstract class RangedWeapon : WeaponBase
 {
     [Header("Ranged Settings")]
-    [SerializeField] protected GameObject projectilePrefab;
+    [SerializeField] protected GameObject fireProjectilePrefab;
+    [SerializeField] protected GameObject waterProjectilePrefab;
+    [SerializeField] protected GameObject plantProjectilePrefab;
     [SerializeField] protected Transform firePoint;
     [SerializeField] protected float projectileSpeed = 20f;
+    protected private WeaponManager weaponManager;
+    private GameObject projectileObj;
 
     [Header("Aiming")]
     [SerializeField] protected bool hasAimMode = true;
@@ -31,6 +35,10 @@ public abstract class RangedWeapon : WeaponBase
     {
         base.OnInitialized();
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineCamera>();
+        if (owner.GetComponent<WeaponManager>() != null)
+        {
+            weaponManager = owner.GetComponent<WeaponManager>();
+        }
     }
 
     protected override void PerformPrimaryAttack()
@@ -38,7 +46,7 @@ public abstract class RangedWeapon : WeaponBase
         // Play attack animation
         PlayAttackAnimation();
 
-        if (projectilePrefab == null)
+        if (fireProjectilePrefab == null || waterProjectilePrefab == null || plantProjectilePrefab == null)
         {
             Debug.LogError($"{weaponName}: Projectile prefab not assigned!");
             return;
@@ -51,11 +59,18 @@ public abstract class RangedWeapon : WeaponBase
         }
 
         // Spawn projectile
-        GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, playerCamera.transform.rotation);
+        if (weaponManager.currentElement.ToString() == "Fire") {
+            projectileObj = Instantiate(fireProjectilePrefab, firePoint.position, playerCamera.transform.rotation);
+        } else if (weaponManager.currentElement.ToString() == "Water") {
+            projectileObj = Instantiate(waterProjectilePrefab, firePoint.position, playerCamera.transform.rotation);
+        } else if (weaponManager.currentElement.ToString() == "Plant") {
+            projectileObj = Instantiate(plantProjectilePrefab, firePoint.position, playerCamera.transform.rotation);
+        }
+
         ProjectileBase projectile = projectileObj.GetComponent<ProjectileBase>();
 
         if (projectile != null)
-        {
+        {   
             projectile.Initialize(damage, owner, projectileSpeed);
         }
         else

@@ -11,6 +11,8 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected float lifetime = 5f;
     [SerializeField] protected bool destroyOnImpact = true;
     [SerializeField] protected LayerMask targetLayers;
+    [SerializeField] protected string element;
+    
 
     [Header("Visual Effects")]
     [SerializeField] protected GameObject impactEffectPrefab;
@@ -66,7 +68,7 @@ public class ProjectileBase : MonoBehaviour
         {
             targetCharacter.TakeDamage(damage);
             OnTargetHit(targetCharacter);
-        } else if (other.gameObject.tag == "PlantWall") // If a plant wall - ADD TEST WHETHER PROJECTILE IS FIRE MAGIC
+        } else if (other.gameObject.tag == "PlantWall" && element == "Fire") // If a plant wall
         {
             Disintegrate disintegrate = other.gameObject.GetComponent<Disintegrate>();
             if (disintegrate == null)
@@ -77,7 +79,7 @@ public class ProjectileBase : MonoBehaviour
                 //Trigger disintegration material
                 disintegrate.TriggerDisintegration();
             }
-        } else if (other.gameObject.tag == "FlameWall") // If a fire wall - ADD TEST WHETHER PROJECTILE IS WATER MAGIC
+        } else if (other.gameObject.tag == "FlameWall" && element == "Water") // If a fire wall
         {
             GameObject FlameWall = other.gameObject;
 
@@ -125,7 +127,7 @@ public class ProjectileBase : MonoBehaviour
             {
                 toggle.Toggle();
             } 
-        } else if (other.gameObject.tag == "PlantBridge") // if it's a plant bridge cast point
+        } else if (other.gameObject.tag == "PlantBridge" && element == "Plant") // if it's a plant bridge cast point
         {
             // START FLOWER TOGGLE CHECK
             PlantBridge plantBridge = other.GetComponent<PlantBridge>();

@@ -9,15 +9,24 @@ public class WeaponManager : MonoBehaviour
 {
     [Header("Weapon Inventory")]
     [SerializeField] private List<GameObject> weaponPrefabs = new List<GameObject>();
-    [SerializeField] private int startingWeaponIndex = 0;
-
+    [SerializeField] private int startingWeaponIndex = 0;    
     private PlayerData playerData;
+    public EquippedElement currentElement = EquippedElement.Fire;
 
     [Header("References")]
     [SerializeField] private Transform weaponSlot;
     [SerializeField] private BaseCharacter character;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject weaponSwapEffectPrefab;
+        
+    [Header("Staff Materials")]
+    [SerializeField] private Material fireOrb;
+    [SerializeField] private Material fireFirePoint;
+    [SerializeField] private Material waterOrb;
+    [SerializeField] private Material waterFirePoint;
+    [SerializeField] private Material plantOrb;
+    [SerializeField] private Material plantFirePoint;
+
 
 
     [Header("Input")]
@@ -55,6 +64,7 @@ public class WeaponManager : MonoBehaviour
     {
         HandleWeaponSwitching();
         HandleWeaponInput();
+        HandleElementInput();
     }
 
     private void InitializeWeapons()
@@ -107,7 +117,6 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && playerController.canMove)
         {
             currentWeapon.TryPrimaryAttack();
-
         }
 
         // Secondary attack (Right Mouse Button)
@@ -125,6 +134,33 @@ public class WeaponManager : MonoBehaviour
             {
                 rangedWeapon.TrySecondaryAttack(); // Toggle off
             }
+        }
+    }
+
+    private void HandleElementInput()
+    {
+        if (currentWeapon == null) return;
+
+        if (Input.GetKeyDown(KeyCode.R) && playerController.canMove && currentWeaponIndex == 0)
+        {
+            if (currentElement == EquippedElement.Fire)
+            {
+                if (playerData.waterGemObtained) {
+                    SetElement(EquippedElement.Water);
+                } else if (playerData.plantGemObtained) {
+                    SetElement(EquippedElement.Plant);
+                }
+            } else if (currentElement == EquippedElement.Water)
+            {
+                if (playerData.plantGemObtained) {
+                    SetElement(EquippedElement.Plant);
+                } else {
+                    SetElement(EquippedElement.Fire);
+                }
+            } else if (currentElement == EquippedElement.Plant)
+            {
+                SetElement(EquippedElement.Fire);
+            } 
         }
     }
 
@@ -174,5 +210,66 @@ public class WeaponManager : MonoBehaviour
         }
 
         Debug.LogWarning($"WeaponManager: Weapon '{weaponName}' not found!");
+    }
+
+    // ELEMENT STUFF:
+
+    public void SetElement(EquippedElement newElement)
+    {
+        if (currentElement != newElement)
+        {
+            currentElement = newElement;
+            OnElementChanged(newElement);
+        }
+    }
+    protected virtual void OnElementChanged(EquippedElement newElement)
+    {
+        Debug.Log("Player swapped to " + newElement);
+        if (newElement == EquippedElement.Fire) 
+        {
+            if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
+                GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
+                Renderer rend = Orb.GetComponent<Renderer>();
+                rend.material = fireOrb;
+                rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
+                rend.material = fireFirePoint;
+            } else
+            {
+                Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
+            }
+        } 
+        else if (newElement == EquippedElement.Water)
+        {
+            if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
+                GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
+                Renderer rend = Orb.GetComponent<Renderer>();
+                rend.material = waterOrb;
+                rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
+                rend.material = waterFirePoint;
+            } else
+            {
+                Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
+            }
+        } 
+        else if (newElement == EquippedElement.Plant)
+        {
+            if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
+                GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
+                Renderer rend = Orb.GetComponent<Renderer>();
+                rend.material = plantOrb;
+                rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
+                rend.material = plantFirePoint;
+            } else
+            {
+                Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
+            }
+        }
+    }
+
+    public enum EquippedElement
+    {
+        Fire,
+        Water,
+        Plant
     }
 }

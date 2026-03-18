@@ -71,6 +71,7 @@ public class ProjectileBase : MonoBehaviour
         } else if (other.gameObject.tag == "PlantWall" && element == "Fire") // If a plant wall
         {
             Disintegrate disintegrate = other.gameObject.GetComponent<Disintegrate>();
+           
             if (disintegrate == null)
             {
                 Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
@@ -78,8 +79,22 @@ public class ProjectileBase : MonoBehaviour
             {
                 //Trigger disintegration material
                 disintegrate.TriggerDisintegration();
+                
             }
-        } else if (other.gameObject.tag == "FlameWall" && element == "Water") // If a fire wall
+        } else if (other.gameObject.tag =="Tough Plant Wall"){
+            DisintegrateUP disintegrateup = other.gameObject.GetComponent<DisintegrateUP>();
+
+            if (disintegrateup == null)
+            {
+                Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
+            } else
+            {
+                //Trigger disintegration material
+                disintegrateup.TriggerDisintegrationUP();
+            }
+        }
+        
+        else if (other.gameObject.tag == "FlameWall" && element == "Water") // If a fire wall
         {
             GameObject FlameWall = other.gameObject;
 

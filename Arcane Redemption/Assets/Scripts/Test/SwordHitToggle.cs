@@ -38,6 +38,7 @@ public class SwordHitToggle : MonoBehaviour
         {
             if (obj == null) continue;
             StartStateTransition(obj, toggledState);
+            
         }
 
         foreach (GameObject obj in objectsToDisable)

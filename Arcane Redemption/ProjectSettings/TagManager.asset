@@ -13,6 +13,7 @@ TagManager:
   - Flower
   - Sword
   - PlantBridge
+  - Tough Plant Wall
   layers:
   - Default
   - TransparentFX

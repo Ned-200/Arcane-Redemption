@@ -5,29 +5,27 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public Button playButton;
-    public Button controlsButton;
     [SerializeField] GameObject LoadingUI;
-    [SerializeField] GameObject Controls;
+    [SerializeField] GameObject controls;
     private bool teleporting = false;
 
 	void Start () 
     {
         playButton.GetComponent<Button>().onClick.AddListener(OnPlayClick);
-        controlsButton.GetComponent<Button>().onClick.AddListener(OnControlsClick);
 	}
 
     void Update ()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Controls.activeSelf)
+            if (controls.activeSelf)
             {
-                Controls.SetActive(false);
+                controls.SetActive(false);
             }
         }
     }
 
-	void OnPlayClick(){
+	public void OnPlayClick(){
 		Debug.Log ("Play Button Clicked");
 
 		// Show Loading Screen
@@ -39,17 +37,26 @@ public class MainMenu : MonoBehaviour
         }
 	}
 
-    void OnControlsClick() 
+    public void ToggleControls()
     {
-		Debug.Log ("Controls Button Clicked");
-
-		// Show Controls Screen
-        Controls.SetActive(true);
-	}
+        if (controls.activeSelf) {
+            controls.SetActive(false);
+        } else
+        {
+            controls.SetActive(true);
+        }
+    }
 
     void Teleport()
     {
         Debug.Log("Teleporting Player to new Scene");
         SceneManager.LoadScene("JailGraybox", LoadSceneMode.Single);
     }
+
+    public void QuitGame()
+    {
+        Debug.Log("QUITTING GAME");
+        Application.Quit();
+    }
+
 }

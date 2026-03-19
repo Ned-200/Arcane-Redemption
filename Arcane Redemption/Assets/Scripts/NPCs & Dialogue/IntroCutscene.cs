@@ -21,21 +21,6 @@ public class IntroCutscene : NPC_Character
         StartIntro();
     }
 
-    // void Update()
-    // {
-    //     if (Input.GetMouseButtonDown(0))
-    //     {
-    //         if (textComponent.text == lines[index])
-    //         {
-    //             NextLine();
-    //         } else
-    //         {
-    //             StopAllCoroutines();
-    //             textComponent.text = lines[index];
-    //         }
-    //     }
-    // }
-
     void StartIntro()
     {
         textComponent.text = string.Empty;
@@ -46,15 +31,6 @@ public class IntroCutscene : NPC_Character
         CutsceneImageObject.SetActive(true);
         NPC_Speaking = true;
     }
-
-    // IEnumerator TypeLine()
-    // {
-    //     foreach (char c in lines[index].ToCharArray())
-    //     {
-    //         textComponent.text += c;
-    //         yield return new WaitForSeconds(textSpeed);
-    //     }
-    // }
 
     protected override void NextLine()
     {

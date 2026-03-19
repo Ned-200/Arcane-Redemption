@@ -800,6 +800,18 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1285
       objectReference: {fileID: 0}
+    - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.x
+      value: 75.00007
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.y
+      value: -59.99985
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.z
+      value: -44.999954
+      objectReference: {fileID: 0}
     - target: {fileID: 2287780413625707029, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -853,6 +865,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4818591495709312724, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_TranslationOffset.x
+      value: 0.17614722
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818591495709312724, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.y
       value: 0.026005268
       objectReference: {fileID: 0}
@@ -860,6 +876,10 @@ PrefabInstance:
       propertyPath: m_TranslationOffset.z
       value: 0.060044676
       objectReference: {fileID: 0}
+    - target: {fileID: 5034271716910781457, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: globalVolume
+      value: 
+      objectReference: {fileID: 1353991160}
     - target: {fileID: 5459682828121328213, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -868,6 +888,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1439280127}
+    - target: {fileID: 5832026475385575172, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_TranslationOffset.x
+      value: 0.015999941
+      objectReference: {fileID: 0}
     - target: {fileID: 5832026475385575172, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_TranslationOffset.y
       value: -0.17663085
@@ -904,6 +928,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 781827965}
+    - target: {fileID: 8356516978262426242, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.x
+      value: 2.623177
+      objectReference: {fileID: 0}
+    - target: {fileID: 8356516978262426242, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.y
+      value: -172.28494
+      objectReference: {fileID: 0}
+    - target: {fileID: 8356516978262426242, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_RotationOffset.z
+      value: 1.5612595
+      objectReference: {fileID: 0}
     - target: {fileID: 8866390142278909826, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 

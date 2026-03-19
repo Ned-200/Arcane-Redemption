@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class InventoryUI : MonoBehaviour
     private GameObject pauseMenu;
     private GameObject controls;
     private bool gamePaused;
+    private bool quittingToMenu;
 
     void Start()
     {
@@ -235,6 +237,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (gamePaused)
         {
+            Debug.Log("InventoryUI: Resuming Game");
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             Time.timeScale = 1;
@@ -243,12 +246,40 @@ public class InventoryUI : MonoBehaviour
             playerController.canMove = true;
         } else if (playerController.canMove) // to pause, check if player can move
         {
+            Debug.Log("InventoryUI: Pausing Game");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             Time.timeScale = 0;
             gamePaused = true;
             pauseMenu.SetActive(true);
             playerController.canMove = false;
+        }
+    }
+
+    public void QuitToMenu()
+    {
+        if (!quittingToMenu) // only can quit while not already quittingToMenu
+        {
+            quittingToMenu = true;
+
+            Debug.Log("InventoryUI: Quitting to menu & destroying player save");
+            if (playerData != null) {
+                Destroy(playerData.gameObject); // If has player data, destroy it
+            } else {
+                playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+                if (playerData != null) {
+                    Destroy(playerData.gameObject); // if no data found, try to find it again
+                } else {
+                    Debug.LogError("InventoryUI: No PlayerData found to destroy. Check Data object Tag.");
+                }
+            }
+
+            // Resume Game
+            Debug.Log("InventoryUI: Resuming Game");
+            Time.timeScale = 1;
+            gamePaused = false;
+
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         }
     }
 }

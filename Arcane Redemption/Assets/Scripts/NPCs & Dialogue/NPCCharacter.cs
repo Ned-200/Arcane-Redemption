@@ -197,11 +197,13 @@ public class NPC_Character : BaseCharacter
 
     protected virtual void TalkingAnim(bool isTalking)
     {
-        if (NPCMesh.GetComponent<Animator>())
-        {
-            Animator NPC_Anim = NPCMesh.GetComponent<Animator>();
-            
-            NPC_Anim.SetBool("isTalking", isTalking);
+        if (NPCMesh != null) {
+            if (NPCMesh.GetComponent<Animator>())
+            {
+                Animator NPC_Anim = NPCMesh.GetComponent<Animator>();
+                
+                NPC_Anim.SetBool("isTalking", isTalking);
+            }
         }
     }
 

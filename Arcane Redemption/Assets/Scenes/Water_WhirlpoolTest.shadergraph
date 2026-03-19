@@ -3137,7 +3137,7 @@
     "m_ObjectId": "1bca248b5fea4f8d8796ccbd359767d1",
     "m_Title": "Foam",
     "m_Position": {
-        "x": -3658.39990234375,
+        "x": -3658.400146484375,
         "y": 717.5999755859375
     }
 }
@@ -4365,7 +4365,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"cf1fbcf6c57dc3a48ab78d7402bb4aa9\",\"type\":3}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -11099,8 +11099,8 @@
     "m_ObjectId": "b3e03ef994ad48a6a237afdfe57ef1c5",
     "m_Title": "Normals",
     "m_Position": {
-        "x": -1800.0,
-        "y": 1491.999755859375
+        "x": -1799.999755859375,
+        "y": 1492.0
     }
 }
 
@@ -13552,7 +13552,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"cf1fbcf6c57dc3a48ab78d7402bb4aa9\",\"type\":3}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -13777,15 +13777,15 @@
     "m_Value": 0.0,
     "m_SerializableColorKeys": [
         {
-            "x": 0.08865560591220856,
-            "y": 0.05286065489053726,
-            "z": 0.11953844875097275,
-            "w": 0.008239871822297573
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 0.0
         },
         {
-            "x": 0.1946178674697876,
-            "y": 0.3277781307697296,
-            "z": 0.37626221776008608,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
         }
     ],

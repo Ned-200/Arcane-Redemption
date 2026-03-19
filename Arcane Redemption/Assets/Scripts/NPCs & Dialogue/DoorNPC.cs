@@ -29,20 +29,20 @@ public class DoorNPC : NPC_Character
         playerController.canMove = false;
     }
 
-    // protected override void Update()
-    // {
-    //     if (!notFirstInteraction && playerInRange)
-    //     {
-    //         Debug.Log("Dialogue Begin");
-    //         if (SpeakImage != null)
-    //         {
-    //             Destroy(SpeakImage);
-    //         }
-    //         StartDialogue();
-    //     }
+    protected override void Update()
+    {
+        if (!notFirstInteraction && playerInRange)
+        {
+            Debug.Log("Dialogue Begin");
+            if (SpeakImage != null)
+            {
+                Destroy(SpeakImage);
+            }
+            StartDialogue();
+        }
 
-    //     base.Update();
-    // }
+        base.Update();
+    }
     
     protected override void StartDialogue()
     {

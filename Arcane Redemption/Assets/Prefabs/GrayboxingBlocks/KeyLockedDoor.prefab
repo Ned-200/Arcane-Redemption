@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7574284152230867286}
   - component: {fileID: 2985132230506725750}
+  - component: {fileID: 6297701331170560901}
   m_Layer: 10
   m_Name: movingPart
   m_TagString: Untagged
@@ -177,6 +178,27 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!65 &6297701331170560901
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3121727211030690098}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 10, z: 6}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!1 &3276165831356964446
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +243,6 @@ GameObject:
   - component: {fileID: 5804476022262949481}
   - component: {fileID: 120196344107661278}
   - component: {fileID: 1461412514035704895}
-  - component: {fileID: 1168029236934955320}
   - component: {fileID: 2413009015307611046}
   - component: {fileID: 1176122239874806097}
   m_Layer: 10
@@ -547,28 +568,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8205896685628949497}
   m_Mesh: {fileID: 0}
---- !u!64 &1168029236934955320
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8205896685628949497}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &2413009015307611046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,8 +607,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.883978
-  m_Center: {x: -1.7679558, y: 0, z: 0}
+  m_Radius: 4
+  m_Center: {x: -1.7679558, y: -3, z: 0}
 --- !u!1 &8336329815375198715
 GameObject:
   m_ObjectHideFlags: 0

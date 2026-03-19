@@ -4,24 +4,36 @@ public class PlantBridge : MonoBehaviour
 {
     
     [SerializeField] private GameObject plantBridge;
-    private Renderer bridgeRenderer;
+    [SerializeField] private bool startHidden = true;
+    private DisintegrateUP bridgeDisintegrate;
     private Collider bridgeCollider;
     [SerializeField] private Material leavesMaterial;
     private int leavesMaterialIndex = 0;
+    public bool activated;
+
+
+    
     void Start()
     {
-        bridgeRenderer = plantBridge.GetComponent<Renderer>();
+        bridgeDisintegrate = plantBridge.GetComponent<DisintegrateUP>();
         bridgeCollider = plantBridge.GetComponent<Collider>();
-        if (bridgeRenderer != null)
+        if (bridgeDisintegrate != null)
         {
-            bridgeRenderer.enabled = false;
+            if (startHidden) {
+                bridgeDisintegrate.TriggerDisintegration(true);
+            }
         } else
         {
-            Debug.LogError("PlantBridge: Could not fetch bridgeRenderer component!");
+            Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
         }
         if (bridgeCollider != null)
         {
-            bridgeCollider.enabled = false;
+            if (startHidden) {
+                bridgeCollider.enabled = false;
+            } else
+            {
+                bridgeCollider.enabled = true;
+            }
         } else
         {
             Debug.LogError("PlantBridge: Could not fetch bridgeCollider component!");
@@ -34,13 +46,15 @@ public class PlantBridge : MonoBehaviour
 
     public void GrowBridge()
     {
+        if (activated) return;
+        activated = true;
         
-        if (bridgeRenderer != null)
+        if (bridgeDisintegrate != null)
         {
-            bridgeRenderer.enabled = true;
+            bridgeDisintegrate.TriggerDisintegration(false);
         } else
         {
-            Debug.LogError("PlantBridge: Could not fetch bridgeRenderer component!");
+            Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
         }
         if (bridgeCollider != null)
         {

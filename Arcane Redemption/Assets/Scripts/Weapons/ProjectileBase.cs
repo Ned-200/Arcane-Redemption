@@ -12,6 +12,7 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected bool destroyOnImpact = true;
     [SerializeField] protected LayerMask targetLayers;
     [SerializeField] protected string element;
+    [SerializeField] protected bool toughVinesBurnable = false; // CHANGE THIS TO TRUE FOR TESTING ONLY
     
 
     [Header("Visual Effects")]
@@ -81,7 +82,7 @@ public class ProjectileBase : MonoBehaviour
                 disintegrate.TriggerDisintegration();
                 
             }
-        } else if (other.gameObject.tag =="Tough Plant Wall"){
+        } else if (other.gameObject.tag =="Tough Plant Wall" && toughVinesBurnable){
             DisintegrateUP disintegrateup = other.gameObject.GetComponent<DisintegrateUP>();
 
             if (disintegrateup == null)

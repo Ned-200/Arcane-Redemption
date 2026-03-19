@@ -59,16 +59,29 @@ public class ElementalGem : MonoBehaviour
                 Debug.LogError("Gem element int not recognized! Check ElementalGem Script");
             }
 
-            // Start the tweening coroutine
-            boxCollider.enabled = true;
-            StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
-            
-            CinemachineImpulseSource impulseSource = gemDoor.GetComponent<CinemachineImpulseSource>();
-            if (impulseSource) {
-                impulseSource.GenerateImpulse(0.5f);
+
+            if (gemElement != 3) {
+                // Start the tweening coroutine
+                boxCollider.enabled = true;
+                StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
+                
+                CinemachineImpulseSource impulseSource = gemDoor.GetComponent<CinemachineImpulseSource>();
+                if (impulseSource) {
+                    impulseSource.GenerateImpulse(0.5f);
+                }
+            } else
+            {
+                DisintegrateUP bridgeDisintegrate = gemDoor.GetComponent<DisintegrateUP>();
+                if (bridgeDisintegrate != null)
+                {
+                    bridgeDisintegrate.TriggerDisintegration(true);
+                } else
+                {
+                    Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
+                }
             }
-            
-            Invoke(nameof(DestroyGem), moveDuration);
+            gameObject.SetActive(false);
+
         }
     }
     IEnumerator TweenPosition(Vector3 targetPos, float duration)
@@ -91,11 +104,6 @@ public class ElementalGem : MonoBehaviour
         // Ensure the object reaches the exact target position
         gemDoor.transform.localPosition  = targetPos;
         Debug.Log("Gem Door Sealed!");
-    }
-
-    void DestroyGem()
-    {
-        Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider collision)

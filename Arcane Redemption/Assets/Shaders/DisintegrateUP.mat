@@ -61,7 +61,7 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 0.06415099, g: 0.06415099, b: 0.06415099, a: 0.003921569}
     - _Color: {r: 0, g: 0.81886786, b: 0, a: 1}
-    - _Direction: {r: 0, g: 1, b: 0, a: 0.1}
+    - _Direction: {r: 0, g: 1, b: 0, a: 8.06}
     - _DisintegrationColor: {r: 0.3921568, g: 1.6078432, b: 0.3921568, a: 1}
     - _DissolveColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

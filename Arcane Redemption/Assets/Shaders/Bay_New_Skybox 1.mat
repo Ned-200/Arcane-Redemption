@@ -42,7 +42,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AnimationSpeed: 0.04
+    - _AnimationSpeed: 0.03
     - _CloudDistanceFadePower: 2.71
     - _CloudScale: 0.4
     - _NadirBlendPower: 0.34

@@ -37593,10 +37593,13 @@ MonoBehaviour:
   - {fileID: 479882517435553165, guid: 0546c9335f0f694409a8cd551b47ad09, type: 3}
   startingWeaponIndex: 1
   currentElement: 0
+  swapDelay: 1
   weaponSlot: {fileID: 39723029630920527}
   character: {fileID: 8074217898286727442}
-  playerController: {fileID: 5331459119020749177}
   weaponSwapEffectPrefab: {fileID: 261948290644060713, guid: a882d2c1d06f1a342908a3b61078ec18, type: 3}
+  fireSwapEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
+  waterSwapEffectPrefab: {fileID: 7038505790271449214, guid: f7f953d178c44ff48b963c185ac5b7a4, type: 3}
+  plantSwapEffectPrefab: {fileID: 7038505790271449214, guid: a0d52f98584721b49947069f69c2cea6, type: 3}
   fireOrb: {fileID: 2100000, guid: 7d919fbdf906eb1458c4f4e85de12bcc, type: 2}
   fireFirePoint: {fileID: 2100000, guid: 5facfb72e3d3030489fec5847f99f351, type: 2}
   waterOrb: {fileID: 2100000, guid: c115d44a9203c624192ebbf52b4b1fc7, type: 2}
@@ -39217,7 +39220,7 @@ PositionConstraint:
   serializedVersion: 2
   m_Weight: 1
   m_TranslationAtRest: {x: 0.016, y: 1.37, z: -0.471}
-  m_TranslationOffset: {x: 0.015998004, y: -0.17663467, z: -0.015910894}
+  m_TranslationOffset: {x: 0.015999941, y: -0.17663372, z: -0.015910357}
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
@@ -39237,7 +39240,7 @@ RotationConstraint:
   serializedVersion: 2
   m_Weight: 1
   m_RotationAtRest: {x: -8.839472, y: -172.19986, z: 0.00011794083}
-  m_RotationOffset: {x: 2.6231744, y: -172.28496, z: 1.561259}
+  m_RotationOffset: {x: 2.623177, y: -172.28494, z: 1.5612595}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
@@ -39470,7 +39473,7 @@ PositionConstraint:
   serializedVersion: 2
   m_Weight: 1
   m_TranslationAtRest: {x: 1.5, y: 1.48, z: -0.414}
-  m_TranslationOffset: {x: 0.17614532, y: 0.026009083, z: 0.060054272}
+  m_TranslationOffset: {x: 0.17614722, y: 0.026007175, z: 0.060052305}
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
@@ -39490,7 +39493,7 @@ RotationConstraint:
   serializedVersion: 2
   m_Weight: 1
   m_RotationAtRest: {x: -38.26763, y: -74.06137, z: -83.01147}
-  m_RotationOffset: {x: 75.00005, y: -59.999866, z: -44.99999}
+  m_RotationOffset: {x: 75.00007, y: -59.99985, z: -44.999954}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1

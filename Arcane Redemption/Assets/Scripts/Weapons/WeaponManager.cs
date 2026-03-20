@@ -11,13 +11,19 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private List<GameObject> weaponPrefabs = new List<GameObject>();
     [SerializeField] private int startingWeaponIndex = 0;    
     private PlayerData playerData;
+    private Animator playerAnim;
     public EquippedElement currentElement = EquippedElement.Fire;
+    [SerializeField] private float swapDelay = 1.0f;
+    private bool swapCooldown;
 
     [Header("References")]
     [SerializeField] private Transform weaponSlot;
     [SerializeField] private BaseCharacter character;
-    [SerializeField] private PlayerController playerController;
+    private PlayerController playerController;
     [SerializeField] private GameObject weaponSwapEffectPrefab;
+    [SerializeField] private GameObject fireSwapEffectPrefab;
+    [SerializeField] private GameObject waterSwapEffectPrefab;
+    [SerializeField] private GameObject plantSwapEffectPrefab;
         
     [Header("Staff Materials")]
     [SerializeField] private Material fireOrb;
@@ -53,6 +59,17 @@ public class WeaponManager : MonoBehaviour
     {
         GameObject playerDataObject = GameObject.FindWithTag("PlayerData");
         playerData = playerDataObject.GetComponent<PlayerData>();
+
+        playerAnim = GetComponent<Animator>();
+        if (playerAnim == null)
+        {
+            Debug.LogError("WeaponManager: Could not find player Animator component!");
+        }
+        playerController = GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("WeaponManager: Could not find playerController component!");
+        }
 
         if (weaponPrefabs.Count > 0)
         {
@@ -103,8 +120,10 @@ public class WeaponManager : MonoBehaviour
 
     private void HandleWeaponSwitching()
     {
-        if (Input.GetKeyDown(switchWeaponKey) && playerData.fireGemObtained)
+        if (Input.GetKeyDown(switchWeaponKey) && playerData.fireGemObtained && !swapCooldown)
         {
+            swapCooldown = true;
+            Invoke(nameof(SetCooldown), swapDelay);
             SwitchToNextWeapon();
         }
     }
@@ -141,8 +160,11 @@ public class WeaponManager : MonoBehaviour
     {
         if (currentWeapon == null) return;
 
-        if (Input.GetKeyDown(KeyCode.R) && playerController.canMove && currentWeaponIndex == 0)
+        if (Input.GetKeyDown(KeyCode.R) && playerController.canMove && currentWeaponIndex == 0 && !swapCooldown)
         {
+            swapCooldown = true;
+            Invoke(nameof(SetCooldown), swapDelay);
+
             if (currentElement == EquippedElement.Fire)
             {
                 if (playerData.waterGemObtained) {
@@ -170,6 +192,9 @@ public class WeaponManager : MonoBehaviour
 
         int nextIndex = (currentWeaponIndex + 1) % instantiatedWeapons.Count;
         EquipWeapon(nextIndex); 
+        if (playerAnim != null) {
+            playerAnim.Play("WeaponSwap");
+        }
     }
 
     public void EquipWeapon(int index)
@@ -225,6 +250,10 @@ public class WeaponManager : MonoBehaviour
     protected virtual void OnElementChanged(EquippedElement newElement)
     {
         Debug.Log("Player swapped to " + newElement);
+        if (playerAnim != null) {
+            playerAnim.Play("ElementSwap");
+        }
+        
         if (newElement == EquippedElement.Fire) 
         {
             if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
@@ -233,6 +262,8 @@ public class WeaponManager : MonoBehaviour
                 rend.material = fireOrb;
                 rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
                 rend.material = fireFirePoint;
+                GameObject swapEffect = Instantiate(fireSwapEffectPrefab, Orb.transform.position, fireSwapEffectPrefab.transform.rotation);
+                swapEffect.transform.SetParent(Orb.transform);
             } else
             {
                 Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
@@ -246,6 +277,8 @@ public class WeaponManager : MonoBehaviour
                 rend.material = waterOrb;
                 rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
                 rend.material = waterFirePoint;
+                GameObject swapEffect = Instantiate(waterSwapEffectPrefab, Orb.transform.position, waterSwapEffectPrefab.transform.rotation);
+                swapEffect.transform.SetParent(Orb.transform);
             } else
             {
                 Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
@@ -259,11 +292,18 @@ public class WeaponManager : MonoBehaviour
                 rend.material = plantOrb;
                 rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
                 rend.material = plantFirePoint;
+                GameObject swapEffect = Instantiate(plantSwapEffectPrefab, Orb.transform.position, plantSwapEffectPrefab.transform.rotation);
+                swapEffect.transform.SetParent(Orb.transform);
             } else
             {
                 Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
             }
         }
+    }
+
+    private void SetCooldown()
+    {
+        swapCooldown = false;
     }
 
     public enum EquippedElement

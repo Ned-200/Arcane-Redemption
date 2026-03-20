@@ -4,6 +4,7 @@ public class Checkpoint : MonoBehaviour
 {
     protected private BoxCollider boxCollider;
     protected private Transform spawnPoint;
+    public bool checkpointSet;
 
     protected void Start()
     {
@@ -24,7 +25,7 @@ public class Checkpoint : MonoBehaviour
     {
         GameObject other = collision.gameObject;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !checkpointSet)
         {   
             Debug.Log("Player reached checkpoint!");
 
@@ -38,6 +39,7 @@ public class Checkpoint : MonoBehaviour
             }
 
             boxCollider.enabled = false;
+            checkpointSet = true;
         }
     }
 }

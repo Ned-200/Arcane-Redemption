@@ -54,34 +54,89 @@ public class EnemyCharacter : BaseCharacter
     {
         base.Awake(); // Initialize stats and weapon slot
 
-        enemyAnim = this.gameObject.GetComponent<Animator>();
-        if (enemyAnim == null)
-        {
-            Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached animator!");
-        } else
-        {
-            enemyAnim.Play("Idle", 0, Random.Range(0.0f, 1.0f));
-        }
-
-        if (disintegrate == null) // if not already set in fields
-        {
-            if (this.gameObject.GetComponent<Disintegrate>() != null)
-            {
-                disintegrate = this.gameObject.GetComponent<Disintegrate>();
-            } else
-            {
-                disintegrate = this.gameObject.transform.Find("Body").GetComponent<Disintegrate>(); // try to find it from a body gameobject instead
-            }
-
-            if (disintegrate == null) // if still can't find disintegrate
-            {
-                Debug.LogError(this.gameObject.name + ": EnemyCharacter - No attached disintegration script!");
-            }
-        }
+        // FIXED: Safely initialize animator
+        InitializeAnimator();
+        
+        // FIXED: Safely initialize disintegrate
+        InitializeDisintegrate();
 
         // Equip default weapon
         EquipDefaultWeapon();
+    }
 
+    /// <summary>
+    /// Safely initializes the animator component
+    /// </summary>
+    private void InitializeAnimator()
+    {
+        enemyAnim = GetComponent<Animator>();
+        
+        if (enemyAnim == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No Animator component found - animations disabled");
+            return;
+        }
+
+        // Only try to play animation if animator has a controller
+        if (enemyAnim.runtimeAnimatorController == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] Animator has no controller assigned - animations disabled");
+            return;
+        }
+
+        // Safely check if "Idle" state exists before playing
+        if (HasAnimationState("Idle"))
+        {
+            enemyAnim.Play("Idle", 0, Random.Range(0.0f, 1.0f));
+        }
+        else
+        {
+            Debug.LogWarning($"[{gameObject.name}] Animator missing 'Idle' state - skipping initial animation");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the animator has a specific state
+    /// </summary>
+    private bool HasAnimationState(string stateName)
+    {
+        if (enemyAnim == null || enemyAnim.runtimeAnimatorController == null)
+            return false;
+
+        foreach (var clip in enemyAnim.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == stateName)
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Safely initializes the disintegrate component
+    /// </summary>
+    private void InitializeDisintegrate()
+    {
+        if (disintegrate != null)
+            return; // Already assigned in Inspector
+
+        // Try to find on this GameObject
+        disintegrate = GetComponent<Disintegrate>();
+        
+        if (disintegrate == null)
+        {
+            // Try to find on "Body" child
+            Transform bodyTransform = transform.Find("Body");
+            if (bodyTransform != null)
+            {
+                disintegrate = bodyTransform.GetComponent<Disintegrate>();
+            }
+        }
+
+        if (disintegrate == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No Disintegrate component found - death effect will be skipped");
+        }
     }
 
     protected override void Update()
@@ -216,18 +271,29 @@ public class EnemyCharacter : BaseCharacter
         // Call base class TakeDamage which handles health reduction and events
         base.TakeDamage(damage);
 
-        // Remove phyiscal detail
-        if (gameObject.transform.Find("Leaf1") && HealthPercent <= 0.9f)
+        // Remove physical detail - FIXED: Safely check for children
+        Transform leaf1 = transform.Find("Leaf1");
+        if (leaf1 != null && HealthPercent <= 0.9f)
         {
-            gameObject.transform.Find("Leaf1").GetComponent<Renderer>().enabled = false;
+            Renderer renderer = leaf1.GetComponent<Renderer>();
+            if (renderer != null)
+                renderer.enabled = false;
         }
-        if (gameObject.transform.Find("Leaf2") && HealthPercent <= 0.5f)
+
+        Transform leaf2 = transform.Find("Leaf2");
+        if (leaf2 != null && HealthPercent <= 0.5f)
         {
-            gameObject.transform.Find("Leaf2").GetComponent<Renderer>().enabled = false;
+            Renderer renderer = leaf2.GetComponent<Renderer>();
+            if (renderer != null)
+                renderer.enabled = false;
         }
-        if (gameObject.transform.Find("Leaf3") && HealthPercent <= 0.3f)
+
+        Transform leaf3 = transform.Find("Leaf3");
+        if (leaf3 != null && HealthPercent <= 0.3f)
         {
-            gameObject.transform.Find("Leaf3").GetComponent<Renderer>().enabled = false;
+            Renderer renderer = leaf3.GetComponent<Renderer>();
+            if (renderer != null)
+                renderer.enabled = false;
         }
 
         // Log detailed damage information
@@ -325,19 +391,37 @@ public class EnemyCharacter : BaseCharacter
     protected virtual void OnStateChanged(EnemyState newState)
     {
         Debug.Log($"{gameObject.name} state changed to: {newState}");
-        // Override for custom behavior (animations, sounds, etc.)
-
-        if (newState == EnemyState.Idle || newState == EnemyState.Combat) 
+        
+        // Safely handle animation state changes
+        if (enemyAnim != null && enemyAnim.runtimeAnimatorController != null)
         {
-            if (enemyAnim != null) {
-                enemyAnim.SetBool("isWalking", false);
-            }
-        } 
-        else if (newState == EnemyState.Alert || newState == EnemyState.Patrol) 
-        {
-            
-            if (enemyAnim != null) {
-                enemyAnim.SetBool("isWalking", true);
+            if (newState == EnemyState.Idle || newState == EnemyState.Combat) 
+            {
+                if (enemyAnim.parameters != null)
+                {
+                    foreach (var param in enemyAnim.parameters)
+                    {
+                        if (param.name == "isWalking")
+                        {
+                            enemyAnim.SetBool("isWalking", false);
+                            break;
+                        }
+                    }
+                }
+            } 
+            else if (newState == EnemyState.Alert || newState == EnemyState.Patrol) 
+            {
+                if (enemyAnim.parameters != null)
+                {
+                    foreach (var param in enemyAnim.parameters)
+                    {
+                        if (param.name == "isWalking")
+                        {
+                            enemyAnim.SetBool("isWalking", true);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -347,9 +431,13 @@ public class EnemyCharacter : BaseCharacter
     /// </summary>
     protected virtual void OnAttackPerformed()
     {
-        // Override for custom behavior (play attack animation, sound, etc.)
-        if (enemyAnim != null) {
-            enemyAnim.Play("Attack");
+        // Safely play attack animation
+        if (enemyAnim != null && enemyAnim.runtimeAnimatorController != null)
+        {
+            if (HasAnimationState("Attack"))
+            {
+                enemyAnim.Play("Attack");
+            }
         }
     }
 
@@ -370,24 +458,33 @@ public class EnemyCharacter : BaseCharacter
     {
         base.OnDeath();
         
-        Debug.Log($" [{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
+        Debug.Log($"[{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
         
-        // Play death animation 
-        if (enemyAnim != null) {
-            enemyAnim.Play("Death");
-        }
-
-        //Trigger disintegration material
-        disintegrate.TriggerDisintegration();
-        if (this.gameObject.transform.Find("Feet"))
+        // Safely play death animation
+        if (enemyAnim != null && enemyAnim.runtimeAnimatorController != null)
         {
-            this.gameObject.transform.Find("Feet").GetComponent<Disintegrate>().TriggerDisintegration();
+            if (HasAnimationState("Death"))
+            {
+                enemyAnim.Play("Death");
+            }
         }
 
-        // TODO: Play death sound
-        // TODO: Spawn particle effects (blood, dissolve effect, etc.)
-        // TODO: Spawn loot drops
-        // TODO: Add score/experience to player
+        // Safely trigger disintegration
+        if (disintegrate != null)
+        {
+            disintegrate.TriggerDisintegration();
+        }
+
+        // Safely trigger feet disintegration
+        Transform feet = transform.Find("Feet");
+        if (feet != null)
+        {
+            Disintegrate feetDisintegrate = feet.GetComponent<Disintegrate>();
+            if (feetDisintegrate != null)
+            {
+                feetDisintegrate.TriggerDisintegration();
+            }
+        }
     }
 
     #endregion

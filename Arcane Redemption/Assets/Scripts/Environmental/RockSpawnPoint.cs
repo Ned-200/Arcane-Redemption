@@ -55,7 +55,12 @@ public class RockSpawnPoint : MonoBehaviour
         FallingRock rockScript = currentRock.GetComponent<FallingRock>();
         if (rockScript != null)
         {
+            rockScript.SetSpawnPoint(this);
             Debug.Log($"[RockSpawnPoint] Spawned rock at {gameObject.name} - awaiting player trigger");
+        }
+        else
+        {
+            Debug.LogError($"[RockSpawnPoint] Spawned rock has no FallingRock component!");
         }
 
         return currentRock;

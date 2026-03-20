@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ShellBoss : EnemyCharacter
 {
@@ -12,11 +13,10 @@ public class ShellBoss : EnemyCharacter
     [SerializeField] private ShellProtection shellProtection;
 
     [Header("Phase 1: Shell Phase")]
-    [SerializeField] private float phase1AdvanceDistance = 25f;
     [SerializeField] private float phase1MoveSpeed = 3f;
     [SerializeField] private float rockPositionCheckRadius = 2f;
-    [SerializeField] private float rockPositioningChance = 0.7f;
-    [SerializeField] private float repositionWaitTime = 4f;
+    [SerializeField] private float timeUnderRock = 3f;
+    [SerializeField] private float rockCycleDelay = 1f;
 
     [Header("Phase 2: Enraged Phase")]
     [SerializeField] private float phase2MoveSpeedMultiplier = 1.5f;
@@ -44,6 +44,18 @@ public class ShellBoss : EnemyCharacter
     [SerializeField] private float phase2ComboCooldownMin = 0.5f;
     [SerializeField] private float phase2ComboCooldownMax = 1.5f;
 
+    [Header("Projectile Volley Attack (Phase 2)")]
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private float projectileVolleyCooldown = 6f;
+    [SerializeField] private int minProjectilesPerVolley = 3;
+    [SerializeField] private int maxProjectilesPerVolley = 6;
+    [SerializeField] private float projectileSpeed = 15f;
+    [SerializeField] private float projectileDamage = 15f;
+    [SerializeField] private float projectileTrackingDuration = 4f;
+    [SerializeField] private float projectileSpawnDelay = 0.2f;
+    [SerializeField] private float volleySpreadAngle = 30f;
+
     [Header("Rock Spawn System")]
     [SerializeField] private RockSpawnPoint[] rockSpawnPoints;
 
@@ -53,12 +65,16 @@ public class ShellBoss : EnemyCharacter
     [Header("Debug")]
     [SerializeField] private bool showDebugGizmos = true;
 
+    [Header("Arena Boundaries")]
+    [SerializeField] private ArenaBounds arenaBounds;
+    [SerializeField] private float edgeAvoidanceStrength = 3f;
+
     #endregion
 
     #region Private Fields
 
     private BossPhase currentPhase = BossPhase.ShellPhase;
-    private ShellBossState currentState = ShellBossState.Advancing;
+    private ShellBossState currentState = ShellBossState.MovingToRock;
 
     private Transform playerTransform;
     private float lastComboTime;
@@ -67,10 +83,16 @@ public class ShellBoss : EnemyCharacter
     private Coroutine repositionCoroutine;
 
     private RockSpawnPoint targetRockSpawnPoint;
-    private bool isPositioningUnderRock;
+    private bool isMovingToRock;
     private bool isBackingUp;
+    
+    private float timeArrivedAtRock;
+    private int currentRockIndex;
 
     private BossHealthBarUI healthBarUI;
+
+    private float lastProjectileVolleyTime;
+    private bool isFiringVolley;
 
     #endregion
 
@@ -118,6 +140,13 @@ public class ShellBoss : EnemyCharacter
         InitializeHealthBarUI();
         InitializeRockSpawnPoints();
         ValidateComponents();
+        
+        if (currentPhase == BossPhase.ShellPhase)
+        {
+            StartRockCycle();
+        }
+
+        lastProjectileVolleyTime = -projectileVolleyCooldown;
     }
 
     private void InitializeShellProtection()
@@ -155,6 +184,27 @@ public class ShellBoss : EnemyCharacter
             rockSpawnPoints = FindObjectsByType<RockSpawnPoint>(FindObjectsSortMode.None);
             Debug.Log($"[{gameObject.name}] Auto-found {rockSpawnPoints.Length} rock spawn points");
         }
+        
+        if (rockSpawnPoints == null || rockSpawnPoints.Length == 0)
+        {
+            Debug.LogError($"[{gameObject.name}] No rock spawn points found! Boss cannot position under rocks.");
+        }
+        else
+        {
+            ShuffleRockSpawnPoints();
+            currentRockIndex = 0;
+        }
+    }
+
+    private void ShuffleRockSpawnPoints()
+    {
+        for (int i = rockSpawnPoints.Length - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            RockSpawnPoint temp = rockSpawnPoints[i];
+            rockSpawnPoints[i] = rockSpawnPoints[randomIndex];
+            rockSpawnPoints[randomIndex] = temp;
+        }
     }
 
     private void ValidateComponents()
@@ -167,6 +217,26 @@ public class ShellBoss : EnemyCharacter
         if (rockSpawnPoints == null || rockSpawnPoints.Length == 0)
         {
             Debug.LogError($"[{gameObject.name}] No rock spawn points found! Boss cannot position under rocks.");
+        }
+
+        if (projectilePrefab == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No projectile prefab assigned! Projectile volley attack will not work.");
+        }
+
+        if (projectileSpawnPoint == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No projectile spawn point assigned! Using boss position instead.");
+        }
+
+        // NEW: Validate or find arena bounds
+        if (arenaBounds == null)
+        {
+            arenaBounds = FindFirstObjectByType<ArenaBounds>();
+            if (arenaBounds == null)
+            {
+                Debug.LogWarning($"[{gameObject.name}] No ArenaBounds found! Boss may fall off platform.");
+            }
         }
     }
 
@@ -186,28 +256,8 @@ public class ShellBoss : EnemyCharacter
         }
         else
         {
-            StartRepositionAfterRockHit();
+            StartCoroutine(MoveToNextRockAfterDelay(rockCycleDelay));
         }
-    }
-
-    private void StartRepositionAfterRockHit()
-    {
-        if (currentPhase != BossPhase.ShellPhase) return;
-
-        currentState = ShellBossState.PositioningUnderRock;
-        
-        if (repositionCoroutine != null)
-        {
-            StopCoroutine(repositionCoroutine);
-        }
-
-        repositionCoroutine = StartCoroutine(DelayedRockPositioning(1f));
-    }
-
-    private IEnumerator DelayedRockPositioning(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        AttemptRockPositioning();
     }
 
     private void OnShellHit()
@@ -228,17 +278,18 @@ public class ShellBoss : EnemyCharacter
         {
             bossAnimator.SetTrigger("ShellBreak");
         }
-    }
+    }       
 
-    protected override void OnDamageTaken(float damage)
+    public override void TakeDamage(float damage)
     {
         if (IsShellActive)
         {
-            Debug.Log($"[{gameObject.name}] Blocked {damage} damage - shell is active!");
+            Debug.Log($"[{gameObject.name}] Blocked {damage} damage - shell is active! Must break shell first.");
+            OnDamageBlocked(damage);
             return;
         }
 
-        base.OnDamageTaken(damage);
+        base.TakeDamage(damage);
     }
 
     #endregion
@@ -253,7 +304,7 @@ public class ShellBoss : EnemyCharacter
         currentState = ShellBossState.Fighting;
 
         StopAllCoroutines();
-        isPositioningUnderRock = false;
+        isMovingToRock = false;
 
         if (TryFindPlayer())
         {
@@ -263,7 +314,96 @@ public class ShellBoss : EnemyCharacter
             }
         }
 
+        lastProjectileVolleyTime = Time.time;
+
         Debug.LogWarning($"[{gameObject.name}] ⚡ PHASE 2: ENRAGED! Speed x{phase2MoveSpeedMultiplier}, Damage x{phase2DamageMultiplier}");
+    }
+
+    #endregion
+
+    #region Rock Cycling System
+
+    private void StartRockCycle()
+    {
+        if (rockSpawnPoints == null || rockSpawnPoints.Length == 0)
+        {
+            Debug.LogError($"[{gameObject.name}] Cannot start rock cycle - no spawn points!");
+            return;
+        }
+
+        Debug.Log($"[{gameObject.name}] Starting rock cycle with {rockSpawnPoints.Length} points");
+        MoveToNextRock();
+    }
+
+    private void MoveToNextRock()
+    {
+        if (currentPhase != BossPhase.ShellPhase) return;
+
+        RockSpawnPoint[] availableRocks = GetAvailableRockSpawnPoints();
+
+        if (availableRocks.Length == 0)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No available rocks - waiting for reset");
+            StartCoroutine(RetryRockCycle());
+            return;
+        }
+
+        targetRockSpawnPoint = availableRocks[currentRockIndex % availableRocks.Length];
+        currentRockIndex++;
+
+        Vector3 targetPosition = targetRockSpawnPoint.transform.position;
+        targetPosition.y = transform.position.y;
+
+        isMovingToRock = true;
+        currentState = ShellBossState.MovingToRock;
+
+        Debug.Log($"[{gameObject.name}] Moving to rock: {targetRockSpawnPoint.name}");
+
+        if (repositionCoroutine != null)
+        {
+            StopCoroutine(repositionCoroutine);
+        }
+        repositionCoroutine = StartCoroutine(MoveToRockPosition(targetPosition));
+    }
+
+    private IEnumerator RetryRockCycle()
+    {
+        yield return new WaitForSeconds(2f);
+        MoveToNextRock();
+    }
+
+    private IEnumerator MoveToNextRockAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        MoveToNextRock();
+    }
+
+    private IEnumerator MoveToRockPosition(Vector3 targetPosition)
+    {
+        while (isMovingToRock)
+        {
+            if (TargetPlayer != null && !isPerformingCombo)
+            {
+                float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
+                TryPerformRingAttack(distanceToPlayer);
+            }
+
+            float distance = Vector3.Distance(transform.position, targetPosition);
+
+            if (distance < rockPositionCheckRadius)
+            {
+                isMovingToRock = false;
+                currentState = ShellBossState.WaitingUnderRock;
+                timeArrivedAtRock = Time.time;
+                Debug.Log($"[{gameObject.name}] ✓ Arrived at rock - waiting");
+                yield break;
+            }
+
+            MoveTowards(targetPosition, CurrentMoveSpeed);
+            RotateTowards(targetPosition);
+
+            yield return null;
+        }
     }
 
     #endregion
@@ -272,53 +412,70 @@ public class ShellBoss : EnemyCharacter
 
     private void UpdateBossStateMachine()
     {
-        if (!TryFindPlayer()) return;
-
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        TryFindPlayer();
 
         switch (currentPhase)
         {
             case BossPhase.ShellPhase:
-                UpdateShellPhase(distanceToPlayer);
+                UpdateShellPhase();
                 break;
 
             case BossPhase.EnragedPhase:
-                UpdateEnragedPhase(distanceToPlayer);
+                UpdateEnragedPhase();
                 break;
         }
     }
 
-    private void UpdateShellPhase(float distanceToPlayer)
+    private void UpdateShellPhase()
     {
-        // CHANGE: Always try ring attack if player is in range (even while positioning)
-        if (!isPerformingCombo)
+        if (!isPerformingCombo && TargetPlayer != null)
         {
+            float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
             TryPerformRingAttack(distanceToPlayer);
         }
 
         switch (currentState)
         {
-            case ShellBossState.Advancing:
-                HandleAdvancing(distanceToPlayer);
-                break;
-
-            case ShellBossState.PositioningUnderRock:
-                HandleRockPositioning();
+            case ShellBossState.MovingToRock:
                 break;
 
             case ShellBossState.WaitingUnderRock:
                 HandleWaitingUnderRock();
                 break;
-
-            case ShellBossState.WaitingForReposition:
-                // Still check for ring attack even while waiting
-                break;
         }
     }
 
-    private void UpdateEnragedPhase(float distanceToPlayer)
+    private void HandleWaitingUnderRock()
     {
-        if (isPerformingCombo) return;
+        if (Time.time - timeArrivedAtRock >= timeUnderRock)
+        {
+            Debug.Log($"[{gameObject.name}] Waited {timeUnderRock}s under rock - moving to next");
+            MoveToNextRock();
+            return;
+        }
+
+        if (targetRockSpawnPoint == null)
+        {
+            Debug.Log($"[{gameObject.name}] Rock destroyed - finding new one");
+            MoveToNextRock();
+            return;
+        }
+
+        FallingRock rock = targetRockSpawnPoint.GetRockScript();
+        if (rock == null || rock.HasBeenTriggered)
+        {
+            Debug.Log($"[{gameObject.name}] Rock triggered - moving to next");
+            MoveToNextRock();
+        }
+    }
+
+    private void UpdateEnragedPhase()
+    {
+        if (TargetPlayer == null) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
+
+        if (isPerformingCombo || isFiringVolley) return;
 
         if (distanceToPlayer < phase2KeepAwayDistance)
         {
@@ -330,162 +487,7 @@ public class ShellBoss : EnemyCharacter
         }
 
         TryPerformRingAttack(distanceToPlayer);
-    }
-
-    #endregion
-
-    #region Phase 1: Shell Phase Logic
-
-    private void HandleAdvancing(float distanceToPlayer)
-    {
-        if (distanceToPlayer > phase1AdvanceDistance)
-        {
-            MoveTowardsPlayer(CurrentMoveSpeed);
-            RotateTowardsPlayer();
-        }
-        else
-        {
-            TransitionToRockPositioning();
-        }
-    }
-
-    private void TransitionToRockPositioning()
-    {
-        currentState = ShellBossState.PositioningUnderRock;
-        AttemptRockPositioning();
-    }
-
-    private void AttemptRockPositioning()
-    {
-        if (rockSpawnPoints == null || rockSpawnPoints.Length == 0)
-        {
-            Debug.LogError($"[{gameObject.name}] Cannot position under rock - no spawn points!");
-            return;
-        }
-
-        RockSpawnPoint[] availablePoints = GetAvailableRockSpawnPoints();
-
-        if (availablePoints.Length == 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] No available rocks to position under - waiting");
-            StartRepositionWait();
-            return;
-        }
-
-        float roll = Random.value;
-
-        if (roll <= rockPositioningChance)
-        {
-            PositionUnderRandomRock(availablePoints);
-        }
-        else
-        {
-            StartRepositionWait();
-        }
-    }
-
-    private RockSpawnPoint[] GetAvailableRockSpawnPoints()
-    {
-        System.Collections.Generic.List<RockSpawnPoint> available = new System.Collections.Generic.List<RockSpawnPoint>();
-
-        foreach (RockSpawnPoint spawnPoint in rockSpawnPoints)
-        {
-            if (spawnPoint == null) continue;
-
-            FallingRock rock = spawnPoint.GetRockScript();
-            if (rock != null && rock.IsAvailable)
-            {
-                available.Add(spawnPoint);
-            }
-        }
-
-        return available.ToArray();
-    }
-
-    private void PositionUnderRandomRock(RockSpawnPoint[] availablePoints)
-    {
-        targetRockSpawnPoint = availablePoints[Random.Range(0, availablePoints.Length)];
-        
-        Vector3 targetPosition = targetRockSpawnPoint.transform.position;
-        targetPosition.y = transform.position.y;
-
-        isPositioningUnderRock = true;
-        currentState = ShellBossState.PositioningUnderRock;
-
-        Debug.Log($"[{gameObject.name}] Positioning under rock at {targetRockSpawnPoint.name}");
-
-        if (repositionCoroutine != null)
-        {
-            StopCoroutine(repositionCoroutine);
-        }
-        repositionCoroutine = StartCoroutine(MoveToRockPosition(targetPosition));
-    }
-
-    private IEnumerator MoveToRockPosition(Vector3 targetPosition)
-    {
-        while (isPositioningUnderRock)
-        {
-            // CHANGE: Can still perform ring attack while moving to rock
-            if (TargetPlayer != null && !isPerformingCombo)
-            {
-                float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
-                TryPerformRingAttack(distanceToPlayer);
-            }
-
-            float distance = Vector3.Distance(transform.position, targetPosition);
-
-            if (distance < 1f)
-            {
-                isPositioningUnderRock = false;
-                currentState = ShellBossState.WaitingUnderRock;
-                Debug.Log($"[{gameObject.name}] ✓ Positioned under rock - waiting for player to trigger fall");
-                yield break;
-            }
-
-            MoveTowards(targetPosition, CurrentMoveSpeed);
-            RotateTowards(targetPosition);
-
-            yield return null;
-        }
-    }
-
-    private void HandleWaitingUnderRock()
-    {
-        if (targetRockSpawnPoint == null) return;
-
-        FallingRock rock = targetRockSpawnPoint.GetRockScript();
-        
-        if (rock == null || rock.HasBeenTriggered)
-        {
-            Debug.Log($"[{gameObject.name}] Rock was triggered or destroyed - finding new position");
-            TransitionToRockPositioning();
-        }
-    }
-
-    private void StartRepositionWait()
-    {
-        currentState = ShellBossState.WaitingForReposition;
-        
-        Debug.Log($"[{gameObject.name}] Failed rock positioning (30% chance) - waiting {repositionWaitTime}s");
-
-        if (repositionCoroutine != null)
-        {
-            StopCoroutine(repositionCoroutine);
-        }
-        repositionCoroutine = StartCoroutine(RepositionWaitRoutine());
-    }
-
-    private IEnumerator RepositionWaitRoutine()
-    {
-        yield return new WaitForSeconds(repositionWaitTime);
-
-        currentState = ShellBossState.PositioningUnderRock;
-        AttemptRockPositioning();
-    }
-
-    private void HandleRockPositioning()
-    {
-        // Movement handled by MoveToRockPosition coroutine
+        TryPerformProjectileVolley();
     }
 
     #endregion
@@ -497,6 +499,23 @@ public class ShellBoss : EnemyCharacter
         if (playerTransform == null) return;
 
         Vector3 directionAwayFromPlayer = (transform.position - playerTransform.position).normalized;
+        
+        // NEW: Blend with edge avoidance
+        if (arenaBounds != null)
+        {
+            Vector3 edgePush = arenaBounds.GetSafePushDirection(transform.position);
+            if (edgePush != Vector3.zero)
+            {
+                // Blend backing away with staying in bounds
+                float edgeProximity = 1f - arenaBounds.GetDistanceFromEdgeNormalized(transform.position);
+                directionAwayFromPlayer = Vector3.Lerp(
+                    directionAwayFromPlayer,
+                    edgePush,
+                    edgeProximity * edgeAvoidanceStrength
+                ).normalized;
+            }
+        }
+
         Vector3 backupPosition = transform.position + directionAwayFromPlayer * 2f;
 
         MoveTowards(backupPosition, phase2BackupSpeed);
@@ -615,6 +634,85 @@ public class ShellBoss : EnemyCharacter
 
     #endregion
 
+    #region Projectile Volley System
+
+    private void TryPerformProjectileVolley()
+    {
+        if (currentPhase != BossPhase.EnragedPhase) return;
+        if (isFiringVolley) return;
+        if (playerTransform == null) return;
+        if (projectilePrefab == null) return;
+
+        if (Time.time - lastProjectileVolleyTime < projectileVolleyCooldown) return;
+
+        StartCoroutine(FireProjectileVolley());
+    }
+
+    private IEnumerator FireProjectileVolley()
+    {
+        isFiringVolley = true;
+        lastProjectileVolleyTime = Time.time;
+
+        int projectileCount = Random.Range(minProjectilesPerVolley, maxProjectilesPerVolley + 1);
+
+        Debug.Log($"[{gameObject.name}] 🎯 Firing projectile volley x{projectileCount}!");
+
+        if (bossAnimator != null)
+        {
+            bossAnimator.SetTrigger("ProjectileVolley");
+        }
+
+        for (int i = 0; i < projectileCount; i++)
+        {
+            FireSingleTrackingProjectile(i, projectileCount);
+
+            if (i < projectileCount - 1)
+            {
+                yield return new WaitForSeconds(projectileSpawnDelay);
+            }
+        }
+
+        isFiringVolley = false;
+    }
+
+    private void FireSingleTrackingProjectile(int projectileIndex, int totalProjectiles)
+    {
+        if (playerTransform == null || projectilePrefab == null) return;
+
+        Vector3 spawnPosition = projectileSpawnPoint != null 
+            ? projectileSpawnPoint.position 
+            : transform.position + Vector3.up * 2f;
+
+        Vector3 directionToPlayer = (playerTransform.position - spawnPosition).normalized;
+
+        float spreadOffset = 0f;
+        if (totalProjectiles > 1)
+        {
+            float step = volleySpreadAngle / (totalProjectiles - 1);
+            spreadOffset = -volleySpreadAngle / 2f + (step * projectileIndex);
+        }
+
+        Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
+        rotation *= Quaternion.Euler(0f, spreadOffset, 0f);
+
+        GameObject projectileObj = Instantiate(projectilePrefab, spawnPosition, rotation);
+
+        TreeBossProjectile projectile = projectileObj.GetComponent<TreeBossProjectile>();
+        if (projectile != null)
+        {
+            projectile.Initialize(projectileDamage, this, projectileSpeed, playerTransform);
+
+            Debug.Log($"[{gameObject.name}] Fired tracking projectile {projectileIndex + 1}/{totalProjectiles}");
+        }
+        else
+        {
+            Debug.LogError($"[{gameObject.name}] Projectile prefab missing TreeBossProjectile component!");
+            Destroy(projectileObj);
+        }
+    }
+
+    #endregion
+
     #region Movement System
 
     private bool TryFindPlayer()
@@ -632,11 +730,22 @@ public class ShellBoss : EnemyCharacter
         return false;
     }
 
-    private void MoveTowardsPlayer(float speed)
+    private RockSpawnPoint[] GetAvailableRockSpawnPoints()
     {
-        if (playerTransform == null) return;
+        System.Collections.Generic.List<RockSpawnPoint> available = new System.Collections.Generic.List<RockSpawnPoint>();
 
-        MoveTowards(playerTransform.position, speed);
+        foreach (RockSpawnPoint spawnPoint in rockSpawnPoints)
+        {
+            if (spawnPoint == null) continue;
+
+            FallingRock rock = spawnPoint.GetRockScript();
+            if (rock != null && rock.IsAvailable)
+            {
+                available.Add(spawnPoint);
+            }
+        }
+
+        return available.ToArray();
     }
 
     private void MoveTowards(Vector3 targetPosition, float speed)
@@ -644,7 +753,16 @@ public class ShellBoss : EnemyCharacter
         Vector3 direction = (targetPosition - transform.position).normalized;
         direction.y = 0f;
 
-        transform.position += direction * speed * Time.deltaTime;
+        // Calculate new position
+        Vector3 newPosition = transform.position + direction * speed * Time.deltaTime;
+
+        // Apply arena boundary constraints
+        if (arenaBounds != null)
+        {
+            newPosition = arenaBounds.ClampPosition(newPosition);
+        }
+
+        transform.position = newPosition;
     }
 
     private void RotateTowardsPlayer()
@@ -688,6 +806,25 @@ public class ShellBoss : EnemyCharacter
         PerformRingAttackCombo();
     }
 
+    [ContextMenu("Force Move to Next Rock")]
+    private void ForceMoveToNextRock()
+    {
+        MoveToNextRock();
+    }
+
+    [ContextMenu("Force Projectile Volley")]
+    private void ForceProjectileVolley()
+    {
+        if (currentPhase == BossPhase.EnragedPhase)
+        {
+            StartCoroutine(FireProjectileVolley());
+        }
+        else
+        {
+            Debug.LogWarning($"[{gameObject.name}] Projectile volley only available in Phase 2!");
+        }
+    }
+
     #endregion
 
     #region Override Methods
@@ -718,35 +855,33 @@ public class ShellBoss : EnemyCharacter
     {
         if (!showDebugGizmos) return;
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, phase1AdvanceDistance);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, phase2KeepAwayDistance);
-
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, ringAttackRadius);
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, ringAttackTriggerRange);
 
-        if (Application.isPlaying && playerTransform != null)
-        {
-            Gizmos.color = currentPhase == BossPhase.EnragedPhase ? Color.red : Color.green;
-            Gizmos.DrawLine(transform.position, playerTransform.position);
-        }
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, phase2KeepAwayDistance);
 
-        if (targetRockSpawnPoint != null && currentState == ShellBossState.PositioningUnderRock)
+        if (Application.isPlaying && targetRockSpawnPoint != null)
         {
-            Gizmos.color = Color.blue;
+            Gizmos.color = currentState == ShellBossState.MovingToRock ? Color.yellow : Color.green;
             Gizmos.DrawLine(transform.position, targetRockSpawnPoint.transform.position);
             Gizmos.DrawWireSphere(targetRockSpawnPoint.transform.position, rockPositionCheckRadius);
         }
 
-        if (targetRockSpawnPoint != null && currentState == ShellBossState.WaitingUnderRock)
+        if (Application.isPlaying && playerTransform != null)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(targetRockSpawnPoint.transform.position, rockPositionCheckRadius);
+            Gizmos.color = currentPhase == BossPhase.EnragedPhase ? Color.red : Color.blue;
+            Gizmos.DrawLine(transform.position, playerTransform.position);
+        }
+
+        if (projectileSpawnPoint != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(projectileSpawnPoint.position, 0.3f);
+            Gizmos.DrawLine(transform.position, projectileSpawnPoint.position);
         }
     }
 
@@ -757,16 +892,14 @@ public class ShellBoss : EnemyCharacter
 
 public enum BossPhase
 {
-    ShellPhase,
-    EnragedPhase
+    ShellPhase
+    , EnragedPhase
 }
 
 public enum ShellBossState
 {
-    Advancing,
-    PositioningUnderRock,
+    MovingToRock,
     WaitingUnderRock,
-    WaitingForReposition,
     Fighting
 }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class FallingRock : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class FallingRock : MonoBehaviour
     [Header("Physics Settings")]
     [SerializeField] private float fallSpeed = 10f;
     [SerializeField] private float lifeTime = 10f;
+    [SerializeField] private float collisionEnableDelay = 0.3f; // NEW: Delay before rock can collide
 
     [Header("Damage Settings")]
     [SerializeField] private float playerDamage = 20f;
+    [SerializeField] private float bossDamage = 1f;
     [SerializeField] private float impactRadius = 1f;
+
+    [Header("Respawn Settings")]
+    [SerializeField] private float respawnDelay = 5f;
 
     [Header("Visual Effects")]
     [SerializeField] private GameObject impactVFX;
@@ -31,8 +37,10 @@ public class FallingRock : MonoBehaviour
     private bool hasBeenTriggered;
     private bool hasImpacted;
     private float spawnTime;
-    private SphereCollider triggerCollider;
+    private SphereCollider rockCollider;
     private Renderer rockRenderer;
+    private bool canCollide = false; // NEW: Prevents immediate collision
+    private RockSpawnPoint spawnPoint;
 
     public bool HasBeenTriggered => hasBeenTriggered;
     public bool IsAvailable => !hasBeenTriggered && !hasImpacted;
@@ -48,6 +56,12 @@ public class FallingRock : MonoBehaviour
 
         rockRenderer = GetComponent<Renderer>();
 
+        rockCollider = GetComponent<SphereCollider>();
+        if (rockCollider == null)
+        {
+            rockCollider = gameObject.AddComponent<SphereCollider>();
+        }
+
         if (requiresPlayerTrigger)
         {
             ConfigureAsStationaryRock();
@@ -60,15 +74,19 @@ public class FallingRock : MonoBehaviour
         spawnTime = Time.time;
     }
 
+    public void SetSpawnPoint(RockSpawnPoint point)
+    {
+        spawnPoint = point;
+    }
+
     private void ConfigureAsStationaryRock()
     {
         rb.useGravity = false;
         rb.isKinematic = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
 
-        triggerCollider = gameObject.AddComponent<SphereCollider>();
-        triggerCollider.isTrigger = true;
-        triggerCollider.radius = triggerRadius;
+        rockCollider.isTrigger = true;
+        rockCollider.radius = triggerRadius;
 
         if (rockRenderer != null && idleMaterial != null)
         {
@@ -79,6 +97,8 @@ public class FallingRock : MonoBehaviour
         {
             Instantiate(idleVFX, transform.position, Quaternion.identity, transform);
         }
+
+        Debug.Log($"[FallingRock] Configured as stationary - waiting for trigger");
     }
 
     private void ConfigureAsFallingRock()
@@ -90,7 +110,11 @@ public class FallingRock : MonoBehaviour
         rb.angularDamping = 0.5f;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
+        rockCollider.isTrigger = false;
+        rockCollider.radius = 1f;
+
         hasBeenTriggered = true;
+        canCollide = true; // NEW: Allow collision immediately for pre-falling rocks
         Destroy(gameObject, lifeTime);
     }
 
@@ -121,15 +145,12 @@ public class FallingRock : MonoBehaviour
 
         hasBeenTriggered = true;
 
-        if (triggerCollider != null)
-        {
-            Destroy(triggerCollider);
-        }
+        Debug.Log($"[FallingRock] Triggered by player - converting to falling rock!");
 
-        SphereCollider solidCollider = gameObject.AddComponent<SphereCollider>();
-        solidCollider.isTrigger = false;
-        solidCollider.radius = 1f;
+        // Start collision delay coroutine
+        StartCoroutine(EnableCollisionAfterDelay());
 
+        // Configure physics for falling
         rb.isKinematic = false;
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.None;
@@ -138,30 +159,49 @@ public class FallingRock : MonoBehaviour
         rb.angularDamping = 0.5f;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
+        // Visual feedback
         if (rockRenderer != null && fallingMaterial != null)
         {
             rockRenderer.material = fallingMaterial;
         }
 
+        // Audio feedback
         if (triggerSound != null)
         {
             AudioSource.PlayClipAtPoint(triggerSound, transform.position);
         }
 
+        // Remove idle VFX
         if (idleVFX != null)
         {
             foreach (Transform child in transform)
             {
-                if (child.name.Contains(idleVFX.name))
+                if (child.gameObject.name.Contains(idleVFX.name) || 
+                    child.gameObject.name.Contains("Clone"))
                 {
                     Destroy(child.gameObject);
                 }
             }
         }
 
+        // Schedule destruction
         Destroy(gameObject, lifeTime);
+    }
 
-        Debug.Log($"[FallingRock] Triggered by player projectile - falling!");
+    // NEW: Coroutine to delay collision enabling
+    private IEnumerator EnableCollisionAfterDelay()
+    {
+        // Keep as trigger briefly to let projectile pass through
+        yield return new WaitForSeconds(collisionEnableDelay);
+
+        // Now convert to solid collider
+        if (rockCollider != null)
+        {
+            rockCollider.isTrigger = false;
+            rockCollider.radius = 1f;
+            canCollide = true;
+            Debug.Log($"[FallingRock] Collision enabled - rock can now impact");
+        }
     }
 
     private void FixedUpdate()
@@ -174,10 +214,26 @@ public class FallingRock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // NEW: Ignore collision if not ready yet
+        if (!canCollide)
+        {
+            Debug.Log($"[FallingRock] Ignoring collision with {collision.gameObject.name} - not ready yet");
+            return;
+        }
+
         if (!hasBeenTriggered) return;
         if (hasImpacted) return;
 
+        // NEW: Ignore projectiles entirely in collision
+        if (collision.gameObject.GetComponent<ProjectileBase>() != null)
+        {
+            Debug.Log($"[FallingRock] Ignoring projectile collision");
+            return;
+        }
+
         hasImpacted = true;
+
+        Debug.Log($"[FallingRock] Impacted with {collision.gameObject.name}");
 
         HandleRockImpact(collision);
 
@@ -191,24 +247,32 @@ public class FallingRock : MonoBehaviour
             AudioSource.PlayClipAtPoint(impactSound, transform.position);
         }
 
+        // Request respawn before destroying
+        RequestRespawn();
+
         Destroy(gameObject, 0.1f);
     }
 
     private void HandleRockImpact(Collision collision)
     {
+        // Check for ShellBoss first
         ShellBoss boss = collision.gameObject.GetComponent<ShellBoss>();
         if (boss != null)
         {
             boss.OnRockHit(this);
+            Debug.Log($"[FallingRock] Hit ShellBoss!");
             return;
         }
 
+        // Check for player
         PlayerCharacter player = collision.gameObject.GetComponent<PlayerCharacter>();
         if (player != null)
         {
             DamagePlayer(player);
             return;
         }
+
+        Debug.Log($"[FallingRock] Hit ground/environment");
     }
 
     private void DamagePlayer(PlayerCharacter player)
@@ -218,6 +282,29 @@ public class FallingRock : MonoBehaviour
         {
             baseChar.TakeDamage(playerDamage);
             Debug.Log($"[FallingRock] Hit player for {playerDamage} damage!");
+        }
+    }
+
+    private void RequestRespawn()
+    {
+        if (spawnPoint != null)
+        {
+            Debug.Log($"[FallingRock] Requesting respawn at {spawnPoint.name} after {respawnDelay}s");
+            spawnPoint.RespawnRock(respawnDelay);
+        }
+        else
+        {
+            Debug.LogWarning($"[FallingRock] No spawn point assigned - rock will not respawn!");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // If destroyed without impact (e.g., lifetime expired), still request respawn
+        if (!hasImpacted && spawnPoint != null)
+        {
+            Debug.Log($"[FallingRock] Destroyed by lifetime - requesting respawn");
+            spawnPoint.RespawnRock(respawnDelay);
         }
     }
 
@@ -238,10 +325,16 @@ public class FallingRock : MonoBehaviour
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireCube(transform.position, Vector3.one * 2f);
         }
-        else if (hasBeenTriggered)
+        else if (hasBeenTriggered && !hasImpacted)
         {
-            Gizmos.color = Color.red;
+            // NEW: Different color if collision not enabled yet
+            Gizmos.color = canCollide ? Color.red : Color.orange;
             Gizmos.DrawWireSphere(transform.position, 1f);
+        }
+        else if (hasImpacted)
+        {
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireSphere(transform.position, 0.5f);
         }
     }
 }

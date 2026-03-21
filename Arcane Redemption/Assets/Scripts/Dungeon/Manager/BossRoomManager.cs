@@ -13,6 +13,7 @@ public class BossRoomManager : DungeonManager
     private bool cutscenePlayed;
     private Animator playerAnim;
     [SerializeField] private TextMeshProUGUI BossNameDisplay; 
+    [SerializeField] private TextMeshProUGUI BossDescriptionDisplay; 
 
     void Start()
     {
@@ -49,16 +50,18 @@ public class BossRoomManager : DungeonManager
             playerAnim.SetBool("isWalking", false);
             playerAnim.SetBool("isSprinting", false);
 
-            StartCoroutine(TweenPosition(battleLockedDoors[0], new Vector3(battleLockedDoors[0].transform.position.x, moveYPosition, battleLockedDoors[0].transform.position.z), moveDuration));
-            
-            CinemachineImpulseSource impulseSource = battleLockedDoors[0].GetComponent<CinemachineImpulseSource>();
-            if (impulseSource) {
-                impulseSource.GenerateImpulse(0.5f);
-            }
+            if (battleLockedDoors.Length > 0) {
+                StartCoroutine(TweenPosition(battleLockedDoors[0], new Vector3(battleLockedDoors[0].transform.position.x, moveYPosition, battleLockedDoors[0].transform.position.z), moveDuration));
+                
+                CinemachineImpulseSource impulseSource = battleLockedDoors[0].GetComponent<CinemachineImpulseSource>();
+                if (impulseSource) {
+                    impulseSource.GenerateImpulse(0.5f);
+                }
 
-            ParticleSystem particles = battleLockedDoors[0].GetComponent<ParticleSystem>();
-            if (particles) {
-                particles.Play();
+                ParticleSystem particles = battleLockedDoors[0].GetComponent<ParticleSystem>();
+                if (particles) {
+                    particles.Play();
+                }
             }
             
             Invoke(nameof(EnableBossCamera), moveDuration + 2.5f);
@@ -76,6 +79,7 @@ public class BossRoomManager : DungeonManager
     void RoarShake()
     {
         StartCoroutine(FadeText(BossNameDisplay, 1, 1));
+        StartCoroutine(FadeText(BossDescriptionDisplay, 1, 1.25f));
 
         CinemachineImpulseSource impulseSource = BossCamera.transform.parent.GetComponent<CinemachineImpulseSource>();
         if (impulseSource) {
@@ -88,12 +92,13 @@ public class BossRoomManager : DungeonManager
         BossCamera.SetActive(false);
         playerController.canMove = true; // re-enable player movement
          StartCoroutine(FadeText(BossNameDisplay, 0, 1));
+        StartCoroutine(FadeText(BossDescriptionDisplay, 0, 0.75f));
     }
 
     private IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha, float duration)
     {
-        float currentAlpha = BossNameDisplay.color.a;
-        float startAlpha = BossNameDisplay.color.a;
+        float currentAlpha = text.color.a;
+        float startAlpha = text.color.a;
         float timeElapsed = 0.0f;
 
         while (timeElapsed < duration)
@@ -103,7 +108,7 @@ public class BossRoomManager : DungeonManager
 
             // Interpolate the position
             currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-            BossNameDisplay.color = new Color(BossNameDisplay.color.r, BossNameDisplay.color.g, BossNameDisplay.color.b, currentAlpha);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, currentAlpha);
             
             // Increment time and wait for the next frame
             timeElapsed += Time.deltaTime;
@@ -111,6 +116,6 @@ public class BossRoomManager : DungeonManager
         }
 
         // Ensure the object reaches the exact target position
-        BossNameDisplay.color = new Color(BossNameDisplay.color.r, BossNameDisplay.color.g, BossNameDisplay.color.b, targetAlpha);
+        text.color = new Color(text.color.r, text.color.g, text.color.b, targetAlpha);
     }
 }

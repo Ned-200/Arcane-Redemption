@@ -3536,6 +3536,17 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!114 &217238787 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6415295413430454547, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+  m_PrefabInstance: {fileID: 2081104915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!43 &223036732
 Mesh:
   m_ObjectHideFlags: 0
@@ -23815,7 +23826,7 @@ ParticleSystem:
     m_BurstCount: 1
     m_Bursts:
     - serializedVersion: 2
-      time: 3.125
+      time: 2.5
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -28454,6 +28465,7 @@ GameObject:
   - component: {fileID: 1221999121}
   - component: {fileID: 1221999128}
   - component: {fileID: 1221999127}
+  - component: {fileID: 1221999129}
   m_Layer: 6
   m_Name: ShellBoss
   m_TagString: Untagged
@@ -28706,6 +28718,140 @@ MonoBehaviour:
   hitVFX: {fileID: 0}
   shellHitSound: {fileID: 0}
   shellBreakSound: {fileID: 0}
+--- !u!114 &1221999129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221999120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 4
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.046470176
+        outSlope: 0.046470176
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.3660296
+        value: 0.018037513
+        inSlope: 0.5018612
+        outSlope: 0.5018612
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.29588118
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.42283055
+        value: 1.0324417
+        inSlope: -2.2434845
+        outSlope: -2.2434845
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.51190907
+        value: -0.98225486
+        inSlope: 6.447876
+        outSlope: 6.447876
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5616993
+        value: 0.82474416
+        inSlope: 13.866757
+        outSlope: 13.866757
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.78472173
+        value: -0.7102147
+        inSlope: 7.3161726
+        outSlope: 7.3161726
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.84105015
+        value: 0.55149996
+        inSlope: -0.48158816
+        outSlope: -0.48158816
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.8892903
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9236121
+        value: -0.39057514
+        inSlope: -3.0049257
+        outSlope: -3.0049257
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: -0.00577683
+        inSlope: 4.7503185
+        outSlope: 4.7503185
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 3
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: -1, y: 0, z: 0}
 --- !u!1 &1242158977
 GameObject:
   m_ObjectHideFlags: 0
@@ -51014,7 +51160,7 @@ MonoBehaviour:
   battleLockedDoors:
   - {fileID: 1146763055}
   teleportDoor: {fileID: 0}
-  moveDuration: 5
+  moveDuration: 4
   characterController: {fileID: 497637279}
   environmentDeathEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   drownedOrBurned: 0
@@ -51023,6 +51169,7 @@ MonoBehaviour:
   CinematicCamera: {fileID: 101148972}
   BossCamera: {fileID: 1695059564}
   moveYPosition: 75
+  BossNameDisplay: {fileID: 217238787}
 --- !u!1 &1912061582
 GameObject:
   m_ObjectHideFlags: 0

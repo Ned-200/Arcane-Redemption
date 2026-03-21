@@ -1,5 +1,8 @@
 using UnityEngine;
+using System.Collections;
 using Unity.Cinemachine;
+using UnityEngine.UI;
+using TMPro;
 
 public class BossRoomManager : DungeonManager
 {
@@ -9,7 +12,7 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private float moveYPosition = 75;
     private bool cutscenePlayed;
     private Animator playerAnim;
-
+    [SerializeField] private TextMeshProUGUI BossNameDisplay; 
 
     void Start()
     {
@@ -58,7 +61,7 @@ public class BossRoomManager : DungeonManager
                 particles.Play();
             }
             
-            Invoke(nameof(EnableBossCamera), moveDuration + 1.0f);
+            Invoke(nameof(EnableBossCamera), moveDuration + 2.5f);
         }
     }
 
@@ -66,18 +69,48 @@ public class BossRoomManager : DungeonManager
     {
         BossCamera.SetActive(true);
         CinematicCamera.SetActive(false);
-
-        CinemachineImpulseSource impulseSource = battleLockedDoors[0].GetComponent<CinemachineImpulseSource>();
-        if (impulseSource) {
-            impulseSource.GenerateImpulse(0.5f);
-        }
-
+        Invoke(nameof(RoarShake), 1);
         Invoke(nameof(DisableBossCamera), 4);
+    }
+
+    void RoarShake()
+    {
+        StartCoroutine(FadeText(BossNameDisplay, 1, 1));
+
+        CinemachineImpulseSource impulseSource = BossCamera.transform.parent.GetComponent<CinemachineImpulseSource>();
+        if (impulseSource) {
+            impulseSource.GenerateImpulse(1.0f);
+        }
     }
 
     void DisableBossCamera()
     {
         BossCamera.SetActive(false);
         playerController.canMove = true; // re-enable player movement
+         StartCoroutine(FadeText(BossNameDisplay, 0, 1));
+    }
+
+    private IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha, float duration)
+    {
+        float currentAlpha = BossNameDisplay.color.a;
+        float startAlpha = BossNameDisplay.color.a;
+        float timeElapsed = 0.0f;
+
+        while (timeElapsed < duration)
+        {
+            // Calculate the interpolation percentage (0 to 1)
+            float t = timeElapsed / duration;
+
+            // Interpolate the position
+            currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+            BossNameDisplay.color = new Color(BossNameDisplay.color.r, BossNameDisplay.color.g, BossNameDisplay.color.b, currentAlpha);
+            
+            // Increment time and wait for the next frame
+            timeElapsed += Time.deltaTime;
+            yield return null; // Wait until the next frame
+        }
+
+        // Ensure the object reaches the exact target position
+        BossNameDisplay.color = new Color(BossNameDisplay.color.r, BossNameDisplay.color.g, BossNameDisplay.color.b, targetAlpha);
     }
 }

@@ -11,6 +11,10 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected float speed = 20f;
     [SerializeField] protected float lifetime = 5f;
+    [SerializeField] protected bool destroyOnImpact = true;
+    [SerializeField] protected LayerMask targetLayers;
+    [SerializeField] protected string element;
+    [SerializeField] protected bool toughVinesBurnable = false; // CHANGE THIS TO TRUE FOR TESTING ONLY
 
     [Header("Visual Effects")]
     [SerializeField] protected GameObject hitEffect;
@@ -73,12 +77,96 @@ public class ProjectileBase : MonoBehaviour
             target.TakeDamage(damage);
             OnTargetHit(target); // NEW: Call virtual method for derived classes
             Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
-        }
 
+        // CHECK FOR ALL ENVIRONMENT COLLISIONS:
+        } else if (other.gameObject.tag == "PlantWall" && element == "Fire") // If a plant wall
+        {
+            Disintegrate disintegrate = other.gameObject.GetComponent<Disintegrate>();
+           
+            if (disintegrate == null)
+            {
+                Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
+            } else
+            {
+                //Trigger disintegration material
+                disintegrate.TriggerDisintegration();
+                
+            }
+        } else if (other.gameObject.tag =="Tough Plant Wall" && toughVinesBurnable){
+            DisintegrateUP disintegrateup = other.gameObject.GetComponent<DisintegrateUP>();
+
+            if (disintegrateup == null)
+            {
+                Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
+            } else
+            {
+                //Trigger disintegration material
+                disintegrateup.TriggerDisintegrationUP();
+            }
+        } else if (other.gameObject.tag == "FlameWall" && element == "Water") // If a fire wall
+        {
+            GameObject FlameWall = other.gameObject;
+
+            //Disable particles
+            ParticleSystem fireParticles = FlameWall.transform.Find("FireEffect").GetComponent<ParticleSystem>();
+            if (fireParticles == null)
+            {
+                Debug.LogError(FlameWall.name + ": FlameWall - no particles found! Check particle gameobject name");
+            } else
+            {
+                //Disable flame particles before deleting
+                fireParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting); // stops emmision without clearing
+            }
+
+            Collider flameCollider = FlameWall.GetComponent<Collider>();
+            Light flameLight = FlameWall.GetComponent<Light>();
+            if (flameCollider == null || flameLight == null)
+            {
+                Debug.LogError(FlameWall.name + ": FlameWall - no collider or light source found!");
+            } else
+            {
+                //Disable flame wall collision
+                flameCollider.enabled = false;
+                flameLight.enabled = false;
+            }
+        } else if (other.gameObject.tag == "Breakable") // If a breakable object
+        {
+            GameObject BreakableObject = other.gameObject;
+
+            //Play damaged effect
+            Breakable breakableScript = BreakableObject.GetComponent<Breakable>();
+            if (breakableScript != null)
+            {
+                breakableScript.Break();
+            } else
+            {
+                Debug.LogError(BreakableObject.name + ": Breakable - no breakableScript found!");
+            }
+        } else if (other.gameObject.tag == "Flower") //if it's a flower for plant dungeon
+        {
+            // START FLOWER TOGGLE CHECK
+            GameObject ToggleObject = other.gameObject;
+            SwordHitToggle toggle = ToggleObject.GetComponent<SwordHitToggle>();
+            if (toggle !=null)
+            {
+                toggle.Toggle();
+            } 
+        } else if (other.gameObject.tag == "PlantBridge" && element == "Plant") // if it's a plant bridge cast point
+        {
+            // START FLOWER TOGGLE CHECK
+            PlantBridge plantBridge = other.GetComponent<PlantBridge>();
+            if (plantBridge != null)
+            {
+                plantBridge.GrowBridge();
+            } else
+            {
+                Debug.LogError("ProjectileBase: Could not fetch plant bridge component from tagged object!");
+            }
+        }
         // Spawn impact effect
         if (hitEffect != null)
         {
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
+            Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
         }
 
         // Play impact sound

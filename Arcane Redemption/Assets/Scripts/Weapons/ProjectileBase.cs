@@ -56,6 +56,11 @@ public class ProjectileBase : MonoBehaviour
         {
             return;
         }
+        // Don't continue if not correct layer
+        if (((1 << other.gameObject.layer) & targetLayers) == 0)
+        {
+            return;
+        }
 
         // Check if we hit a FallingRock - trigger it but DON'T destroy projectile
         FallingRock rock = other.GetComponent<FallingRock>();
@@ -77,9 +82,44 @@ public class ProjectileBase : MonoBehaviour
             target.TakeDamage(damage);
             OnTargetHit(target); // NEW: Call virtual method for derived classes
             Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+        }
 
+        // If projectile was shot by a player, check for envirnmental triggers (Vine walls, Barrels, growing plant bridges, etc)
+        if (owner.gameObject.tag == "Player") {
+            EnvironmentalTriggers(other);
+        }
+
+        // Spawn impact effect
+        if (hitEffect != null)
+        {
+            Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
+        }
+
+        // Play impact sound
+        if (impactSound != null)
+        {
+            AudioSource.PlayClipAtPoint(impactSound, transform.position);
+        }
+
+        // Destroy the projectile
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// NEW: Virtual method called when projectile hits a character target.
+    /// Override this in derived classes for custom hit behavior.
+    /// </summary>
+    /// <param name="target">The character that was hit</param>
+    protected virtual void OnTargetHit(BaseCharacter target)
+    {
+        // Base implementation does nothing
+        // Derived classes can override for custom behavior
+    }
+
+    protected virtual void EnvironmentalTriggers(Collider other)
+    {
         // CHECK FOR ALL ENVIRONMENT COLLISIONS:
-        } else if (other.gameObject.tag == "PlantWall" && element == "Fire") // If a plant wall
+        if (other.gameObject.tag == "PlantWall" && element == "Fire") // If a plant wall
         {
             Disintegrate disintegrate = other.gameObject.GetComponent<Disintegrate>();
            
@@ -163,30 +203,5 @@ public class ProjectileBase : MonoBehaviour
                 Debug.LogError("ProjectileBase: Could not fetch plant bridge component from tagged object!");
             }
         }
-        // Spawn impact effect
-        if (hitEffect != null)
-        {
-            Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
-        }
-
-        // Play impact sound
-        if (impactSound != null)
-        {
-            AudioSource.PlayClipAtPoint(impactSound, transform.position);
-        }
-
-        // Destroy the projectile
-        Destroy(gameObject);
-    }
-
-    /// <summary>
-    /// NEW: Virtual method called when projectile hits a character target.
-    /// Override this in derived classes for custom hit behavior.
-    /// </summary>
-    /// <param name="target">The character that was hit</param>
-    protected virtual void OnTargetHit(BaseCharacter target)
-    {
-        // Base implementation does nothing
-        // Derived classes can override for custom behavior
     }
 }

@@ -94626,6 +94626,66 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &742361151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 742361153}
+  - component: {fileID: 742361152}
+  m_Layer: 0
+  m_Name: ElementSwapDecal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &742361152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742361151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
+  m_Material: {fileID: 2100000, guid: cdfc0ee30378f584e87f3be373b0cf48, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 1
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_RenderingLayerMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0.5}
+  m_Size: {x: 25, y: 15, z: 1}
+  m_FadeFactor: 1
+  version: 1
+  m_DecalLayerMask: 1
+--- !u!4 &742361153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742361151}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -12.33, y: -12.96, z: 45.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &742403859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104213,6 +104273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c75912bea9022f4e880697946fc1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonCheckpoint
+  checkpointSet: 0
   DungeonManager: {fileID: 1993126107}
 --- !u!1 &845836737
 GameObject:
@@ -154323,6 +154384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c75912bea9022f4e880697946fc1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonCheckpoint
+  checkpointSet: 0
   DungeonManager: {fileID: 1993126107}
 --- !u!1 &1439510280
 GameObject:
@@ -205262,6 +205324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c75912bea9022f4e880697946fc1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterDungeonCheckpoint
+  checkpointSet: 0
   DungeonManager: {fileID: 1993126107}
 --- !u!1 &2040363769
 GameObject:
@@ -251889,3 +251952,4 @@ SceneRoots:
   - {fileID: 1850835576}
   - {fileID: 904652327}
   - {fileID: 1048484982}
+  - {fileID: 742361153}

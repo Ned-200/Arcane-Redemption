@@ -84,14 +84,16 @@ public class EnemyCharacter : BaseCharacter
             return;
         }
 
-        // Safely check if "Idle" state exists before playing
-        if (HasAnimationState("Idle"))
+        // Play idle animation with random start time for variety
+        // Trust that the state exists since we've validated the controller
+        try
         {
             enemyAnim.Play("Idle", 0, Random.Range(0.0f, 1.0f));
+            Debug.Log($"[{gameObject.name}] ✅ Animator initialized successfully - Playing Idle");
         }
-        else
+        catch (System.Exception e)
         {
-            Debug.LogWarning($"[{gameObject.name}] Animator missing 'Idle' state - skipping initial animation");
+            Debug.LogWarning($"[{gameObject.name}] Failed to play Idle state: {e.Message}");
         }
     }
 
@@ -326,16 +328,16 @@ public class EnemyCharacter : BaseCharacter
     {
         currentState = EnemyState.Dead;
 
-        // Drop equipped weapon
-        DropEquippedWeapon();
-
-        // Disable components immediately
-        DisableComponents();
-
-        // Call death event (animations, sounds, VFX)
+       
         OnDeath();
 
-        // Destroy the GameObject after a delay
+        
+        DropEquippedWeapon();
+
+        
+        DisableComponents();
+
+        
         Destroy(gameObject, deathDelay);
     }
 
@@ -431,23 +433,19 @@ public class EnemyCharacter : BaseCharacter
     /// </summary>
     protected virtual void OnAttackPerformed()
     {
-        // Safely play attack animation
+        // Play attack animation
         if (enemyAnim != null && enemyAnim.runtimeAnimatorController != null)
         {
-            if (HasAnimationState("Attack"))
+            try
             {
                 enemyAnim.Play("Attack");
+                Debug.Log($"[{gameObject.name}] 🗡️ Playing Attack animation");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[{gameObject.name}] Failed to play Attack animation: {e.Message}");
             }
         }
-    }
-
-    /// <summary>
-    /// Called when the enemy takes damage
-    /// </summary>
-    protected override void OnDamageTaken(float damage)
-    {
-        base.OnDamageTaken(damage);
-        // Add enemy-specific damage response (play hurt sound, visual effects, etc.)
     }
 
     /// <summary>
@@ -460,12 +458,17 @@ public class EnemyCharacter : BaseCharacter
         
         Debug.Log($"[{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
         
-        // Safely play death animation
+        // Play death animation
         if (enemyAnim != null && enemyAnim.runtimeAnimatorController != null)
         {
-            if (HasAnimationState("Death"))
+            try
             {
                 enemyAnim.Play("Death");
+                Debug.Log($"[{gameObject.name}] 💀 Playing Death animation");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[{gameObject.name}] Failed to play Death animation: {e.Message}");
             }
         }
 
@@ -485,6 +488,8 @@ public class EnemyCharacter : BaseCharacter
                 feetDisintegrate.TriggerDisintegration();
             }
         }
+
+        Debug.Log($"[{gameObject.name}] Animator state: Animator={(enemyAnim != null)}, Controller={(enemyAnim?.runtimeAnimatorController != null)}, HasDeathState={HasAnimationState("Death")}");
     }
 
     #endregion

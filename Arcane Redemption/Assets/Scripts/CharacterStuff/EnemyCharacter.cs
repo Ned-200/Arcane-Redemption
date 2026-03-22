@@ -89,7 +89,7 @@ public class EnemyCharacter : BaseCharacter
         try
         {
             enemyAnim.Play("Idle", 0, Random.Range(0.0f, 1.0f));
-            Debug.Log($"[{gameObject.name}] ✅ Animator initialized successfully - Playing Idle");
+            Debug.Log($"[{gameObject.name}]  Animator initialized successfully - Playing Idle");
         }
         catch (System.Exception e)
         {
@@ -259,7 +259,7 @@ public class EnemyCharacter : BaseCharacter
     public override void TakeDamage(float damage)
     {
         // Debug entry point
-        Debug.Log($"[{gameObject.name}] 🎯 EnemyCharacter.TakeDamage CALLED! Damage: {damage}, CurrentHealth: {CurrentHealth:F1}, IsDead: {isDead}");
+        Debug.Log($"[{gameObject.name}]  EnemyCharacter.TakeDamage CALLED! Damage: {damage}, CurrentHealth: {CurrentHealth:F1}, IsDead: {isDead}");
 
         if (isDead)
         {
@@ -300,23 +300,23 @@ public class EnemyCharacter : BaseCharacter
 
         // Log detailed damage information
         float healthLost = healthBefore - CurrentHealth;
-        Debug.Log($"[{gameObject.name}] ⚔️ Damage Applied: {damage} | Health: {healthBefore:F1} → {CurrentHealth:F1} (-{healthLost:F1}) | {HealthPercent * 100:F1}%");
+        Debug.Log($"[{gameObject.name}]  Damage Applied: {damage} | Health: {healthBefore:F1} → {CurrentHealth:F1} (-{healthLost:F1}) | {HealthPercent * 100:F1}%");
         
         // Show status indicator
         if (HealthPercent <= 0.2f)
         {
-            Debug.LogWarning($"[{gameObject.name}] ⚠️ CRITICAL HEALTH! ({HealthPercent * 100:F1}%)");
+            Debug.LogWarning($"[{gameObject.name}]  CRITICAL HEALTH! ({HealthPercent * 100:F1}%)");
         }
         else if (HealthPercent <= 0.5f)
         {
-            Debug.Log($"[{gameObject.name}] ⚠️ Low Health ({HealthPercent * 100:F1}%)");
+            Debug.Log($"[{gameObject.name}]  Low Health ({HealthPercent * 100:F1}%)");
         }
 
         // Check if enemy died from this damage
         if (!IsAlive && !isDead)
         {
             isDead = true;
-            Debug.Log($"[{gameObject.name}] 💀 Health reached ZERO! Triggering death sequence...");
+            Debug.Log($"[{gameObject.name}]  Triggering death sequence...");
             Die();
         }
     }
@@ -464,7 +464,7 @@ public class EnemyCharacter : BaseCharacter
             try
             {
                 enemyAnim.Play("Death");
-                Debug.Log($"[{gameObject.name}] 💀 Playing Death animation");
+                Debug.Log($"[{gameObject.name}]  Playing Death animation");
             }
             catch (System.Exception e)
             {

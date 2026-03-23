@@ -7,6 +7,7 @@ public class WaterDungeonManager : DungeonManager
     [SerializeField] Collider exitFireWall;
     [SerializeField] GameObject dungeonExit;
     private bool exitOpened;
+    private bool fireWallDoused;
 
     private bool[] doorsOpened = new bool[5];
 
@@ -81,14 +82,20 @@ public class WaterDungeonManager : DungeonManager
         }
 
         // Dungeon Exit
-        if (!exitFireWall.enabled & !exitOpened)
-        {
+        if (exitFireWall != null) {
+            if (!exitFireWall.enabled)
+            {
+                fireWallDoused = true;
+            }
+        }
+            
+        if (fireWallDoused && !exitOpened) {
             exitOpened = true;
             teleportDoor.SetActive(true);
             // Start the tweening coroutine
             StartCoroutine(TweenPosition(dungeonExit, new Vector3(dungeonExit.transform.localPosition.x, dungeonExit.transform.localPosition.y+12, dungeonExit.transform.localPosition.z), 10));
             dungeonExit.transform.localPosition = new Vector3(dungeonExit.transform.localPosition.x, dungeonExit.transform.localPosition.y+12, dungeonExit.transform.localPosition.z);
         }
-        
+
     }
 }

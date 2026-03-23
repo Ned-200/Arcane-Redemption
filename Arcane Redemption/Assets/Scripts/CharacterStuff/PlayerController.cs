@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Animator playerAnim;
     private bool isWalkingAnim = false;
 
+    [Header("Animation Layers")]
+    [SerializeField] private int lowerBodyLayerIndex = 1; // Set this in Inspector if your layer order differs
+    [SerializeField] private int torsoLayerIndex = 2; // set in Inspector
+
     [Header("Movement")]
     [SerializeField] public bool canMove = true;
     [SerializeField] private float walkSpeed = 3f;
@@ -55,13 +59,15 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         baseCharacter = GetComponent<BaseCharacter>();
-        
+
         if (GameObject.FindWithTag("PlayerData") == null)
         {
-            if (playerDataPrefab != null) {
+            if (playerDataPrefab != null)
+            {
                 Debug.Log("No Player Data Found, Creating New Player Data!");
                 Instantiate(playerDataPrefab);
-            } else
+            }
+            else
             {
                 Debug.LogError("No Player Data Found, Cannot create new Data without Prefab! Check Player Controller fields!");
             }
@@ -69,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
         if (enableDebugLogs)
         {
-            Debug.Log("PlayerController: Awake - CharacterController: " + (characterController != null) + 
+            Debug.Log("PlayerController: Awake - CharacterController: " + (characterController != null) +
                       ", BaseCharacter: " + (baseCharacter != null));
         }
     }
@@ -94,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
         // Cast from center of character downward
         Vector3 spherePosition = transform.position + Vector3.up * (groundCheckRadius + 0.1f);
-        
+
         // Use SphereCast for more reliable ground detection
         RaycastHit hit;
         bool sphereCastHit = Physics.SphereCast(
@@ -178,7 +184,7 @@ public class PlayerController : MonoBehaviour
         if (isSprinting && baseCharacter != null)
         {
             baseCharacter.ConsumeStamina(sprintStaminaCost * Time.deltaTime);
-            
+
             if (enableDebugLogs)
             {
                 // Debug.Log($"Sprinting - Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
@@ -242,7 +248,10 @@ public class PlayerController : MonoBehaviour
         if (baseCharacter != null && baseCharacter.TryConsumeStamina(jumpStaminaCost))
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            playerAnim.Play("Jump");
+
+            // Play on both Base Layer (0) and LowerBody layer
+            playerAnim.Play("Jump", 0);
+            playerAnim.Play("Jump", lowerBodyLayerIndex);
 
             if (enableDebugLogs)
             {
@@ -273,7 +282,9 @@ public class PlayerController : MonoBehaviour
                 dashDirection = move.normalized;
             }
 
-            playerAnim.Play("Dash");
+            // Play on both Base Layer (0) and LowerBody layer
+            playerAnim.Play("Dash", 0);
+            playerAnim.Play("Dash", lowerBodyLayerIndex);
 
             isDashing = true;
             dashTimeRemaining = dashDuration;
@@ -305,7 +316,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(spherePosition, groundCheckRadius);
         Gizmos.DrawWireSphere(sphereEnd, groundCheckRadius);
-        
+
         // Draw line showing the cast direction
         Gizmos.DrawLine(spherePosition, sphereEnd);
 

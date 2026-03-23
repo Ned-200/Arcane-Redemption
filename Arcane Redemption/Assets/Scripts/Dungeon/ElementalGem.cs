@@ -6,16 +6,20 @@ using Unity.Cinemachine;
 public class ElementalGem : MonoBehaviour
 {
     
+    [Header("References")]
     [SerializeField] int gemElement; // 1 = Fire Ruby, 2 = Water Sapphire, 3 = Plant Emerald
     private Image interactImage;
     private bool playerInRange = false;
-
     private PlayerData playerData;
 
-    [SerializeField] GameObject gemDoor;
-    [SerializeField] int gemDoorHeight; // Y position to set door when it seals after gem is picked up!
-    private BoxCollider boxCollider;
+    [Header("Gem Rendering")]
+    [SerializeField] private GameObject gemMesh;
+    [SerializeField] private GameObject gemEffect;
 
+    [Header("Gem Door")]
+    [SerializeField] GameObject gemDoor;    
+    private BoxCollider boxCollider;
+    [SerializeField] int gemDoorHeight; // Y position to set door when it seals after gem is picked up!
     private bool movedOrMoving;
     [SerializeField] float moveDuration;
     
@@ -37,6 +41,15 @@ public class ElementalGem : MonoBehaviour
         } else
         {
             boxCollider = gemDoor.GetComponent<BoxCollider>(); // Invisible barricade to prevent player from running past closing gem door
+        }
+
+        if (gemMesh == null)
+        {
+            Debug.LogError("ElementalGem: gemMesh not assigned!");
+        }
+        if (gemEffect == null)
+        {
+            Debug.LogError("ElementalGem: gemEffect not assigned!");
         }
     }
 
@@ -80,7 +93,9 @@ public class ElementalGem : MonoBehaviour
                     Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
                 }
             }
-            gameObject.SetActive(false);
+            
+            gemMesh.SetActive(false);
+            gemEffect.SetActive(false);
 
         }
     }

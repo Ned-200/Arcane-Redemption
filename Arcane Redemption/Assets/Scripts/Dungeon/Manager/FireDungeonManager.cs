@@ -53,7 +53,7 @@ public class FireDungeonManager : DungeonManager
             
             CinemachineImpulseSource impulseSource = battleLockedDoors[0].GetComponent<CinemachineImpulseSource>();
             if (impulseSource) {
-                battleLockedDoors[0].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+                impulseSource.GenerateImpulse(0.5f);
             }
             
             Debug.Log("Opening doors");
@@ -67,7 +67,7 @@ public class FireDungeonManager : DungeonManager
             
             CinemachineImpulseSource impulseSource = battleLockedDoors[2].GetComponent<CinemachineImpulseSource>();
             if (impulseSource) {
-                battleLockedDoors[2].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+                impulseSource.GenerateImpulse(0.5f);
             }
 
             Debug.Log("Opening door");
@@ -80,7 +80,7 @@ public class FireDungeonManager : DungeonManager
             
             CinemachineImpulseSource impulseSource = battleLockedDoors[3].GetComponent<CinemachineImpulseSource>();
             if (impulseSource) {
-                battleLockedDoors[3].GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+                impulseSource.GenerateImpulse(0.5f);
             }
 
             Debug.Log("Opening door");
@@ -94,7 +94,7 @@ public class FireDungeonManager : DungeonManager
             
             CinemachineImpulseSource impulseSource = bridge.GetComponent<CinemachineImpulseSource>();
             if (impulseSource) {
-                bridge.GetComponent<CinemachineImpulseSource>().GenerateImpulse(0.5f);
+                impulseSource.GenerateImpulse(0.5f);
             }
 
             bridge.transform.position = new Vector3(17,-19,-60);

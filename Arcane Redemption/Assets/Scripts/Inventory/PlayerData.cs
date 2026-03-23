@@ -5,6 +5,7 @@ public class PlayerData : MonoBehaviour
 {
     private Transform fireDungeonSpawn;
     private Transform waterDungeonSpawn;
+    private Transform volcanoSpawn;
 
     public bool fireGemObtained;
     public bool waterGemObtained;
@@ -190,6 +191,20 @@ public class PlayerData : MonoBehaviour
                 } else
                 {
                     Debug.LogError("PlayerData can't find waterDungeonSpawn!");
+                }
+            }
+            
+            if (lastScene == "VolcanoBattleArena") { // If coming from Volcano Boss Arena
+
+                // Set player spawn position
+                volcanoSpawn = GameObject.Find("VolcanoSpawn").transform;
+                if (volcanoSpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = volcanoSpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find VolcanoSpawn!");
                 }
             }
 

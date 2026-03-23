@@ -29,7 +29,7 @@ public class EnemyCharacter : BaseCharacter
     [SerializeField] private float deathDelay = 3f;
 
     [Header("Debug")]
-    [SerializeField] private bool showDebugGizmos = true;
+    [SerializeField] protected bool showDebugGizmos = true;
 
     // State
     private EnemyState currentState = EnemyState.Idle;

@@ -62,19 +62,20 @@ public class ShellBoss : EnemyCharacter
     [Header("Animation")]
     [SerializeField] private Animator bossAnimator;
 
-    [Header("Debug")]
-    [SerializeField] private bool showDebugGizmos = true;
-
     [Header("Arena Boundaries")]
     [SerializeField] private ArenaBounds arenaBounds;
     [SerializeField] private float edgeAvoidanceStrength = 3f;
+
+    [Header("Other References")]
+    private bool ghostSpawned;
+    [SerializeField] private GameObject GhostNPCPrefab;
 
     #endregion
 
     #region Private Fields
 
     private BossPhase currentPhase = BossPhase.ShellPhase;
-    private ShellBossState currentState = ShellBossState.MovingToRock;
+    private ShellBossState currentBossState = ShellBossState.MovingToRock;
 
     private Transform playerTransform;
     private float lastComboTime;
@@ -99,7 +100,7 @@ public class ShellBoss : EnemyCharacter
     #region Properties
 
     public BossPhase CurrentPhase => currentPhase;
-    public ShellBossState CurrentState => currentState;
+    public ShellBossState CurrentBossState => currentBossState;
     public bool IsShellActive => shellProtection != null && shellProtection.IsShellActive;
     public bool IsPerformingCombo => isPerformingCombo;
 
@@ -301,7 +302,7 @@ public class ShellBoss : EnemyCharacter
         if (currentPhase == BossPhase.EnragedPhase) return;
 
         currentPhase = BossPhase.EnragedPhase;
-        currentState = ShellBossState.Fighting;
+        currentBossState = ShellBossState.Fighting;
 
         StopAllCoroutines();
         isMovingToRock = false;
@@ -355,7 +356,7 @@ public class ShellBoss : EnemyCharacter
         targetPosition.y = transform.position.y;
 
         isMovingToRock = true;
-        currentState = ShellBossState.MovingToRock;
+        currentBossState = ShellBossState.MovingToRock;
 
         Debug.Log($"[{gameObject.name}] Moving to rock: {targetRockSpawnPoint.name}");
 
@@ -393,7 +394,7 @@ public class ShellBoss : EnemyCharacter
             if (distance < rockPositionCheckRadius)
             {
                 isMovingToRock = false;
-                currentState = ShellBossState.WaitingUnderRock;
+                currentBossState = ShellBossState.WaitingUnderRock;
                 timeArrivedAtRock = Time.time;
                 Debug.Log($"[{gameObject.name}] ✓ Arrived at rock - waiting");
                 yield break;
@@ -434,7 +435,7 @@ public class ShellBoss : EnemyCharacter
             TryPerformRingAttack(distanceToPlayer);
         }
 
-        switch (currentState)
+        switch (currentBossState)
         {
             case ShellBossState.MovingToRock:
                 break;
@@ -844,6 +845,19 @@ public class ShellBoss : EnemyCharacter
             shellProtection.OnShellHit -= OnShellHit;
         }
 
+        if (!ghostSpawned)
+            {
+                ghostSpawned = true;
+                if (GhostNPCPrefab != null)
+                {
+                    Instantiate(GhostNPCPrefab, gameObject.transform.position, gameObject.transform.rotation);
+                }
+                else
+                {
+                    Debug.LogError("TreeBoss not assigned a Ghost NPC Prefab! Check Fields!");
+                }
+            }
+
         StopAllCoroutines();
     }
 
@@ -866,7 +880,7 @@ public class ShellBoss : EnemyCharacter
 
         if (Application.isPlaying && targetRockSpawnPoint != null)
         {
-            Gizmos.color = currentState == ShellBossState.MovingToRock ? Color.yellow : Color.green;
+            Gizmos.color = currentBossState == ShellBossState.MovingToRock ? Color.yellow : Color.green;
             Gizmos.DrawLine(transform.position, targetRockSpawnPoint.transform.position);
             Gizmos.DrawWireSphere(targetRockSpawnPoint.transform.position, rockPositionCheckRadius);
         }

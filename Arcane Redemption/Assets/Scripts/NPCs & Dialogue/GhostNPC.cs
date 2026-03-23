@@ -7,8 +7,11 @@ using Unity.Cinemachine;
 
 public class GhostNPC : NPC_Character
 {
-    [SerializeField] protected int mayorIndex;
+    [SerializeField] protected int mayorIndex = -1;
+    [SerializeField] protected int bridgeIndex = -1;
+
     private GameObject mayorCamera;
+    private GameObject bossExitBridge;
     private bool movedOrMoving;
     private Vector3 targetPosition;
     protected override void Start()
@@ -17,6 +20,7 @@ public class GhostNPC : NPC_Character
 
         Invoke(nameof(BeginGhostDialogue), 3);
         targetPosition = new Vector3(NPCMesh.transform.localPosition.x, NPCMesh.transform.localPosition.y+8, NPCMesh.transform.localPosition.z);
+    
     }
 
     private void BeginGhostDialogue()
@@ -60,14 +64,7 @@ public class GhostNPC : NPC_Character
             // If index is the index where the camera must pan to the mayor, do that
             if (index == mayorIndex && mayorIndex != 0)
             {
-                MeshRenderer meshRenderer = NPCMesh.GetComponent<MeshRenderer>();
-                if (meshRenderer != null)
-                {
-                    meshRenderer.enabled = false;
-                } else
-                {
-                    Debug.LogError("GhostNPC: Can't find meshRenderer component!");
-                }
+                HideNPCMesh();
 
                 Transform mayorMesh = GameObject.Find("MayorNPC").transform.Find("NPCMesh");
                 if (mayorMesh != null)
@@ -86,6 +83,11 @@ public class GhostNPC : NPC_Character
                     Debug.LogError("GhostNPC: Can't find mayorCamera gameobject!");
                 }
             }
+
+            if (index == bridgeIndex && bridgeIndex != 0)
+            {
+                bossExitBridge = GameObject.Find("BossExitBridge");                
+            }
         }
     }
 
@@ -98,6 +100,31 @@ public class GhostNPC : NPC_Character
             {
                 mayorCamera.SetActive(false);
             }
+        }
+
+        if (bossExitBridge != null && !CinemachineCamera.activeSelf) //if ghost cam inactive and exit bridge has been assigned, play cutscene
+        {
+            BossExitBridge bridgeScript = bossExitBridge.GetComponent<BossExitBridge>();
+            if (bridgeScript != null)
+            {
+                bridgeScript.moveBridge();
+                HideNPCMesh();
+            } else
+            {
+                Debug.LogError("GhostNPC: Can't find bridgeScript component!");
+            }
+        }
+    }
+
+    protected void HideNPCMesh()
+    {
+        MeshRenderer meshRenderer = NPCMesh.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            meshRenderer.enabled = false;
+        } else
+        {
+            Debug.LogError("GhostNPC: Can't find meshRenderer component!");
         }
     }
 

@@ -545,7 +545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &507582007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -635,6 +635,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
   - {fileID: 21300000, guid: 26a2749073f53c643994c42c4a18fc9d, type: 3}
   - {fileID: 21300000, guid: 0ee7eefcc3e711c42b53d9eac3ace40c, type: 3}
+  mainMenu: {fileID: 103708535}
 --- !u!1 &592886345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,9 +1567,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 103708535}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnPlayClick
+      - m_Target: {fileID: 507582008}
+        m_TargetAssemblyTypeName: IntroCutscene, Assembly-CSharp
+        m_MethodName: StartIntro
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

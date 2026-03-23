@@ -26,7 +26,7 @@ public class MayorCharacter : NPC_Character
         
         // Fade out of black
         FadeUI.SetActive(true);
-        Invoke(nameof(Fade), 2);
+        Invoke(nameof(Fade), 1.5f);
         Debug.Log("FADING UI");
     }
 

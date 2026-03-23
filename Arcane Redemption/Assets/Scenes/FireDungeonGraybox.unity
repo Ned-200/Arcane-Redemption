@@ -120560,6 +120560,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eacfd0c365b5af6419be2f5908a7ab9c, type: 3}
   m_PrefabInstance: {fileID: 1980033646}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1992022742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1992022743}
+  m_Layer: 10
+  m_Name: promptPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1992022743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992022742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.71, y: 4.5, z: -0.844}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2044082677}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1992162444 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -298092508047035362, guid: 25c388e3afcac064383119623233e12e, type: 3}
@@ -124484,6 +124515,7 @@ Transform:
   m_Children:
   - {fileID: 543450653092092963}
   - {fileID: 4986216234125433480}
+  - {fileID: 1992022743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2044082678
@@ -124521,6 +124553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireGem
   gemElement: 1
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
+  promptPosition: {fileID: 1992022743}
   gemMesh: {fileID: 919132148553893529}
   gemEffect: {fileID: 7038505792361716238}
   gemDoor: {fileID: 1389128071}

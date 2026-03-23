@@ -170,11 +170,17 @@ public class InventoryUI : MonoBehaviour
             Debug.Log("PlayerCharacter: Set Maguso Icon to Injured");
             MagusoIcon.sprite = MagusoIconInjured;
         }
+
         // Pause Game
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Close inventory if open when pausing
+            if (InventoryOpen) {
+                InventoryOpen = false;
+                inventoryMenu.SetActive(false);
+            }
             TogglePause();
         }
+
         // Toggle Inventory
         if (Input.GetKeyDown(KeyCode.I) && playerController.canMove)
         {
@@ -188,6 +194,7 @@ public class InventoryUI : MonoBehaviour
                 inventoryMenu.SetActive(true);
             }
         }
+        
         // Hide controls
         if (Input.GetMouseButtonDown(0) && controls.activeSelf)
         {

@@ -40,6 +40,7 @@ public class PlayerCharacter : BaseCharacter
     private InventorySystem inventorySystem;
 
     [Header("UI Bars")]
+    private GameObject HUD;
     private GameObject HealthBar;
     private GameObject ManaBar;
     private GameObject StaminaBar;
@@ -79,12 +80,20 @@ public class PlayerCharacter : BaseCharacter
             Debug.LogError("PlayerCharacter: Main Camera not found! Make sure your camera is tagged MainCamera.");
         }
 
-        DeathScreen = GameObject.Find("DeathScreen");
-        HealthBar = GameObject.Find("HealthBar");
-        ManaBar = GameObject.Find("ManaBar");
-        StaminaBar = GameObject.Find("StaminaBar");
+        HUD = GameObject.Find("HUD");
         HealthPotionCounter = GameObject.Find("HealthPotionCounter");
         ManaPotionCounter = GameObject.Find("ManaPotionCounter");
+        DeathScreen = GameObject.Find("DeathScreen");
+
+        if (HUD != null)
+        {
+            HealthBar = HUD.transform.Find("HealthBar").gameObject;
+            ManaBar = HUD.transform.Find("ManaBar").gameObject;
+            StaminaBar = HUD.transform.Find("StaminaBar").gameObject;
+        } else
+        {
+            Debug.LogError("PlayerCharacter: HUD UI not found.");
+        }
 
         if (HealthBar == null || ManaBar == null || StaminaBar == null)
         {
@@ -352,6 +361,17 @@ public class PlayerCharacter : BaseCharacter
 
             if (ManaPotionCounter != null)
                 ManaPotionCounter.GetComponent<TextMeshProUGUI>().text = $"{inventorySystem.ManaPotionCount}";
+        }
+
+        if (playerController != null)
+        {
+            if (!playerController.canMove && HUD.activeSelf)
+            {
+                HUD.SetActive(false);
+            } else if (playerController.canMove && !HUD.activeSelf)
+            {
+                HUD.SetActive(true);
+            }
         }
     }
 }

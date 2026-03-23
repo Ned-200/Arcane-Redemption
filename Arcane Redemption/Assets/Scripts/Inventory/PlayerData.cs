@@ -168,6 +168,18 @@ public class PlayerData : MonoBehaviour
                 {
                     Debug.LogError("PlayerData can't find SadTree!");
                 }
+
+                // Also swap terrain if has fire gem and not coming from fire dungeon
+                GameObject TerrainSwap = GameObject.Find("TerrainSwap");
+                if (TerrainSwap != null) 
+                {
+                    TerrainSwap TerrainSwapScript = TerrainSwap.GetComponent<TerrainSwap>();
+                    TerrainSwapScript.SetCheckpointReached(true);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find TerrainSwap!");
+                }
+
             } else // Make tree sad before boss fight (by hiding calm tree)
             {
                 GameObject CalmTree = GameObject.Find("CalmTree");

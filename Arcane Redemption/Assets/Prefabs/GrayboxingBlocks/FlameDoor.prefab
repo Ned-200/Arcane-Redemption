@@ -590,6 +590,8 @@ GameObject:
   - component: {fileID: 6895369112074800331}
   - component: {fileID: 544623077156776210}
   - component: {fileID: 5737941986874115069}
+  - component: {fileID: 6681273161471752441}
+  - component: {fileID: 6688546993225197715}
   m_Layer: 6
   m_Name: Flames
   m_TagString: FlameWall
@@ -728,6 +730,42 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &6681273161471752441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785767076208672542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3ccd4bce735314f94d1d262794e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlameWall
+  burningPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
+  damage: 10
+  cooldownDuration: 2
+--- !u!65 &6688546993225197715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785767076208672542}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.532549, y: 8, z: 11.956193}
+  m_Center: {x: 0.044947773, y: 0.07214661, z: 4.6446953}
 --- !u!1 &9011237855991898076
 GameObject:
   m_ObjectHideFlags: 0

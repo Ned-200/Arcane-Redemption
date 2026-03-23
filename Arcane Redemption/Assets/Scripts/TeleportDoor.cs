@@ -31,7 +31,13 @@ public class TeleportDoor : MonoBehaviour
         // Get interactPrompt prefab
         if (interactPromptPrefab == null)
         {
-            Debug.LogError("TeleportDoor: interactPromptPrefab not assigned! Please assign the prefab.");
+            Debug.LogError("TeleportDoor: interactPromptPrefab not assigned! Please assign the prefab. "  + this.gameObject.name);
+        }
+
+        // Get promptPosition object
+        if (promptPosition == null)
+        {
+            Debug.LogError("TeleportDoor: promptPosition not assigned! Please assign the prefab. "  + this.gameObject.name);
         }
     }
 

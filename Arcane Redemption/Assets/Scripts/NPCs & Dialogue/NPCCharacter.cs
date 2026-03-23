@@ -170,12 +170,9 @@ public class NPC_Character : BaseCharacter
             playerInRange = true;
             Debug.Log("Entered NPC range");
             
-            if (SpeakImagePrefab != null)
+            if (SpeakImagePrefab != null && SpeakImage == null)
             {
                 SpeakImage = Instantiate(SpeakImagePrefab, new Vector3(NPCMesh.transform.position.x, NPCMesh.transform.position.y+3, NPCMesh.transform.position.z), NPCMesh.transform.rotation);
-            } else
-            {
-                Debug.LogError("NPC_Character: Speak Prompt prefab not assigned!");
             }
         }
     }
@@ -344,13 +341,10 @@ public class NPC_Character : BaseCharacter
                 happyIndex = secondaryHappyIndex;
                 angryIndex = secondaryAngryIndex;
 
-                // Spawn SpeakImage to talk again if there is secondary dialogue
-                if (SpeakImagePrefab != null)
+                // Spawn SpeakImage to talk again if there is secondary dialogue, and on doesnt already exist
+                if (SpeakImagePrefab != null && SpeakImage == null)
                 {
                     SpeakImage = Instantiate(SpeakImagePrefab, new Vector3(NPCMesh.transform.position.x, NPCMesh.transform.position.y+3, NPCMesh.transform.position.z), NPCMesh.transform.rotation);
-                } else
-                {
-                    Debug.LogError("NPC_Character: Speak Prompt prefab not assigned!");
                 }
             }
 

@@ -9,6 +9,7 @@ public class ElementalGem : MonoBehaviour
     [Header("References")]
     [SerializeField] int gemElement; // 1 = Fire Ruby, 2 = Water Sapphire, 3 = Plant Emerald
     [SerializeField] private GameObject interactPromptPrefab;
+    [SerializeField] private Transform promptPosition;
     private GameObject interactPrompt;
     private bool playerInRange = false;
     private PlayerData playerData;
@@ -32,6 +33,10 @@ public class ElementalGem : MonoBehaviour
         if (interactPromptPrefab == null)
         {
             Debug.LogError("ElementalGem can't find interactPromptPrefab!");
+        }
+        if (promptPosition == null)
+        {
+            Debug.LogError("ElementalGem: promptPosition not assigned!");
         }
 
         if (gemDoor == null)
@@ -130,7 +135,7 @@ public class ElementalGem : MonoBehaviour
             Debug.Log("Entered Gem range");
             if (interactPromptPrefab != null)
             {
-                interactPrompt = Instantiate(interactPromptPrefab, new Vector3(this.transform.position.x, this.transform.position.y+1.5f, this.transform.position.z), this.transform.rotation);
+                interactPrompt = Instantiate(interactPromptPrefab, promptPosition.position, promptPosition.rotation);
             } else {
                 Debug.LogError("ElementalGem: Interact Prompt prefab not assigned! " + this.gameObject.name);
             }

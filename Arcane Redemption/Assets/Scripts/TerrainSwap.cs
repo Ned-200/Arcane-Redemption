@@ -3,7 +3,7 @@ using UnityEngine;
 public class TerrainSwap : MonoBehaviour
 {
     [Header("Drive With This Bool")]
-    [SerializeField] private bool checkpointReached;
+    private bool checkpointReached;
 
     [Header("Toggle These GameObjects")]
     [SerializeField] private GameObject terrainA; // default / before checkpoint

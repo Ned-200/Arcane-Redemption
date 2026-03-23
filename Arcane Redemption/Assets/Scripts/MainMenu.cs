@@ -9,10 +9,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject controls;
     private bool teleporting = false;
 
-	void Start () 
+	void Start ()
     {
-        playButton.GetComponent<Button>().onClick.AddListener(OnPlayClick);
-	}
+        
+    }
 
     void Update ()
     {
@@ -25,8 +25,8 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-	public void OnPlayClick(){
-		Debug.Log ("Play Button Clicked");
+	public void PlayGame(){
+		Debug.Log ("Play Game");
 
 		// Show Loading Screen
         LoadingUI.SetActive(true);

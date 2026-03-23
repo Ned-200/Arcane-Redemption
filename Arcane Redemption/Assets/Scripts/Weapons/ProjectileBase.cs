@@ -158,9 +158,10 @@ public class ProjectileBase : MonoBehaviour
                 fireParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting); // stops emmision without clearing
             }
 
+            FlameWall flameWallScript = FlameWall.GetComponent<FlameWall>();
             Collider flameCollider = FlameWall.GetComponent<Collider>();
             Light flameLight = FlameWall.GetComponent<Light>();
-            if (flameCollider == null || flameLight == null)
+            if (flameCollider == null || flameLight == null || flameWallScript == null) 
             {
                 Debug.LogError(FlameWall.name + ": FlameWall - no collider or light source found!");
             } else
@@ -168,6 +169,8 @@ public class ProjectileBase : MonoBehaviour
                 //Disable flame wall collision
                 flameCollider.enabled = false;
                 flameLight.enabled = false;
+                flameWallScript.enabled = false;
+                Destroy(FlameWall, 3);
             }
         } else if (other.gameObject.tag == "Breakable") // If a breakable object
         {

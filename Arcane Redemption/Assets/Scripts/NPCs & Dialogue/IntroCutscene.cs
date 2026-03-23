@@ -11,18 +11,20 @@ public class IntroCutscene : NPC_Character
     [SerializeField] private GameObject CutsceneImageObject;
     private Image cutsceneImage;
     public Sprite[] images;
+    [SerializeField] private MainMenu mainMenu;
 
     protected override void Start()
     {
         cutsceneImage = CutsceneImageObject.GetComponent<Image>();
+    }
+
+    public void StartIntro()
+    {
+        gameObject.SetActive(true);
+        cutsceneImage = CutsceneImageObject.GetComponent<Image>();
 
         textComponent.text = string.Empty;
         Debug.Log("Cutscene Begin");
-        StartIntro();
-    }
-
-    void StartIntro()
-    {
         textComponent.text = string.Empty;
         index = 0;
         cutsceneImage.sprite = images[index];
@@ -44,9 +46,8 @@ public class IntroCutscene : NPC_Character
         {
             // End introduction
             Debug.Log("Introduction End");
-            DialogueBox.SetActive(false);
-            CutsceneImageObject.SetActive(false);
-            gameObject.SetActive(false);
+
+            mainMenu.PlayGame();
         }
     }
 

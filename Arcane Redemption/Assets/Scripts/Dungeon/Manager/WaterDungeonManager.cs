@@ -70,7 +70,7 @@ public class WaterDungeonManager : DungeonManager
             doorsOpened[2] = true;
             StartCoroutine(TweenPosition(battleLockedDoors[2], new Vector3(battleLockedDoors[2].transform.localPosition.x, -23, battleLockedDoors[2].transform.localPosition.z), moveDuration-1.0f));
             StartCoroutine(TweenPosition(battleLockedDoors[3], new Vector3(battleLockedDoors[3].transform.localPosition.x, -26, battleLockedDoors[3].transform.localPosition.z), moveDuration));
-            StartCoroutine(TweenPosition(battleLockedDoors[4], new Vector3(battleLockedDoors[4].transform.localPosition.x, -33, battleLockedDoors[4].transform.localPosition.z), moveDuration+1.0f));
+            StartCoroutine(TweenPosition(battleLockedDoors[4], new Vector3(battleLockedDoors[4].transform.localPosition.x, -33.5f, battleLockedDoors[4].transform.localPosition.z), moveDuration+1.0f));
             
             CinemachineImpulseSource impulseSource = battleLockedDoors[2].GetComponent<CinemachineImpulseSource>();
             if (impulseSource) {

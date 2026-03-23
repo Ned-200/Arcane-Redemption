@@ -397,7 +397,7 @@ public class EnemyAIController : MonoBehaviour
     /// <summary>
     /// Rotates the enemy to look at a target position
     /// </summary>
-    private void LookAt(Vector3 targetPosition)
+    public void LookAt(Vector3 targetPosition)
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         direction.y = 0f; // Keep rotation horizontal

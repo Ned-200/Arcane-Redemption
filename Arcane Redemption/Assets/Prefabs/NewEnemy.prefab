@@ -406,6 +406,7 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
   detectionRadius: 15
   combatRadius: 3
@@ -441,7 +442,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   eyeHeight: 1.5
   sightAngle: 90
-  showLineOfSightDebug: 1
+  showLineOfSightDebug: 0
   memoryDuration: 3
 --- !u!135 &637457643052893180
 SphereCollider:

@@ -5865,7 +5865,6 @@ Transform:
   - {fileID: 1312187288}
   - {fileID: 1743852869}
   - {fileID: 298299903}
-  - {fileID: 543450653130204625}
   - {fileID: 1101757731}
   - {fileID: 666350761}
   - {fileID: 1483104856}
@@ -45010,6 +45009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElementalGem
   gemElement: 3
+  interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   gemMesh: {fileID: 693012489}
   gemEffect: {fileID: 8801888776370288212}
   gemDoor: {fileID: 1312187287}
@@ -124424,13 +124424,13 @@ Transform:
   m_GameObject: {fileID: 919132148659126123}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6057907, y: -0.243012, z: -0.2931061, w: 0.698607}
-  m_LocalPosition: {x: -28.497, y: -6.684, z: 6.335}
+  m_LocalPosition: {x: 21.83655, y: 1.9650898, z: 99.295}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 693012490}
   - {fileID: 6825704086661674706}
-  m_Father: {fileID: 99186143}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 44.746, y: -77.979, z: -82.377}
 --- !u!23 &677658815942514247
 MeshRenderer:
@@ -129541,6 +129541,7 @@ SceneRoots:
   - {fileID: 1808711044}
   - {fileID: 112500923}
   - {fileID: 1314226473}
+  - {fileID: 543450653130204625}
   - {fileID: 99186143}
   - {fileID: 1350103742}
   - {fileID: 786021849}

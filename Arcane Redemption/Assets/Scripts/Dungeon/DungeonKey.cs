@@ -75,7 +75,7 @@ public class DungeonKey : MonoBehaviour
             {
                 interactPrompt = Instantiate(interactPromptPrefab, new Vector3(this.transform.position.x, this.transform.position.y+1.5f, this.transform.position.z), this.transform.rotation);
             } else {
-                Debug.LogError("PotionPickup: Interact Prompt prefab not assigned! " + this.gameObject.name);
+                Debug.LogError("DungeonKey: Interact Prompt prefab not assigned! " + this.gameObject.name);
             }
         }
     }

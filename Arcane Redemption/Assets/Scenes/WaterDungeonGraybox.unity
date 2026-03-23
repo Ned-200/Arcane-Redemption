@@ -53897,6 +53897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElementalGem
   gemElement: 2
+  interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   gemMesh: {fileID: 1997949290}
   gemEffect: {fileID: 7446020307445930463}
   gemDoor: {fileID: 1023316575}

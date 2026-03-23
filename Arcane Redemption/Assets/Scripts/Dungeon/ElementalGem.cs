@@ -8,7 +8,8 @@ public class ElementalGem : MonoBehaviour
     
     [Header("References")]
     [SerializeField] int gemElement; // 1 = Fire Ruby, 2 = Water Sapphire, 3 = Plant Emerald
-    private Image interactImage;
+    [SerializeField] private GameObject interactPromptPrefab;
+    private GameObject interactPrompt;
     private bool playerInRange = false;
     private PlayerData playerData;
 
@@ -28,11 +29,9 @@ public class ElementalGem : MonoBehaviour
         GameObject playerDataObject = GameObject.FindWithTag("PlayerData");
         playerData = playerDataObject.GetComponent<PlayerData>();
 
-        GameObject canvas = GameObject.FindWithTag("MainCanvas");
-        interactImage = canvas.transform.Find("InteractImage").GetComponent<Image>();
-        if (interactImage == null)
+        if (interactPromptPrefab == null)
         {
-            Debug.LogError("ElementalGem can't find interactImage!");
+            Debug.LogError("ElementalGem can't find interactPromptPrefab!");
         }
 
         if (gemDoor == null)
@@ -58,7 +57,7 @@ public class ElementalGem : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.E) & !movedOrMoving)
         {
             movedOrMoving = true;
-            interactImage.enabled = false;
+            Destroy(interactPrompt);
             Debug.Log("Gem Obtained!");
 
             // GIVE PLAYER ABILITIES HERE
@@ -69,7 +68,7 @@ public class ElementalGem : MonoBehaviour
             } else if (gemElement == 3) {
                 playerData.plantGemObtained = true;
             } else {
-                Debug.LogError("Gem element int not recognized! Check ElementalGem Script");
+                Debug.LogError("ElementalGem: Gem element int not recognized!");
             }
 
 
@@ -90,7 +89,7 @@ public class ElementalGem : MonoBehaviour
                     bridgeDisintegrate.TriggerDisintegration(true);
                 } else
                 {
-                    Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
+                    Debug.LogError("ElementalGem: Could not fetch bridgeDisintegrate component!");
                 }
             }
             
@@ -129,7 +128,12 @@ public class ElementalGem : MonoBehaviour
         {   
             playerInRange = true;
             Debug.Log("Entered Gem range");
-            interactImage.enabled = true;
+            if (interactPromptPrefab != null)
+            {
+                interactPrompt = Instantiate(interactPromptPrefab, new Vector3(this.transform.position.x, this.transform.position.y+1.5f, this.transform.position.z), this.transform.rotation);
+            } else {
+                Debug.LogError("ElementalGem: Interact Prompt prefab not assigned! " + this.gameObject.name);
+            }
         }
     }
 
@@ -141,7 +145,7 @@ public class ElementalGem : MonoBehaviour
         {
             playerInRange = false;
             Debug.Log("Left Gem range");
-            interactImage.enabled = false;
+            Destroy(interactPrompt);
         }
     }
 }

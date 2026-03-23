@@ -298,6 +298,24 @@ public class EnemyCharacter : BaseCharacter
                 renderer.enabled = false;
         }
 
+        // Become Alert if not already when attacked
+        if (currentState == EnemyState.Idle || currentState == EnemyState.Patrol) {
+
+            // Find all colliders in detection radius
+            Collider[] hits = Physics.OverlapSphere(transform.position, DetectionRadius);
+
+            foreach (Collider hit in hits)
+            {
+                PlayerCharacter player = hit.GetComponent<PlayerCharacter>();
+                if (player != null)
+                {
+                    EnemyAIController aiController = GetComponent<EnemyAIController>();
+                    Vector3 direction = (hit.transform.position - transform.position).normalized;
+                    transform.rotation = Quaternion.LookRotation(direction);
+                }
+            }
+        }
+
         // Log detailed damage information
         float healthLost = healthBefore - CurrentHealth;
         Debug.Log($"[{gameObject.name}]  Damage Applied: {damage} | Health: {healthBefore:F1} → {CurrentHealth:F1} (-{healthLost:F1}) | {HealthPercent * 100:F1}%");

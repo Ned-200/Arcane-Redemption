@@ -45011,7 +45011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElementalGem
   gemElement: 3
   gemMesh: {fileID: 693012489}
-  gemEffect: {fileID: 0}
+  gemEffect: {fileID: 8801888776370288212}
   gemDoor: {fileID: 1312187287}
   gemDoorHeight: 0
   moveDuration: 0
@@ -118976,7 +118976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
-  m_Material: {fileID: 2100000, guid: cdfc0ee30378f584e87f3be373b0cf48, type: 2}
+  m_Material: {fileID: 2100000, guid: 7408f721b832aee4593192b45cd1bf99, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 1
   m_StartAngleFade: 180
@@ -129505,19 +129505,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8229532758369208716, guid: f5338628e907db64b9b51573e5e43d70, type: 3}
---- !u!114 &7988669511663154770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8801888776370288212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edbedf4397af34643b41e338d030f366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageEffect
-  destroyDelay: 2.5
 --- !u!1 &8801888776370288212
 GameObject:
   m_ObjectHideFlags: 0
@@ -129531,7 +129518,6 @@ GameObject:
   - component: {fileID: 5562789875155225226}
   - component: {fileID: 4462418074703846232}
   - component: {fileID: 4077911700570992807}
-  - component: {fileID: 7988669511663154770}
   m_Layer: 0
   m_Name: GemEffect
   m_TagString: Untagged

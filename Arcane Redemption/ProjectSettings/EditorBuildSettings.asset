@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BayGraybox.unity
     guid: ede993ecd2a19444d9da8bd509ce8529
+  - enabled: 1
+    path: Assets/Scenes/VolcanoBattleArena.unity
+    guid: 4bb502afe4843ae41a302a77b4781cd6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

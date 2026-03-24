@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 7e63b931059c95e4d9d10af94bd8f10a, type: 3}
+  - {fileID: 2100000, guid: 579b23df2d55d1c41ad8426f80e4b783, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -240,7 +240,7 @@ MonoBehaviour:
     m_Bits: 1
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 0}
-  m_Size: {x: 1, y: 1, z: 0.1}
+  m_Size: {x: 1.25, y: 1, z: 0.1}
   m_FadeFactor: 1
   version: 1
   m_DecalLayerMask: 1

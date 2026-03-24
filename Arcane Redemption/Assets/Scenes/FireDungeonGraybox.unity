@@ -17348,7 +17348,7 @@ PrefabInstance:
     - target: {fileID: 3503882695104781159, guid: 7fc9cf30ee8a4f146a7ebc6d503ebfb4, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: fc4844c2376ef4e489d5910d95737b70, type: 2}
+      objectReference: {fileID: 2100000, guid: 604dffafae0e8234c89ecd3c90f5828c, type: 2}
     - target: {fileID: 3503882695104781159, guid: 7fc9cf30ee8a4f146a7ebc6d503ebfb4, type: 3}
       propertyPath: m_UVScale.x
       value: -1
@@ -42932,7 +42932,7 @@ PrefabInstance:
     - target: {fileID: 3503882695104781159, guid: 7fc9cf30ee8a4f146a7ebc6d503ebfb4, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: 3c36864cce2a08f4996fc868f76bb545, type: 2}
+      objectReference: {fileID: 2100000, guid: 1320fde00acd8a848be632d75ceaf481, type: 2}
     - target: {fileID: 3503882695104781159, guid: 7fc9cf30ee8a4f146a7ebc6d503ebfb4, type: 3}
       propertyPath: m_UVScale.x
       value: -1

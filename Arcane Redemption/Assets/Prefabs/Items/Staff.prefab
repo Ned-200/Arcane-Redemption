@@ -49,7 +49,7 @@ MonoBehaviour:
   damage: 10
   attackCooldown: 1
   staminaCost: 3
-  manaCost: 10
+  manaCost: 8
   attackSound: {fileID: 0}
   impactSound: {fileID: 0}
   fireProjectilePrefab: {fileID: 6124905989408069561, guid: a199a21b18389f647ac730efca9436b8, type: 3}

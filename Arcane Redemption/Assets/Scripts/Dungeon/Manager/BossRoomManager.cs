@@ -9,6 +9,7 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private Checkpoint cutsceneTrigger; 
     [SerializeField] private GameObject CinematicCamera;
     [SerializeField] private GameObject BossCamera;
+    [SerializeField] private Animator BossAnim;
     [SerializeField] private float moveYPosition = 75;
     private bool cutscenePlayed;
     private Animator playerAnim;
@@ -74,6 +75,11 @@ public class BossRoomManager : DungeonManager
         CinematicCamera.SetActive(false);
         Invoke(nameof(RoarShake), 1);
         Invoke(nameof(DisableBossCamera), 4);
+
+        if (BossAnim != null)
+        {
+            BossAnim.Play("Intro");
+        }
     }
 
     void RoarShake()

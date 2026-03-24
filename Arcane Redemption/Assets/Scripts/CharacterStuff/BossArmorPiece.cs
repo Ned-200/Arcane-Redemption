@@ -114,6 +114,9 @@ public class BossArmorPiece : MonoBehaviour
             case ArmorRemovalType.PhysicsDrop:
                 PhysicsDropArmor();
                 break;
+            case ArmorRemovalType.DisintegratRenderers:
+                DisintegratRenderers();
+                break;
         }
     }
 
@@ -138,6 +141,11 @@ public class BossArmorPiece : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void DisintegratRenderers()
+    {
+        StartCoroutine(TriggerDisintegrationAfterDelay());
+    }
+
     /// <summary>
     /// NEW: Detaches armor from parent, applies physics, and triggers disintegration on ground impact.
     /// </summary>
@@ -148,7 +156,19 @@ public class BossArmorPiece : MonoBehaviour
             Debug.Log($"[{name}] 🌀 Physics drop initiated for '{armorName}'");
         }
 
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            if (renderer != null)
+            {
+                if (renderer.rootBone) {
+                    renderer.rootBone = null;
+                    renderer.bones = new Transform[0];
+                }
+            }
+        }
+
         // Detach from parent (boss)
+        transform.SetParent(null);
         transform.SetParent(null);
 
         // Add or configure Rigidbody for physics
@@ -426,5 +446,6 @@ public enum ArmorRemovalType
     Disable,           // Deactivates the GameObject
     DisableRenderers,  // Only disables renderers (keeps colliders active)
     Destroy,           // Destroys the GameObject immediately
-    PhysicsDrop        // NEW: Detaches, applies physics, and disintegrates on ground contact
+    PhysicsDrop,        // NEW: Detaches, applies physics, and disintegrates on ground contact
+    DisintegratRenderers  // NEW: Disintegrates without detaching
 }

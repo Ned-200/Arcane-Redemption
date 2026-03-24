@@ -105,6 +105,7 @@ public class TreeBoss : EnemyCharacter
     private float lastRangedAttackTime;
     private float lastDashRetreatTime;
 
+    private bool isMoving;
     private bool isAdvancingToPlayer;
     private Transform playerTransform;
 
@@ -397,7 +398,7 @@ public class TreeBoss : EnemyCharacter
     {
         if (bossAnimator != null)
         {
-            bossAnimator.SetTrigger("Dash");
+            bossAnimator.Play("Retreat");
         }
     }
 
@@ -478,7 +479,7 @@ public class TreeBoss : EnemyCharacter
 
         if (bossAnimator != null)
         {
-            bossAnimator.SetTrigger("Enrage");
+            bossAnimator.Play("Intro");
             ChangeEyeColourToRed();
         }
 
@@ -515,6 +516,9 @@ public class TreeBoss : EnemyCharacter
     {
         isRetreating = false;
         isAdvancingAfterVolley = false;
+
+        isMoving = false;
+        bossAnimator.SetBool("isMoving", false);
     }
 
     private void StopDashRetreat()
@@ -951,6 +955,12 @@ public class TreeBoss : EnemyCharacter
         desiredMovementDirection = direction;
         desiredMovementSpeed = speed;
 
+        if (!isMoving)
+        {
+            isMoving = true;
+            bossAnimator.SetBool("isMoving", true);
+        }
+
         HandleDoorClosing();
     }
 
@@ -1067,7 +1077,7 @@ public class TreeBoss : EnemyCharacter
     {
         if (bossAnimator != null)
         {
-            bossAnimator.SetTrigger("VineRingAttack");
+            bossAnimator.Play("Windup");
         }
     }
 
@@ -1190,7 +1200,7 @@ public class TreeBoss : EnemyCharacter
 
         if (bossAnimator != null)
         {
-            bossAnimator.SetTrigger("RangedAttack");
+            bossAnimator.Play("Shoot");
         }
 
         Vector3 spawnPosition = projectileSpawnPoint.position;

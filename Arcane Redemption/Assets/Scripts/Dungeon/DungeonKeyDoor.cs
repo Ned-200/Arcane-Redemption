@@ -55,7 +55,7 @@ public class DungeonKeyDoor : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.E) && dungeonKey.pickedUp && !movedOrMoving)
         {
             movedOrMoving = true; // prevent repeated interaction
-            keyUI.GetComponent<Image>().enabled = true; // hide key once more, since it was used
+            keyUI.GetComponent<Image>().enabled = false; // hide key once more, since it was used
             Debug.Log("Key opened door");
             Destroy(interactPrompt);
             StartCoroutine(TweenPosition(targetPosition, moveDuration));

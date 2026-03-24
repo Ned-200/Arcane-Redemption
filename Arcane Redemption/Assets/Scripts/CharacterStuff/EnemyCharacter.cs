@@ -49,6 +49,7 @@ public class EnemyCharacter : BaseCharacter
 
     //accessing disintegrate script
     public Disintegrate disintegrate;
+    public Disintegrate[] partsToDisintegrate;
 
     protected override void Awake()
     {
@@ -114,12 +115,12 @@ public class EnemyCharacter : BaseCharacter
         return false;
     }
 
-    /// <summary>
-    /// Safely initializes the disintegrate component
-    /// </summary>
+    // / <summary>
+    // / Safely initializes the disintegrate component
+    // / </summary>
     private void InitializeDisintegrate()
     {
-        if (disintegrate != null)
+        if (disintegrate != null || partsToDisintegrate.Length > 0)
             return; // Already assigned in Inspector
 
         // Try to find on this GameObject
@@ -274,28 +275,28 @@ public class EnemyCharacter : BaseCharacter
         base.TakeDamage(damage);
 
         // Remove physical detail - FIXED: Safely check for children
-        Transform leaf1 = transform.Find("Leaf1");
-        if (leaf1 != null && HealthPercent <= 0.9f)
+        Transform detail1 = transform.Find("Detail1");
+        if (detail1 != null && HealthPercent <= 0.9f)
         {
-            Renderer renderer = leaf1.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.enabled = false;
+            Disintegrate detailDisintegrate = detail1.GetComponent<Disintegrate>();
+            if (detailDisintegrate != null)
+                detailDisintegrate.TriggerDisintegration();
         }
 
-        Transform leaf2 = transform.Find("Leaf2");
-        if (leaf2 != null && HealthPercent <= 0.5f)
+        Transform detail2 = transform.Find("Detail2");
+        if (detail2 != null && HealthPercent <= 0.5f)
         {
-            Renderer renderer = leaf2.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.enabled = false;
+             Disintegrate detailDisintegrate = detail2.GetComponent<Disintegrate>();
+            if (detailDisintegrate != null)
+                detailDisintegrate.TriggerDisintegration();
         }
 
-        Transform leaf3 = transform.Find("Leaf3");
-        if (leaf3 != null && HealthPercent <= 0.3f)
+        Transform detail3 = transform.Find("Detail3");
+        if (detail3 != null && HealthPercent <= 0.3f)
         {
-            Renderer renderer = leaf3.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.enabled = false;
+             Disintegrate detailDisintegrate = detail3.GetComponent<Disintegrate>();
+            if (detailDisintegrate != null)
+                detailDisintegrate.TriggerDisintegration();
         }
 
         // Become Alert if not already when attacked
@@ -491,19 +492,11 @@ public class EnemyCharacter : BaseCharacter
         }
 
         // Safely trigger disintegration
-        if (disintegrate != null)
+        if (partsToDisintegrate.Length > 0)
         {
-            disintegrate.TriggerDisintegration();
-        }
-
-        // Safely trigger feet disintegration
-        Transform feet = transform.Find("Feet");
-        if (feet != null)
-        {
-            Disintegrate feetDisintegrate = feet.GetComponent<Disintegrate>();
-            if (feetDisintegrate != null)
+            foreach (Disintegrate disintegratePart in partsToDisintegrate)
             {
-                feetDisintegrate.TriggerDisintegration();
+                disintegratePart.TriggerDisintegration();
             }
         }
 

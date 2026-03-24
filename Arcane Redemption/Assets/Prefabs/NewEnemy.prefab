@@ -421,6 +421,9 @@ MonoBehaviour:
   deathDelay: 3
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
+  partsToDisintegrate:
+  - {fileID: 3640152211570368214}
+  - {fileID: 236817681060722912}
 --- !u!114 &7096410715934611294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,8 +1374,9 @@ GameObject:
   m_Component:
   - component: {fileID: 54417750669497532}
   - component: {fileID: 652098397225643298}
+  - component: {fileID: 5760641526048893288}
   m_Layer: 0
-  m_Name: Leaf3
+  m_Name: Detail3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1419,6 +1423,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ead28d7af1fa415459e3ebafd3a4c324, type: 2}
+  - {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1476,6 +1481,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00012558443, y: 0.021407966, z: 0.010762214}
     m_Extent: {x: 0.0052399207, y: 0.00739337, z: 0.0021094661}
   m_DirtyAABB: 0
+--- !u!114 &5760641526048893288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300714168394391802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &8414234666561847853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1486,8 +1510,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1291838045068017228}
   - component: {fileID: 6478587437560660681}
+  - component: {fileID: 1050369914445164742}
   m_Layer: 0
-  m_Name: Leaf2
+  m_Name: Detail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1534,6 +1559,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ead28d7af1fa415459e3ebafd3a4c324, type: 2}
+  - {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1591,6 +1617,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.006844744, y: 0.018353943, z: 0.010903468}
     m_Extent: {x: 0.0052128686, y: 0.0070089675, z: 0.0015601618}
   m_DirtyAABB: 0
+--- !u!114 &1050369914445164742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414234666561847853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &8523422061797633449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,8 +1742,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2978157149038514107}
   - component: {fileID: 3440599028995061095}
+  - component: {fileID: 1121437752436775630}
   m_Layer: 0
-  m_Name: Leaf1
+  m_Name: Detail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1745,6 +1791,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ead28d7af1fa415459e3ebafd3a4c324, type: 2}
+  - {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1802,3 +1849,22 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0070850956, y: 0.018292386, z: 0.010969473}
     m_Extent: {x: 0.005631237, y: 0.006915367, z: 0.0014752527}
   m_DirtyAABB: 0
+--- !u!114 &1121437752436775630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9004743756879069860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5

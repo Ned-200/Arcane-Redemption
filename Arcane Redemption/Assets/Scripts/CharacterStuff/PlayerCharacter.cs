@@ -47,7 +47,7 @@ public class PlayerCharacter : BaseCharacter
     private GameObject HealthPotionCounter;
     private GameObject ManaPotionCounter;
     
-    [SerializeField] private GameObject DeathScreen;
+    private GameObject DeathScreen;
 
     private bool canRespawn;
     private bool deathHandled;

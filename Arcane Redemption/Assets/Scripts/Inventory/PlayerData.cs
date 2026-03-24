@@ -114,13 +114,13 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("PlayerData can't find PlantBoss!");
             }
-            GameObject plantBossManager = GameObject.Find("TreeBossManager");
-            if (plantBossManager != null) 
+            GameObject treeBossCheckpoint = GameObject.Find("TreeBossCheckpoint");
+            if (treeBossCheckpoint != null) 
             {
-                plantBossManager.SetActive(true);
+                treeBossCheckpoint.SetActive(true);
             } else
             {
-                Debug.LogError("PlayerData can't find TreeBossManager!");
+                Debug.LogError("PlayerData can't find TreeBossCheckpoint!");
             }
             // Spawn Potions in Town
             GameObject bossPotions = GameObject.Find("BossPotions");
@@ -229,13 +229,13 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("PlayerData can't find PlantBoss!");
             }
-            GameObject plantBossManager = GameObject.Find("TreeBossManager");
-            if (plantBossManager != null) 
+            GameObject treeBossCheckpoint = GameObject.Find("TreeBossCheckpoint");
+            if (treeBossCheckpoint != null) 
             {
-                plantBossManager.SetActive(false);
+                treeBossCheckpoint.SetActive(false);
             } else
             {
-                Debug.LogError("PlayerData can't find TreeBossManager!");
+                Debug.LogError("PlayerData can't find TreeBossCheckpoint!");
             }
             // Despawn Boss Potions in Town
             GameObject bossPotions = GameObject.Find("BossPotions");

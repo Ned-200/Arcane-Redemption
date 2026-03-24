@@ -122,8 +122,8 @@ public class Breakable : MonoBehaviour
         StartCoroutine(EnableCollidersAndOptionalExplosionNextFixed());
 
         // Drops
-        potionChance = Random.Range(0, 10); // 0/1 = drop
-        if (potionChance == 0 || potionChance == 1)
+        potionChance = Random.Range(0, 15); // 0, 1 and 2 = drop, (3/15) aka (1/5) potion drop chance
+        if (potionChance > 3)
             Invoke(nameof(SpawnPotion), 0.05f);
 
         // Destroy the parent (colliders already disabled)
@@ -157,9 +157,9 @@ public class Breakable : MonoBehaviour
     {
         Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
 
-        if (potionChance == 0 && healthPotionPrefab != null)
+        if (potionChance == 0 || potionChance == 1 && healthPotionPrefab != null) // 1 or 2 (of 0-2) is health
             Instantiate(healthPotionPrefab, spawnPos, healthPotionPrefab.transform.rotation);
-        else if (potionChance == 1 && manaPotionPrefab != null)
-            Instantiate(manaPotionPrefab, spawnPos, manaPotionPrefab.transform.rotation);
+        else if (potionChance == 2 && manaPotionPrefab != null)
+            Instantiate(manaPotionPrefab, spawnPos, manaPotionPrefab.transform.rotation); // 0 (of 0-2) is mana
     }
 }

@@ -1643,8 +1643,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Flandrik
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9582e5b45661a0b44b66e3d78226011d, type: 2}
-  m_sharedMaterial: {fileID: 8264986061782615871, guid: 9582e5b45661a0b44b66e3d78226011d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3653fb9f29e4225489fc0feb0c763373, type: 2}
+  m_sharedMaterial: {fileID: 8264986061782615871, guid: 3653fb9f29e4225489fc0feb0c763373, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3114,8 +3114,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pinecone Protector of the Great Tree
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9582e5b45661a0b44b66e3d78226011d, type: 2}
-  m_sharedMaterial: {fileID: 8264986061782615871, guid: 9582e5b45661a0b44b66e3d78226011d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3653fb9f29e4225489fc0feb0c763373, type: 2}
+  m_sharedMaterial: {fileID: 8264986061782615871, guid: 3653fb9f29e4225489fc0feb0c763373, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

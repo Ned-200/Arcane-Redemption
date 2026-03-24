@@ -15,7 +15,7 @@ public class DungeonManager : MonoBehaviour
     
     [Header("Player/EnvironmentDeath")]
     [SerializeField] protected CharacterController characterController;    
-    protected PlayerController playerController;
+    [SerializeField] protected PlayerController playerController;
     [SerializeField] protected GameObject environmentDeathEffectPrefab;
     protected bool dyingToEnvironment;
     [SerializeField] protected bool drownedOrBurned; // true is drowned, false is burned

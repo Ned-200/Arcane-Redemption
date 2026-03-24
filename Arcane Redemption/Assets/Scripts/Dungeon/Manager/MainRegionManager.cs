@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.Cinemachine;
+using TMPro;
 
 public class MainRegionManager : DungeonManager
 {
@@ -13,18 +14,38 @@ public class MainRegionManager : DungeonManager
     [Header("Bridges/Doors")]
     [SerializeField] private int bridgeElevation = 35;
     [SerializeField] DungeonKeyDoor dungeonKeyDoor;
+    
+    [Header("Cutscene")]
+    [SerializeField] private GameObject CinematicCamera;
+    [SerializeField] private float cinematicDuration = 5.0f;
+    [SerializeField] private TextMeshProUGUI BossNameDisplay; // change within scene
+    [SerializeField] private TextMeshProUGUI BossDescriptionDisplay;  // change within scene
+
 
 
     void Start()
     {
         if (characterController == null)
         {
-            Debug.LogError("Fire dungeon manager can't find characterController!");
+            Debug.LogError("MainRegionManager: Can't find characterController!");
+        }
+        if (playerController == null)
+        {
+            Debug.LogError("MainRegionManager: Can't find playerController!");
         }
 
         if (environmentDeathEffectPrefab == null)
         {
-            Debug.LogError("Fire dungeon manager can't find environmentDeathEffectPrefab!");
+            Debug.LogError("MainRegionManager: Can't find environmentDeathEffectPrefab!");
+        }
+
+        if (CinematicCamera == null)
+        {
+            Debug.LogError("MainRegionManager: CinematicCamera not assigned!");
+        } else
+        {
+            playerController.canMove = false;
+            Invoke(nameof(EnableCinematicCamera), 2.0f);
         }
     }
 
@@ -57,6 +78,47 @@ public class MainRegionManager : DungeonManager
         {
             teleportDoor.SetActive(true);
         }
+    }
+
+
+    void EnableCinematicCamera()
+    {
+        CinematicCamera.SetActive(true);
+        StartCoroutine(FadeText(BossNameDisplay, 1, 1));
+        StartCoroutine(FadeText(BossDescriptionDisplay, 1, 1.25f));
+        Invoke(nameof(DisableCinematicCamera), cinematicDuration);
+    }
+
+    void DisableCinematicCamera()
+    {
+        CinematicCamera.SetActive(false);
+        playerController.canMove = true; // re-enable player movement
+        StartCoroutine(FadeText(BossNameDisplay, 0, 1));
+        StartCoroutine(FadeText(BossDescriptionDisplay, 0, 0.75f));
+    }
+
+    private IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha, float duration)
+    {
+        float currentAlpha = text.color.a;
+        float startAlpha = text.color.a;
+        float timeElapsed = 0.0f;
+
+        while (timeElapsed < duration)
+        {
+            // Calculate the interpolation percentage (0 to 1)
+            float t = timeElapsed / duration;
+
+            // Interpolate the position
+            currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, currentAlpha);
+            
+            // Increment time and wait for the next frame
+            timeElapsed += Time.deltaTime;
+            yield return null; // Wait until the next frame
+        }
+
+        // Ensure the object reaches the exact target position
+        text.color = new Color(text.color.r, text.color.g, text.color.b, targetAlpha);
     }
 
 }

@@ -32466,6 +32466,17 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &283458358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6415295413430454547, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+  m_PrefabInstance: {fileID: 2081104915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &306080181
 GameObject:
   m_ObjectHideFlags: 0
@@ -135802,6 +135813,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4401015316249077878, guid: 97301081cd2c58441b1d5acb2e73aecc, type: 3}
   m_PrefabInstance: {fileID: 475785173}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1485733327 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5331459119020749177, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+  m_PrefabInstance: {fileID: 1144140015}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d04dbae649014f8830afacc31a086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!43 &1508018983
 Mesh:
   m_ObjectHideFlags: 0
@@ -146176,6 +146198,17 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!114 &1896917579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8428333966093723007, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+  m_PrefabInstance: {fileID: 2081104915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1899743791
 GameObject:
   m_ObjectHideFlags: 0
@@ -155271,6 +155304,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &1986704848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1986704850}
+  - component: {fileID: 1986704849}
+  m_Layer: 0
+  m_Name: CinematicCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1986704849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986704848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!4 &1986704850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986704848}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.15929712, y: -0.40561113, z: 0.072215095, w: -0.8971561}
+  m_LocalPosition: {x: 106.52414, y: 135.381, z: 147.1063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1995686365
 GameObject:
   m_ObjectHideFlags: 0
@@ -155339,12 +155447,17 @@ MonoBehaviour:
   teleportDoor: {fileID: 1235136035}
   moveDuration: 3
   characterController: {fileID: 944126661}
+  playerController: {fileID: 1485733327}
   environmentDeathEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   drownedOrBurned: 0
   checkpoint: {fileID: 368234932}
   enemiesPerBridge: 02000000030000000400000005000000
   bridgeElevation: 35
   dungeonKeyDoor: {fileID: 7096217}
+  CinematicCamera: {fileID: 1986704848}
+  cinematicDuration: 5
+  BossNameDisplay: {fileID: 283458358}
+  BossDescriptionDisplay: {fileID: 1896917579}
 --- !u!65 &1995686368
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -161010,9 +161123,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6415295413430454547, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+      propertyPath: m_text
+      value: Mount Fwoosh
+      objectReference: {fileID: 0}
     - target: {fileID: 7683215186282256387, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8428333966093723007, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+      propertyPath: m_text
+      value: The Volcanic Vault of the Element of Fire
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -169353,3 +169474,4 @@ SceneRoots:
   - {fileID: 1667331327}
   - {fileID: 1744751434}
   - {fileID: 736086309}
+  - {fileID: 1986704850}

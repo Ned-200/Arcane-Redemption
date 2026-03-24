@@ -13,8 +13,8 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private float moveYPosition = 75;
     private bool cutscenePlayed;
     private Animator playerAnim;
-    [SerializeField] private TextMeshProUGUI BossNameDisplay; 
-    [SerializeField] private TextMeshProUGUI BossDescriptionDisplay; 
+    [SerializeField] private TextMeshProUGUI BossNameDisplay; // change within scene
+    [SerializeField] private TextMeshProUGUI BossDescriptionDisplay; // change within scene
 
     void Start()
     {

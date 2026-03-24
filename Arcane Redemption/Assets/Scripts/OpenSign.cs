@@ -51,6 +51,7 @@ public class OpenSign : MonoBehaviour
         {
             // Set UI image to sign decal
             signUI.sprite = MaterialToSprite(decalProjector.material);
+            signUI.SetNativeSize();
 
             // Show sign in UI
             signView.SetActive(true);

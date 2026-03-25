@@ -37566,7 +37566,7 @@ MonoBehaviour:
   cameraDistance: 5
   cameraHeight: 1.8
   shoulderOffset: 1.2
-  minPitch: -40
+  minPitch: -60
   maxPitch: 70
   rotationSmoothTime: 0.12
   cameraSmoothSpeed: 10

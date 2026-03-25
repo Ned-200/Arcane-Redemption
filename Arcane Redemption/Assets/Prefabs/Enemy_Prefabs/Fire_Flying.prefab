@@ -137,8 +137,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7418929223566598750}
   - component: {fileID: 4890188292011315757}
+  - component: {fileID: 3438874942286526071}
   m_Layer: 6
-  m_Name: pPlane5
+  m_Name: Detail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,12 +153,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050100587973189920}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &4890188292011315757
 SkinnedMeshRenderer:
@@ -185,6 +186,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bf2b3a6207ce3f14a8de5178daf059e8, type: 2}
+  - {fileID: 2100000, guid: 961ea911784b4e34fbed98ac4b1f508e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,6 +245,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.009368487, y: 0.00058254227, z: -0.003417492}
     m_Extent: {x: 0.0057477932, y: 0.004808608, z: 0.002507382}
   m_DirtyAABB: 0
+--- !u!114 &3438874942286526071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050100587973189920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &1440123278553344404
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,14 +330,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9036832946547593708}
-  - {fileID: 6669077185879463972}
-  - {fileID: 7532215312137072207}
-  - {fileID: 7418929223566598750}
-  - {fileID: 4600403790013521330}
-  - {fileID: 8280048182532641677}
-  - {fileID: 510819583169096686}
-  - {fileID: 6934236204819988}
-  - {fileID: 6179111483542783906}
+  - {fileID: 7573288735582571823}
   - {fileID: 7501553250542406005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -376,7 +390,10 @@ MonoBehaviour:
   deathDelay: 3
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
-  partsToDisintegrate: []
+  partsToDisintegrate:
+  - {fileID: 3963614698814143626}
+  - {fileID: 1871329601440527080}
+  - {fileID: 5636889811180581390}
   patrolPointA: {fileID: 0}
   patrolPointB: {fileID: 0}
   flyingMoveSpeed: 5
@@ -488,8 +505,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8280048182532641677}
   - component: {fileID: 9106379216390440405}
+  - component: {fileID: 5636889811180581390}
   m_Layer: 6
-  m_Name: pSphere12
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -503,12 +521,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951998248205376141}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &9106379216390440405
 SkinnedMeshRenderer:
@@ -536,6 +554,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 49e527002a001fe4a93d51f28a098952, type: 2}
+  - {fileID: 2100000, guid: 961ea911784b4e34fbed98ac4b1f508e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -594,6 +613,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000025142916, y: 0.004835574, z: -0.00035071885}
     m_Extent: {x: 0.01115453, y: 0.009709563, z: 0.009754205}
   m_DirtyAABB: 0
+--- !u!114 &5636889811180581390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951998248205376141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 1.2
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &2752772863904670913
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +643,7 @@ GameObject:
   - component: {fileID: 6179111483542783906}
   - component: {fileID: 6058206866325703715}
   m_Layer: 6
-  m_Name: pSphere20
+  m_Name: Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -619,12 +657,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2752772863904670913}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &6058206866325703715
 SkinnedMeshRenderer:
@@ -912,8 +950,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6934236204819988}
   - component: {fileID: 6985418327522493198}
+  - component: {fileID: 1871329601440527080}
   m_Layer: 6
-  m_Name: pSphere12.002
+  m_Name: RightWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -927,12 +966,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4913771756289355283}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &6985418327522493198
 SkinnedMeshRenderer:
@@ -960,6 +999,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bf2b3a6207ce3f14a8de5178daf059e8, type: 2}
+  - {fileID: 2100000, guid: 961ea911784b4e34fbed98ac4b1f508e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1018,6 +1058,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.017210905, y: 0.015363272, z: -0.009879559}
     m_Extent: {x: 0.015188191, y: 0.012949135, z: 0.0059081484}
   m_DirtyAABB: 0
+--- !u!114 &1871329601440527080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4913771756289355283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 1.2
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &5400404121119110509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,7 +1088,7 @@ GameObject:
   - component: {fileID: 6669077185879463972}
   - component: {fileID: 2170430618830820054}
   m_Layer: 6
-  m_Name: polySurface10
+  m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1043,12 +1102,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5400404121119110509}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &2170430618830820054
 SkinnedMeshRenderer:
@@ -1145,7 +1204,7 @@ GameObject:
   - component: {fileID: 7532215312137072207}
   - component: {fileID: 1371109974342423168}
   m_Layer: 6
-  m_Name: polySurface10.001
+  m_Name: Eye2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1159,12 +1218,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5450314943908370744}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1371109974342423168
 SkinnedMeshRenderer:
@@ -1291,8 +1350,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4600403790013521330}
   - component: {fileID: 1107594410936722623}
+  - component: {fileID: 2895152545580774762}
   m_Layer: 6
-  m_Name: pPlane7
+  m_Name: Detail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1306,12 +1366,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5909944234565205940}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1107594410936722623
 SkinnedMeshRenderer:
@@ -1339,6 +1399,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bf2b3a6207ce3f14a8de5178daf059e8, type: 2}
+  - {fileID: 2100000, guid: 961ea911784b4e34fbed98ac4b1f508e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1397,6 +1458,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.009797862, y: 0.0009728824, z: -0.001988072}
     m_Extent: {x: 0.0059155016, y: 0.0043610795, z: 0.0026015192}
   m_DirtyAABB: 0
+--- !u!114 &2895152545580774762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5909944234565205940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &6038135225546897996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,6 +1729,45 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6816264269100367359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6988126070952611139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7573288735582571823}
+  m_Layer: 6
+  m_Name: EnemyMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7573288735582571823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6988126070952611139}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6669077185879463972}
+  - {fileID: 7532215312137072207}
+  - {fileID: 7418929223566598750}
+  - {fileID: 4600403790013521330}
+  - {fileID: 8280048182532641677}
+  - {fileID: 510819583169096686}
+  - {fileID: 6934236204819988}
+  - {fileID: 6179111483542783906}
+  m_Father: {fileID: 6205488203937882174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7315905267667965897
 GameObject:
@@ -1914,8 +2033,9 @@ GameObject:
   m_Component:
   - component: {fileID: 510819583169096686}
   - component: {fileID: 3949600619690137366}
+  - component: {fileID: 3963614698814143626}
   m_Layer: 6
-  m_Name: pSphere12.001
+  m_Name: LeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1929,12 +2049,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8769353741164282371}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0.000000059604645}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6205488203937882174}
+  m_Father: {fileID: 7573288735582571823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &3949600619690137366
 SkinnedMeshRenderer:
@@ -1962,6 +2082,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bf2b3a6207ce3f14a8de5178daf059e8, type: 2}
+  - {fileID: 2100000, guid: 961ea911784b4e34fbed98ac4b1f508e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2020,6 +2141,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.01721347, y: 0.015749466, z: -0.009753905}
     m_Extent: {x: 0.015241065, y: 0.013335322, z: 0.006030623}
   m_DirtyAABB: 0
+--- !u!114 &3963614698814143626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769353741164282371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 1.2
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &8816167954588283647
 GameObject:
   m_ObjectHideFlags: 0

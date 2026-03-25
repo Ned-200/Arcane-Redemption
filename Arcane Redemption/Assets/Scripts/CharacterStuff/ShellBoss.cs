@@ -61,6 +61,7 @@ public class ShellBoss : EnemyCharacter
 
     [Header("Animation")]
     [SerializeField] private Animator bossAnimator;
+    private bool isWalking = false;
 
     [Header("Arena Boundaries")]
     [SerializeField] private ArenaBounds arenaBounds;
@@ -265,7 +266,7 @@ public class ShellBoss : EnemyCharacter
         // Play hit animation
         if (bossAnimator != null)
         {
-            bossAnimator.SetTrigger("ShellHit");
+            bossAnimator.Play("Hide");
         }
 
         // Move to next rock after delay (if shell not broken yet)
@@ -467,6 +468,11 @@ public class ShellBoss : EnemyCharacter
 
     private void HandleWaitingUnderRock()
     {
+        if (bossAnimator != null && isWalking == true) {
+            isWalking = false;
+            bossAnimator.SetBool("isWalking", false);
+        }
+
         if (Time.time - timeArrivedAtRock >= timeUnderRock)
         {
             Debug.Log($"[{gameObject.name}] Waited {timeUnderRock}s under rock - moving to next");
@@ -727,6 +733,12 @@ public class ShellBoss : EnemyCharacter
             Debug.LogError($"[{gameObject.name}] Projectile prefab missing TreeBossProjectile component!");
             Destroy(projectileObj);
         }
+
+        // Play attack animation
+        if (bossAnimator != null)
+        {
+            bossAnimator.Play("Attack");
+        }
     }
 
     #endregion
@@ -768,6 +780,11 @@ public class ShellBoss : EnemyCharacter
 
     private void MoveTowards(Vector3 targetPosition, float speed)
     {
+        if (bossAnimator != null) {
+            isWalking = true;
+            bossAnimator.SetBool("isWalking", true);
+        }
+
         Vector3 direction = (targetPosition - transform.position).normalized;
         direction.y = 0f;
 
@@ -881,6 +898,10 @@ public class ShellBoss : EnemyCharacter
             {
                 Debug.LogError("ShellBoss not assigned a Ghost NPC Prefab! Check Fields!");
             }
+        }
+
+        if (bossAnimator != null) {
+            bossAnimator.Play("Death");
         }
 
         StopAllCoroutines();

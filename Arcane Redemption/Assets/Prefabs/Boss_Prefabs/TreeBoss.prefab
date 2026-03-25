@@ -2670,7 +2670,6 @@ GameObject:
   - component: {fileID: 4223675958011363581}
   - component: {fileID: 8742605827131902075}
   - component: {fileID: 2821828460621426168}
-  - component: {fileID: 2456003627823306912}
   - component: {fileID: 1517124430812169557}
   - component: {fileID: 3742112485453235775}
   - component: {fileID: 7407363525288281728}
@@ -2809,6 +2808,8 @@ MonoBehaviour:
   MayorNPC: {fileID: 0}
   OpenDoors: {fileID: 0}
   ClosedDoors: {fileID: 0}
+  WaterDungeonPlantWall: {fileID: 0}
+  PlantDungeonPlantWall: {fileID: 0}
   eyeRenderer: {fileID: 3142304288368573763}
   normalEye: {fileID: 3142304288368573763}
   enragedEyeMaterial: {fileID: 2100000, guid: 569d7cc39d898df42a7ca7c05aae5e39, type: 2}
@@ -2839,43 +2840,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &2456003627823306912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7075486636287271208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a98173041ef6b43bb40079fb29895e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TreeBossProjectile
-  damage: 10
-  speed: 20
-  lifetime: 5
-  destroyOnImpact: 1
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  element: 
-  toughVinesBurnable: 0
-  hitEffect: {fileID: 0}
-  trail: {fileID: 0}
-  impactSound: {fileID: 0}
-  trackingDuration: 6
-  trackingStrength: 10
-  maxTurnRate: 720
-  accelerationRate: 20
-  centerMassOffset: {x: 0, y: 1, z: 0}
-  useBoundsCenter: 1
-  trackImmediately: 1
-  predictiveTracking: 1
-  predictionMultiplier: 0.3
-  minDistanceForPrediction: 10
-  useAggressiveTracking: 1
-  showDebugLogs: 0
-  showTrackingGizmos: 1
 --- !u!114 &1517124430812169557
 MonoBehaviour:
   m_ObjectHideFlags: 0

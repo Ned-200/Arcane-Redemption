@@ -1183,7 +1183,7 @@ MonoBehaviour:
   weaponSlotTransform: {fileID: 0}
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
-  detectionRadius: 15
+  detectionRadius: 20
   combatRadius: 3
   attackRange: 2.04
   playerLayer:

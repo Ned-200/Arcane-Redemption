@@ -50,8 +50,8 @@ MonoBehaviour:
   attackCooldown: 1
   staminaCost: 3
   manaCost: 8
-  attackSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: 836ba245660d8134c944d8bd77e495e8, type: 3}
+  impactSound: {fileID: 8300000, guid: 836ba245660d8134c944d8bd77e495e8, type: 3}
   fireProjectilePrefab: {fileID: 6124905989408069561, guid: a199a21b18389f647ac730efca9436b8, type: 3}
   waterProjectilePrefab: {fileID: 6124905989408069561, guid: b49cfbac1796da3489f856be113a1a75, type: 3}
   plantProjectilePrefab: {fileID: 6124905989408069561, guid: 8c074a6a059be764ebd4c76e9c4d0da0, type: 3}
@@ -66,6 +66,11 @@ MonoBehaviour:
   chargingEffect: {fileID: 0}
   staffGlow: {fileID: 0}
   playerAnim: {fileID: 0}
+  chargingSound: {fileID: 8300000, guid: 836ba245660d8134c944d8bd77e495e8, type: 3}
+  fireSound: {fileID: 8300000, guid: 836ba245660d8134c944d8bd77e495e8, type: 3}
+  aimStartSound: {fileID: 8300000, guid: 836ba245660d8134c944d8bd77e495e8, type: 3}
+  aimEndSound: {fileID: 8300000, guid: 836ba245660d8134c944d8bd77e495e8, type: 3}
+  soundVolume: 6.45
 --- !u!1 &2447751459986926964
 GameObject:
   m_ObjectHideFlags: 0

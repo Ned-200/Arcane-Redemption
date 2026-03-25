@@ -136,7 +136,8 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 100
   showDebugGizmos: 1
 --- !u!33 &-9160761985415171690
 MeshFilter:

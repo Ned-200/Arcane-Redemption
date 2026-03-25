@@ -963,7 +963,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8369151844866561918, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1449309247}
   m_SourcePrefab: {fileID: 100100000, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
 --- !u!114 &96791615 stripped
 MonoBehaviour:
@@ -13386,9 +13389,9 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 1
   showDebugGizmos: 1
-  verboseLogging: 1
 --- !u!43 &781827965
 Mesh:
   m_ObjectHideFlags: 0
@@ -30947,9 +30950,9 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 1
   showDebugGizmos: 1
-  verboseLogging: 1
 --- !u!54 &1364025046
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31993,9 +31996,9 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 1
   showDebugGizmos: 1
-  verboseLogging: 1
 --- !u!64 &1417498069
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -32253,6 +32256,19 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1449309243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8369151844866561918, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+  m_PrefabInstance: {fileID: 96791614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!81 &1449309247
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449309243}
+  m_Enabled: 1
 --- !u!1 &1453353896
 GameObject:
   m_ObjectHideFlags: 0
@@ -35504,7 +35520,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1552671485}
   - component: {fileID: 1552671484}
-  - component: {fileID: 1552671483}
   - component: {fileID: 1552671482}
   - component: {fileID: 1552671481}
   m_Layer: 0
@@ -35590,14 +35605,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1552671483
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552671480}
-  m_Enabled: 1
 --- !u!20 &1552671484
 Camera:
   m_ObjectHideFlags: 0
@@ -46930,9 +46937,9 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 1
   showDebugGizmos: 1
-  verboseLogging: 1
 --- !u!64 &1808616492
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -49695,9 +49702,9 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 1
   showDebugGizmos: 1
-  verboseLogging: 1
 --- !u!1 &1929851013
 GameObject:
   m_ObjectHideFlags: 0
@@ -49785,9 +49792,9 @@ MonoBehaviour:
   idleMaterial: {fileID: 0}
   fallingMaterial: {fileID: 0}
   triggerSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: e03ac17019106f54faaa780f50989a26, type: 3}
+  impactSoundVolume: 1
   showDebugGizmos: 1
-  verboseLogging: 1
 --- !u!64 &1929851017
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -27,6 +27,7 @@ public class FallingRock : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip triggerSound;
     [SerializeField] private AudioClip impactSound;
+    [SerializeField] private float impactSoundVolume = 1f;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugGizmos = true;
@@ -261,8 +262,10 @@ public class FallingRock : MonoBehaviour
 
         hasImpacted = true;
 
+        Vector3 impactPosition = transform.position;
+
         HandleRockImpact(collision);
-        SpawnImpactEffects();
+        SpawnImpactEffects(impactPosition);
         RequestRespawn();
 
         Destroy(gameObject, 0.1f);
@@ -313,16 +316,28 @@ public class FallingRock : MonoBehaviour
         return true;
     }
 
-    private void SpawnImpactEffects()
+    private void SpawnImpactEffects(Vector3 position)
     {
         if (impactVFX != null)
         {
-            Instantiate(impactVFX, transform.position, Quaternion.identity);
+            Instantiate(impactVFX, position, Quaternion.identity);
         }
 
         if (impactSound != null)
         {
-            AudioSource.PlayClipAtPoint(impactSound, transform.position);
+            GameObject audioObject = new GameObject("RockImpactAudio");
+            audioObject.transform.position = position;
+            
+            AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+            audioSource.clip = impactSound;
+            audioSource.volume = impactSoundVolume;
+            audioSource.spatialBlend = 1f;
+            audioSource.minDistance = 5f;
+            audioSource.maxDistance = 50f;
+            audioSource.rolloffMode = AudioRolloffMode.Linear;
+            audioSource.Play();
+
+            Destroy(audioObject, impactSound.length + 0.1f);
         }
     }
 

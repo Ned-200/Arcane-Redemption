@@ -327,6 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8342866915600509412}
   - component: {fileID: 46498712065131599}
+  - component: {fileID: 2038098718507148370}
   m_Layer: 0
   m_Name: Cape
   m_TagString: Untagged
@@ -501,6 +502,64 @@ SkinnedMeshRenderer:
     m_Center: {x: -9.313226e-10, y: 0.003214675, z: -0.003664713}
     m_Extent: {x: 0.017076645, y: 0.020184662, z: 0.01703904}
   m_DirtyAABB: 0
+--- !u!114 &2038098718507148370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629668725826966389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e4f77fc99c26d42a5d26bab28c17c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CapeCollisionPusher
+  bootPushers:
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0.5
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0
+  - bone: {fileID: 0}
+    radius: 0.5
+  - bone: {fileID: 0}
+    radius: 0
+  capeBones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pushStrength: 5
+  restoreSpeed: 8
 --- !u!1 &683871327107752120
 GameObject:
   m_ObjectHideFlags: 0
@@ -37519,7 +37578,6 @@ MonoBehaviour:
   respawnPoint: {fileID: 0}
   respawnCooldown: 3
   showDebugInfo: 1
-  DeathScreen: {fileID: 0}
 --- !u!114 &5331459119020749177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37534,6 +37592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerDataPrefab: {fileID: 6304225515165161262, guid: 7e799c43644a2884b9f82d7b0e8c7923, type: 3}
   playerAnim: {fileID: 1513892264371063068}
+  lowerBodyLayerIndex: 1
+  torsoLayerIndex: 2
   canMove: 1
   walkSpeed: 6
   sprintSpeed: 10

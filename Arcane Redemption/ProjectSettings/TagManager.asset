@@ -26,8 +26,8 @@ TagManager:
   - Enviromental
   - EnviromentalTrigger
   - IgnoreCameraCollision
-  - 
-  - 
+  - FallingRocks
+  - RockSpawnLayer
   - 
   - 
   - 

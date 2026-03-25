@@ -56,19 +56,27 @@ public class ProjectileBase : MonoBehaviour
         {
             return;
         }
-        // Don't continue if not correct layer
-        if (((1 << other.gameObject.layer) & targetLayers) == 0)
-        {
-            return;
-        }
 
-        // Check if we hit a FallingRock - trigger it but DON'T destroy projectile
+        // Check if we hit a FallingRock - trigger it AND destroy projectile
         FallingRock rock = other.GetComponent<FallingRock>();
         if (rock != null)
         {
-            Debug.Log($"[ProjectileBase] Hit FallingRock - triggering rock but continuing flight");
+            Debug.Log($"[ProjectileBase] Hit FallingRock - triggering rock and destroying projectile");
             // Rock's OnTriggerEnter will handle the trigger logic
-            // Projectile passes through and continues
+            // Mark as hit and destroy
+            hasHit = true;
+            
+            // Spawn impact effect on rock
+            SpawnImpactEffect();
+            PlayImpactSound();
+            
+            Destroy(gameObject);
+            return;
+        }
+
+        // Don't continue if not correct layer
+        if (((1 << other.gameObject.layer) & targetLayers) == 0)
+        {
             return;
         }
 
@@ -80,131 +88,238 @@ public class ProjectileBase : MonoBehaviour
         if (target != null)
         {
             target.TakeDamage(damage);
-            OnTargetHit(target); // NEW: Call virtual method for derived classes
+            OnTargetHit(target);
             Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
         }
 
-        // If projectile was shot by a player, check for envirnmental triggers (Vine walls, Barrels, growing plant bridges, etc)
-        if (owner.gameObject.tag == "Player") {
-            EnvironmentalTriggers(other);
+        // If projectile was shot by a player, check for environmental triggers
+        if (IsPlayerProjectile())
+        {
+            HandleEnvironmentalTriggers(other);
         }
 
         // Spawn impact effect
-        if (hitEffect != null)
-        {
-            Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
-        }
+        SpawnImpactEffect();
 
         // Play impact sound
-        if (impactSound != null)
-        {
-            AudioSource.PlayClipAtPoint(impactSound, transform.position);
-        }
+        PlayImpactSound();
 
         // Destroy the projectile
-        Destroy(gameObject);
+        if (destroyOnImpact)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        // Handle solid collisions (when rock is falling or other solid objects)
+        // Check if we hit a FallingRock that's already falling
+        FallingRock rock = collision.gameObject.GetComponent<FallingRock>();
+        if (rock != null)
+        {
+            if (hasHit) return; // Already processed
+            
+            Debug.Log($"[ProjectileBase] Collision with falling FallingRock - destroying projectile");
+            hasHit = true;
+            
+            // Spawn impact effect
+            SpawnImpactEffect();
+            PlayImpactSound();
+            
+            Destroy(gameObject);
+            return;
+        }
+
+        // For all other collisions, treat as trigger
+        OnTriggerEnter(collision.collider);
     }
 
     /// <summary>
-    /// NEW: Virtual method called when projectile hits a character target.
+    /// Checks if this projectile belongs to a player character.
+    /// </summary>
+    protected bool IsPlayerProjectile()
+    {
+        if (owner == null)
+        {
+            return false;
+        }
+
+        return owner.CompareTag("Player");
+    }
+
+    /// <summary>
+    /// Virtual method called when projectile hits a character target.
     /// Override this in derived classes for custom hit behavior.
     /// </summary>
-    /// <param name="target">The character that was hit</param>
     protected virtual void OnTargetHit(BaseCharacter target)
     {
         // Base implementation does nothing
         // Derived classes can override for custom behavior
     }
 
-    protected virtual void EnvironmentalTriggers(Collider other)
+    /// <summary>
+    /// Handles interactions with environmental objects.
+    /// </summary>
+    protected virtual void HandleEnvironmentalTriggers(Collider other)
     {
-        // CHECK FOR ALL ENVIRONMENT COLLISIONS:
-        if (other.gameObject.tag == "PlantWall" && element == "Fire") // If a plant wall
-        {
-            Disintegrate disintegrate = other.gameObject.GetComponent<Disintegrate>();
-           
-            if (disintegrate == null)
-            {
-                Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
-            } else
-            {
-                //Trigger disintegration material
-                disintegrate.TriggerDisintegration();
-                
-            }
-        } else if (other.gameObject.tag =="Tough Plant Wall" && toughVinesBurnable){
-            DisintegrateUP disintegrateup = other.gameObject.GetComponent<DisintegrateUP>();
+        // Delegate to specific handlers based on tag
+        if (TryBurnPlantWall(other)) return;
+        if (TryBurnToughPlantWall(other)) return;
+        if (TryExtinguishFlameWall(other)) return;
+        if (TryBreakObject(other)) return;
+        if (TryToggleFlower(other)) return;
+        if (TryGrowPlantBridge(other)) return;
+    }
 
-            if (disintegrateup == null)
-            {
-                Debug.LogError(other.gameObject.name + ": PlantWall - No attached disintegration script!");
-            } else
-            {
-                //Trigger disintegration material
-                disintegrateup.TriggerDisintegrationUP();
-            }
-        } else if (other.gameObject.tag == "FlameWall" && element == "Water") // If a fire wall
-        {
-            GameObject FlameWall = other.gameObject;
+    #region Environmental Interaction Handlers
 
-            //Disable particles
-            ParticleSystem fireParticles = FlameWall.transform.Find("FireEffect").GetComponent<ParticleSystem>();
-            if (fireParticles == null)
-            {
-                Debug.LogError(FlameWall.name + ": FlameWall - no particles found! Check particle gameobject name");
-            } else
-            {
-                //Disable flame particles before deleting
-                fireParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting); // stops emmision without clearing
-            }
+    protected virtual bool TryBurnPlantWall(Collider other)
+    {
+        if (!other.CompareTag("PlantWall") || element != "Fire")
+        {
+            return false;
+        }
 
-            FlameWall flameWallScript = FlameWall.GetComponent<FlameWall>();
-            Collider flameCollider = FlameWall.GetComponent<Collider>();
-            Light flameLight = FlameWall.GetComponent<Light>();
-            if (flameCollider == null || flameLight == null || flameWallScript == null) 
-            {
-                Debug.LogError(FlameWall.name + ": FlameWall - no collider or light source found!");
-            } else
-            {
-                //Disable flame wall collision
-                flameCollider.enabled = false;
-                flameLight.enabled = false;
-                flameWallScript.enabled = false;
-                Destroy(FlameWall, 3);
-            }
-        } else if (other.gameObject.tag == "Breakable") // If a breakable object
+        Disintegrate disintegrate = other.GetComponent<Disintegrate>();
+        if (disintegrate == null)
         {
-            GameObject BreakableObject = other.gameObject;
+            Debug.LogError($"{other.gameObject.name}: PlantWall missing Disintegrate component!");
+            return false;
+        }
 
-            //Play damaged effect
-            Breakable breakableScript = BreakableObject.GetComponent<Breakable>();
-            if (breakableScript != null)
-            {
-                breakableScript.Break();
-            } else
-            {
-                Debug.LogError(BreakableObject.name + ": Breakable - no breakableScript found!");
-            }
-        } else if (other.gameObject.tag == "Flower") //if it's a flower for plant dungeon
+        disintegrate.TriggerDisintegration();
+        return true;
+    }
+
+    protected virtual bool TryBurnToughPlantWall(Collider other)
+    {
+        if (!other.CompareTag("Tough Plant Wall") || !toughVinesBurnable)
         {
-            // START FLOWER TOGGLE CHECK
-            GameObject ToggleObject = other.gameObject;
-            SwordHitToggle toggle = ToggleObject.GetComponent<SwordHitToggle>();
-            if (toggle !=null)
-            {
-                toggle.Toggle();
-            } 
-        } else if (other.gameObject.tag == "PlantBridge" && element == "Plant") // if it's a plant bridge cast point
+            return false;
+        }
+
+        DisintegrateUP disintegrateup = other.GetComponent<DisintegrateUP>();
+        if (disintegrateup == null)
         {
-            // START FLOWER TOGGLE CHECK
-            PlantBridge plantBridge = other.GetComponent<PlantBridge>();
-            if (plantBridge != null)
+            Debug.LogError($"{other.gameObject.name}: Tough Plant Wall missing DisintegrateUP component!");
+            return false;
+        }
+
+        disintegrateup.TriggerDisintegrationUP();
+        return true;
+    }
+
+    protected virtual bool TryExtinguishFlameWall(Collider other)
+    {
+        if (!other.CompareTag("FlameWall") || element != "Water")
+        {
+            return false;
+        }
+
+        GameObject flameWall = other.gameObject;
+
+        // Handle particles
+        Transform fireEffectTransform = flameWall.transform.Find("FireEffect");
+        if (fireEffectTransform != null)
+        {
+            ParticleSystem fireParticles = fireEffectTransform.GetComponent<ParticleSystem>();
+            if (fireParticles != null)
             {
-                plantBridge.GrowBridge();
-            } else
-            {
-                Debug.LogError("ProjectileBase: Could not fetch plant bridge component from tagged object!");
+                fireParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             }
         }
+        else
+        {
+            Debug.LogWarning($"{flameWall.name}: FlameWall missing FireEffect child!");
+        }
+
+        // Disable components
+        FlameWall flameWallScript = flameWall.GetComponent<FlameWall>();
+        Collider flameCollider = flameWall.GetComponent<Collider>();
+        Light flameLight = flameWall.GetComponent<Light>();
+
+        if (flameCollider != null) flameCollider.enabled = false;
+        if (flameLight != null) flameLight.enabled = false;
+        if (flameWallScript != null) flameWallScript.enabled = false;
+
+        Destroy(flameWall, 3f);
+        return true;
     }
+
+    protected virtual bool TryBreakObject(Collider other)
+    {
+        if (!other.CompareTag("Breakable"))
+        {
+            return false;
+        }
+
+        Breakable breakableScript = other.GetComponent<Breakable>();
+        if (breakableScript == null)
+        {
+            Debug.LogError($"{other.gameObject.name}: Breakable missing Breakable component!");
+            return false;
+        }
+
+        breakableScript.Break();
+        return true;
+    }
+
+    protected virtual bool TryToggleFlower(Collider other)
+    {
+        if (!other.CompareTag("Flower"))
+        {
+            return false;
+        }
+
+        SwordHitToggle toggle = other.GetComponent<SwordHitToggle>();
+        if (toggle == null)
+        {
+            Debug.LogWarning($"{other.gameObject.name}: Flower missing SwordHitToggle component!");
+            return false;
+        }
+
+        toggle.Toggle();
+        return true;
+    }
+
+    protected virtual bool TryGrowPlantBridge(Collider other)
+    {
+        if (!other.CompareTag("PlantBridge") || element != "Plant")
+        {
+            return false;
+        }
+
+        PlantBridge plantBridge = other.GetComponent<PlantBridge>();
+        if (plantBridge == null)
+        {
+            Debug.LogError($"{other.gameObject.name}: PlantBridge missing PlantBridge component!");
+            return false;
+        }
+
+        plantBridge.GrowBridge();
+        return true;
+    }
+
+    #endregion
+
+    #region Effect Helpers
+
+    protected virtual void SpawnImpactEffect()
+    {
+        if (hitEffect != null)
+        {
+            Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
+        }
+    }
+
+    protected virtual void PlayImpactSound()
+    {
+        if (impactSound != null)
+        {
+            AudioSource.PlayClipAtPoint(impactSound, transform.position);
+        }
+    }
+
+    #endregion
 }

@@ -84,6 +84,8 @@ public class TreeBoss : EnemyCharacter
     [SerializeField] private GameObject MayorNPC;
     [SerializeField] private GameObject OpenDoors;
     [SerializeField] private GameObject ClosedDoors;
+    [SerializeField] private GameObject WaterDungeonPlantWall;
+    [SerializeField] private GameObject PlantDungeonPlantWall;
     private bool ghostSpawned = false;
 
     [Header("Eye Colour")]
@@ -1267,6 +1269,17 @@ public class TreeBoss : EnemyCharacter
             {
                 Debug.LogError("TreeBoss not assigned MayorNPC! Check Fields!");
             }
+        }
+
+        // Change tags so that plant walls are burnable
+        if (WaterDungeonPlantWall != null && PlantDungeonPlantWall != null)
+        {
+            WaterDungeonPlantWall.tag = "PlantWall";
+            PlantDungeonPlantWall.tag = "PlantWall";
+        }
+        else
+        {
+            Debug.LogError("TreeBoss not assigned Vine Walls! Check Fields!");
         }
 
         disintegrate.TriggerDisintegration();

@@ -9,8 +9,8 @@ public class ShellBoss : EnemyCharacter
     [Header("Boss Phases")]
     [SerializeField] private string bossDisplayName = "Armored Sentinel";
 
-    [Header("Shell System")]
-    [SerializeField] private ShellProtection shellProtection;
+    [Header("Shell Armor System")]
+    [SerializeField] private ShellArmorManager shellArmorManager;
 
     [Header("Phase 1: Shell Phase")]
     [SerializeField] private float phase1MoveSpeed = 3f;
@@ -101,7 +101,7 @@ public class ShellBoss : EnemyCharacter
 
     public BossPhase CurrentPhase => currentPhase;
     public ShellBossState CurrentBossState => currentBossState;
-    public bool IsShellActive => shellProtection != null && shellProtection.IsShellActive;
+    public bool IsShellActive => shellArmorManager != null && shellArmorManager.IsShellActive;
     public bool IsPerformingCombo => isPerformingCombo;
 
     private float CurrentMoveSpeed => currentPhase == BossPhase.EnragedPhase 
@@ -137,7 +137,7 @@ public class ShellBoss : EnemyCharacter
 
     private void InitializeBoss()
     {
-        InitializeShellProtection();
+        InitializeShellArmorManager();
         InitializeHealthBarUI();
         InitializeRockSpawnPoints();
         ValidateComponents();
@@ -150,21 +150,24 @@ public class ShellBoss : EnemyCharacter
         lastProjectileVolleyTime = -projectileVolleyCooldown;
     }
 
-    private void InitializeShellProtection()
+    private void InitializeShellArmorManager()
     {
-        if (shellProtection == null)
+        if (shellArmorManager == null)
         {
-            shellProtection = GetComponent<ShellProtection>();
+            shellArmorManager = GetComponent<ShellArmorManager>();
         }
 
-        if (shellProtection != null)
+        if (shellArmorManager != null)
         {
-            shellProtection.OnShellBroken += OnShellBroken;
-            shellProtection.OnShellHit += OnShellHit;
+            // Subscribe to armor events
+            shellArmorManager.OnArmorPieceRemoved += OnArmorPieceRemoved;
+            shellArmorManager.OnShellFullyBroken += OnShellFullyBroken;
+
+            Debug.Log($"[{gameObject.name}] Shell armor system initialized - {shellArmorManager.RemainingArmorPieces} pieces remaining");
         }
         else
         {
-            Debug.LogError($"[{gameObject.name}] ShellProtection component not found!");
+            Debug.LogError($"[{gameObject.name}] ShellArmorManager component not found! Add it to the boss GameObject.");
         }
     }
 
@@ -230,7 +233,6 @@ public class ShellBoss : EnemyCharacter
             Debug.LogWarning($"[{gameObject.name}] No projectile spawn point assigned! Using boss position instead.");
         }
 
-        // NEW: Validate or find arena bounds
         if (arenaBounds == null)
         {
             arenaBounds = FindFirstObjectByType<ArenaBounds>();
@@ -243,53 +245,70 @@ public class ShellBoss : EnemyCharacter
 
     #endregion
 
-    #region Shell System
+    #region Shell Armor System
 
+    /// <summary>
+    /// Called by FallingRock when it hits the boss.
+    /// Passes the rock hit to the armor manager.
+    /// </summary>
     public void OnRockHit(FallingRock rock)
     {
-        if (shellProtection == null) return;
-
-        bool shellBroken = shellProtection.TryDamageShell();
-
-        if (shellBroken)
+        if (shellArmorManager == null)
         {
-            TransitionToEnragedPhase();
+            Debug.LogWarning($"[{gameObject.name}] No ShellArmorManager found!");
+            return;
         }
-        else
+
+        // Forward rock hit to armor manager
+        shellArmorManager.OnRockHit(rock);
+
+        // Play hit animation
+        if (bossAnimator != null)
+        {
+            bossAnimator.SetTrigger("ShellHit");
+        }
+
+        // Move to next rock after delay (if shell not broken yet)
+        if (shellArmorManager.IsShellActive)
         {
             StartCoroutine(MoveToNextRockAfterDelay(rockCycleDelay));
         }
     }
 
-    private void OnShellHit()
+    /// <summary>
+    /// Called when a single armor piece is removed.
+    /// </summary>
+    private void OnArmorPieceRemoved()
     {
-        Debug.Log($"[{gameObject.name}] Shell hit! {shellProtection.RemainingHits} hits remaining");
-
-        if (bossAnimator != null)
-        {
-            bossAnimator.SetTrigger("ShellHit");
-        }
+        Debug.Log($"[{gameObject.name}] Armor piece removed! {shellArmorManager.RemainingArmorPieces} pieces remaining, {shellArmorManager.RemainingHits} hits until shell breaks");
     }
 
-    private void OnShellBroken()
+    /// <summary>
+    /// Called when all armor pieces are removed and shell is fully broken.
+    /// </summary>
+    private void OnShellFullyBroken()
     {
-        Debug.LogWarning($"[{gameObject.name}] 💥 SHELL BROKEN! Entering Phase 2!");
+        Debug.LogWarning($"[{gameObject.name}] 💥 ALL ARMOR REMOVED! Shell fully broken!");
 
         if (bossAnimator != null)
         {
             bossAnimator.SetTrigger("ShellBreak");
         }
-    }       
+
+        TransitionToEnragedPhase();
+    }
 
     public override void TakeDamage(float damage)
     {
+        // Block damage if shell is still active
         if (IsShellActive)
         {
-            Debug.Log($"[{gameObject.name}] Blocked {damage} damage - shell is active! Must break shell first.");
+            Debug.Log($"[{gameObject.name}] Blocked {damage} damage - shell armor is active! Must break all armor pieces first.");
             OnDamageBlocked(damage);
             return;
         }
 
+        // Shell broken, take normal damage
         base.TakeDamage(damage);
     }
 
@@ -501,13 +520,11 @@ public class ShellBoss : EnemyCharacter
 
         Vector3 directionAwayFromPlayer = (transform.position - playerTransform.position).normalized;
         
-        // NEW: Blend with edge avoidance
         if (arenaBounds != null)
         {
             Vector3 edgePush = arenaBounds.GetSafePushDirection(transform.position);
             if (edgePush != Vector3.zero)
             {
-                // Blend backing away with staying in bounds
                 float edgeProximity = 1f - arenaBounds.GetDistanceFromEdgeNormalized(transform.position);
                 directionAwayFromPlayer = Vector3.Lerp(
                     directionAwayFromPlayer,
@@ -754,10 +771,8 @@ public class ShellBoss : EnemyCharacter
         Vector3 direction = (targetPosition - transform.position).normalized;
         direction.y = 0f;
 
-        // Calculate new position
         Vector3 newPosition = transform.position + direction * speed * Time.deltaTime;
 
-        // Apply arena boundary constraints
         if (arenaBounds != null)
         {
             newPosition = arenaBounds.ClampPosition(newPosition);
@@ -789,14 +804,23 @@ public class ShellBoss : EnemyCharacter
 
     #region Debug Context Menu
 
-    [ContextMenu("Force Break Shell")]
-    private void ForceBreakShell()
+    [ContextMenu("Force Remove Next Armor Piece")]
+    private void ForceRemoveNextArmor()
     {
-        if (shellProtection != null)
+        if (shellArmorManager != null)
         {
-            while (shellProtection.IsShellActive)
+            shellArmorManager.ForceRemoveNextArmor();
+        }
+    }
+
+    [ContextMenu("Force Break All Armor")]
+    private void ForceBreakAllArmor()
+    {
+        if (shellArmorManager != null)
+        {
+            while (shellArmorManager.IsShellActive)
             {
-                shellProtection.TryDamageShell();
+                shellArmorManager.ForceRemoveNextArmor();
             }
         }
     }
@@ -839,24 +863,25 @@ public class ShellBoss : EnemyCharacter
             healthBarUI.HideBossHealthBar();
         }
 
-        if (shellProtection != null)
+        // Unsubscribe from armor events
+        if (shellArmorManager != null)
         {
-            shellProtection.OnShellBroken -= OnShellBroken;
-            shellProtection.OnShellHit -= OnShellHit;
+            shellArmorManager.OnArmorPieceRemoved -= OnArmorPieceRemoved;
+            shellArmorManager.OnShellFullyBroken -= OnShellFullyBroken;
         }
 
         if (!ghostSpawned)
+        {
+            ghostSpawned = true;
+            if (GhostNPCPrefab != null)
             {
-                ghostSpawned = true;
-                if (GhostNPCPrefab != null)
-                {
-                    Instantiate(GhostNPCPrefab, gameObject.transform.position, gameObject.transform.rotation);
-                }
-                else
-                {
-                    Debug.LogError("TreeBoss not assigned a Ghost NPC Prefab! Check Fields!");
-                }
+                Instantiate(GhostNPCPrefab, gameObject.transform.position, gameObject.transform.rotation);
             }
+            else
+            {
+                Debug.LogError("ShellBoss not assigned a Ghost NPC Prefab! Check Fields!");
+            }
+        }
 
         StopAllCoroutines();
     }
@@ -906,8 +931,8 @@ public class ShellBoss : EnemyCharacter
 
 public enum BossPhase
 {
-    ShellPhase
-    , EnragedPhase
+    ShellPhase,
+    EnragedPhase
 }
 
 public enum ShellBossState

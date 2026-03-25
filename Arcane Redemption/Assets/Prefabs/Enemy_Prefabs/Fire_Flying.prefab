@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &712235797723422955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7501553250542406005}
+  m_Layer: 6
+  m_Name: ProjSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7501553250542406005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712235797723422955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6205488203937882174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &835841465734015990
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1338104236387485357}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1121011590673034985}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6816264269100367359}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EyeLid_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7418929223566598750}
   - component: {fileID: 4890188292011315757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pPlane5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4711090366770330828}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_r.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +284,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6205488203937882174}
-  m_Layer: 0
+  - component: {fileID: 2404192145040470992}
+  - component: {fileID: 2865374095924412658}
+  - component: {fileID: 5772367095118819390}
+  - component: {fileID: 4929131252247984768}
+  m_Layer: 6
   m_Name: Fire_Flying
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,8 +317,136 @@ Transform:
   - {fileID: 510819583169096686}
   - {fileID: 6934236204819988}
   - {fileID: 6179111483542783906}
+  - {fileID: 7501553250542406005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2404192145040470992
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732292901591587241}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0.74, z: -0.51}
+--- !u!114 &2865374095924412658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732292901591587241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910a39d37df55a84082c4fffafb03c6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlyingToGroundEnemy
+  maxHealth: 30
+  maxStamina: 100
+  maxMana: 100
+  staminaRegenRate: 20
+  manaRegenRate: 10
+  staminaRegenDelay: 1
+  manaRegenDelay: 2
+  weaponSlotTransform: {fileID: 0}
+  lowHealthEffects: {fileID: 0}
+  defaultWeapon: {fileID: 0}
+  detectionRadius: 15
+  combatRadius: 3
+  attackRange: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  moveSpeed: 3
+  rotationSpeed: 5
+  attackDamage: 5
+  attackCooldown: 2
+  deathDelay: 3
+  showDebugGizmos: 1
+  disintegrate: {fileID: 0}
+  partsToDisintegrate: []
+  patrolPointA: {fileID: 0}
+  patrolPointB: {fileID: 0}
+  flyingMoveSpeed: 5
+  flyingRotationSpeed: 3
+  trackingDistance: 15
+  orbitDistance: 7
+  patrolReturnDistance: 20
+  orbitRadius: 7
+  orbitSpeed: 3
+  orbitClockwise: 1
+  projectilePrefab: {fileID: 9094806483858042860, guid: 8299ac2a1a40781469484e92a33a2a2c, type: 3}
+  projectileSpawnPoint: {fileID: 6205488203937882174}
+  shootingRange: 20
+  shootCooldown: 2
+  projectileSpeed: 15
+  projectileDamage: 10
+  groundPhaseHealthThreshold: 10
+  groundDropSpeed: 8
+  groundHeight: 0.5
+  showFlyingDebugGizmos: 1
+--- !u!54 &5772367095118819390
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732292901591587241}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4929131252247984768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732292901591587241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e58fe2e096744f4d887f5d416e3469b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAIController
+  usePatrol: 0
+  patrolPoints: []
+  retreatHealthPercent: 0.01
+  requireLineOfSight: 1
+  obstructionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  eyeHeight: 1.5
+  sightAngle: 360
+  showLineOfSightDebug: 1
+  memoryDuration: 3
 --- !u!1 &1824729716725565813
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +456,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4076439534762577322}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_r.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8280048182532641677}
   - component: {fileID: 9106379216390440405}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pSphere12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6179111483542783906}
   - component: {fileID: 6058206866325703715}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pSphere20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7823884297109810630}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4732363829071019505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3608704851535943910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,7 +815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1493837786705006035}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_l.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +847,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1265468906128369882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,7 +879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5772679018284296143}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,7 +912,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6934236204819988}
   - component: {fileID: 6985418327522493198}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pSphere12.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -865,7 +1028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6669077185879463972}
   - component: {fileID: 2170430618830820054}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,7 +1144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7532215312137072207}
   - component: {fileID: 1371109974342423168}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface10.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1096,7 +1259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2382369103399316973}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.006_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,7 +1291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4600403790013521330}
   - component: {fileID: 1107594410936722623}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pPlane7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1243,7 +1406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4939534643494897500}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1275,7 +1438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2452708180979952187}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_l.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1307,7 +1470,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8247531946116855841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EyeLid_Bot_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1338,7 +1501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5816095285649801480}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_l.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1369,7 +1532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8683449982246168607}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1401,7 +1564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3143571284104443476}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1433,7 +1596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2988790923764997952}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1465,7 +1628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6951873738576545888}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EyeLid_Top_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1496,7 +1659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8970019343340187421}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing_Bot_r.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1528,7 +1691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8700448108928899727}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1560,7 +1723,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6384943594557272615}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1592,7 +1755,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3864077372122845485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1624,7 +1787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4695934429845310184}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1656,7 +1819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5423009243272828874}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.006_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1687,7 +1850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 184867532727450060}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_l.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1719,7 +1882,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8589685103966946963}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1751,7 +1914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 510819583169096686}
   - component: {fileID: 3949600619690137366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pSphere12.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1866,7 +2029,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4576794446691093937}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EyeLid_Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1898,7 +2061,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2434262649955061645}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WingTop_r.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1930,7 +2093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2783443061395601662}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1968,7 +2131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9036832946547593708}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -35558,7 +35558,7 @@ MonoBehaviour:
   - bone: {fileID: 1848729045}
     radius: 0
   - bone: {fileID: 1194991307}
-    radius: 0
+    radius: 0.5
   - bone: {fileID: 0}
     radius: 0
   - bone: {fileID: 152576469}
@@ -35572,7 +35572,7 @@ MonoBehaviour:
   - bone: {fileID: 331066096}
     radius: 0
   - bone: {fileID: 329377673}
-    radius: 0
+    radius: 0.5
   - bone: {fileID: 1513252310}
     radius: 0
   capeBones:

@@ -139309,6 +139309,10 @@ PrefabInstance:
       propertyPath: respawnCooldown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: defaultRespawnPoint
+      value: 
+      objectReference: {fileID: 2144774176}
     - target: {fileID: 8237695219505609809, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -139458,6 +139462,7 @@ SceneRoots:
   - {fileID: 1157543717}
   - {fileID: 1723487260}
   - {fileID: 2144774176}
+  - {fileID: 5335280022240072529}
   - {fileID: 728920474}
   - {fileID: 138205580}
   - {fileID: 1729672090}
@@ -139496,7 +139501,6 @@ SceneRoots:
   - {fileID: 2067847957209317522}
   - {fileID: 4839307776761865700}
   - {fileID: 422835263}
-  - {fileID: 5335280022240072529}
   - {fileID: 513670510}
   - {fileID: 1355713212}
   - {fileID: 695066252}

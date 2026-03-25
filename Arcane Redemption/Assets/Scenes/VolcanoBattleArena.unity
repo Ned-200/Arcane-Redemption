@@ -949,13 +949,17 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 368234932}
+    - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: lowHealthEffects
       value: 
       objectReference: {fileID: 96791615}
     - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: defaultRespawnPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 368234932}
     - target: {fileID: 8237695219505609809, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -52820,6 +52824,7 @@ SceneRoots:
   - {fileID: 1353991161}
   - {fileID: 2081104915}
   - {fileID: 368234932}
+  - {fileID: 96791614}
   - {fileID: 28664434}
   - {fileID: 2095331242}
   - {fileID: 1551010981}
@@ -52848,7 +52853,6 @@ SceneRoots:
   - {fileID: 3009492661546043014}
   - {fileID: 1486578878}
   - {fileID: 1552671485}
-  - {fileID: 96791614}
   - {fileID: 1250695706}
   - {fileID: 1146763061}
   - {fileID: 791236693}

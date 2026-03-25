@@ -66134,13 +66134,17 @@ PrefabInstance:
       value: 4861
       objectReference: {fileID: 0}
     - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 368234932}
+    - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: lowHealthEffects
       value: 
       objectReference: {fileID: 570715504}
     - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: defaultRespawnPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 368234932}
     - target: {fileID: 8237695219505609809, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 

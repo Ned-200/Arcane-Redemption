@@ -47738,6 +47738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 586581472729798208, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1106739712975502354, guid: 6979dcc1e1d29d449864c21f2d0daac9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -200
@@ -122567,6 +122571,10 @@ PrefabInstance:
       propertyPath: m_RotationOffset.z
       value: 1.561259
       objectReference: {fileID: 0}
+    - target: {fileID: 8369151844866561918, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8866390142278909826, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -158099,7 +158107,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 0.57878953, g: 0.88540953, b: 0.89433956, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -170545,6 +170553,7 @@ MonoBehaviour:
   teleportDoor: {fileID: 1723487252}
   moveDuration: 2
   characterController: {fileID: 1453777675}
+  playerController: {fileID: 0}
   environmentDeathEffectPrefab: {fileID: 261948290644060713, guid: 5f32dbfb26a037f409a8ecbbaad87f11, type: 3}
   drownedOrBurned: 1
   checkpoint: {fileID: 767697268}

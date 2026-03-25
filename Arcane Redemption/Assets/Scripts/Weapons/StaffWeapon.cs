@@ -11,6 +11,16 @@ public class StaffWeapon : RangedWeapon
     [SerializeField] private Light staffGlow;
     [SerializeField] private Animator playerAnim;
 
+    [Header("Staff Audio")]
+    [SerializeField] private AudioClip chargingSound;
+    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip aimStartSound;
+    [SerializeField] private AudioClip aimEndSound;
+    [SerializeField] private float soundVolume = 1f;
+
+    private AudioSource oneShotAudioSource;
+    private AudioSource loopingAudioSource;
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -19,18 +29,33 @@ public class StaffWeapon : RangedWeapon
         {
             playerAnim = owner.transform.GetComponent<Animator>();
         }
+
+        // Dedicated AudioSource for one-shot sounds (fire, aim start/end)
+        oneShotAudioSource = gameObject.AddComponent<AudioSource>();
+        oneShotAudioSource.playOnAwake = false;
+        oneShotAudioSource.spatialBlend = 0f;
+        oneShotAudioSource.volume = soundVolume;
+
+        // Separate AudioSource for looping sounds (charging)
+        loopingAudioSource = gameObject.AddComponent<AudioSource>();
+        loopingAudioSource.playOnAwake = false;
+        loopingAudioSource.spatialBlend = 0f;
+        loopingAudioSource.volume = soundVolume;
+        loopingAudioSource.loop = true;
+
+        Debug.Log($"[StaffWeapon] Audio initialized on {gameObject.name} | fireSound={fireSound != null} | chargingSound={chargingSound != null} | aimStartSound={aimStartSound != null} | aimEndSound={aimEndSound != null}");
     }
 
     protected override void PlayAttackAnimation()
     {
-
         base.PlayAttackAnimation();
         
         if (playerAnim != null)
         {
             playerAnim.Play("SpellCast" + comboStack);
             Debug.Log("Playing animation " + "SpellCast" + comboStack);
-        } else
+        } 
+        else
         {
             Debug.LogError("Staff could not find Player Animator");
         }
@@ -40,9 +65,9 @@ public class StaffWeapon : RangedWeapon
     {
         base.OnProjectileFired(projectile);
 
-        Debug.Log($"Staff fired projectile with {damage} damage!");
+        Debug.Log($"[StaffWeapon] Projectile fired!");
+        PlaySound(fireSound);
 
-        // Flash the staff glow
         if (staffGlow != null)
         {
             StopAllCoroutines();
@@ -59,14 +84,61 @@ public class StaffWeapon : RangedWeapon
             if (aiming)
             {
                 chargingEffect.Play();
+                PlaySound(aimStartSound);
+                
+                if (chargingSound != null)
+                {
+                    PlayLoopingSound(chargingSound);
+                }
             }
             else
             {
                 chargingEffect.Stop();
+                PlaySound(aimEndSound);
+                StopLoopingSound();
             }
         }
 
         Debug.Log($"Staff aim mode: {(aiming ? "ENABLED" : "DISABLED")}");
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip == null)
+        {
+            Debug.LogWarning("[StaffWeapon] Tried to play null audio clip!");
+            return;
+        }
+
+        if (oneShotAudioSource == null)
+        {
+            Debug.LogError("[StaffWeapon] OneShotAudioSource is null!");
+            return;
+        }
+
+        Debug.Log($"[StaffWeapon] Playing sound: {clip.name} at volume {soundVolume}");
+        oneShotAudioSource.PlayOneShot(clip, soundVolume);
+    }
+
+    private void PlayLoopingSound(AudioClip clip)
+    {
+        if (clip != null && loopingAudioSource != null)
+        {
+            loopingAudioSource.clip = clip;
+            loopingAudioSource.volume = soundVolume;
+            loopingAudioSource.Play();
+            
+            Debug.Log($"[StaffWeapon] Playing looping sound: {clip.name}");
+        }
+    }
+
+    private void StopLoopingSound()
+    {
+        if (loopingAudioSource != null && loopingAudioSource.isPlaying)
+        {
+            Debug.Log("[StaffWeapon] Stopping looping sound");
+            loopingAudioSource.Stop();
+        }
     }
 
     private System.Collections.IEnumerator FlashGlow()

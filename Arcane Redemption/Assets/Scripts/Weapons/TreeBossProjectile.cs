@@ -315,4 +315,36 @@ public class TreeBossProjectile : ProjectileBase
             Gizmos.DrawWireSphere(transform.position, 1f);
         }
     }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (hasHit) return;
+
+        // Don't hit the boss that fired this projectile
+        BaseCharacter hitCharacter = other.GetComponent<BaseCharacter>();
+        if (hitCharacter == owner)
+        {
+            return;
+        }
+
+        // Damage any BaseCharacter (player) regardless of layer
+        if (hitCharacter != null)
+        {
+            hasHit = true;
+            hitCharacter.TakeDamage(damage);
+            OnTargetHit(hitCharacter);
+
+            SpawnImpactEffect();
+            PlayImpactSound();
+
+            if (destroyOnImpact)
+            {
+                Destroy(gameObject);
+            }
+            return;
+        }
+
+        // Fall back to base for environment hits (rocks, walls, etc.)
+        base.OnTriggerEnter(other);
+    }
 }

@@ -1106,7 +1106,7 @@ GameObject:
   - component: {fileID: 7690271413594085346}
   - component: {fileID: 4022859813262624560}
   - component: {fileID: 434332866832427669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1191,6 +1191,7 @@ MonoBehaviour:
     m_Bits: 8
   moveSpeed: 3
   rotationSpeed: 5
+  element: Fire
   attackDamage: 10
   attackCooldown: 2
   deathDelay: 3

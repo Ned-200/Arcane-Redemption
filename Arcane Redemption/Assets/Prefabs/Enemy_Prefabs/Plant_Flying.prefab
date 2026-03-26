@@ -1847,6 +1847,7 @@ MonoBehaviour:
     m_Bits: 8
   moveSpeed: 3
   rotationSpeed: 5
+  element: Plant
   attackDamage: 5
   attackCooldown: 4
   deathDelay: 3

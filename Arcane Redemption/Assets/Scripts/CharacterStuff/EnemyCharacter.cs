@@ -22,6 +22,7 @@ public class EnemyCharacter : BaseCharacter
     [SerializeField] private float rotationSpeed = 5f;
 
     [Header("Combat")]
+    public string element;
     [SerializeField] private float attackDamage = 5f;
     [SerializeField] private float attackCooldown = 2f;
 

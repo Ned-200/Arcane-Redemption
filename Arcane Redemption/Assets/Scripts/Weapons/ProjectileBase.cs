@@ -87,9 +87,30 @@ public class ProjectileBase : MonoBehaviour
         BaseCharacter target = other.GetComponent<BaseCharacter>();
         if (target != null)
         {
-            target.TakeDamage(damage);
-            OnTargetHit(target);
-            Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+            EnemyCharacter enemy = other.GetComponent<EnemyCharacter>(); 
+            if (enemy != null) { // if target character is an enemycharacter
+                
+                if (enemy.element != null && enemy.element != "") { // If enemy has an assigned element
+                    // For each possible element, check if projectile overpowers enemy element
+                    if ((enemy.element == "Fire" && element == "Water") || (enemy.element == "Water" && element == "Plant") || enemy.element == "Plant" && element == "Fire") 
+                    {
+                        target.TakeDamage(damage);
+                        OnTargetHit(target);
+                        Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+                    } else
+                    {
+                        Debug.Log($"[ProjectileBase] Hit {target.name}, but incorrect element matchup!");
+                    }
+                } else { // if not enemy element is not assigned, deal damage normally
+                    target.TakeDamage(damage);
+                    OnTargetHit(target);
+                    Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+                }
+            } else { // if not an enemy character, also deal damage normally
+                target.TakeDamage(damage);
+                OnTargetHit(target);
+                Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+            }
         }
 
         // If projectile was shot by a player, check for environmental triggers

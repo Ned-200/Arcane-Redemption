@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5493549780269188811
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
-  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestWaterWhirlpool
-  m_Shader: {fileID: -6465566751694194690, guid: ac313b140fef65c4dadf3c39bb176ff6, type: 3}
+  m_Name: Water_Whirlpool
+  m_Shader: {fileID: -6465566751694194690, guid: e556a769abc0ada42b5ea70684961ba6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,20 +24,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _SampleTexture2D_6a81df4d4d60478aa6db930486ae2240_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: cf1fbcf6c57dc3a48ab78d7402bb4aa9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_7f871bbda0e14e11a701aed06396f4ee_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: cf1fbcf6c57dc3a48ab78d7402bb4aa9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_e31ba62eb63048018c9dd85ec64cb9d2_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: cf1fbcf6c57dc3a48ab78d7402bb4aa9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_f2415aec109e4f04b62c040f116e7291_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: cf1fbcf6c57dc3a48ab78d7402bb4aa9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -67,22 +46,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DeepWater: 0
     - _Drop: 300
-    - _FoamAmount: 0
-    - _MaxHeight: 0
+    - _FoamAmount: 29.1
+    - _MaxHeight: -1.5
     - _MinHeight: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ShallowWater: 0
     - _WaterDepth: 0
-    - _WaterDepth_1: 50
+    - _WaterDepth_1: -8
     m_Colors:
-    - _Color: {r: 0.4784314, g: 0.6313726, b: 0.8156863, a: 0.4823529}
     - _DeepColour: {r: 0, g: 0.227451, b: 0.4470589, a: 0.9333333}
-    - _DeepWater_1: {r: 0, g: 0.227451, b: 0.4470589, a: 0.9333333}
-    - _FoamColour: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColour: {r: 128, g: 3.409114, b: 0, a: 1}
     - _ShallowColour: {r: 0.4784314, g: 0.6313726, b: 0.8156863, a: 0.4823529}
-    - _ShallowWater_1: {r: 0.4784314, g: 0.6313726, b: 0.8156863, a: 0.4823529}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &2801055936431801430
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10

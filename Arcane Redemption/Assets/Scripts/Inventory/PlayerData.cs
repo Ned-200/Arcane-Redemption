@@ -159,7 +159,7 @@ public class PlayerData : MonoBehaviour
 
 
             // Make tree calm after boss fight (by hiding sad tree)
-            if (fireGemObtained) { // to ensure not before
+            if (plantBossDefeated) { // to ensure not before
                 GameObject SadTree = GameObject.Find("SadTree");
                 if (SadTree != null) 
                 {
@@ -169,7 +169,7 @@ public class PlayerData : MonoBehaviour
                     Debug.LogError("PlayerData can't find SadTree!");
                 }
 
-                // Also swap terrain if has fire gem and not coming from fire dungeon
+                // Also swap terrain if has plant boss was defeated and not coming from fire dungeon
                 GameObject TerrainSwap = GameObject.Find("TerrainSwap");
                 if (TerrainSwap != null) 
                 {

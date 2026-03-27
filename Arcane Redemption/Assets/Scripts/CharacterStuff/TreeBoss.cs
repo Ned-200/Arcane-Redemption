@@ -80,6 +80,7 @@ public class TreeBoss : EnemyCharacter
     [SerializeField] private TerrainSwap terrainSwap;
 
     [Header("NPCs and Other")]
+    private PlayerData playerData;
     [SerializeField] private GameObject PlantGhostPrefab;
     [SerializeField] private GameObject MayorNPC;
     [SerializeField] private GameObject OpenDoors;
@@ -162,6 +163,16 @@ public class TreeBoss : EnemyCharacter
     {
         base.Awake();
         InitializeBoss();
+    }
+
+    private void Start()
+    {
+        // Fetch Player Data (This must be done at start, not awake.)
+        playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+        if (playerData == null)
+        {
+            Debug.LogError("TreeBoss cannot find PlayerData!");
+        }
     }
 
     protected override void Update()
@@ -1280,6 +1291,16 @@ public class TreeBoss : EnemyCharacter
         else
         {
             Debug.LogError("TreeBoss not assigned Vine Walls! Check Fields!");
+        }
+
+        if (bossAnimator != null) {
+            bossAnimator.Play("Death");
+        }
+
+        // Update player data that plant boss was defeated
+        if (playerData != null)
+        {
+            playerData.plantBossDefeated = true;
         }
 
         disintegrate.TriggerDisintegration();

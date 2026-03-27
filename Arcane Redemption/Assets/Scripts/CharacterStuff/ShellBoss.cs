@@ -68,6 +68,7 @@ public class ShellBoss : EnemyCharacter
     [SerializeField] private float edgeAvoidanceStrength = 3f;
 
     [Header("Other References")]
+    private PlayerData playerData;
     private bool ghostSpawned;
     [SerializeField] private GameObject GhostNPCPrefab;
 
@@ -121,6 +122,16 @@ public class ShellBoss : EnemyCharacter
     {
         base.Awake();
         InitializeBoss();
+    }
+
+    private void Start()
+    {
+        // Fetch Player Data (This must be done at start, not awake.)
+        playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+        if (playerData == null)
+        {
+            Debug.LogError("ShellBoss cannot find PlayerData!");
+        }
     }
 
     protected override void Update()
@@ -902,6 +913,12 @@ public class ShellBoss : EnemyCharacter
 
         if (bossAnimator != null) {
             bossAnimator.Play("Death");
+        }
+
+        // Update player data that plant boss was defeated
+        if (playerData != null)
+        {
+            playerData.fireBossDefeated = true;
         }
 
         StopAllCoroutines();

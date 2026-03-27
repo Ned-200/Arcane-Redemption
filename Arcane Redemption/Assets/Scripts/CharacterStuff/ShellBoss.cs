@@ -26,23 +26,21 @@ public class ShellBoss : EnemyCharacter
     [SerializeField] private float ringAttackOnBackupChance = 0.5f;
 
     [Header("Ring Attack Settings")]
-    [SerializeField] private float ringAttackRadius = 4f;
-    [SerializeField] private float ringAttackDamage = 30f;
-    [SerializeField] private float ringAttackTriggerRange = 10f;
+    [SerializeField] private GameObject fireRingAttackPrefab;
     [SerializeField] private int minComboAttacks = 1;
     [SerializeField] private int maxComboAttacks = 3;
 
     [Header("Phase 1 Attack Cooldowns")]
-    [SerializeField] private float phase1ComboAttackCooldownMin = 1f;
-    [SerializeField] private float phase1ComboAttackCooldownMax = 3f;
-    [SerializeField] private float phase1ComboCooldownMin = 1f;
-    [SerializeField] private float phase1ComboCooldownMax = 3f;
+    [SerializeField] private float phase1ComboAttackCooldownMin = 10f;
+    [SerializeField] private float phase1ComboAttackCooldownMax = 15f;
+    [SerializeField] private float phase1ComboCooldownMin = 10f;
+    [SerializeField] private float phase1ComboCooldownMax = 15f;
 
     [Header("Phase 2 Attack Cooldowns")]
-    [SerializeField] private float phase2ComboAttackCooldownMin = 0.5f;
-    [SerializeField] private float phase2ComboAttackCooldownMax = 1.5f;
-    [SerializeField] private float phase2ComboCooldownMin = 0.5f;
-    [SerializeField] private float phase2ComboCooldownMax = 1.5f;
+    [SerializeField] private float phase2ComboAttackCooldownMin = 5f;
+    [SerializeField] private float phase2ComboAttackCooldownMax = 10f;
+    [SerializeField] private float phase2ComboCooldownMin = 5f;
+    [SerializeField] private float phase2ComboCooldownMax = 10f;
 
     [Header("Projectile Volley Attack (Phase 2)")]
     [SerializeField] private GameObject projectilePrefab;
@@ -71,6 +69,7 @@ public class ShellBoss : EnemyCharacter
     private PlayerData playerData;
     private bool ghostSpawned;
     [SerializeField] private GameObject GhostNPCPrefab;
+    [SerializeField] private BossRoomManager bossRoomManager;
 
     #endregion
 
@@ -131,6 +130,12 @@ public class ShellBoss : EnemyCharacter
         if (playerData == null)
         {
             Debug.LogError("ShellBoss cannot find PlayerData!");
+        }
+
+        // Check Fire Ring Prefab
+        if (fireRingAttackPrefab == null)
+        {
+            Debug.LogError("ShellBoss not assigned fire ring attack prefab!");
         }
     }
 
@@ -416,8 +421,7 @@ public class ShellBoss : EnemyCharacter
         {
             if (TargetPlayer != null && !isPerformingCombo)
             {
-                float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
-                TryPerformRingAttack(distanceToPlayer);
+                TryPerformRingAttack();
             }
 
             float distance = Vector3.Distance(transform.position, targetPosition);
@@ -462,8 +466,7 @@ public class ShellBoss : EnemyCharacter
     {
         if (!isPerformingCombo && TargetPlayer != null)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, TargetPlayer.position);
-            TryPerformRingAttack(distanceToPlayer);
+            TryPerformRingAttack();
         }
 
         switch (currentBossState)
@@ -523,7 +526,7 @@ public class ShellBoss : EnemyCharacter
             isBackingUp = false;
         }
 
-        TryPerformRingAttack(distanceToPlayer);
+        TryPerformRingAttack();
         TryPerformProjectileVolley();
     }
 
@@ -571,10 +574,11 @@ public class ShellBoss : EnemyCharacter
 
     #region Ring Attack System
 
-    private void TryPerformRingAttack(float distanceToPlayer)
+    private void TryPerformRingAttack()
     {
         if (isPerformingCombo) return;
-        if (distanceToPlayer > ringAttackTriggerRange) return;
+        
+        if (!bossRoomManager.cutsceneEnded) return;
 
         float comboCooldown = GetComboCooldown();
 
@@ -621,30 +625,11 @@ public class ShellBoss : EnemyCharacter
     {
         if (bossAnimator != null)
         {
-            bossAnimator.SetTrigger("RingAttack");
+            bossAnimator.Play("Attack");
         }
 
-        DamagePlayersInRingRadius();
-    }
-
-    private void DamagePlayersInRingRadius()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, ringAttackRadius);
-
-        foreach (Collider hit in hits)
-        {
-            PlayerCharacter player = hit.GetComponent<PlayerCharacter>();
-            if (player != null)
-            {
-                BaseCharacter baseChar = player.GetComponent<BaseCharacter>();
-                if (baseChar != null)
-                {
-                    float finalDamage = ringAttackDamage * CurrentDamageMultiplier;
-                    baseChar.TakeDamage(finalDamage);
-                    Debug.Log($"[{gameObject.name}] Ring Attack hit {player.name} for {finalDamage} damage!");
-                }
-            }
-        }
+        // Create ring attack
+        Instantiate(fireRingAttackPrefab, transform.position, fireRingAttackPrefab.transform.rotation);
     }
 
     private float GetComboAttackCooldown()
@@ -931,12 +916,6 @@ public class ShellBoss : EnemyCharacter
     private void OnDrawGizmosSelected()
     {
         if (!showDebugGizmos) return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, ringAttackRadius);
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, ringAttackTriggerRange);
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, phase2KeepAwayDistance);

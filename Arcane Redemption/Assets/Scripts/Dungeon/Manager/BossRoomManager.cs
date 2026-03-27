@@ -11,7 +11,8 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private GameObject BossCamera;
     [SerializeField] private Animator BossAnim;
     [SerializeField] private float moveYPosition = 75;
-    private bool cutscenePlayed;
+    private bool cutscenePlaying;
+    public bool cutsceneEnded;
     private Animator playerAnim;
     [SerializeField] private TextMeshProUGUI BossNameDisplay; // change within scene
     [SerializeField] private TextMeshProUGUI BossDescriptionDisplay; // change within scene
@@ -43,9 +44,9 @@ public class BossRoomManager : DungeonManager
 
     void Update()
     {
-        if (!cutscenePlayed && cutsceneTrigger.checkpointSet)
+        if (!cutscenePlaying && cutsceneTrigger.checkpointSet)
         {
-            cutscenePlayed = true;
+            cutscenePlaying = true;
             CinematicCamera.SetActive(true);
             playerController.canMove = false; // stop player movement
             playerAnim.SetBool("isWalking", false);
@@ -97,8 +98,9 @@ public class BossRoomManager : DungeonManager
     {
         BossCamera.SetActive(false);
         playerController.canMove = true; // re-enable player movement
-         StartCoroutine(FadeText(BossNameDisplay, 0, 1));
+        StartCoroutine(FadeText(BossNameDisplay, 0, 1));
         StartCoroutine(FadeText(BossDescriptionDisplay, 0, 0.75f));
+        cutsceneEnded = true;
     }
 
     private IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha, float duration)

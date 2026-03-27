@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileBase
   damage: 10
-  speed: 20
+  speed: 30
   lifetime: 5
   destroyOnImpact: 1
   targetLayers:

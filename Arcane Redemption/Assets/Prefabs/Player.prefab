@@ -37557,7 +37557,7 @@ MonoBehaviour:
   maxStamina: 100
   maxMana: 100
   staminaRegenRate: 20
-  manaRegenRate: 1
+  manaRegenRate: 2
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 39723029630920527}
@@ -37598,8 +37598,8 @@ MonoBehaviour:
   walkSpeed: 6
   sprintSpeed: 10
   sprintStaminaCost: 10
-  jumpHeight: 2
-  gravity: -9.81
+  jumpHeight: 2.5
+  gravity: -20
   jumpStaminaCost: 15
   dashDistance: 5
   dashDuration: 0.3

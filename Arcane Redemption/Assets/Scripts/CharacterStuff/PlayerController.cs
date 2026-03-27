@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     private BaseCharacter baseCharacter;
 
     // Movement state
-    private Vector3 velocity;
+    public Vector3 velocity;
     private bool isGrounded;
     private bool wasGroundedLastFrame;
     private bool isDashing;

@@ -2755,6 +2755,7 @@ MonoBehaviour:
     m_Bits: 8
   moveSpeed: 7
   rotationSpeed: 5
+  element: Plant
   attackDamage: 5
   attackCooldown: 2
   deathDelay: 2
@@ -2764,11 +2765,11 @@ MonoBehaviour:
   bossDetectionRadius: 30
   spawnDetectionDelay: 4
   advanceStopDistance: 8
-  advanceSpeed: 2
+  advanceSpeed: 5
   meleeAttackRange: 6
   projectileMinRange: 28
   projectileMaxRange: 30
-  vineRingDamage: 30
+  vineRingDamage: 15
   projectileDamage: 15
   meleeAttackCooldown: 1.5
   rangedAttackCooldown: 3
@@ -2789,7 +2790,7 @@ MonoBehaviour:
   retreatDistance: 10
   retreatSpeed: 4
   enrageHealthThreshold: 0.2
-  enrageChargeSpeed: 6
+  enrageChargeSpeed: 10
   enragedMeleeCooldown: 0.8
   enragedDamageMultiplier: 1.3
   vineRingPrefab: {fileID: 6496473789516645908, guid: 97c9d95b1a9cbe94a813314b1a23e077, type: 3}

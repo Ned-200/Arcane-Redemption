@@ -1189,7 +1189,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  moveSpeed: 3
+  moveSpeed: 5
   rotationSpeed: 5
   element: Fire
   attackDamage: 10

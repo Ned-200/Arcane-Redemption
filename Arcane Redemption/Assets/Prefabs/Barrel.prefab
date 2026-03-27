@@ -185,6 +185,9 @@ MonoBehaviour:
   explosionRadius: 1
   upwardModifier: 0.3
   maxDepenetrationVelocity: 1.3
+  healthChanceWeight: 2
+  manaChanceWeight: 1
+  potionChance: 20
 --- !u!136 &3297240282578224974
 CapsuleCollider:
   m_ObjectHideFlags: 0

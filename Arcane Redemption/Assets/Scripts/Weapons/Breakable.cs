@@ -34,7 +34,10 @@ public class Breakable : MonoBehaviour
     [Tooltip("Limits physics depenetration 'pop' if pieces start overlapping.")]
     [SerializeField] private float maxDepenetrationVelocity = 0.5f;
 
-    private int potionChance;
+    private int totalWeight;
+    [SerializeField]private int healthChanceWeight;
+    [SerializeField]private int manaChanceWeight;
+    [SerializeField] private int potionChance;
     private bool broken = false;
     private Collider[] parentColliders;
 
@@ -122,9 +125,10 @@ public class Breakable : MonoBehaviour
         StartCoroutine(EnableCollidersAndOptionalExplosionNextFixed());
 
         // Drops
-        potionChance = Random.Range(0, 15); // 0, 1 and 2 = drop, (3/15) aka (1/5) potion drop chance
-        if (potionChance > 3)
+        if (potionChance > Random.Range(0, 100)+1) // will drop potion if percentage chance is less than generated percentage
+        {
             Invoke(nameof(SpawnPotion), 0.05f);
+        }
 
         // Destroy the parent (colliders already disabled)
         Destroy(gameObject, despawnDelay);
@@ -156,10 +160,12 @@ public class Breakable : MonoBehaviour
     private void SpawnPotion()
     {
         Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
+        totalWeight = healthChanceWeight + manaChanceWeight;
 
-        if (potionChance == 0 || potionChance == 1 && healthPotionPrefab != null) // 1 or 2 (of 0-2) is health
+        if (healthChanceWeight > Random.Range(0, totalWeight)+1) { // is health potion 
             Instantiate(healthPotionPrefab, spawnPos, healthPotionPrefab.transform.rotation);
-        else if (potionChance == 2 && manaPotionPrefab != null)
-            Instantiate(manaPotionPrefab, spawnPos, manaPotionPrefab.transform.rotation); // 0 (of 0-2) is mana
+        } else {
+            Instantiate(manaPotionPrefab, spawnPos, healthPotionPrefab.transform.rotation);
+        }
     }
 }

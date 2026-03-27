@@ -14,6 +14,8 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] protected float moveDuration = 5.0f;
     
     [Header("Player/EnvironmentDeath")]
+    protected int defaultGravity = -20;
+    protected int drowningGravity = -15;
     [SerializeField] protected CharacterController characterController;    
     [SerializeField] protected PlayerController playerController;
     [SerializeField] protected GameObject environmentDeathEffectPrefab;
@@ -72,7 +74,8 @@ public class DungeonManager : MonoBehaviour
             {
                 environmentDeathEffect.transform.SetParent(other.transform);
                 playerController.playerAnim.SetBool("Drowned", true);
-                playerController.gravity = 7.5f;
+                playerController.velocity.y = -5;
+                playerController.gravity = drowningGravity;
             } else // if false, burned
             {
                 playerController.canMove = false;
@@ -90,7 +93,7 @@ public class DungeonManager : MonoBehaviour
 
         if (drownedOrBurned) // if true, drowned
         {
-            playerController.gravity = -9.81f;
+            playerController.gravity = defaultGravity;
             playerController.playerAnim.SetBool("Drowned", false);
         } else // if false, burned
         {

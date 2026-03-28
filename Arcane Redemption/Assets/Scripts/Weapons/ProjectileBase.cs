@@ -13,7 +13,7 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected float lifetime = 5f;
     [SerializeField] protected bool destroyOnImpact = true;
     [SerializeField] protected LayerMask targetLayers;
-    [SerializeField] protected string element;
+    [SerializeField] public string element;
     [SerializeField] protected bool toughVinesBurnable = false; // CHANGE THIS TO TRUE FOR TESTING ONLY
 
     [Header("Visual Effects")]
@@ -159,7 +159,7 @@ public class ProjectileBase : MonoBehaviour
     /// <summary>
     /// Checks if this projectile belongs to a player character.
     /// </summary>
-    protected bool IsPlayerProjectile()
+    public bool IsPlayerProjectile()
     {
         if (owner == null)
         {

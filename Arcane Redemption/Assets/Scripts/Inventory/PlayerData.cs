@@ -18,6 +18,11 @@ public class PlayerData : MonoBehaviour
     private GameObject Player;
     private CharacterController characterController;
 
+    // Tower Stuff
+    public bool vineWallBurned;
+    public bool fireWallDoused;
+    public bool plantBridgeGrown;
+
     public string lastScene = "No Scene";
 
     // called first
@@ -156,7 +161,71 @@ public class PlayerData : MonoBehaviour
         } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
             // MAKE NECESSARY CHANGES FOR ALL OTHER SCENES
+            if (lastScene == "WaterDungeonGraybox") { // If coming from Water Dungeon
 
+                // Set player spawn position
+                waterDungeonSpawn = GameObject.Find("WaterDungeonSpawn").transform;
+                if (waterDungeonSpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = waterDungeonSpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find waterDungeonSpawn!");
+                }
+            }
+            
+            if (lastScene == "VolcanoBattleArena") { // If coming from Volcano Boss Arena
+
+                // Set player spawn position
+                volcanoSpawn = GameObject.Find("VolcanoSpawn").transform;
+                if (volcanoSpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = volcanoSpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find VolcanoSpawn!");
+                }
+            }
+
+            // ALWAYS DO IF IN MAIN SCENE, REGARDLESS OF LAST SCENE
+            if (plantBridgeGrown) {
+                GameObject towerPlantBridgeCastPoint = GameObject.Find("TowerPlantBridgeCastPoint");
+                if (towerPlantBridgeCastPoint != null) 
+                {
+                    PlantBridge plantBridge = towerPlantBridgeCastPoint.GetComponent<PlantBridge>();
+                    if (plantBridge == null)
+                    {
+                        Debug.LogError($"{towerPlantBridgeCastPoint.gameObject.name}: PlantBridge missing PlantBridge component!");
+                    }
+
+                    plantBridge.GrowBridge();
+                } else
+                {
+                    Debug.LogError("PlayerData can't find towerPlantBridgeCastPoint!");
+                }
+            }
+            if (vineWallBurned) {
+                GameObject towerVineWall = GameObject.Find("TowerVineWall");
+                if (towerVineWall != null) 
+                {
+                    Destroy(towerVineWall);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find towerVineWall!");
+                }
+            }
+            if (fireWallDoused) {
+                GameObject towerFlameWall = GameObject.Find("TowerFlameWall");
+                if (towerFlameWall != null) 
+                {
+                    Destroy(towerFlameWall);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find towerFlameWall!");
+                }
+            }
 
             // Make tree calm after boss fight (by hiding sad tree)
             if (plantBossDefeated) { // to ensure not before
@@ -189,34 +258,6 @@ public class PlayerData : MonoBehaviour
                 } else
                 {
                     Debug.LogError("PlayerData can't find CalmTree!");
-                }
-            }
-
-            if (lastScene == "WaterDungeonGraybox") { // If coming from Water Dungeon
-
-                // Set player spawn position
-                waterDungeonSpawn = GameObject.Find("WaterDungeonSpawn").transform;
-                if (waterDungeonSpawn != null) {
-                    characterController.enabled = false;
-                    characterController.transform.position = waterDungeonSpawn.position;
-                    characterController.enabled = true;
-                } else
-                {
-                    Debug.LogError("PlayerData can't find waterDungeonSpawn!");
-                }
-            }
-            
-            if (lastScene == "VolcanoBattleArena") { // If coming from Volcano Boss Arena
-
-                // Set player spawn position
-                volcanoSpawn = GameObject.Find("VolcanoSpawn").transform;
-                if (volcanoSpawn != null) {
-                    characterController.enabled = false;
-                    characterController.transform.position = volcanoSpawn.position;
-                    characterController.enabled = true;
-                } else
-                {
-                    Debug.LogError("PlayerData can't find VolcanoSpawn!");
                 }
             }
 

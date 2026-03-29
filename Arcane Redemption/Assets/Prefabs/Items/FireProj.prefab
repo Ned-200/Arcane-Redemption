@@ -167,7 +167,7 @@ MonoBehaviour:
   toughVinesBurnable: 0
   hitEffect: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   trail: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: 683c0b8de49178d438f46f3c1cc82694, type: 3}
 --- !u!114 &-1999294816065245334
 MonoBehaviour:
   m_ObjectHideFlags: 0

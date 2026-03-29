@@ -45042,6 +45042,7 @@ MonoBehaviour:
   gemElement: 3
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   promptPosition: {fileID: 59334795}
+  pickUpSound: {fileID: 8300000, guid: 80acc2640c4c5ef4998a73b855b9b3a2, type: 3}
   gemMesh: {fileID: 693012489}
   gemEffect: {fileID: 8801888776370288212}
   gemDoor: {fileID: 1312187287}
@@ -119110,7 +119111,9 @@ MonoBehaviour:
   teleportDoor: {fileID: 0}
   moveDuration: 5
   characterController: {fileID: 713442580}
+  playerController: {fileID: 0}
   environmentDeathEffectPrefab: {fileID: 261948290644060713, guid: 5f32dbfb26a037f409a8ecbbaad87f11, type: 3}
+  environmentDeathSound: {fileID: 8300000, guid: 86dea0a1357ad6f4e9d133c64afe9fa2, type: 3}
   drownedOrBurned: 1
   checkpoint: {fileID: 84065710}
   finalPlantBridge: {fileID: 1460720670}

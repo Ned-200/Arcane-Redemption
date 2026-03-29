@@ -1183,6 +1183,11 @@ MonoBehaviour:
   weaponSlotTransform: {fileID: 0}
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
+  damagedSounds:
+  - {fileID: 8300000, guid: b27220921410c4a488a2eac435a4945c, type: 3}
+  - {fileID: 8300000, guid: 6d90f749e75486044804dd88964694c7, type: 3}
+  - {fileID: 8300000, guid: 953eab2bf2f879c4b883b2ae35d17d3c, type: 3}
+  deathSound: {fileID: 8300000, guid: b27220921410c4a488a2eac435a4945c, type: 3}
   detectionRadius: 20
   combatRadius: 3
   attackRange: 2.04

@@ -5023,7 +5023,7 @@ MonoBehaviour:
   toughVinesBurnable: 0
   hitEffect: {fileID: 0}
   trail: {fileID: 0}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: ca976f398c076274a95896409c145a23, type: 3}
   trackingDuration: 1.25
   trackingStrength: 3
   maxTurnRate: 360

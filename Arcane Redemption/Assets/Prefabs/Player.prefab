@@ -37613,6 +37613,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   enableDebugLogs: 1
   showGroundCheckGizmo: 1
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!136 &5817230402008472814
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -37666,6 +37667,9 @@ MonoBehaviour:
   waterFirePoint: {fileID: 2100000, guid: e5d372b80b03e9c4488024b02be2f693, type: 2}
   plantOrb: {fileID: 2100000, guid: 28c2ee56bcc5be048be10429f975a6a7, type: 2}
   plantFirePoint: {fileID: 2100000, guid: 3baf4bda5e349c64998a45d9f7d1cc16, type: 2}
+  FireElementSwapSound: {fileID: 8300000, guid: fa0643908b1332b468c8c4ec79d123f7, type: 3}
+  WaterElementSwapSound: {fileID: 8300000, guid: 86dea0a1357ad6f4e9d133c64afe9fa2, type: 3}
+  PlantElementSwapSound: {fileID: 0}
   switchWeaponKey: 113
 --- !u!114 &6466121563640481464
 MonoBehaviour:

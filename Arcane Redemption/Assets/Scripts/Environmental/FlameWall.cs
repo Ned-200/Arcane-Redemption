@@ -9,6 +9,7 @@ public class FlameWall : MonoBehaviour
     [SerializeField] private GameObject burningPrefab;
     [SerializeField] private float damage = 10.0f;
     [SerializeField] private float cooldownDuration = 2.0f;
+    [SerializeField] private AudioClip burnSound;
     private bool damageCooldown;
 
     void Update()
@@ -22,6 +23,12 @@ public class FlameWall : MonoBehaviour
             // Run player animations
             playerController.playerAnim.Play("HurtFire", 1); 
             playerController.playerAnim.Play("HurtFire", 2); 
+
+            // Play burning sound
+            if (burnSound != null)
+            {
+                AudioSource.PlayClipAtPoint(burnSound, transform.position);
+            }
 
             // Spawn burning effect
             if (burningPrefab != null)

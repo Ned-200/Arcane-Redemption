@@ -13,6 +13,7 @@ public class ElementalGem : MonoBehaviour
     private GameObject interactPrompt;
     private bool playerInRange = false;
     private PlayerData playerData;
+    [SerializeField] protected AudioClip pickUpSound;
 
     [Header("Gem Rendering")]
     [SerializeField] private GameObject gemMesh;
@@ -76,6 +77,10 @@ public class ElementalGem : MonoBehaviour
                 Debug.LogError("ElementalGem: Gem element int not recognized!");
             }
 
+            if (pickUpSound != null)
+            {
+                AudioSource.PlayClipAtPoint(pickUpSound, transform.position);
+            }
 
             if (gemElement != 3) {
                 // Start the tweening coroutine

@@ -11,6 +11,10 @@ public class EnemyCharacter : BaseCharacter
     [Header("Animation")]
     private Animator enemyAnim;
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip[] damagedSounds;
+    [SerializeField] private AudioClip deathSound;
+
     [Header("AI Settings")]
     [SerializeField] private float detectionRadius = 15f;
     [SerializeField] private float combatRadius = 3f;
@@ -279,15 +283,29 @@ public class EnemyCharacter : BaseCharacter
         Transform detail1 = transform.Find("Detail1");
         if (detail1 != null && HealthPercent <= 0.9f)
         {
+            if (damagedSounds.Length > 0)
+            {
+                AudioSource.PlayClipAtPoint(damagedSounds[0], transform.position);
+            }
+
             Disintegrate detailDisintegrate = detail1.GetComponent<Disintegrate>();
             if (detailDisintegrate != null)
                 detailDisintegrate.TriggerDisintegration();
         }
 
+
         Transform detail2 = transform.Find("Detail2");
         if (detail2 != null && HealthPercent <= 0.5f)
         {
-             Disintegrate detailDisintegrate = detail2.GetComponent<Disintegrate>();
+            if (damagedSounds.Length > 1)
+            {
+                AudioSource.PlayClipAtPoint(damagedSounds[1], transform.position);
+            } else
+            {
+                AudioSource.PlayClipAtPoint(damagedSounds[0], transform.position);
+            }
+
+            Disintegrate detailDisintegrate = detail2.GetComponent<Disintegrate>();
             if (detailDisintegrate != null)
                 detailDisintegrate.TriggerDisintegration();
         }
@@ -295,7 +313,15 @@ public class EnemyCharacter : BaseCharacter
         Transform detail3 = transform.Find("Detail3");
         if (detail3 != null && HealthPercent <= 0.3f)
         {
-             Disintegrate detailDisintegrate = detail3.GetComponent<Disintegrate>();
+            if (damagedSounds.Length > 2)
+            {
+                AudioSource.PlayClipAtPoint(damagedSounds[2], transform.position);
+            } else
+            {
+                AudioSource.PlayClipAtPoint(damagedSounds[0], transform.position);
+            }
+
+            Disintegrate detailDisintegrate = detail3.GetComponent<Disintegrate>();
             if (detailDisintegrate != null)
                 detailDisintegrate.TriggerDisintegration();
         }
@@ -499,6 +525,11 @@ public class EnemyCharacter : BaseCharacter
             {
                 disintegratePart.TriggerDisintegration();
             }
+        }
+
+        if (deathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
         }
 
         Debug.Log($"[{gameObject.name}] Animator state: Animator={(enemyAnim != null)}, Controller={(enemyAnim?.runtimeAnimatorController != null)}, HasDeathState={HasAnimationState("Death")}");

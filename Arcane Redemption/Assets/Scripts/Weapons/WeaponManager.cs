@@ -33,6 +33,11 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Material plantOrb;
     [SerializeField] private Material plantFirePoint;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip FireElementSwapSound;
+    [SerializeField] private AudioClip WaterElementSwapSound;
+    [SerializeField] private AudioClip PlantElementSwapSound;
+
 
 
     [Header("Input")]
@@ -264,6 +269,12 @@ public class WeaponManager : MonoBehaviour
                 rend.material = fireFirePoint;
                 GameObject swapEffect = Instantiate(fireSwapEffectPrefab, Orb.transform.position, fireSwapEffectPrefab.transform.rotation);
                 swapEffect.transform.SetParent(Orb.transform);
+
+                if (FireElementSwapSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(FireElementSwapSound, Orb.transform.position);
+                }
+
             } else
             {
                 Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
@@ -279,6 +290,12 @@ public class WeaponManager : MonoBehaviour
                 rend.material = waterFirePoint;
                 GameObject swapEffect = Instantiate(waterSwapEffectPrefab, Orb.transform.position, waterSwapEffectPrefab.transform.rotation);
                 swapEffect.transform.SetParent(Orb.transform);
+
+                if (WaterElementSwapSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(WaterElementSwapSound, Orb.transform.position);
+                }
+
             } else
             {
                 Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");
@@ -294,6 +311,12 @@ public class WeaponManager : MonoBehaviour
                 rend.material = plantFirePoint;
                 GameObject swapEffect = Instantiate(plantSwapEffectPrefab, Orb.transform.position, plantSwapEffectPrefab.transform.rotation);
                 swapEffect.transform.SetParent(Orb.transform);
+
+                if (PlantElementSwapSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(PlantElementSwapSound, Orb.transform.position);
+                }
+
             } else
             {
                 Debug.LogError("WeaponManager: Could not find Staff renderer part, checking gameobject naming.");

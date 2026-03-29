@@ -15,10 +15,12 @@ public class DungeonManager : MonoBehaviour
     
     [Header("Player/EnvironmentDeath")]
     protected int defaultGravity = -20;
-    protected int drowningGravity = -15;
+    protected int drowningGravity = -5;
     [SerializeField] protected CharacterController characterController;    
     [SerializeField] protected PlayerController playerController;
     [SerializeField] protected GameObject environmentDeathEffectPrefab;
+    [SerializeField] protected AudioClip environmentDeathSound;
+
     protected bool dyingToEnvironment;
     [SerializeField] protected bool drownedOrBurned; // true is drowned, false is burned
     public Transform checkpoint;
@@ -70,6 +72,11 @@ public class DungeonManager : MonoBehaviour
             Invoke(nameof(SpawnPlayerAtopPit), 2);
             GameObject environmentDeathEffect = Instantiate(environmentDeathEffectPrefab, characterController.transform.position, environmentDeathEffectPrefab.transform.rotation);
             
+            if (environmentDeathSound != null)
+            {
+                AudioSource.PlayClipAtPoint(environmentDeathSound, other.transform.position);
+            }
+
             if (drownedOrBurned) // if true, drowned
             {
                 environmentDeathEffect.transform.SetParent(other.transform);
@@ -80,7 +87,6 @@ public class DungeonManager : MonoBehaviour
             {
                 playerController.canMove = false;
                 playerController.playerAnim.SetBool("Burned", true);
-
             }
         }
     }

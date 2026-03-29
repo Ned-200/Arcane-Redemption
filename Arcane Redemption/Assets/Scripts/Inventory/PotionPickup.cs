@@ -12,6 +12,8 @@ public class PotionPickup : MonoBehaviour
 
     private bool playerInRange = false;
     private InventorySystem playerInventory;
+    [Header("Sounds")]
+    [SerializeField] private AudioClip pickUpSound;
 
     void Start()
     {
@@ -52,6 +54,12 @@ public class PotionPickup : MonoBehaviour
                 
                 if (added)
                 {
+                    // Play pickedup sound
+                    if (pickUpSound != null)
+                    {
+                        AudioSource.PlayClipAtPoint(pickUpSound, transform.position);
+                    }
+
                     // Successfully picked up - destroy the pickup
                     if (interactPrompt != null)
                     {

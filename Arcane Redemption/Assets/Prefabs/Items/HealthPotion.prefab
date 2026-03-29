@@ -34136,6 +34136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PotionPickup
   potionType: {fileID: 11400000, guid: 7b41e92e8d49a894eb8d4eecf95be2d5, type: 2}
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
+  pickUpSound: {fileID: 8300000, guid: 80acc2640c4c5ef4998a73b855b9b3a2, type: 3}
 --- !u!1 &3914116212425438647
 GameObject:
   m_ObjectHideFlags: 0

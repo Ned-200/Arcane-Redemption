@@ -27914,6 +27914,8 @@ MonoBehaviour:
   weaponSlotTransform: {fileID: 0}
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
+  damagedSounds: []
+  deathSound: {fileID: 0}
   detectionRadius: 15
   combatRadius: 3
   attackRange: 2
@@ -48727,6 +48729,7 @@ MonoBehaviour:
   characterController: {fileID: 497637279}
   playerController: {fileID: 0}
   environmentDeathEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
+  environmentDeathSound: {fileID: 8300000, guid: 683c0b8de49178d438f46f3c1cc82694, type: 3}
   drownedOrBurned: 0
   checkpoint: {fileID: 554987681}
   cutsceneTrigger: {fileID: 1622465258}

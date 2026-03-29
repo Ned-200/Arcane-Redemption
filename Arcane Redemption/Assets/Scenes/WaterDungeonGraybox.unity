@@ -35437,7 +35437,7 @@ PrefabInstance:
       objectReference: {fileID: 1126368187}
     - target: {fileID: 1380480452138661623, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
       propertyPath: m_VersionIndex
-      value: 1273
+      value: 1279
       objectReference: {fileID: 0}
     - target: {fileID: 2217232845408095805, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
       propertyPath: m_Mesh
@@ -35449,7 +35449,7 @@ PrefabInstance:
       objectReference: {fileID: 1168111371}
     - target: {fileID: 4079309000226144807, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
       propertyPath: m_VersionIndex
-      value: 2107
+      value: 2113
       objectReference: {fileID: 0}
     - target: {fileID: 4476809959923919536, guid: e5810fe998a598345a5b3a17af6b9126, type: 3}
       propertyPath: m_Mesh
@@ -46550,7 +46550,7 @@ PrefabInstance:
       objectReference: {fileID: 883440590}
     - target: {fileID: 8869616143773070892, guid: 9a23ea2ec3e858f4282495043ba9637f, type: 3}
       propertyPath: m_VersionIndex
-      value: 10504
+      value: 10510
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2383934187701287177, guid: 9a23ea2ec3e858f4282495043ba9637f, type: 3}
@@ -53961,6 +53961,7 @@ MonoBehaviour:
   gemElement: 2
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   promptPosition: {fileID: 1044242012}
+  pickUpSound: {fileID: 0}
   gemMesh: {fileID: 1997949290}
   gemEffect: {fileID: 7446020307445930463}
   gemDoor: {fileID: 1023316575}
@@ -54357,7 +54358,7 @@ PrefabInstance:
       objectReference: {fileID: 1650062401}
     - target: {fileID: 223164209239987856, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
       propertyPath: m_VersionIndex
-      value: 1276
+      value: 1282
       objectReference: {fileID: 0}
     - target: {fileID: 1486847877415097613, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
       propertyPath: m_Name
@@ -54417,7 +54418,7 @@ PrefabInstance:
       objectReference: {fileID: 1856234397}
     - target: {fileID: 5658052450638443225, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
       propertyPath: m_VersionIndex
-      value: 2110
+      value: 2116
       objectReference: {fileID: 0}
     - target: {fileID: 7612088144557771246, guid: f0d1714989660a6409c2f396ad476dd5, type: 3}
       propertyPath: m_Mesh
@@ -170104,6 +170105,7 @@ MonoBehaviour:
   characterController: {fileID: 1453777675}
   playerController: {fileID: 0}
   environmentDeathEffectPrefab: {fileID: 261948290644060713, guid: 5f32dbfb26a037f409a8ecbbaad87f11, type: 3}
+  environmentDeathSound: {fileID: 8300000, guid: 86dea0a1357ad6f4e9d133c64afe9fa2, type: 3}
   drownedOrBurned: 1
   checkpoint: {fileID: 767697268}
   exitFireWall: {fileID: 6454036268755014798}
@@ -209454,7 +209456,7 @@ PrefabInstance:
       objectReference: {fileID: 723352657}
     - target: {fileID: 8869616143773070892, guid: 9a23ea2ec3e858f4282495043ba9637f, type: 3}
       propertyPath: m_VersionIndex
-      value: 10507
+      value: 10513
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -260858,7 +260860,7 @@ PrefabInstance:
       objectReference: {fileID: 1869150878}
     - target: {fileID: 8869616143773070892, guid: 9a23ea2ec3e858f4282495043ba9637f, type: 3}
       propertyPath: m_VersionIndex
-      value: 10507
+      value: 10513
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

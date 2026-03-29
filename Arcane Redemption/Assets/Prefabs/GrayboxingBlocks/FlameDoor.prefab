@@ -745,6 +745,7 @@ MonoBehaviour:
   burningPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   damage: 10
   cooldownDuration: 2
+  burnSound: {fileID: 8300000, guid: fa0643908b1332b468c8c4ec79d123f7, type: 3}
 --- !u!65 &6688546993225197715
 BoxCollider:
   m_ObjectHideFlags: 0

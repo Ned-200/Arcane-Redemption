@@ -661,7 +661,7 @@ MonoBehaviour:
   orbitRadius: 7
   orbitSpeed: 3
   orbitClockwise: 1
-  projectilePrefab: {fileID: 8497696522997006273, guid: c8a195c9f89a9664d8e116344fcaba0e, type: 3}
+  projectilePrefab: {fileID: 8497696522997006273, guid: 3ea55c9dafe1bd0479561785c5db2740, type: 3}
   projectileSpawnPoint: {fileID: 7859783000099445400}
   shootingRange: 20
   shootCooldown: 2
@@ -822,7 +822,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73d40f9378282d744b63e920bae1a173, type: 2}
+  - {fileID: 2100000, guid: 6419302abaa30b745b190319e5549a58, type: 2}
   - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -990,7 +990,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c115d44a9203c624192ebbf52b4b1fc7, type: 2}
+  - {fileID: 2100000, guid: bb3de2c2f415f244e90bc267a22b7935, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1699,7 +1699,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e5d372b80b03e9c4488024b02be2f693, type: 2}
+  - {fileID: 2100000, guid: 2375c5a2c0c9bfe429959dbee00ed099, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2196,7 +2196,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2375c5a2c0c9bfe429959dbee00ed099, type: 2}
+  - {fileID: 2100000, guid: 6419302abaa30b745b190319e5549a58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

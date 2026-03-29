@@ -629,7 +629,7 @@ public class ShellBoss : EnemyCharacter
         }
 
         // Create ring attack
-        Instantiate(fireRingAttackPrefab, transform.position, fireRingAttackPrefab.transform.rotation);
+        Instantiate(fireRingAttackPrefab, new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z), fireRingAttackPrefab.transform.rotation);
     }
 
     private float GetComboAttackCooldown()

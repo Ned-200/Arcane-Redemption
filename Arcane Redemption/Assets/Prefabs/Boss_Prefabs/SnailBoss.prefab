@@ -1478,7 +1478,7 @@ MonoBehaviour:
     m_Bits: 0
   moveSpeed: 10
   rotationSpeed: 5
-  element: 
+  element: Fire
   attackDamage: 5
   attackCooldown: 2
   deathDelay: 3
@@ -1528,6 +1528,7 @@ MonoBehaviour:
   arenaBounds: {fileID: 0}
   edgeAvoidanceStrength: 10
   GhostNPCPrefab: {fileID: 967328167914030711, guid: 50d8e720df2f8534da92faa9353049dc, type: 3}
+  bossRoomManager: {fileID: 0}
 --- !u!114 &5469566042292951017
 MonoBehaviour:
   m_ObjectHideFlags: 0

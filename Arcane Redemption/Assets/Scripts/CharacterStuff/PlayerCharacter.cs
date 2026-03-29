@@ -24,6 +24,7 @@ public class PlayerCharacter : BaseCharacter
     [SerializeField] private Transform defaultRespawnPoint;
     public Transform respawnPoint;
     [SerializeField] private float respawnCooldown = 3.0f;
+    private CharacterController characterController;    
 
     [Header("Debug")]
     [SerializeField] private bool showDebugInfo = true;
@@ -119,6 +120,12 @@ public class PlayerCharacter : BaseCharacter
             Debug.LogError("PlayerCharacter: PlayerController not found on player.");
         }
 
+        characterController = GetComponent<CharacterController>();
+        if (characterController == null)
+        {
+            Debug.LogError("PlayerCharacter: CharacterController not found on player.");
+        }
+
         if (lowHealthEffects == null)
         {
             Debug.LogWarning("PlayerCharacter: LowHealthPostProcess not found in scene.");
@@ -209,8 +216,10 @@ public class PlayerCharacter : BaseCharacter
         if (DeathScreen != null)
             DeathScreen.SetActive(false);
 
-        transform.position = respawnPoint.position;
-        transform.rotation = respawnPoint.rotation;
+        characterController.enabled = false;
+        characterController.transform.position = respawnPoint.position;
+        characterController.transform.rotation = respawnPoint.rotation;
+        characterController.enabled = true;
 
         currentHealth = maxHealth;
         currentMana = maxMana;

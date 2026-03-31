@@ -28,7 +28,6 @@
         _MaxHeight("Max Height", Float) = 1
         _HeightSharpness("Height Sharpness", Float) = 1
         _NoiseStrength("Noise Strength", Range(0,1)) = 0.15
-        _FadeWidth("Fade Width", Float) = 0.12
     }
 
     SubShader
@@ -38,6 +37,8 @@
             "RenderPipeline"="UniversalPipeline"
             "RenderType"="Transparent"
             "Queue"="Transparent"
+            // "RenderType"="TransparentCutout"
+            // "Queue"="AlphaTest"
         }
 
         Cull Off
@@ -48,8 +49,11 @@
             Name "UniversalForward"
             Tags { "LightMode"="UniversalForward" }
 
-            Blend SrcAlpha OneMinusSrcAlpha
-            ZWrite Off
+            //Blend SrcAlpha OneMinusSrcAlpha
+            Blend One Zero
+            ZWrite On
+            //Blend SrcAlpha OneMinusSrcAlpha
+           // ZWrite Off
 
             HLSLPROGRAM
             #pragma target 4.6
@@ -93,7 +97,6 @@
                 float _MaxHeight;
                 float _HeightSharpness;
                 float _NoiseStrength;
-                float _FadeWidth;
             CBUFFER_END
 
             struct Attributes
@@ -192,14 +195,12 @@
                 float3 avgPosWS = (IN[0].positionWS + IN[1].positionWS + IN[2].positionWS) / 3.0;
                 float3 avgNormalWS = normalize((IN[0].normalWS + IN[1].normalWS + IN[2].normalWS) / 3.0);
 
-                float dissolve_value = SAMPLE_TEXTURE2D_LOD(_DissolveTexture, sampler_DissolveTexture, avgUV, 0).r;
-
+                float dissolveValue = SAMPLE_TEXTURE2D_LOD(_DissolveTexture, sampler_DissolveTexture, avgUV, 0).r;
                 float avgPosOSY = (IN[0].positionOS3.y + IN[1].positionOS3.y + IN[2].positionOS3.y) / 3.0;
                 float height01 = GetHeight01(avgPosOSY);
 
-                float noiseOffset = (dissolve_value - 0.5) * _NoiseStrength;
-                float front = _Weight + noiseOffset;
-
+                // 0 = visible, 1 = hidden
+                float front = _Weight + (dissolveValue - 0.5) * _NoiseStrength;
                 float t = saturate((front - height01) * 4.0);
 
                 float2 flowUV = avgPosWS.xz * _FlowMap_ST.xy + _FlowMap_ST.zw;
@@ -261,11 +262,18 @@
                 float2 uvMain = i.uv * _MainTex_ST.xy + _MainTex_ST.zw;
                 half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uvMain) * _Color;
 
+                // float3 N = SampleNormalWS(i);
+                // Light mainLight = GetMainLight();
+                // float3 L = normalize(mainLight.direction);
+                // float NdotL = saturate(dot(N, -L));
+                // half3 lit = (_AmbientColor.rgb + (mainLight.color.rgb * NdotL));
+                // col.rgb *= lit;
+
                 float3 N = SampleNormalWS(i);
                 Light mainLight = GetMainLight();
                 float3 L = normalize(mainLight.direction);
-                float NdotL = saturate(dot(N, -L));
-                half3 lit = (_AmbientColor.rgb + (mainLight.color.rgb * NdotL));
+                float NdotL = saturate(dot(N, L));
+                half3 lit = _AmbientColor.rgb + (mainLight.color.rgb * NdotL);
                 col.rgb *= lit;
 
                 col = lerp(col, _DisintegrationColor, i.color.x);
@@ -280,22 +288,20 @@
                 {
                     float height01 = GetHeight01(i.positionOS.y);
 
-                    float progress = _Weight;
-                    float noiseOffset = (dissolve - 0.5) * _NoiseStrength;
-                    float front = progress + noiseOffset;
-
+                    // 0 = visible, 1 = hidden
+                    float front = _Weight + (dissolve - 0.5) * _NoiseStrength;
                     float d = height01 - front;
 
-                    clip(d + _FadeWidth * 0.5);
-
-                    float alpha = smoothstep(-_FadeWidth * 0.5, _FadeWidth * 0.5, d);
-                    col.a = alpha;
+                    // solid visible mesh, clipped when dissolved
+                    clip(d);
 
                     if (_Weight > 0.0)
                     {
                         float edge = 1.0 - smoothstep(0.0, _DissolveBorder, abs(d));
                         col.rgb += (_DissolveColor.rgb * _Glow * edge);
                     }
+
+                    col.a = 1.0;
                 }
                 else
                 {

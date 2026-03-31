@@ -56,7 +56,7 @@ Material:
     - _NoiseStrength: 0
     - _R: 1.84
     - _Size: 0.627
-    - _Weight: 0
+    - _Weight: 1
     - _ptlRadius: 0.1
     m_Colors:
     - _AmbientColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.003921569}

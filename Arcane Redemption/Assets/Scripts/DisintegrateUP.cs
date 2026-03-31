@@ -45,6 +45,9 @@ public class DisintegrateUP : MonoBehaviour
     private void Awake()
     {
         rend = GetComponent<Renderer>();
+
+        // Cache the wall's normal visible materials immediately
+        originalMats = rend.materials;
     }
 
     /// <summary>
@@ -68,6 +71,57 @@ public class DisintegrateUP : MonoBehaviour
         TriggerDisintegration(true);
     }
 
+    /// <summary>
+    /// Force the renderer back to its original visible materials.
+    /// </summary>
+    public void UseOriginalMaterials()
+    {
+        if (rend == null)
+            rend = GetComponent<Renderer>();
+
+        if (originalMats != null && originalMats.Length > 0)
+        {
+            rend.materials = originalMats;
+        }
+    }
+
+    /// <summary>
+    /// Optional helper for startup state setup.
+    /// visible = true  -> use original materials
+    /// visible = false -> use dissolve materials at hidden state, then optionally disable object
+    /// </summary>
+    public void SnapToState(bool visible)
+    {
+        if (!materialsPrepared)
+        {
+            PrepareRuntimeMaterials();
+        }
+
+        if (activeRoutine != null)
+        {
+            StopCoroutine(activeRoutine);
+            activeRoutine = null;
+        }
+
+        gameObject.SetActive(true);
+
+        if (visible)
+        {
+            UseOriginalMaterials();
+        }
+        else
+        {
+            if (runtimeMats != null && runtimeMats.Length > 0)
+            {
+                rend.materials = runtimeMats;
+                SetWeight(1f);
+            }
+
+            if (disableObjectAfterDissolve)
+                gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator DisintegrateRoutine(bool dissolveOut)
     {
         running = true;
@@ -85,11 +139,13 @@ public class DisintegrateUP : MonoBehaviour
             yield break;
         }
 
-        rend.materials = runtimeMats;
-
         if (delay > 0f)
             yield return new WaitForSeconds(delay);
 
+        // Only NOW do we swap to dissolve materials
+        rend.materials = runtimeMats;
+
+        // 0 = visible, 1 = hidden
         float startWeight = dissolveOut ? 0f : 1f;
         float endWeight   = dissolveOut ? 1f : 0f;
 
@@ -106,12 +162,20 @@ public class DisintegrateUP : MonoBehaviour
 
         SetWeight(endWeight);
 
-        if (dissolveOut && disableObjectAfterDissolve)
+        if (dissolveOut)
         {
-            if (disableDelay > 0f)
-                yield return new WaitForSeconds(disableDelay);
+            if (disableObjectAfterDissolve)
+            {
+                if (disableDelay > 0f)
+                    yield return new WaitForSeconds(disableDelay);
 
-            gameObject.SetActive(false);
+                gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            // Once fully visible again, switch back to the original materials
+            UseOriginalMaterials();
         }
 
         running = false;
@@ -120,7 +184,9 @@ public class DisintegrateUP : MonoBehaviour
 
     private void PrepareRuntimeMaterials()
     {
-        originalMats = rend.materials;
+        // Keep the original visible materials intact
+        if (originalMats == null || originalMats.Length == 0)
+            originalMats = rend.materials;
 
         if (originalMats == null || originalMats.Length == 0)
         {

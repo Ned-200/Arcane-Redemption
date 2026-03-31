@@ -37661,6 +37661,9 @@ MonoBehaviour:
   fireSwapEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   waterSwapEffectPrefab: {fileID: 7038505790271449214, guid: f7f953d178c44ff48b963c185ac5b7a4, type: 3}
   plantSwapEffectPrefab: {fileID: 7038505790271449214, guid: a0d52f98584721b49947069f69c2cea6, type: 3}
+  orbFireEffectPrefab: {fileID: 6124905989408069561, guid: db1fc2db2bec86d48849ede7e65b02af, type: 3}
+  orbWaterEffectPrefab: {fileID: 6124905989408069561, guid: 7f31d2ee595231f4b8340d95573dd119, type: 3}
+  orbPlantEffectPrefab: {fileID: 6124905989408069561, guid: 1a488894f2788c64082fe7c3968b3df6, type: 3}
   fireOrb: {fileID: 2100000, guid: 7d919fbdf906eb1458c4f4e85de12bcc, type: 2}
   fireFirePoint: {fileID: 2100000, guid: 5facfb72e3d3030489fec5847f99f351, type: 2}
   waterOrb: {fileID: 2100000, guid: c115d44a9203c624192ebbf52b4b1fc7, type: 2}

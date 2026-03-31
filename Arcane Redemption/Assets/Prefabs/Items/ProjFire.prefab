@@ -15,10 +15,10 @@ GameObject:
   - component: {fileID: 907333691612357113}
   - component: {fileID: 1911119451317736253}
   - component: {fileID: -1999294816065245334}
-  - component: {fileID: 3644226477361859416}
-  - component: {fileID: 6678219165632581661}
+  - component: {fileID: 9124062797746849643}
+  - component: {fileID: 1610094738897832733}
   m_Layer: 0
-  m_Name: PlantProj
+  m_Name: ProjFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bb05e35d804bbce41bdfa6a90c129e02, type: 2}
+  - {fileID: 2100000, guid: 569d7cc39d898df42a7ca7c05aae5e39, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -163,11 +163,11 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 576
-  element: Plant
+  element: Fire
   toughVinesBurnable: 0
-  hitEffect: {fileID: 7038505790271449214, guid: a0d52f98584721b49947069f69c2cea6, type: 3}
+  hitEffect: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
   trail: {fileID: 0}
-  impactSound: {fileID: 8300000, guid: ca976f398c076274a95896409c145a23, type: 3}
+  impactSound: {fileID: 8300000, guid: 683c0b8de49178d438f46f3c1cc82694, type: 3}
 --- !u!114 &-1999294816065245334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   duration: 1.2
   destroyAfter: 1
   destroyDelay: 0.5
---- !u!199 &3644226477361859416
+--- !u!199 &9124062797746849643
 ParticleSystemRenderer:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 51da24c54cbf2104c96d554a3bdef5a9, type: 2}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -267,7 +267,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!198 &6678219165632581661
+--- !u!198 &1610094738897832733
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,7 +403,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -455,13 +455,13 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 1, b: 0.024334192, a: 1}
+      maxColor: {r: 1, g: 0.18947035, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.3958106, g: 0.9245283, b: 0.2660199, a: 1}
-        key1: {r: 0.004049484, g: 0.066037714, b: 0.018438164, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -485,7 +485,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_ColorSpace: 0
+        m_ColorSpace: -1
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
@@ -521,7 +521,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 1.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -679,8 +679,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 3.1415927
+      minMaxState: 0
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -732,8 +732,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 3.1415927
+      minMaxState: 0
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -785,8 +785,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotation:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 6.283185
+      minMaxState: 0
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -845,7 +845,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.05
+      scalar: -0.05
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1230,7 +1230,7 @@ ParticleSystem:
           outWeight: 0.12349396
         - serializedVersion: 3
           time: 1
-          value: 0
+          value: 0.5133362
           inSlope: -0.13471623
           outSlope: -0.13471623
           tangentMode: 0
@@ -1534,7 +1534,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1542,19 +1542,19 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0, g: 1, b: 0.105707645, a: 1}
-        key1: {r: 0.26853815, g: 0.7830189, b: 0.09972411, a: 1}
-        key2: {r: 0.3651212, g: 0.6792453, b: 0.1505874, a: 1}
-        key3: {r: 0.5490196, g: 0.7882354, b: 0.1411765, a: 1}
-        key4: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 1, g: 0.702134, b: 0, a: 1}
+        key1: {r: 1, g: 0.29065636, b: 0, a: 1}
+        key2: {r: 0.7753682, g: 0.2253657, b: 0, a: 1}
+        key3: {r: 0, g: 0, b: 0, a: 1}
+        key4: {r: 0.03524697, g: 0.010244757, b: 0.19999999, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 2544
-        ctime1: 21974
-        ctime2: 40863
+        ctime1: 17502
+        ctime2: 36314
         ctime3: 60061
-        ctime4: 60061
+        ctime4: 62374
         ctime5: 0
         ctime6: 0
         ctime7: 0

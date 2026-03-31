@@ -24,6 +24,10 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private GameObject fireSwapEffectPrefab;
     [SerializeField] private GameObject waterSwapEffectPrefab;
     [SerializeField] private GameObject plantSwapEffectPrefab;
+    [SerializeField] private GameObject orbFireEffectPrefab;
+    [SerializeField] private GameObject orbWaterEffectPrefab;
+    [SerializeField] private GameObject orbPlantEffectPrefab;
+    private GameObject constantParticles;
         
     [Header("Staff Materials")]
     [SerializeField] private Material fireOrb;
@@ -80,6 +84,7 @@ public class WeaponManager : MonoBehaviour
         {
             EquipWeapon(startingWeaponIndex);
         }
+
     }
 
     private void Update()
@@ -118,6 +123,7 @@ public class WeaponManager : MonoBehaviour
                 Debug.LogWarning($"WeaponManager: {weaponPrefab.name} doesn't have a WeaponBase component!");
                 Destroy(weaponObj);
             }
+
         }
 
         Debug.Log($"WeaponManager: Initialized {instantiatedWeapons.Count} weapons");
@@ -225,6 +231,21 @@ public class WeaponManager : MonoBehaviour
         GameObject swapEffect = Instantiate(weaponSwapEffectPrefab, weaponSlot.position, weaponSwapEffectPrefab.transform.rotation);
         swapEffect.transform.SetParent(weaponSlot);
 
+        // Create particle effect if the weapon is range, and one doesnt exist
+        RangedWeapon rangedWeapon = currentWeapon as RangedWeapon;
+        if (rangedWeapon != null && constantParticles == null)
+        {
+            GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
+            if (currentElement == EquippedElement.Fire) {
+                constantParticles = Instantiate(orbFireEffectPrefab, Orb.transform.position, orbFireEffectPrefab.transform.rotation);
+            } else if (currentElement == EquippedElement.Water) {
+                constantParticles = Instantiate(orbWaterEffectPrefab, Orb.transform.position, orbWaterEffectPrefab.transform.rotation);
+            } else if (currentElement == EquippedElement.Plant) {
+                constantParticles = Instantiate(orbPlantEffectPrefab, Orb.transform.position, orbPlantEffectPrefab.transform.rotation);
+            }
+            constantParticles.transform.SetParent(Orb.transform);
+        }
+
         Debug.Log($"WeaponManager: Equipped {currentWeapon.WeaponName}");
     }
 
@@ -258,18 +279,32 @@ public class WeaponManager : MonoBehaviour
         if (playerAnim != null) {
             playerAnim.Play("ElementSwap");
         }
-        
+
         if (newElement == EquippedElement.Fire) 
         {
             if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
+                // Update materials
                 GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
                 Renderer rend = Orb.GetComponent<Renderer>();
                 rend.material = fireOrb;
                 rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
                 rend.material = fireFirePoint;
+                // Play swap particle effect
                 GameObject swapEffect = Instantiate(fireSwapEffectPrefab, Orb.transform.position, fireSwapEffectPrefab.transform.rotation);
                 swapEffect.transform.SetParent(Orb.transform);
-
+                // Play constant particle effect
+                if (orbFireEffectPrefab != null) {
+                    if (constantParticles != null) { Destroy(constantParticles); }
+                    constantParticles = Instantiate(orbFireEffectPrefab, Orb.transform.position, orbFireEffectPrefab.transform.rotation);
+                    constantParticles.transform.SetParent(Orb.transform);
+                }
+                // Remove ligth from particle effect
+                Light light = swapEffect.GetComponent<Light>();
+                light.enabled = false;
+                // Light colour
+                light = Orb.GetComponent<Light>();
+                light.color = Color.HSVToRGB(0, .80f, 1);
+                // Play Sound
                 if (FireElementSwapSound != null)
                 {
                     AudioSource.PlayClipAtPoint(FireElementSwapSound, Orb.transform.position);
@@ -283,14 +318,28 @@ public class WeaponManager : MonoBehaviour
         else if (newElement == EquippedElement.Water)
         {
             if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
+                // Update materials
                 GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
                 Renderer rend = Orb.GetComponent<Renderer>();
                 rend.material = waterOrb;
                 rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
                 rend.material = waterFirePoint;
+                // Play swap particle effect
                 GameObject swapEffect = Instantiate(waterSwapEffectPrefab, Orb.transform.position, waterSwapEffectPrefab.transform.rotation);
                 swapEffect.transform.SetParent(Orb.transform);
-
+                // Play constant particle effect
+                if (orbWaterEffectPrefab != null) {
+                    if (constantParticles != null) { Destroy(constantParticles); }
+                    constantParticles = Instantiate(orbWaterEffectPrefab, Orb.transform.position, orbWaterEffectPrefab.transform.rotation);
+                    constantParticles.transform.SetParent(Orb.transform);
+                }
+                // Remove ligth from particle effect
+                Light light = swapEffect.GetComponent<Light>();
+                light.enabled = false;
+                // Light colour
+                light = Orb.GetComponent<Light>();
+                light.color = Color.HSVToRGB(.56f, .80f, 1);
+                // Play Sound
                 if (WaterElementSwapSound != null)
                 {
                     AudioSource.PlayClipAtPoint(WaterElementSwapSound, Orb.transform.position);
@@ -304,14 +353,28 @@ public class WeaponManager : MonoBehaviour
         else if (newElement == EquippedElement.Plant)
         {
             if (currentWeapon.transform.Find("Handle").Find("Sphere") != null) {
+                // Update materials
                 GameObject Orb = currentWeapon.transform.Find("Handle").Find("Sphere").gameObject;
                 Renderer rend = Orb.GetComponent<Renderer>();
                 rend.material = plantOrb;
                 rend = Orb.transform.Find("FirePoint").GetComponent<Renderer>();
                 rend.material = plantFirePoint;
+                // Play swap particle effects
                 GameObject swapEffect = Instantiate(plantSwapEffectPrefab, Orb.transform.position, plantSwapEffectPrefab.transform.rotation);
                 swapEffect.transform.SetParent(Orb.transform);
-
+                // Play constant particle effect
+                if (orbPlantEffectPrefab != null) {
+                    if (constantParticles != null) { Destroy(constantParticles); }
+                    constantParticles = Instantiate(orbPlantEffectPrefab, Orb.transform.position, orbPlantEffectPrefab.transform.rotation);
+                    constantParticles.transform.SetParent(Orb.transform);
+                }
+                // Remove ligth from particle effect
+                Light light = swapEffect.GetComponent<Light>();
+                light.enabled = false;
+                // Light colour
+                light = Orb.GetComponent<Light>();
+                light.color = Color.HSVToRGB(.28f, .80f, 1);
+                // Play Sound
                 if (PlantElementSwapSound != null)
                 {
                     AudioSource.PlayClipAtPoint(PlantElementSwapSound, Orb.transform.position);

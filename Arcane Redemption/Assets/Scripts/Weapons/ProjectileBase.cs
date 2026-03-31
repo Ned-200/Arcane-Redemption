@@ -210,6 +210,17 @@ public class ProjectileBase : MonoBehaviour
         }
 
         disintegrate.TriggerDisintegration();
+
+        Collider collider = other.GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        } else
+        {
+            Debug.LogError($"{other.gameObject.name}: PlantWall missing Collider component!");
+            return false;
+        }
+
         return true;
     }
 

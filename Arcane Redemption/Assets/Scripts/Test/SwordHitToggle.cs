@@ -8,9 +8,30 @@ public class SwordHitToggle : MonoBehaviour
 
     [Header("Hit Protection")]
     [SerializeField] private float hitCooldown = 0.2f;
+    
+    [Header("Animations")]
+    [SerializeField] private Animator flowerAnim;
 
     private bool toggledState = false;
     private float lastHitTime = -999f;
+
+
+    private void Start()
+    {
+        flowerAnim.SetBool("isOpen", toggledState);
+
+        foreach (GameObject obj in objectsToEnable)
+        {
+            if (obj == null) continue;
+            SetObjectState(obj, toggledState);
+        }
+
+        foreach (GameObject obj in objectsToDisable)
+        {
+            if (obj == null) continue;
+            SetObjectState(obj, !toggledState);
+        }
+    }
 
     public void Toggle()
     {
@@ -19,6 +40,8 @@ public class SwordHitToggle : MonoBehaviour
 
         lastHitTime = Time.time;
         toggledState = !toggledState;
+
+        flowerAnim.SetBool("isOpen", toggledState);
 
         foreach (GameObject obj in objectsToEnable)
         {

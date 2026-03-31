@@ -138,9 +138,9 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _AmbientColor: {r: 0.06415099, g: 0.06415099, b: 0.06415099, a: 0.003921569}
+    - _AmbientColor: {r: 1, g: 1, b: 1, a: 0.003921569}
     - _BaseColor: {r: 0, g: 0.2830189, b: 0, a: 1}
-    - _Color: {r: 0.30697614, g: 0.3509434, b: 0.29598433, a: 1}
+    - _Color: {r: 0.8117647, g: 0.20392157, b: 0.6784314, a: 1}
     - _Direction: {r: 0, g: 1, b: 0, a: 0.1}
     - _DisintegrationColor: {r: 0.3921568, g: 1.6078432, b: 0.3921568, a: 1}
     - _DissolveColor: {r: 1, g: 0, b: 0, a: 1}

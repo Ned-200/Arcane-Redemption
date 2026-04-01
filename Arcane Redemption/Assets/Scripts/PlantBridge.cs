@@ -15,8 +15,8 @@ public class PlantBridge : MonoBehaviour
     
     void Start()
     {
-        bridgeDisintegrate = plantBridge.GetComponent<DisintegrateUP>();
-        bridgeCollider = plantBridge.GetComponent<Collider>();
+        bridgeDisintegrate = plantBridge.GetComponentInChildren<DisintegrateUP>();
+        bridgeCollider = plantBridge.GetComponentInChildren<Collider>();
         if (bridgeDisintegrate != null)
         {
             if (startHidden) {

@@ -2,89 +2,105 @@ using UnityEngine;
 
 public class PlantBridge : MonoBehaviour
 {
-    
     [SerializeField] private GameObject plantBridge;
     [SerializeField] private bool startHidden = true;
-    private DisintegrateUP bridgeDisintegrate;
-    private Collider bridgeCollider;
     [SerializeField] private Material leavesMaterial;
-    private int leavesMaterialIndex = 0;
+    [SerializeField] private int leavesMaterialIndex = 0;
+
+    private DisintegrateUP[] bridgeDisintegrates;
+    private Collider[] bridgeColliders;
+
     public bool activated;
 
-
-    
     void Start()
     {
-        bridgeDisintegrate = plantBridge.GetComponentInChildren<DisintegrateUP>();
-        bridgeCollider = plantBridge.GetComponentInChildren<Collider>();
-        if (bridgeDisintegrate != null)
+        bridgeDisintegrates = plantBridge.GetComponentsInChildren<DisintegrateUP>();
+        bridgeColliders = plantBridge.GetComponentsInChildren<Collider>();
+
+        if (bridgeDisintegrates.Length > 0)
         {
-            if (startHidden) {
-                bridgeDisintegrate.TriggerDisintegration(true);
-            }
-        } else
-        {
-            Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
-        }
-        if (bridgeCollider != null)
-        {
-            if (startHidden) {
-                bridgeCollider.enabled = false;
-            } else
+            if (startHidden)
             {
-                bridgeCollider.enabled = true;
+                foreach (DisintegrateUP dis in bridgeDisintegrates)
+                {
+                    dis.TriggerDisintegration(true);
+                }
             }
-        } else
-        {
-            Debug.LogError("PlantBridge: Could not fetch bridgeCollider component!");
         }
-    }
-    void Update()
-    {
-        
+        else
+        {
+            Debug.LogError("PlantBridge: Could not fetch any DisintegrateUP components!");
+        }
+
+        if (bridgeColliders.Length > 0)
+        {
+            foreach (Collider col in bridgeColliders)
+            {
+                col.enabled = !startHidden;
+            }
+        }
+        else
+        {
+            Debug.LogError("PlantBridge: Could not fetch any Collider components!");
+        }
     }
 
     public void GrowBridge()
     {
         if (activated) return;
         activated = true;
-        
-        if (bridgeDisintegrate != null)
+
+        if (bridgeDisintegrates != null && bridgeDisintegrates.Length > 0)
         {
-            bridgeDisintegrate.TriggerDisintegration(false);
-        } else
-        {
-            Debug.LogError("PlantBridge: Could not fetch bridgeDisintegrate component!");
+            foreach (DisintegrateUP dis in bridgeDisintegrates)
+            {
+                dis.TriggerDisintegration(false);
+            }
         }
-        if (bridgeCollider != null)
+        else
         {
-            bridgeCollider.enabled = true;
-        } else
+            Debug.LogError("PlantBridge: Could not fetch any DisintegrateUP components!");
+        }
+
+        if (bridgeColliders != null && bridgeColliders.Length > 0)
         {
-            Debug.LogError("PlantBridge: Could not fetch bridgeCollider component!");
+            foreach (Collider col in bridgeColliders)
+            {
+                col.enabled = true;
+            }
+        }
+        else
+        {
+            Debug.LogError("PlantBridge: Could not fetch any Collider components!");
         }
 
         // Change Tree Appearance
-        
-        Renderer rend = transform.Find("InnerOrb").GetComponent<Renderer>();
-        rend.enabled = false;
-        rend = transform.Find("OuterOrb").GetComponent<Renderer>();
-        rend.enabled = false;
+        Renderer rend = transform.Find("InnerOrb")?.GetComponent<Renderer>();
+        if (rend != null) rend.enabled = false;
 
-        rend = transform.Find("Tree1").GetComponent<Renderer>();
-        var mats = rend.materials;
-        mats[leavesMaterialIndex] = leavesMaterial;
-        rend.materials = mats;
+        rend = transform.Find("OuterOrb")?.GetComponent<Renderer>();
+        if (rend != null) rend.enabled = false;
 
-        rend = transform.Find("Tree2").GetComponent<Renderer>();
-        mats = rend.materials;
-        mats[leavesMaterialIndex] = leavesMaterial;
-        rend.materials = mats;
+        rend = transform.Find("Tree1")?.GetComponent<Renderer>();
+        if (rend != null)
+        {
+            var mats = rend.materials;
+            if (leavesMaterialIndex >= 0 && leavesMaterialIndex < mats.Length)
+            {
+                mats[leavesMaterialIndex] = leavesMaterial;
+                rend.materials = mats;
+            }
+        }
 
-        rend = transform.Find("Tree2").GetComponent<Renderer>();
-        mats = rend.materials;
-        mats[leavesMaterialIndex] = leavesMaterial;
-        rend.materials = mats;
-
+        rend = transform.Find("Tree2")?.GetComponent<Renderer>();
+        if (rend != null)
+        {
+            var mats = rend.materials;
+            if (leavesMaterialIndex >= 0 && leavesMaterialIndex < mats.Length)
+            {
+                mats[leavesMaterialIndex] = leavesMaterial;
+                rend.materials = mats;
+            }
+        }
     }
 }

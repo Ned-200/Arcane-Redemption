@@ -26,6 +26,10 @@ public class PlayerCharacter : BaseCharacter
     [SerializeField] private float respawnCooldown = 3.0f;
     private CharacterController characterController;    
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] damagedSounds;
+    [SerializeField] private AudioClip deathSound;
+
     [Header("Debug")]
     [SerializeField] private bool showDebugInfo = true;
 
@@ -292,30 +296,48 @@ public class PlayerCharacter : BaseCharacter
         {
             lowHealthEffects.SetHealthPercent(HealthPercent);
         }
+
+        // Play impact effects
+        if (damagedSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(damagedSounds[Random.Range(0, damagedSounds.Length)], transform.position);
+        }
+
     }
 
     protected override void OnDeath()
     {
-    base.OnDeath();
+        base.OnDeath();
 
-    if (deathHandled) return;
-    deathHandled = true;
+        if (deathHandled) return;
+        deathHandled = true;
 
-    Debug.Log($"Player '{gameObject.name}' health reached zero!");
+        Debug.Log($"Player '{gameObject.name}' health reached zero!");
 
-    if (playerController != null)
-    {
-        playerController.canMove = false;
-        playerController.playerAnim.SetBool("Died", true);
+        if (playerController != null)
+        {
+            playerController.canMove = false;
+            playerController.playerAnim.SetBool("Died", true);
+        }
+        else
+        {
+            Debug.LogError("playerController is NULL in OnDeath.");
+        }
+
+        // Play death sound
+        if (deathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        }
+
+        if (lowHealthEffects != null)
+        {
+            lowHealthEffects.SetHealthPercent(0);
+        }
+
+        Debug.Log("Starting respawn cooldown...");
+        StartCoroutine(EnableRespawnAfterDelay());
     }
-    else
-    {
-        Debug.LogError("playerController is NULL in OnDeath.");
-    }
-
-    Debug.Log("Starting respawn cooldown...");
-    StartCoroutine(EnableRespawnAfterDelay());
-}
 
     private void OnApplicationFocus(bool hasFocus)
     {

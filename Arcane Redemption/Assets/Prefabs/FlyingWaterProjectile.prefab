@@ -5021,9 +5021,12 @@ MonoBehaviour:
     m_Bits: 8
   element: 
   toughVinesBurnable: 0
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 7038505790271449214, guid: f7f953d178c44ff48b963c185ac5b7a4, type: 3}
   trail: {fileID: 0}
-  impactSound: {fileID: 8300000, guid: 86dea0a1357ad6f4e9d133c64afe9fa2, type: 3}
+  impactSounds:
+  - {fileID: 8300000, guid: c853e1f6ac5d0d64ebfe8700c7bfd2a5, type: 3}
+  - {fileID: 8300000, guid: 54e91b9496fe79c4797bf7b883b06a48, type: 3}
+  - {fileID: 8300000, guid: 45f2a42f79db20c40909af793e365997, type: 3}
   trackingDuration: 1.25
   trackingStrength: 3
   maxTurnRate: 360

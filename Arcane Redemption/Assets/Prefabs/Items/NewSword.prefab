@@ -140,8 +140,14 @@ MonoBehaviour:
   attackCooldown: 1
   staminaCost: 5
   manaCost: 0
-  attackSound: {fileID: 0}
-  impactSound: {fileID: 0}
+  attackSounds:
+  - {fileID: 8300000, guid: cf5dc39e7692d504fbd2c2dde6df874f, type: 3}
+  - {fileID: 8300000, guid: 2ed89645f6576304fb6021ffca84df38, type: 3}
+  - {fileID: 8300000, guid: 4362482857d72f94dbc6185e020971ce, type: 3}
+  impactSounds:
+  - {fileID: 8300000, guid: 3ec823e032e4f474992ba2875511925e, type: 3}
+  - {fileID: 8300000, guid: 9e68da24f8233ac4eb727805485fd7de, type: 3}
+  - {fileID: 8300000, guid: 0058fc19aaeae814ebe776afd7c36318, type: 3}
   attackRange: 2
   attackAngle: 60
   targetLayers:

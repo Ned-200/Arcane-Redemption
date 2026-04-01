@@ -10,6 +10,7 @@ public class DungeonKey : MonoBehaviour
     private GameObject keyUI;
     private GameObject interactPrompt;
     public bool pickedUp;
+    [SerializeField] protected AudioClip pickUpSound;
 
 
     void Start()
@@ -59,7 +60,13 @@ public class DungeonKey : MonoBehaviour
             keyUI.GetComponent<Image>().enabled = true;
 
             pickedUp = true;
-            
+
+            // Play Sound
+            if (pickUpSound != null)
+            {
+                AudioSource.PlayClipAtPoint(pickUpSound, transform.position);
+            }
+
         }
     }
 

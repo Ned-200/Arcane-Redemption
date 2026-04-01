@@ -37467,8 +37467,8 @@ GameObject:
   - component: {fileID: 6466121563640481464}
   - component: {fileID: 7065954753341959028}
   - component: {fileID: 424467593391953597}
-  - component: {fileID: 5034271716910781457}
   - component: {fileID: 5049141510891052718}
+  - component: {fileID: 3651417620480776710}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -37578,6 +37578,11 @@ MonoBehaviour:
   defaultRespawnPoint: {fileID: 0}
   respawnPoint: {fileID: 0}
   respawnCooldown: 3
+  damagedSounds:
+  - {fileID: 8300000, guid: 09590e7e668d7e944a91f545c47b637d, type: 3}
+  - {fileID: 8300000, guid: 29090d4d210375c4d8b2fb9e6ab5eae3, type: 3}
+  - {fileID: 8300000, guid: 0d3029eea839ca74192449739bb57d3a, type: 3}
+  deathSound: {fileID: 8300000, guid: 73e435ab150b1d94f813818492d8a7c9, type: 3}
   showDebugInfo: 1
 --- !u!114 &5331459119020749177
 MonoBehaviour:
@@ -37671,9 +37676,11 @@ MonoBehaviour:
   waterFirePoint: {fileID: 2100000, guid: e5d372b80b03e9c4488024b02be2f693, type: 2}
   plantOrb: {fileID: 2100000, guid: 28c2ee56bcc5be048be10429f975a6a7, type: 2}
   plantFirePoint: {fileID: 2100000, guid: 3baf4bda5e349c64998a45d9f7d1cc16, type: 2}
+  SwordSwapSound: {fileID: 8300000, guid: 18d3984266d114043a3df26b931c4532, type: 3}
+  StaffSwapSound: {fileID: 8300000, guid: ba4abfc02ed8bfd4f9cf86bd5423efdd, type: 3}
   FireElementSwapSound: {fileID: 8300000, guid: fa0643908b1332b468c8c4ec79d123f7, type: 3}
   WaterElementSwapSound: {fileID: 8300000, guid: 86dea0a1357ad6f4e9d133c64afe9fa2, type: 3}
-  PlantElementSwapSound: {fileID: 0}
+  PlantElementSwapSound: {fileID: 8300000, guid: 72a0bcfd775dd0e4c8c68470a6d82d48, type: 3}
   switchWeaponKey: 113
 --- !u!114 &6466121563640481464
 MonoBehaviour:
@@ -37696,6 +37703,8 @@ MonoBehaviour:
   showDebugLogs: 1
   healEffectPrefab: {fileID: 261948290644060713, guid: 6c6b5f680258a5d4ab6c0f16a0f48109, type: 3}
   manaEffectPrefab: {fileID: 8737831217019480111, guid: f5854d348e946d945bd6bcb5caedce7c, type: 3}
+  healthDrinkSounds: []
+  manaDrinkSounds: []
   healthPotionCount: 0
   manaPotionCount: 0
 --- !u!114 &7065954753341959028
@@ -37711,10 +37720,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LowHealthPostProcess
   globalVolume: {fileID: 0}
-  criticalThreshold: 0.1
+  criticalThreshold: 0.35
   baseVignetteIntensity: 0
   maxVignetteIntensity: 0.7
   pulseSpeed: 1.3
+  heartbeatSound: {fileID: 8300000, guid: 74b3868b7ded36540a29dc72a5d2db04, type: 3}
+  breathingSound: {fileID: 8300000, guid: d3ab451439df7a2499469fffba2fc26a, type: 3}
+  synthSound: {fileID: 8300000, guid: c8a8b112e17cabd4386349fbf29b98b1, type: 3}
+  loopingAudioSource: {fileID: 3651417620480776710}
+  soundVolume: 1
   peakDesatAtThreshold: -50
   peakDesatAtZeroHealth: -20
   returnSmoothSpeed: 2
@@ -37825,26 +37839,6 @@ MonoBehaviour:
   m_ForceModule: {fileID: 0}
   m_ForceScale: 1
   m_SimulateSpace: {fileID: 0}
---- !u!114 &5034271716910781457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4359213788509960824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b126848d3cc0b6f4396cd32247d8147a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LowHealthPostProcess
-  globalVolume: {fileID: 0}
-  criticalThreshold: 0.25
-  baseVignetteIntensity: 0.2
-  maxVignetteIntensity: 0.7
-  pulseSpeed: 2
-  peakDesatAtThreshold: -25
-  peakDesatAtZeroHealth: -90
-  returnSmoothSpeed: 6
 --- !u!114 &5049141510891052718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37904,6 +37898,103 @@ MonoBehaviour:
   - {fileID: 6981552140130888564}
   pushStrength: 5
   restoreSpeed: 8
+--- !u!82 &3651417620480776710
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359213788509960824}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: fb874131f15559b45b65f3fe84baea26, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4373977770803971324
 GameObject:
   m_ObjectHideFlags: 0

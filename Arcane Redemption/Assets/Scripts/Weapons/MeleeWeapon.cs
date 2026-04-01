@@ -139,18 +139,18 @@ public abstract class MeleeWeapon : WeaponBase
 
     protected virtual void PlayAttackSound()
     {
-        if (attackSound != null)
+        if (attackSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(attackSound, transform.position);
+            AudioSource.PlayClipAtPoint(attackSounds[Random.Range(0, attackSounds.Length)], transform.position);
         }
     }
 
     protected virtual void OnTargetHit(BaseCharacter target)
     {
         // Play impact effects
-        if (impactSound != null)
+        if (impactSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(impactSound, target.transform.position);
+            AudioSource.PlayClipAtPoint(impactSounds[Random.Range(0, impactSounds.Length)], target.transform.position);
         }
     }
 

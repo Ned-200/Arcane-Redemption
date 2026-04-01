@@ -38,6 +38,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Material plantFirePoint;
 
     [Header("Sounds")]
+    [SerializeField] private AudioClip SwordSwapSound;
+    [SerializeField] private AudioClip StaffSwapSound;
     [SerializeField] private AudioClip FireElementSwapSound;
     [SerializeField] private AudioClip WaterElementSwapSound;
     [SerializeField] private AudioClip PlantElementSwapSound;
@@ -206,6 +208,23 @@ public class WeaponManager : MonoBehaviour
         if (playerAnim != null) {
             playerAnim.Play("WeaponSwap");
         }
+
+        if (nextIndex == 1) {
+            if (SwordSwapSound != null) {
+                AudioSource.PlayClipAtPoint(SwordSwapSound, transform.position);
+            } else
+            {
+                Debug.LogError("WeaponManager: No SwordSwapSound assigned!");
+            }
+        } else if (nextIndex == 0) {
+            if (StaffSwapSound != null) {
+                AudioSource.PlayClipAtPoint(StaffSwapSound, transform.position);
+            } else
+            {
+                Debug.LogError("WeaponManager: No StaffSwapSound assigned!");
+            }
+        }
+        
     }
 
     public void EquipWeapon(int index)

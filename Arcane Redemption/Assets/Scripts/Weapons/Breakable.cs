@@ -34,6 +34,9 @@ public class Breakable : MonoBehaviour
     [Tooltip("Limits physics depenetration 'pop' if pieces start overlapping.")]
     [SerializeField] private float maxDepenetrationVelocity = 0.5f;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] breakSounds;
+    [SerializeField] private AudioClip[] potionSounds;
     private int totalWeight;
     [SerializeField]private int healthChanceWeight;
     [SerializeField]private int manaChanceWeight;
@@ -130,6 +133,8 @@ public class Breakable : MonoBehaviour
             Invoke(nameof(SpawnPotion), 0.05f);
         }
 
+        AudioSource.PlayClipAtPoint(breakSounds[Random.Range(0, breakSounds.Length)], transform.position);
+
         // Destroy the parent (colliders already disabled)
         Destroy(gameObject, despawnDelay);
     }
@@ -167,5 +172,7 @@ public class Breakable : MonoBehaviour
         } else {
             Instantiate(manaPotionPrefab, spawnPos, healthPotionPrefab.transform.rotation);
         }
+
+        AudioSource.PlayClipAtPoint(potionSounds[Random.Range(0, potionSounds.Length)], transform.position);
     }
 }

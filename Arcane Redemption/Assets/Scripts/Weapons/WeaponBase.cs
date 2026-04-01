@@ -12,8 +12,8 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] protected float manaCost = 0f;
 
     [Header("Audio")]
-    [SerializeField] protected AudioClip attackSound;
-    [SerializeField] protected AudioClip impactSound;
+    [SerializeField] protected AudioClip[] attackSounds;
+    [SerializeField] protected AudioClip[] impactSounds;
 
     protected float lastAttackTime = -999f;
     protected BaseCharacter owner;

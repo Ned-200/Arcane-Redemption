@@ -29,6 +29,10 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject healEffectPrefab;
     [SerializeField] private GameObject manaEffectPrefab;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] healthDrinkSounds;
+    [SerializeField] private AudioClip[] manaDrinkSounds;
+
 
     // Current potion counts
     [SerializeField] private int healthPotionCount = 0;
@@ -212,7 +216,12 @@ public class InventorySystem : MonoBehaviour
         // Play Drinking Animation
         playerAnim.Play("HealthPotionDrink");
 
-        // TODO: Play potion use sound
+        // Play Drinking Sound
+        if (healthDrinkSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(healthDrinkSounds[Random.Range(0, healthDrinkSounds.Length)], playerTransform.position);
+        }
+
         // TODO: Play potion use VFX
     }
     
@@ -279,7 +288,12 @@ public class InventorySystem : MonoBehaviour
         // Play Drinking Animation
         playerAnim.Play("ManaPotionDrink");
 
-        // TODO: Play potion use sound
+        // Play Drinking Sound
+        if (manaDrinkSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(manaDrinkSounds[Random.Range(0, manaDrinkSounds.Length)], playerTransform.position);
+        }
+
         // TODO: Play potion use VFX
     }
 }

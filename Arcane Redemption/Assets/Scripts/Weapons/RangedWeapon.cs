@@ -115,9 +115,9 @@ public abstract class RangedWeapon : WeaponBase
 
     protected virtual void PlayAttackSound()
     {
-        if (attackSound != null)
+        if (attackSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(attackSound, transform.position);
+            AudioSource.PlayClipAtPoint(attackSounds[Random.Range(0, attackSounds.Length)], transform.position);
         }
     }
 

@@ -185,6 +185,15 @@ MonoBehaviour:
   explosionRadius: 1
   upwardModifier: 0.3
   maxDepenetrationVelocity: 1.3
+  breakSounds:
+  - {fileID: 8300000, guid: 65121851c6bd62346a812860a09c20c4, type: 3}
+  - {fileID: 8300000, guid: e0918698f410cb14dab668e9fae729ae, type: 3}
+  - {fileID: 8300000, guid: cf361986d31c3ee4790f462c9cb04c6a, type: 3}
+  potionSounds:
+  - {fileID: 8300000, guid: 73a2ee4b0b34ca14bac493c0f849ea68, type: 3}
+  - {fileID: 8300000, guid: ed350b83099c34642bcf8733486127b0, type: 3}
+  - {fileID: 8300000, guid: d17b853065f5d5845bb2b6cfd0f69a4d, type: 3}
+  - {fileID: 8300000, guid: 2512e9c68eac7c34bb659bf3d1d6102f, type: 3}
   healthChanceWeight: 2
   manaChanceWeight: 1
   potionChance: 20

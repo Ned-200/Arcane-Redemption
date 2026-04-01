@@ -13,7 +13,9 @@ public class StaffWeapon : RangedWeapon
 
     [Header("Staff Audio")]
     [SerializeField] private AudioClip chargingSound;
-    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip[] fireAttackSounds;
+    [SerializeField] private AudioClip[] waterAttackSounds;
+    [SerializeField] private AudioClip[] plantAttackSounds;
     [SerializeField] private AudioClip aimStartSound;
     [SerializeField] private AudioClip aimEndSound;
     [SerializeField] private float soundVolume = 1f;
@@ -43,7 +45,7 @@ public class StaffWeapon : RangedWeapon
         loopingAudioSource.volume = soundVolume;
         loopingAudioSource.loop = true;
 
-        Debug.Log($"[StaffWeapon] Audio initialized on {gameObject.name} | fireSound={fireSound != null} | chargingSound={chargingSound != null} | aimStartSound={aimStartSound != null} | aimEndSound={aimEndSound != null}");
+        Debug.Log($"[StaffWeapon] Audio initialized on {gameObject.name} | waterAttackSounds={waterAttackSounds != null} |  plantAttackSounds={plantAttackSounds != null} |  fireAttackSounds={fireAttackSounds != null} | chargingSound={chargingSound != null} | aimStartSound={aimStartSound != null} | aimEndSound={aimEndSound != null}");
     }
 
     protected override void PlayAttackAnimation()
@@ -66,7 +68,17 @@ public class StaffWeapon : RangedWeapon
         base.OnProjectileFired(projectile);
 
         Debug.Log($"[StaffWeapon] Projectile fired!");
-        PlaySound(fireSound);
+
+        if (projectile.element == "Fire")
+        {
+            PlaySound(fireAttackSounds[Random.Range(0, fireAttackSounds.Length)]);
+        } else if (projectile.element == "Water")
+        {
+            PlaySound(waterAttackSounds[Random.Range(0, waterAttackSounds.Length)]);
+        } else if (projectile.element == "Plant")
+        {
+            PlaySound(plantAttackSounds[Random.Range(0, plantAttackSounds.Length)]);
+        }
 
         if (staffGlow != null)
         {

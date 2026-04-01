@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Audio;
 
 public class LowHealthPostProcess : MonoBehaviour
 {
@@ -14,6 +15,15 @@ public class LowHealthPostProcess : MonoBehaviour
     public float baseVignetteIntensity = 0.2f;
     public float maxVignetteIntensity = 0.45f;
     public float pulseSpeed = 2f;
+
+    [Header("Sounds")]
+    public AudioClip heartbeatSound;
+    public AudioClip breathingSound;
+    public AudioClip synthSound;
+    private GameObject breathingSoundObject;
+    private GameObject synthSoundObject;
+    [SerializeField] private AudioSource loopingAudioSource;
+    [SerializeField] private float soundVolume = 1f;
 
     [Header("Saturation Pulse (only when critical)")]
     [Tooltip("How desaturated you get at the pulse PEAK when just barely critical.")]
@@ -39,6 +49,12 @@ public class LowHealthPostProcess : MonoBehaviour
             globalVolume.profile.TryGet(out colorAdjustments);
             globalVolume.profile.TryGet(out vignette);
         }
+
+        // Separate AudioSource for looping sounds
+        loopingAudioSource.playOnAwake = false;
+        loopingAudioSource.spatialBlend = 0f;
+        loopingAudioSource.volume = soundVolume;
+        loopingAudioSource.loop = true;
     }
 
     void Update()
@@ -52,6 +68,47 @@ public class LowHealthPostProcess : MonoBehaviour
     public void SetHealthPercent(float newHealthPercent)
     {
         healthPercent = Mathf.Clamp01(newHealthPercent);
+
+        if (healthPercent <= criticalThreshold) {
+            PlayLoopingSound(heartbeatSound);
+
+            if (breathingSound != null && breathingSoundObject == null) {
+                breathingSoundObject = new GameObject("breathingSoundObject");
+                breathingSoundObject.transform.SetParent(transform);
+                AudioSource breathingSource = breathingSoundObject.AddComponent<AudioSource>();
+                breathingSource.PlayOneShot(breathingSound);
+                Destroy(breathingSoundObject, breathingSound.length);
+            }
+            if (synthSound != null && synthSoundObject == null) {
+                synthSoundObject = new GameObject("synthSoundObject");
+                synthSoundObject.transform.SetParent(transform);
+                AudioSource synthSource = synthSoundObject.AddComponent<AudioSource>();
+                synthSource.PlayOneShot(synthSound);
+                Destroy(synthSoundObject, synthSound.length);
+            }
+
+        } else {
+            StopLoopingSound();
+            if (synthSoundObject != null) {
+                synthSoundObject = null;
+                Destroy(synthSoundObject);
+            }
+            if (breathingSoundObject != null) {
+                breathingSoundObject = null;
+                Destroy(breathingSoundObject);
+            }
+        }
+
+        if (newHealthPercent == 0)
+        {
+            StopLoopingSound();
+            if (synthSoundObject != null) {
+                Destroy(synthSoundObject);
+            }
+            if (breathingSoundObject != null) {
+                Destroy(breathingSoundObject);
+            }
+        }
     }
 
     void UpdatePulse()
@@ -105,6 +162,27 @@ public class LowHealthPostProcess : MonoBehaviour
             // Fully normal when not critical
             colorAdjustments.saturation.value =
                 Mathf.Lerp(colorAdjustments.saturation.value, 0f, Time.deltaTime * returnSmoothSpeed);
+        }
+    }
+
+    private void PlayLoopingSound(AudioClip clip)
+    {
+        if (clip != null && loopingAudioSource != null)
+        {
+            loopingAudioSource.clip = clip;
+            loopingAudioSource.volume = soundVolume;
+            loopingAudioSource.Play();
+            
+            Debug.Log($"[StaffWeapon] Playing looping sound: {clip.name}");
+        }
+    }
+
+    private void StopLoopingSound()
+    {
+        if (loopingAudioSource != null && loopingAudioSource.isPlaying)
+        {
+            Debug.Log("[StaffWeapon] Stopping looping sound");
+            loopingAudioSource.Stop();
         }
     }
 }

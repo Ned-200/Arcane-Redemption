@@ -21,7 +21,7 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected TrailRenderer trail;
 
     [Header("Audio")]
-    [SerializeField] protected AudioClip impactSound;
+    [SerializeField] protected AudioClip[] impactSounds;
 
     protected BaseCharacter owner;
     protected Rigidbody rb;
@@ -347,9 +347,9 @@ public class ProjectileBase : MonoBehaviour
 
     protected virtual void PlayImpactSound()
     {
-        if (impactSound != null)
+        if (impactSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(impactSound, transform.position);
+            AudioSource.PlayClipAtPoint(impactSounds[Random.Range(0, impactSounds.Length)], transform.position);
         }
     }
 

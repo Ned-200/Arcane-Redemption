@@ -37468,6 +37468,7 @@ GameObject:
   - component: {fileID: 7065954753341959028}
   - component: {fileID: 424467593391953597}
   - component: {fileID: 5034271716910781457}
+  - component: {fileID: 5049141510891052718}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -37844,6 +37845,65 @@ MonoBehaviour:
   peakDesatAtThreshold: -25
   peakDesatAtZeroHealth: -90
   returnSmoothSpeed: 6
+--- !u!114 &5049141510891052718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359213788509960824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e4f77fc99c26d42a5d26bab28c17c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CapeCollisionPusher
+  bootPushers:
+  - bone: {fileID: 6931154157322962557}
+    radius: 0
+  - bone: {fileID: 4179801906100161635}
+    radius: 0
+  - bone: {fileID: 5201369766576446860}
+    radius: 0
+  - bone: {fileID: 9155985886202493044}
+    radius: 0.5
+  - bone: {fileID: 3919952381884722188}
+    radius: 0
+  - bone: {fileID: 3778948499906085243}
+    radius: 0
+  - bone: {fileID: 1095531551122619040}
+    radius: 0
+  - bone: {fileID: 3923998004899453809}
+    radius: 0
+  - bone: {fileID: 8858647903051560297}
+    radius: 0.5
+  - bone: {fileID: 8858647903051560297}
+    radius: 0
+  - bone: {fileID: 5237626186626162222}
+    radius: 0.05
+  - bone: {fileID: 1365165713478441893}
+    radius: 0
+  capeBones:
+  - {fileID: 8342866915600509412}
+  - {fileID: 7211568899751143643}
+  - {fileID: 7097123188523567700}
+  - {fileID: 4786687840054081801}
+  - {fileID: 1812780778865048094}
+  - {fileID: 5946756899636897632}
+  - {fileID: 6062625096233346660}
+  - {fileID: 7892308093539135479}
+  - {fileID: 3500411608500751549}
+  - {fileID: 6693767934800660477}
+  - {fileID: 7085602051525046366}
+  - {fileID: 1065066538569277145}
+  - {fileID: 249142957535990226}
+  - {fileID: 7398307988961311597}
+  - {fileID: 1677083133157659119}
+  - {fileID: 6459264649129229835}
+  - {fileID: 7974002538488432503}
+  - {fileID: 1065066538569277145}
+  - {fileID: 6981552140130888564}
+  pushStrength: 5
+  restoreSpeed: 8
 --- !u!1 &4373977770803971324
 GameObject:
   m_ObjectHideFlags: 0

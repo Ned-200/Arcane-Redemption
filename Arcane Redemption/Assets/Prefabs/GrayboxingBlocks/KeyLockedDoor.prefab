@@ -582,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireDungeonKeyDoor
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   promptPosition: {fileID: 7882741817263899855}
+  keySound: {fileID: 8300000, guid: 94b77646e70f5f24f8bb8a1edc015a92, type: 3}
   dungeonKey: {fileID: 0}
   targetPosition: {x: 0, y: 6.5, z: 0}
   movingDoorPart: {fileID: 3121727211030690098}

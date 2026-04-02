@@ -38,7 +38,7 @@ public class DungeonKey : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !pickedUp)
         {
             // Remove prompt
             if (interactPrompt != null)

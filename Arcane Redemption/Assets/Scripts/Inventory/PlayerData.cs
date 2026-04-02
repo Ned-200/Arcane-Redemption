@@ -7,6 +7,7 @@ public class PlayerData : MonoBehaviour
     private Transform waterDungeonSpawn;
     private Transform plantDungeonSpawn;
     private Transform volcanoSpawn;
+    private Transform baySpawn;
 
     public bool fireGemObtained;
     public bool waterGemObtained;
@@ -204,6 +205,21 @@ public class PlayerData : MonoBehaviour
                 }
             }
 
+            
+            if (lastScene == "BayBattleArena") { // If coming from Bay Boss Arena
+
+                // Set player spawn position
+                baySpawn = GameObject.Find("BaySpawn").transform;
+                if (baySpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = baySpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find BaySpawn!");
+                }
+            }
+
             // ALWAYS DO IF IN MAIN SCENE, REGARDLESS OF LAST SCENE
             if (plantBridgeGrown) {
                 GameObject towerPlantBridgeCastPoint = GameObject.Find("TowerPlantBridgeCastPoint");
@@ -262,6 +278,24 @@ public class PlayerData : MonoBehaviour
                 } else
                 {
                     Debug.LogError("PlayerData can't find TerrainSwap!");
+                }
+
+                GameObject WaterDungeonPlantWall = GameObject.Find("WaterDungeonVineWall");
+                GameObject PlantDungeonPlantWall = GameObject.Find("PlantDungeonVineWall");
+                // Make vines burnable if boss was already defeated
+                if (WaterDungeonPlantWall != null && PlantDungeonPlantWall != null)
+                {
+                    if (!plantGemObtained) // make plant dungeon entrance burnable if plant gem not been entered before
+                    {
+                        PlantDungeonPlantWall.tag = "PlantWall";
+                    }
+                    if (!waterGemObtained) // make water dungeon entrance burnable if water gem not been entered before
+                    {
+                        WaterDungeonPlantWall.tag = "PlantWall";
+                    }
+                } else
+                {
+                    Debug.LogError("PlayerData can't find Water / Plant Dungeon Vine Walls!");
                 }
 
             } else // Make tree sad before boss fight (by hiding calm tree)

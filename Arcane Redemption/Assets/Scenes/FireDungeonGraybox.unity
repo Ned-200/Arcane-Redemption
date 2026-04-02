@@ -149,6 +149,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (6)
@@ -197,10 +201,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 4809231948412303819, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8301,6 +8301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (10)
@@ -8349,10 +8353,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27069,6 +27069,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (8)
@@ -27117,10 +27121,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -43014,6 +43014,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (2)
@@ -43062,10 +43066,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -67506,6 +67506,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (11)
@@ -67554,10 +67558,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -80947,6 +80947,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3143092087721740648, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143092087721740648, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0aeada6c899521e47acfba8f29c9a9ed, type: 2}
+    - target: {fileID: 3143092087721740648, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (9)
@@ -80995,22 +81011,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3143092087721740648, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3143092087721740648, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 0aeada6c899521e47acfba8f29c9a9ed, type: 2}
-    - target: {fileID: 3143092087721740648, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -81309,6 +81309,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (5)
@@ -81357,10 +81361,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -83570,6 +83570,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (3)
@@ -83618,10 +83622,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89731,6 +89731,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (12)
@@ -89779,10 +89783,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -113949,6 +113949,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     - target: {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
       propertyPath: m_Name
       value: NewEnemy (7)
@@ -113997,10 +114001,6 @@ PrefabInstance:
       propertyPath: burningPrefab
       value: 
       objectReference: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
-    - target: {fileID: 3302655523602131432, guid: 3335f5b900376e24487b1f8ed4f46ba2, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ccb039140f2d69149b70180f3df66105, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -133623,7 +133623,7 @@ PrefabInstance:
       objectReference: {fileID: 1536671135}
     - target: {fileID: 4385797977045260204, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_VersionIndex
-      value: 4564
+      value: 4570
       objectReference: {fileID: 0}
     - target: {fileID: 4407070695179342706, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_LocalPosition.x

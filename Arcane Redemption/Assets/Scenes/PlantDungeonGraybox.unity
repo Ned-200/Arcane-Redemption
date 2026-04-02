@@ -8930,6 +8930,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tough Vine Door A
       objectReference: {fileID: 0}
+    - target: {fileID: 8793480572143859544, guid: 6d888ffcb74a49e4aba5124b7068fe49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9181125301553352423, guid: 6d888ffcb74a49e4aba5124b7068fe49, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -15909,6 +15913,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3881889454421797483}
+  - {fileID: 1679399680}
   - {fileID: 880734973}
   - {fileID: 436046143}
   - {fileID: 2116247815}
@@ -35523,6 +35528,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tough Vine Door C
       objectReference: {fileID: 0}
+    - target: {fileID: 8793480572143859544, guid: 6d888ffcb74a49e4aba5124b7068fe49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9181125301553352423, guid: 6d888ffcb74a49e4aba5124b7068fe49, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -40242,6 +40251,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 99186143}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!1 &1600393672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3714497732830559262, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+  m_PrefabInstance: {fileID: 757838704571787295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1610003855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41302,6 +41316,122 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 250261097413477216, guid: 1ae406cbc7490dc438307899f7657d0e, type: 3}
   m_PrefabInstance: {fileID: 1667103394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1679399679
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 655111721}
+    m_Modifications:
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 51.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.7577446
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 21.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1562572149019372208, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 826922198}
+    - target: {fileID: 2806314005405925008, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 826922198}
+    - target: {fileID: 4747953078193029018, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: m_Name
+      value: Flower 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907742267525539413, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 826922198}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: objectsToEnable.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: objectsToDisable.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: 'objectsToEnable.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1446543428}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: 'objectsToEnable.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1679399681}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: 'objectsToDisable.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1878917291}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: 'objectsToDisable.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1679399682}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: 'objectsToDisable.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1446543428}
+    - target: {fileID: 8647827107615938294, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 826922198}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+--- !u!4 &1679399680 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1321037399766654209, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+  m_PrefabInstance: {fileID: 1679399679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1679399681 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3714497732830559262, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+  m_PrefabInstance: {fileID: 1679399679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1679399682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3706315174787800950, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+  m_PrefabInstance: {fileID: 1679399679}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1687868352
 PrefabInstance:
@@ -46958,17 +47088,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 826922198}
     - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: objectsToEnable.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: objectsToDisable.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
       propertyPath: 'objectsToEnable.Array.data[0]'
       value: 
       objectReference: {fileID: 1303539546}
     - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
       propertyPath: 'objectsToEnable.Array.data[1]'
       value: 
-      objectReference: {fileID: 1446543428}
+      objectReference: {fileID: 1600393672}
     - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
       propertyPath: 'objectsToDisable.Array.data[0]'
       value: 
       objectReference: {fileID: 398868401}
+    - target: {fileID: 8497321557643144167, guid: 5af41d4933780764281f4465b193eeab, type: 3}
+      propertyPath: 'objectsToDisable.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1446543428}
     - target: {fileID: 8647827107615938294, guid: 5af41d4933780764281f4465b193eeab, type: 3}
       propertyPath: LightsModule.light
       value: 

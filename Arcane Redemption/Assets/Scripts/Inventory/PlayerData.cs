@@ -5,6 +5,7 @@ public class PlayerData : MonoBehaviour
 {
     private Transform fireDungeonSpawn;
     private Transform waterDungeonSpawn;
+    private Transform plantDungeonSpawn;
     private Transform volcanoSpawn;
 
     public bool fireGemObtained;
@@ -175,6 +176,20 @@ public class PlayerData : MonoBehaviour
                 }
             }
             
+            if (lastScene == "PlantDungeonGraybox") { // If coming from Plant Dungeon
+
+                // Set player spawn position
+                plantDungeonSpawn = GameObject.Find("PlantDungeonSpawn").transform;
+                if (plantDungeonSpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = plantDungeonSpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find plantDungeonSpawn!");
+                }
+            }
+
             if (lastScene == "VolcanoBattleArena") { // If coming from Volcano Boss Arena
 
                 // Set player spawn position

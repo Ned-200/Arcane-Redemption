@@ -105683,6 +105683,10 @@ MonoBehaviour:
   - {fileID: 1389128071}
   teleportDoor: {fileID: 1723487252}
   moveDuration: 5
+  movingSounds:
+  - {fileID: 8300000, guid: aab4772d7d0bdbd41a71ef1c7115a85d, type: 3}
+  - {fileID: 8300000, guid: 25c9055661c00a749a9763e67a93e468, type: 3}
+  - {fileID: 8300000, guid: 8eeb2345291cf4143bc8bcbc7c629c56, type: 3}
   characterController: {fileID: 4174744767507445671}
   playerController: {fileID: 4174744767507445679}
   environmentDeathEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
@@ -124624,6 +124628,7 @@ MonoBehaviour:
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   promptPosition: {fileID: 1992022743}
   pickUpSound: {fileID: 8300000, guid: 648c4b5ada47bd244915fba5d1902da8, type: 3}
+  movingDoorSound: {fileID: 8300000, guid: aab4772d7d0bdbd41a71ef1c7115a85d, type: 3}
   gemMesh: {fileID: 919132148553893529}
   gemEffect: {fileID: 7038505792361716238}
   gemDoor: {fileID: 1389128071}
@@ -133623,7 +133628,7 @@ PrefabInstance:
       objectReference: {fileID: 1536671135}
     - target: {fileID: 4385797977045260204, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_VersionIndex
-      value: 4570
+      value: 4585
       objectReference: {fileID: 0}
     - target: {fileID: 4407070695179342706, guid: de0a1de79eb01374ab76babfdbb9e90e, type: 3}
       propertyPath: m_LocalPosition.x

@@ -11,6 +11,7 @@ public class DungeonKeyDoor : MonoBehaviour
     [SerializeField] private Transform promptPosition;
     private GameObject keyUI;
     [SerializeField] protected AudioClip keySound;
+    [SerializeField] protected AudioClip[] movingSounds;
     
     
     [Header("References")]
@@ -65,10 +66,15 @@ public class DungeonKeyDoor : MonoBehaviour
             if (impulseSource) {
                 impulseSource.GenerateImpulse(0.5f);
             }
-            // Play Sound
+            // Play Key Sound
             if (keySound != null)
             {
                 AudioSource.PlayClipAtPoint(keySound, transform.position);
+            }
+            // Play Door Moving Sound
+            if (movingSounds.Length > 0)
+            {
+                AudioSource.PlayClipAtPoint(movingSounds[Random.Range(0, movingSounds.Length)], transform.position);
             }
         }
         if (dungeonKey.pickedUp && !glowingKeyHole)

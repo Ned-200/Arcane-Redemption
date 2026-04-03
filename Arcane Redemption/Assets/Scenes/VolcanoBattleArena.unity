@@ -48726,6 +48726,10 @@ MonoBehaviour:
   - {fileID: 1146763055}
   teleportDoor: {fileID: 0}
   moveDuration: 4
+  movingSounds:
+  - {fileID: 8300000, guid: aab4772d7d0bdbd41a71ef1c7115a85d, type: 3}
+  - {fileID: 8300000, guid: 25c9055661c00a749a9763e67a93e468, type: 3}
+  - {fileID: 8300000, guid: 8eeb2345291cf4143bc8bcbc7c629c56, type: 3}
   characterController: {fileID: 497637279}
   playerController: {fileID: 0}
   environmentDeathEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}

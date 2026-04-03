@@ -13,6 +13,10 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] protected GameObject teleportDoor;
     [SerializeField] protected float moveDuration = 5.0f;
     
+    [SerializeField] protected bool linearSoundDropoff;
+    [SerializeField] protected AudioClip[] movingSounds;
+
+    
     [Header("Player/EnvironmentDeath")]
     protected int defaultGravity = -20;
     protected int drowningGravity = -5;
@@ -41,6 +45,24 @@ public class DungeonManager : MonoBehaviour
     {
         Vector3 startPosition = movingObject.transform.localPosition;
         float timeElapsed = 0.0f;
+
+        // Play and handle moving sounds
+        if (movingSounds.Length > 0)
+        {
+            int movingSoundIndex = Random.Range(0, movingSounds.Length);
+            GameObject movingSoundObject = new GameObject("MovingSoundObject");
+            movingSoundObject.transform.SetParent(movingObject.transform);
+            movingSoundObject.transform.localPosition = new Vector3(0, 0, 0);
+            AudioSource movingSound = movingSoundObject.AddComponent<AudioSource>();
+            movingSound.maxDistance = 125;
+            movingSound.spatialBlend = 1;
+            if (linearSoundDropoff) {
+                movingSound.rolloffMode = AudioRolloffMode.Linear;
+            }
+
+            movingSound.PlayOneShot(movingSounds[movingSoundIndex]);
+            Destroy(movingSoundObject, movingSounds[movingSoundIndex].length);
+        }
 
         while (timeElapsed < duration)
         {

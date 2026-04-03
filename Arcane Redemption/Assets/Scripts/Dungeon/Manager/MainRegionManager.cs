@@ -47,6 +47,8 @@ public class MainRegionManager : DungeonManager
             playerController.canMove = false;
             Invoke(nameof(EnableCinematicCamera), 2.0f);
         }
+
+        linearSoundDropoff = true;
     }
 
     private void Update() {

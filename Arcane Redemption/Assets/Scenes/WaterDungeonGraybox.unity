@@ -53962,6 +53962,7 @@ MonoBehaviour:
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   promptPosition: {fileID: 1044242012}
   pickUpSound: {fileID: 0}
+  movingDoorSound: {fileID: 0}
   gemMesh: {fileID: 1997949290}
   gemEffect: {fileID: 7446020307445930463}
   gemDoor: {fileID: 1023316575}
@@ -170356,6 +170357,10 @@ MonoBehaviour:
   - {fileID: 798726735}
   teleportDoor: {fileID: 1723487252}
   moveDuration: 2
+  movingSounds:
+  - {fileID: 8300000, guid: aab4772d7d0bdbd41a71ef1c7115a85d, type: 3}
+  - {fileID: 8300000, guid: 25c9055661c00a749a9763e67a93e468, type: 3}
+  - {fileID: 8300000, guid: 8eeb2345291cf4143bc8bcbc7c629c56, type: 3}
   characterController: {fileID: 1453777675}
   playerController: {fileID: 0}
   environmentDeathEffectPrefab: {fileID: 261948290644060713, guid: 5f32dbfb26a037f409a8ecbbaad87f11, type: 3}

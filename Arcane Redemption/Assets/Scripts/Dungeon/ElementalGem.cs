@@ -14,6 +14,7 @@ public class ElementalGem : MonoBehaviour
     private bool playerInRange = false;
     private PlayerData playerData;
     [SerializeField] protected AudioClip pickUpSound;
+    [SerializeField] protected AudioClip movingDoorSound;
 
     [Header("Gem Rendering")]
     [SerializeField] private GameObject gemMesh;
@@ -82,7 +83,7 @@ public class ElementalGem : MonoBehaviour
                 AudioSource.PlayClipAtPoint(pickUpSound, transform.position);
             }
 
-            if (gemElement != 3) {
+            if (gemElement == 1) {
                 // Start the tweening coroutine
                 boxCollider.enabled = true;
                 StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
@@ -91,7 +92,16 @@ public class ElementalGem : MonoBehaviour
                 if (impulseSource) {
                     impulseSource.GenerateImpulse(0.5f);
                 }
-            } else
+                if (movingDoorSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(movingDoorSound, transform.position);
+                }
+            } else if (gemElement == 2)
+            {
+                // Start the tweening coroutine
+                boxCollider.enabled = true;
+                StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
+            } else if (gemElement == 3)
             {
                 DisintegrateUP bridgeDisintegrate = gemDoor.GetComponent<DisintegrateUP>();
                 if (bridgeDisintegrate != null)

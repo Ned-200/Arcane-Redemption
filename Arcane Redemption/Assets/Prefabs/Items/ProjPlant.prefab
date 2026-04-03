@@ -170,6 +170,10 @@ MonoBehaviour:
   impactSounds:
   - {fileID: 8300000, guid: 00694273f75ed234b9fd712b757e9c9e, type: 3}
   - {fileID: 8300000, guid: ca976f398c076274a95896409c145a23, type: 3}
+  wallSounds:
+  - {fileID: 8300000, guid: ed9d5c9e02d48c341965e61809e5b457, type: 3}
+  - {fileID: 8300000, guid: c9317b41a2ce14a498ed2996e9228f76, type: 3}
+  - {fileID: 8300000, guid: 0b1f71b7920054243994a6591823a943, type: 3}
 --- !u!114 &-1999294816065245334
 MonoBehaviour:
   m_ObjectHideFlags: 0

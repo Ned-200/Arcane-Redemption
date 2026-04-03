@@ -793,10 +793,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8369151844866561918, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1449309247}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
 --- !u!114 &96791615 stripped
 MonoBehaviour:
@@ -33605,19 +33602,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!1 &1449309243 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8369151844866561918, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
-  m_PrefabInstance: {fileID: 96791614}
-  m_PrefabAsset: {fileID: 0}
---- !u!81 &1449309247
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449309243}
-  m_Enabled: 1
 --- !u!1 &1453353896
 GameObject:
   m_ObjectHideFlags: 0
@@ -48664,6 +48648,7 @@ GameObject:
   - component: {fileID: 1910004086}
   - component: {fileID: 1910004087}
   - component: {fileID: 1910004084}
+  - component: {fileID: 1910004088}
   m_Layer: 0
   m_Name: VolcanoBossManager
   m_TagString: Untagged
@@ -48726,6 +48711,7 @@ MonoBehaviour:
   - {fileID: 1146763055}
   teleportDoor: {fileID: 0}
   moveDuration: 4
+  linearSoundDropoff: 0
   movingSounds:
   - {fileID: 8300000, guid: aab4772d7d0bdbd41a71ef1c7115a85d, type: 3}
   - {fileID: 8300000, guid: 25c9055661c00a749a9763e67a93e468, type: 3}
@@ -48744,6 +48730,103 @@ MonoBehaviour:
   cutsceneEnded: 0
   BossNameDisplay: {fileID: 217238787}
   BossDescriptionDisplay: {fileID: 1044937509}
+--- !u!82 &1910004088
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910004083}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: e3797462b9e75e04f92317562c226a9e, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 1a34ff91d703ca54ebd26d84b3bddc5f, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1912061582
 GameObject:
   m_ObjectHideFlags: 0
@@ -53444,6 +53527,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1552671485}
   - {fileID: 280224285}
   - {fileID: 1353991161}
   - {fileID: 2081104915}
@@ -53473,7 +53557,6 @@ SceneRoots:
   - {fileID: 1221999126}
   - {fileID: 3009492661546043014}
   - {fileID: 1486578878}
-  - {fileID: 1552671485}
   - {fileID: 1250695706}
   - {fileID: 1146763061}
   - {fileID: 791236693}

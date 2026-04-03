@@ -171,6 +171,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 054e15e6f33025948be6c400c5e6c65f, type: 3}
   - {fileID: 8300000, guid: 6afcb5081514ca54daeb261398b14608, type: 3}
   - {fileID: 8300000, guid: 683c0b8de49178d438f46f3c1cc82694, type: 3}
+  wallSounds:
+  - {fileID: 8300000, guid: ed9d5c9e02d48c341965e61809e5b457, type: 3}
+  - {fileID: 8300000, guid: c9317b41a2ce14a498ed2996e9228f76, type: 3}
+  - {fileID: 8300000, guid: 0b1f71b7920054243994a6591823a943, type: 3}
 --- !u!114 &-1999294816065245334
 MonoBehaviour:
   m_ObjectHideFlags: 0

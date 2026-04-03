@@ -21,7 +21,8 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField] protected TrailRenderer trail;
 
     [Header("Audio")]
-    [SerializeField] protected AudioClip[] impactSounds;
+    [SerializeField] protected AudioClip[] impactSounds;    
+    [SerializeField] protected AudioClip[] wallSounds;
 
     protected BaseCharacter owner;
     protected Rigidbody rb;
@@ -220,6 +221,11 @@ public class ProjectileBase : MonoBehaviour
             Debug.LogError($"{other.gameObject.name}: PlantWall missing Collider component!");
             return false;
         }
+        
+        if (wallSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(wallSounds[Random.Range(0, wallSounds.Length)], other.transform.position);
+        }
 
         return true;
     }
@@ -276,6 +282,12 @@ public class ProjectileBase : MonoBehaviour
         if (flameWallScript != null) flameWallScript.enabled = false;
 
         Destroy(flameWall, 3f);
+
+        if (wallSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(wallSounds[Random.Range(0, wallSounds.Length)], other.transform.position);
+        }
+
         return true;
     }
 

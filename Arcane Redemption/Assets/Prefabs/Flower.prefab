@@ -16255,8 +16255,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1321037399766654209}
   - component: {fileID: 8497321557643144167}
-  - component: {fileID: 2404831173269097674}
   - component: {fileID: 7090897539934894982}
+  - component: {fileID: 2469263125362939815}
   m_Layer: 9
   m_Name: Flower
   m_TagString: Flower
@@ -16304,27 +16304,13 @@ MonoBehaviour:
   - {fileID: 3706315174787800950}
   hitCooldown: 0
   flowerAnim: {fileID: 7090897539934894982}
---- !u!135 &2404831173269097674
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747953078193029018}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 3
-  m_Center: {x: 0, y: 3, z: 0}
+  flowerSounds:
+  - {fileID: 8300000, guid: af7e39b6993788640a2b977c87b39dd1, type: 3}
+  - {fileID: 8300000, guid: 8ef428c1c3f5a9144b81695a0ee32b7a, type: 3}
+  vineSounds:
+  - {fileID: 8300000, guid: ed9d5c9e02d48c341965e61809e5b457, type: 3}
+  - {fileID: 8300000, guid: c9317b41a2ce14a498ed2996e9228f76, type: 3}
+  - {fileID: 8300000, guid: 0b1f71b7920054243994a6591823a943, type: 3}
 --- !u!95 &7090897539934894982
 Animator:
   serializedVersion: 7
@@ -16347,6 +16333,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &2469263125362939815
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747953078193029018}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Height: 8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.8483586, z: 0}
 --- !u!1 &4759775050888559853
 GameObject:
   m_ObjectHideFlags: 0

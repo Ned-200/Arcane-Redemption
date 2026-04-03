@@ -12,6 +12,10 @@ public class SwordHitToggle : MonoBehaviour
     [Header("Animations")]
     [SerializeField] private Animator flowerAnim;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip[] flowerSounds;
+    [SerializeField] private AudioClip[] vineSounds;
+
     private bool toggledState = false;
     private float lastHitTime = -999f;
 
@@ -54,6 +58,13 @@ public class SwordHitToggle : MonoBehaviour
             if (obj == null) continue;
             SetObjectState(obj, !toggledState);
         }
+
+
+        // Play sounds
+        if (flowerSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(flowerSounds[Random.Range(0, flowerSounds.Length)], transform.position);
+        }
     }
 
     private void SetObjectState(GameObject obj, bool turnOn)
@@ -73,5 +84,24 @@ public class SwordHitToggle : MonoBehaviour
             Debug.LogWarning($"[SwordHitToggle] No DisintegrateUP found on {obj.name}, using SetActive({turnOn})");
             obj.SetActive(turnOn);
         }
+
+        // Play sounds
+        Transform vineWall = FindChildWithTag(obj.transform, "Tough Plant Wall");
+        if (vineSounds.Length > 0 && vineWall != null)
+        {
+            AudioSource.PlayClipAtPoint(vineSounds[Random.Range(0, vineSounds.Length)], vineWall.position);
+        }
+    }
+
+    Transform FindChildWithTag(Transform parent, string tag)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.CompareTag(tag))
+            {
+                return child;
+            }
+        }
+        return null;
     }
 }

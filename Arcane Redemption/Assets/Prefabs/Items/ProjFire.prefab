@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -1999294816065245334}
   - component: {fileID: 9124062797746849643}
   - component: {fileID: 1610094738897832733}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ProjFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}

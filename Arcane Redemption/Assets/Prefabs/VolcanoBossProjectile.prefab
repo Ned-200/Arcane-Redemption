@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 232382449010741466}
   - component: {fileID: 4803577087771833336}
   - component: {fileID: 8947273010341232762}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: VolcanoBossProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

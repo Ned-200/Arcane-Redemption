@@ -42,7 +42,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3300895497809648042}
   - component: {fileID: 3398653454174530756}
-  m_Layer: 0
+  - component: {fileID: 3502167892890309106}
+  - component: {fileID: -593273402008373953}
+  - component: {fileID: 4236447722866446992}
+  m_Layer: 6
   m_Name: WaterBomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,6 +96,115 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3502167892890309106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853700350503265619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b57ce9d927d96f48a231f1beaa335be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BomberEnemy
+  maxHealth: 100
+  maxStamina: 100
+  maxMana: 100
+  staminaRegenRate: 20
+  manaRegenRate: 10
+  staminaRegenDelay: 1
+  manaRegenDelay: 2
+  weaponSlotTransform: {fileID: 0}
+  lowHealthEffects: {fileID: 0}
+  defaultWeapon: {fileID: 0}
+  damagedSounds: []
+  deathSound: {fileID: 0}
+  detectionRadius: 15
+  combatRadius: 3
+  attackRange: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  moveSpeed: 10
+  rotationSpeed: 5
+  element: Water
+  attackDamage: 5
+  attackCooldown: 2
+  deathDelay: 3
+  showDebugGizmos: 1
+  disintegrate: {fileID: 0}
+  partsToDisintegrate:
+  - {fileID: 1057700963505922304}
+  - {fileID: 1673948194272141491}
+  - {fileID: 5952299587280345971}
+  - {fileID: 4265048270396187717}
+  - {fileID: 487138344339373334}
+  - {fileID: 1950083834056761250}
+  patrolPointA: {fileID: 0}
+  patrolPointB: {fileID: 0}
+  flyingMoveSpeed: 10
+  flyingRotationSpeed: 5
+  dropRange: 5
+  splashDamage: 10
+  splashDamageRadius: 10
+  trackingDistance: 15
+  patrolReturnDistance: 20
+  groundDropSpeed: 8
+  bomberEnemyAnim: {fileID: 3398653454174530756}
+  blastEffectPrefab: {fileID: 7038505790271449214, guid: 9e2b7e27f78ec8d498e3f7efffc2692a, type: 3}
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 73
+  showFlyingDebugGizmos: 1
+--- !u!135 &-593273402008373953
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853700350503265619}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 1.75, z: 0}
+--- !u!54 &4236447722866446992
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853700350503265619}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &1020042382155761488
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4409049324643179446}
   - component: {fileID: 9192337603805756880}
+  - component: {fileID: 4265048270396187717}
   m_Layer: 0
   m_Name: LeftEye2
   m_TagString: Untagged
@@ -246,6 +359,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fe9d2f5fe79116245a0f209bc7a937db, type: 2}
+  - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -304,6 +418,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0053849844, y: 0.021913894, z: 0.016526029}
     m_Extent: {x: 0.00093787163, y: 0.0010865852, z: 0.0010479582}
   m_DirtyAABB: 0
+--- !u!114 &4265048270396187717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367025905581369020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &1940742603527704083
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6955763836268434449}
   - component: {fileID: 5300688263202540958}
+  - component: {fileID: 1673948194272141491}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -660,6 +794,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 6419302abaa30b745b190319e5549a58, type: 2}
+  - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -718,6 +853,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000088581815, y: 0.01722656, z: 0.0041941684}
     m_Extent: {x: 0.021275518, y: 0.022801252, z: 0.022606704}
   m_DirtyAABB: 0
+--- !u!114 &1673948194272141491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773164560380036414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &3885713170720633891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,6 +1166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6905587997714552229}
   - component: {fileID: 5688967143637887600}
+  - component: {fileID: 487138344339373334}
   m_Layer: 0
   m_Name: RightEye1
   m_TagString: Untagged
@@ -1060,6 +1215,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ae66eb2130a4f3643a9f7383a728c395, type: 2}
+  - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1118,6 +1274,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0043230252, y: 0.021281607, z: 0.016026886}
     m_Extent: {x: 0.003723343, y: 0.004343859, z: 0.004138449}
   m_DirtyAABB: 0
+--- !u!114 &487138344339373334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5186807078857251628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &5423413751104493893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,6 +1398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2641967198450987977}
   - component: {fileID: 3485267148121458278}
+  - component: {fileID: 5952299587280345971}
   m_Layer: 0
   m_Name: LeftEye1
   m_TagString: Untagged
@@ -1271,6 +1447,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ae66eb2130a4f3643a9f7383a728c395, type: 2}
+  - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1329,6 +1506,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0053568035, y: 0.019604877, z: 0.016083986}
     m_Extent: {x: 0.0033895131, y: 0.0042198286, z: 0.0041419934}
   m_DirtyAABB: 0
+--- !u!114 &5952299587280345971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5640112016823674643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &5756379004488736581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,6 +1725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2069669313233025397}
   - component: {fileID: 6533250199419896541}
+  - component: {fileID: 1950083834056761250}
   m_Layer: 0
   m_Name: RightEye2
   m_TagString: Untagged
@@ -1577,6 +1774,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fe9d2f5fe79116245a0f209bc7a937db, type: 2}
+  - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1635,6 +1833,25 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0045507136, y: 0.023459503, z: 0.016538298}
     m_Extent: {x: 0.0010198638, y: 0.0011555608, z: 0.0010914057}
   m_DirtyAABB: 0
+--- !u!114 &1950083834056761250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7542817322523471037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &7604009578094821963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,6 +1893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9009606922324748886}
   - component: {fileID: 3778619405562448133}
+  - component: {fileID: 1057700963505922304}
   m_Layer: 0
   m_Name: Propeller
   m_TagString: Untagged
@@ -1724,6 +1942,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 2375c5a2c0c9bfe429959dbee00ed099, type: 2}
+  - {fileID: 2100000, guid: 67ca76776d2eb7a4da81ea6e57d8384b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1782,6 +2001,25 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0041983156, y: 0.04030568, z: -0.000043047592}
     m_Extent: {x: 0.02011317, y: 0.0068465173, z: 0.018762054}
   m_DirtyAABB: 0
+--- !u!114 &1057700963505922304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7917978608708115181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc88cdad6ca4d684d978806dcb581576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Disintegrate
+  normalIndex: 0
+  disintegrateIndex: 1
+  weightProp: _Weight
+  delay: 0
+  duration: 1.2
+  destroyAfter: 1
+  destroyDelay: 0.5
 --- !u!1 &8202192368503877067
 GameObject:
   m_ObjectHideFlags: 0

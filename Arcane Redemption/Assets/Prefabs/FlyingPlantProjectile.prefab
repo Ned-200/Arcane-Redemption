@@ -4929,7 +4929,7 @@ GameObject:
   - component: {fileID: 3921183826804184593}
   - component: {fileID: 3101720167699748449}
   - component: {fileID: 8421105137482583317}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: FlyingPlantProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

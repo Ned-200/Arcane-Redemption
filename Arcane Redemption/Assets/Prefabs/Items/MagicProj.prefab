@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 907333691612357113}
   - component: {fileID: 1911119451317736253}
   - component: {fileID: -1999294816065245334}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MagicProj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,13 +154,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68258398c4b836b4e9fa3de325f84b5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileBase
+  damage: 10
+  speed: 20
   lifetime: 5
   destroyOnImpact: 1
   targetLayers:
     serializedVersion: 2
     m_Bits: 576
-  impactEffectPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}
+  element: 
+  toughVinesBurnable: 0
+  hitEffect: {fileID: 0}
   trail: {fileID: 0}
+  impactSounds: []
 --- !u!114 &-1999294816065245334
 MonoBehaviour:
   m_ObjectHideFlags: 0

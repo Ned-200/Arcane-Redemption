@@ -148,8 +148,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3ec823e032e4f474992ba2875511925e, type: 3}
   - {fileID: 8300000, guid: 9e68da24f8233ac4eb727805485fd7de, type: 3}
   - {fileID: 8300000, guid: 0058fc19aaeae814ebe776afd7c36318, type: 3}
-  attackRange: 2
-  attackAngle: 60
+  attackRange: 3
+  attackAngle: 90
   targetLayers:
     serializedVersion: 2
     m_Bits: 64

@@ -70,6 +70,10 @@ public class TreeBoss : EnemyCharacter
     [Header("Animation")]
     [SerializeField] private Animator bossAnimator;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] slamSounds;
+    [SerializeField] private AudioClip[] shootSounds;
+
     [Header("Boss UI")]
     [SerializeField] private string bossDisplayName = "Ancient Tree Guardian";
 
@@ -1121,6 +1125,12 @@ public class TreeBoss : EnemyCharacter
 
         GameObject vineRingInstance = Instantiate(vineRingPrefab, spawnPosition, Quaternion.identity);
 
+        // Play slam sound
+        if (slamSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(slamSounds[Random.Range(0, slamSounds.Length)], transform.position);
+        }
+
         Destroy(vineRingInstance, vineRingLifetime);
 
         Debug.Log($"[{gameObject.name}] 🌿 Spawned vine ring centered at {spawnPosition}");
@@ -1214,6 +1224,12 @@ public class TreeBoss : EnemyCharacter
         if (bossAnimator != null)
         {
             bossAnimator.Play("Shoot");
+        }
+
+        // Play shoot sound
+        if (shootSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(shootSounds[Random.Range(0, shootSounds.Length)], projectileSpawnPoint.position);
         }
 
         Vector3 spawnPosition = projectileSpawnPoint.position;

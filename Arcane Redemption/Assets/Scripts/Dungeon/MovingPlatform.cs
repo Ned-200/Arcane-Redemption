@@ -11,9 +11,17 @@ public class MovingPlatform : MonoBehaviour
 
     [SerializeField] private float moveDuration;
     [SerializeField] private float pauseDuration;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] waterMovingSounds;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("MovingPlatform: Can't find audioSource component!");
+        }
+
         movingPlatform = gameObject.transform.Find("Platform").gameObject;
         position1 = gameObject.transform.Find("Position1");
         position2 = gameObject.transform.Find("Position2");
@@ -42,11 +50,16 @@ public class MovingPlatform : MonoBehaviour
         }
 
         direction = !direction; // flip direction bool after each call
-
     }
 
     IEnumerator TweenPosition(GameObject movingObject, Vector3 targetPos, float duration)
     {
+        if (waterMovingSounds.Length > 0)
+        {
+            audioSource.clip = waterMovingSounds[Random.Range(0, waterMovingSounds.Length)];
+            audioSource.Play();
+        }
+
         Vector3 startPosition = movingObject.transform.localPosition;
         float timeElapsed = 0.0f;
 

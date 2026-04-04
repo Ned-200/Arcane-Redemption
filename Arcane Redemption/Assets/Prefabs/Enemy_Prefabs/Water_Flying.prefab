@@ -675,6 +675,9 @@ MonoBehaviour:
   groundPhaseHealthThreshold: 10
   groundDropSpeed: 8
   groundHeight: 1
+  shootSounds:
+  - {fileID: 8300000, guid: c92d3bfe3b69f0c4d8ead2d67338f12a, type: 3}
+  - {fileID: 8300000, guid: 64bcfee63dc521044b1ed58aaef640ff, type: 3}
   showFlyingDebugGizmos: 1
 --- !u!114 &1571534788377674183
 MonoBehaviour:

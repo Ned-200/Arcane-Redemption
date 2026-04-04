@@ -15,6 +15,10 @@ public class OpenSign : MonoBehaviour
     private bool viewingSign;
     [SerializeField] private DecalProjector decalProjector;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip creakSoundOpen;
+    [SerializeField] private AudioClip creakSoundClosed;
+
 
     void Start()
     {
@@ -59,6 +63,9 @@ public class OpenSign : MonoBehaviour
 
             // disable player movement
             playerController.canMove = false;
+
+            // Play open sounds
+            AudioSource.PlayClipAtPoint(creakSoundOpen, transform.position);
         }
 
         if (viewingSign && Input.GetMouseButtonDown(0))
@@ -67,9 +74,17 @@ public class OpenSign : MonoBehaviour
             signView.SetActive(false);
             viewingSign = false;
 
-            // enable player movement
-            playerController.canMove = true;
+            // enable player movement, with a delay to not attack on close
+            Invoke(nameof(ReenableMove), 0.1f);
+
+            // Play close sound
+            AudioSource.PlayClipAtPoint(creakSoundClosed, transform.position);
         }
+    }
+
+    private void ReenableMove()
+    {
+        playerController.canMove = true;
     }
 
     private Sprite MaterialToSprite(Material material) {

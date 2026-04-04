@@ -46,7 +46,10 @@ public class FlyingToGroundEnemy : EnemyCharacter
     [SerializeField] private float groundPhaseHealthThreshold = 10f; // Health value to trigger ground phase
     [SerializeField] private float groundDropSpeed = 8f;      // How fast to fall when transitioning
     [SerializeField] private float groundHeight = 0.5f;       // Y position when grounded
-    
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] shootSounds;
+
     [Header("Debug")]
     [SerializeField] private bool showFlyingDebugGizmos = true;
 
@@ -404,6 +407,12 @@ public class FlyingToGroundEnemy : EnemyCharacter
         // Get TreeBossProjectile component
         TreeBossProjectile projectile = projectileObj.GetComponent<TreeBossProjectile>();
         
+        // Play shoot sound
+        if (shootSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(shootSounds[Random.Range(0, shootSounds.Length)], projectileSpawnPoint.position);
+        }
+
         if (projectile != null)
         {
             // Initialize projectile with damage, owner, speed, and target

@@ -184,6 +184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OpenSign
   interactPromptPrefab: {fileID: 5010717163584122740, guid: 7c958427cda48b24baa9960e2b8d0759, type: 3}
   decalProjector: {fileID: 3503882695104781159}
+  creakSoundOpen: {fileID: 8300000, guid: 8be8f503998f61146a93efc715f02bf1, type: 3}
+  creakSoundClosed: {fileID: 8300000, guid: 521e58d4b07eb2c4a83cfa84debfd901, type: 3}
 --- !u!1 &1936880145476250784
 GameObject:
   m_ObjectHideFlags: 0

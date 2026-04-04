@@ -11,6 +11,7 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private GameObject BossCamera;
     [SerializeField] private Animator BossAnim;
     [SerializeField] private float moveYPosition = 75;
+    [SerializeField] private AudioClip slamSound;
     private bool cutscenePlaying;
     public bool cutsceneEnded;
     private Animator playerAnim;
@@ -64,9 +65,24 @@ public class BossRoomManager : DungeonManager
                 if (particles) {
                     particles.Play();
                 }
+
+                Invoke(nameof(playSlamSound), 2.5f);
             }
             
             Invoke(nameof(EnableBossCamera), moveDuration + 2.5f);
+        }
+    }
+
+    private void playSlamSound()
+    {
+        if (slamSound != null)
+        {
+            AudioSource audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+            audioSource.PlayOneShot(slamSound, 1);
+            Destroy(audioSource, slamSound.length);
+        } else
+        {
+            Debug.LogError("BossRoomManager: No slam sound found!");
         }
     }
 

@@ -107170,6 +107170,14 @@ PrefabInstance:
       propertyPath: groundHeight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 260259859067225434, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
+      propertyPath: shootingRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 260259859067225434, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
+      propertyPath: trackingDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8265424383781336733, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
       propertyPath: m_Name
       value: Plant_Flying
@@ -116108,6 +116116,14 @@ PrefabInstance:
     - target: {fileID: 260259859067225434, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
       propertyPath: groundHeight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 260259859067225434, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
+      propertyPath: shootingRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 260259859067225434, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
+      propertyPath: trackingDistance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8265424383781336733, guid: df51043aa2d62b44e96ffa8207cebe0a, type: 3}
       propertyPath: m_Name

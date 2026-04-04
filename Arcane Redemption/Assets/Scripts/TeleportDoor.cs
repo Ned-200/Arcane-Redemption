@@ -16,7 +16,7 @@ public class TeleportDoor : MonoBehaviour
     protected private bool teleporting = false;
     protected private bool playerInRange = false;
 
-    protected void Start()
+    protected virtual void Start()
     {
         // Get player data
         playerDataObject = GameObject.FindWithTag("PlayerData");

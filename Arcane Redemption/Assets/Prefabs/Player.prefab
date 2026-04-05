@@ -37612,16 +37612,26 @@ MonoBehaviour:
   jumpHeight: 2.5
   gravity: -20
   jumpStaminaCost: 15
+  jumpSounds:
+  - {fileID: 8300000, guid: cc8b3f0409de2ae4bb397d9b107d3389, type: 3}
+  - {fileID: 8300000, guid: cf5f019b5792bab4b812cf3badf4cbf7, type: 3}
   dashDistance: 5
   dashDuration: 0.3
   dashStaminaCost: 20
   dashCooldown: 1
   dashInvincibilityDuration: 1.5
+  dodgeSounds:
+  - {fileID: 8300000, guid: ac3bef88ab5cb894db7ddf75bb90ba56, type: 3}
+  - {fileID: 8300000, guid: 14e63ae07403c2248b0d86c836b89d1e, type: 3}
+  - {fileID: 8300000, guid: 14723bf57e5290a4c9e1dfbf8714a123, type: 3}
   groundCheckDistance: 0.2
   groundCheckRadius: 0.3
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  landSounds:
+  - {fileID: 8300000, guid: 7003dfea5c161df488c8882844c2250f, type: 3}
+  - {fileID: 8300000, guid: e98921ce493736848bb539fa54bf950c, type: 3}
   enableDebugLogs: 1
   showGroundCheckGizmo: 1
   velocity: {x: 0, y: 0, z: 0}

@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] public float gravity = -9.81f;
     [SerializeField] private float jumpStaminaCost = 15f;
+    [SerializeField] private AudioClip[] jumpSounds;
 
     [Header("Dash")]
     [SerializeField] private float dashDistance = 5f;
@@ -32,11 +33,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashStaminaCost = 20f;
     [SerializeField] private float dashCooldown = 1f;
     [SerializeField] private float dashInvincibilityDuration = 1.5f;
+    [SerializeField] private AudioClip[] dodgeSounds;
 
     [Header("Ground Check")]
     [SerializeField] private float groundCheckDistance = 0.2f;
     [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private LayerMask groundMask = -1;
+    [SerializeField] private AudioClip[] landSounds;
 
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogs = false;
@@ -128,6 +131,12 @@ public class PlayerController : MonoBehaviour
         // Just landed
         if (isGrounded && !wasGroundedLastFrame)
         {
+            // Play sounds
+            if (landSounds.Length > 0)
+            {
+                AudioSource.PlayClipAtPoint(landSounds[Random.Range(0, landSounds.Length)], transform.position);
+            }
+
             if (enableDebugLogs)
             {
                 Debug.Log("Player landed!");
@@ -253,6 +262,12 @@ public class PlayerController : MonoBehaviour
             playerAnim.Play("Jump", 0);
             playerAnim.Play("Jump", lowerBodyLayerIndex);
 
+            // Play sounds
+            if (jumpSounds.Length > 0)
+            {
+                AudioSource.PlayClipAtPoint(jumpSounds[Random.Range(0, jumpSounds.Length)], transform.position);
+            }
+
             if (enableDebugLogs)
             {
                 Debug.Log($"Jumping! Velocity Y: {velocity.y}, Stamina: {baseCharacter.CurrentStamina:F1}/{baseCharacter.MaxStamina}");
@@ -280,6 +295,12 @@ public class PlayerController : MonoBehaviour
             else
             {
                 dashDirection = move.normalized;
+            }
+
+            // Play sounds
+            if (dodgeSounds.Length > 0)
+            {
+                AudioSource.PlayClipAtPoint(dodgeSounds[Random.Range(0, dodgeSounds.Length)], transform.position);
             }
 
             // Play on both Base Layer (0) and LowerBody layer

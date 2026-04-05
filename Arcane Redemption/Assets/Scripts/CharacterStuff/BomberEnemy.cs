@@ -25,6 +25,7 @@ public class BomberEnemy : EnemyCharacter
     [SerializeField] private float flyingRotationSpeed = 3f;
     [SerializeField] private float dropRange = 5.0f;
     [SerializeField] private float splashDamage = 10.0f;
+    [SerializeField] private float playerDamage = 30.0f;
     [SerializeField] private float splashDamageRadius = 10.0f;
     private float flyingHeight;
     
@@ -37,6 +38,7 @@ public class BomberEnemy : EnemyCharacter
     [SerializeField] private Animator bomberEnemyAnim;
     [SerializeField] private GameObject blastEffectPrefab;
     [SerializeField] protected LayerMask groundLayers;
+    [SerializeField] protected AudioClip[] blastSounds;
     protected bool hasHit = false;
     
     [Header("Debug")]
@@ -430,12 +432,25 @@ public class BomberEnemy : EnemyCharacter
             BaseCharacter character = hit.GetComponent<BaseCharacter>();
             if (character != null && character != this)
             {
-                character.TakeDamage(splashDamage);
+                PlayerCharacter playerCharacter = character as PlayerCharacter;
+                if (playerCharacter != null) {
+                    playerCharacter.TakeDamage(playerDamage); 
+                }
+                EnemyCharacter enemyCharacter = character as EnemyCharacter;
+                if (enemyCharacter != null) {
+                    enemyCharacter.TakeDamage(splashDamage); 
+                }
             }
         }
         TakeDamage(maxHealth); // Deal damage to self once, for death sequence
 
         Instantiate(blastEffectPrefab, transform.position, blastEffectPrefab.transform.rotation);
+
+        // Play blast sound
+        if (blastSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(blastSounds[Random.Range(0, blastSounds.Length)], transform.position);
+        }
     }
 
     #endregion

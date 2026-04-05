@@ -23,6 +23,9 @@ public class BaseCharacter : MonoBehaviour
     [Header("Weapon Slot")]
     [SerializeField] protected Transform weaponSlotTransform;
 
+    [Header("Sounds")]
+    [SerializeField] protected AudioClip[] footstepSounds;
+
     #endregion
 
     #region Private Fields
@@ -443,6 +446,15 @@ public class BaseCharacter : MonoBehaviour
     // Weapon events
     protected virtual void OnWeaponEquipped(GameObject weapon) { }
     protected virtual void OnWeaponUnequipped(GameObject weapon) { }
+
+    protected virtual void Footstep()
+    {
+        // Play blast sound
+        if (footstepSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(footstepSounds[Random.Range(0, footstepSounds.Length)], transform.position);
+        }
+    }
 
     #endregion
 }

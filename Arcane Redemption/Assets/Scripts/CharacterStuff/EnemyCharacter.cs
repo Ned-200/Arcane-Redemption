@@ -14,6 +14,7 @@ public class EnemyCharacter : BaseCharacter
     [Header("Audio Clips")]
     [SerializeField] private AudioClip[] damagedSounds;
     [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip[] attackSounds;
 
     [Header("AI Settings")]
     [SerializeField] private float detectionRadius = 15f;
@@ -253,6 +254,11 @@ public class EnemyCharacter : BaseCharacter
         else
         {
             Debug.LogWarning($"{gameObject.name} attacked {targetPlayer.name} but target has no BaseCharacter component!");
+        }
+
+        if (attackSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(attackSounds[Random.Range(0, attackSounds.Length)], transform.position);
         }
 
         OnAttackPerformed();

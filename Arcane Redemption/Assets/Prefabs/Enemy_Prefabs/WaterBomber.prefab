@@ -147,6 +147,7 @@ MonoBehaviour:
   flyingRotationSpeed: 5
   dropRange: 5
   splashDamage: 10
+  playerDamage: 30
   splashDamageRadius: 10
   trackingDistance: 15
   patrolReturnDistance: 20
@@ -156,6 +157,9 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 73
+  blastSounds:
+  - {fileID: 8300000, guid: c4a27ccdc96fa6345b668b62a9b8ecb8, type: 3}
+  - {fileID: 8300000, guid: 4c716e7d79fbfd149ba3835450f74353, type: 3}
   showFlyingDebugGizmos: 1
 --- !u!135 &-593273402008373953
 SphereCollider:

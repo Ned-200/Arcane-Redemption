@@ -102,16 +102,32 @@ public class ElementalGem : MonoBehaviour
                 boxCollider.enabled = true;
                 StartCoroutine(TweenPosition(new Vector3(gemDoor.transform.localPosition.x, gemDoorHeight, gemDoor.transform.localPosition.z), moveDuration));
             } else if (gemElement == 3)
-            {
-                DisintegrateUP bridgeDisintegrate = gemDoor.GetComponent<DisintegrateUP>();
-                if (bridgeDisintegrate != null)
-                {
-                    bridgeDisintegrate.TriggerDisintegration(true);
-                } else
-                {
-                    Debug.LogError("ElementalGem: Could not fetch bridgeDisintegrate component!");
-                }
-            }
+{
+    DisintegrateSIDE[] bridgeDisintegrates = gemDoor.GetComponentsInChildren<DisintegrateSIDE>(true);
+
+    Debug.Log("Found disintegrates: " + bridgeDisintegrates.Length);
+
+    foreach (DisintegrateSIDE d in bridgeDisintegrates)
+    {
+        Debug.Log("Found on: " + d.gameObject.name);
+        d.TriggerDisintegration(true);
+    }
+
+    if (bridgeDisintegrates.Length == 0)
+    {
+        Debug.LogError("ElementalGem: Could not fetch bridgeDisintegrate components!");
+    }
+}
+            // {
+            //     DisintegrateSIDE bridgeDisintegrate = gemDoor.GetComponent<DisintegrateSIDE>();
+            //     if (bridgeDisintegrate != null)
+            //     {
+            //         bridgeDisintegrate.TriggerDisintegration(true);
+            //     } else
+            //     {
+            //         Debug.LogError("ElementalGem: Could not fetch bridgeDisintegrate component!");
+            //     }
+            // }
             
             gemMesh.SetActive(false);
             gemEffect.SetActive(false);

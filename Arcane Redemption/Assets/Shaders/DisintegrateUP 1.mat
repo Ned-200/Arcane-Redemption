@@ -50,18 +50,18 @@ Material:
     - _Exapnd: 0.05
     - _FadeWidth: 0.05
     - _Glow: 0.89
-    - _HeightSharpness: 4.31
-    - _MaxHeight: 819
-    - _MinHeight: -1091
-    - _NoiseStrength: 0
+    - _HeightSharpness: 12.2
+    - _MaxHeight: -27161
+    - _MinHeight: 6152
+    - _NoiseStrength: 0.01
     - _R: 1.84
     - _Size: 0.627
-    - _Weight: 0
+    - _Weight: 1
     - _ptlRadius: 0.1
     m_Colors:
     - _AmbientColor: {r: 0.06415099, g: 0.06415099, b: 0.06415099, a: 0.003921569}
     - _Color: {r: 0, g: 0.81886786, b: 0, a: 1}
-    - _Direction: {r: 0, g: 1, b: 0, a: 8.06}
+    - _Direction: {r: 0, g: 0, b: -15.4, a: 482}
     - _DisintegrationColor: {r: 0.3921568, g: 1.6078432, b: 0.3921568, a: 1}
     - _DissolveColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

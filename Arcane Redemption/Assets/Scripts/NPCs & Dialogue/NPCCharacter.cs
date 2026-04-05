@@ -13,6 +13,7 @@ public class NPC_Character : BaseCharacter
     // (0 == is NOT marked up, 1 == IS marked up, 2 has the first ">", 3 has the second ">" and should close)
     protected private string markedUpString;
     protected private Coroutine TypeLineCoroutine;
+    protected Animator playerAnim;
 
     [Header("UI")]
     [SerializeField] protected GameObject SpeakImagePrefab;
@@ -86,6 +87,13 @@ public class NPC_Character : BaseCharacter
             {
                 Debug.Log("NPC Could Not Find/Hide Player Mesh!");
             }
+            // Get playerAnim
+            playerAnim = player.GetComponent<Animator>();
+            if (playerAnim == null)
+            {
+                Debug.LogError("NPC: playerAnim NOT FOUND! Check Player Hierarchy.");
+            }
+
         } else {   
             Debug.LogError("NPC_Character: PLAYER NOT FOUND BY NPC! Check Player Tag.");
         }
@@ -162,6 +170,12 @@ public class NPC_Character : BaseCharacter
                 {
                     Debug.LogError("NPC_Character: NPC Could Not Find/Hide Player Mesh!");
                 }
+                // Get playerAnim
+                playerAnim = player.GetComponent<Animator>();
+                if (playerAnim == null)
+                {
+                    Debug.LogError("NPC: playerAnim NOT FOUND! Check Player Hierarchy.");
+                }
 
             } else {   
                 Debug.LogError("NPC_Character: PLAYER NOT FOUND BY NPC! Check Player Tag.");
@@ -216,6 +230,9 @@ public class NPC_Character : BaseCharacter
 
         // disable player movement
         playerController.canMove = false;
+        playerAnim.SetBool("isWalking", false);
+        playerAnim.SetBool("isSprinting", false);
+
         // hide player mesh
         playerMesh.SetActive(false);
         weaponMesh.SetActive(false);

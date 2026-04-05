@@ -37,6 +37,8 @@ public class GhostNPC : NPC_Character
 
         // disable player movement
         playerController.canMove = false;
+        playerAnim.SetBool("isWalking", false);
+        playerAnim.SetBool("isSprinting", false);
         // hide player mesh
         playerMesh.SetActive(false);
         weaponMesh.SetActive(false);

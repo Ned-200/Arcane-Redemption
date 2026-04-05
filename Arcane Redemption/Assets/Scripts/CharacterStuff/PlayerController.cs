@@ -94,6 +94,8 @@ public class PlayerController : MonoBehaviour
             HandleJump();
         }
 
+        characterController.Move(velocity * Time.deltaTime);
+        
         playerAnim.SetBool("isGrounded", isGrounded);
     }
 
@@ -201,7 +203,6 @@ public class PlayerController : MonoBehaviour
         }
 
         characterController.Move(move * currentSpeed * Time.deltaTime);
-        characterController.Move(velocity * Time.deltaTime);
     }
 
     private void HandleJump()

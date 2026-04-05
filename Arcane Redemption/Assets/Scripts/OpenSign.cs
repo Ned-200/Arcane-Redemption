@@ -5,7 +5,8 @@ using UnityEngine.Rendering.Universal;
 public class OpenSign : MonoBehaviour
 {
     private bool playerInRange = false;
-    protected PlayerController playerController;
+    private PlayerController playerController;
+    private Animator playerAnim;
 
     [Header("UI")]
     [SerializeField] private GameObject interactPromptPrefab;
@@ -63,6 +64,8 @@ public class OpenSign : MonoBehaviour
 
             // disable player movement
             playerController.canMove = false;
+            playerAnim.SetBool("isWalking", false);
+            playerAnim.SetBool("isSprinting", false);
 
             // Play open sounds
             AudioSource.PlayClipAtPoint(creakSoundOpen, transform.position);
@@ -130,6 +133,13 @@ public class OpenSign : MonoBehaviour
             if (playerController == null)
             {
                 Debug.LogError("OpenSign: playerController NOT FOUND BY Sign! Check Player Hierarchy.");
+            }
+
+            // Get playerAnim
+            playerAnim = other.GetComponent<Animator>();
+            if (playerAnim == null)
+            {
+                Debug.LogError("OpenSign: playerAnim NOT FOUND BY Sign! Check Player Hierarchy.");
             }
 
             playerInRange = true;

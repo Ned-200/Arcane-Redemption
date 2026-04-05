@@ -194,7 +194,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ed350b83099c34642bcf8733486127b0, type: 3}
   - {fileID: 8300000, guid: d17b853065f5d5845bb2b6cfd0f69a4d, type: 3}
   - {fileID: 8300000, guid: 2512e9c68eac7c34bb659bf3d1d6102f, type: 3}
-  healthChanceWeight: 2
+  healthChanceWeight: 3
   manaChanceWeight: 1
   potionChance: 20
 --- !u!136 &3297240282578224974

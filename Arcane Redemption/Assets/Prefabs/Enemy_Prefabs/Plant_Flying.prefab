@@ -1837,6 +1837,10 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  footstepSounds:
+  - {fileID: 8300000, guid: 26e82ad07f6b48b4f986baad19ba26b5, type: 3}
+  - {fileID: 8300000, guid: ec3eb2b0ec5641645b82b16eedee6523, type: 3}
+  - {fileID: 8300000, guid: 43a046b5204462d488a2ed3bb77bd878, type: 3}
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
   damagedSounds:
@@ -1844,6 +1848,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6d90f749e75486044804dd88964694c7, type: 3}
   - {fileID: 8300000, guid: 953eab2bf2f879c4b883b2ae35d17d3c, type: 3}
   deathSound: {fileID: 8300000, guid: 953eab2bf2f879c4b883b2ae35d17d3c, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: 59349418327c7ee4a816425eabe7c552, type: 3}
+  - {fileID: 8300000, guid: 5087be11562433248965b0435a533b25, type: 3}
   detectionRadius: 15
   combatRadius: 3
   attackRange: 2

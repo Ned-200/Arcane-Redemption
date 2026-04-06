@@ -22,6 +22,10 @@ public class TownAmbience : MonoBehaviour
             {
                 audioSource.clip = townAmbience;
                 audioSource.Play();
+            } else
+            {
+                audioSource.clip = desertAmbience;
+                audioSource.Play();
             }
         } else
         {

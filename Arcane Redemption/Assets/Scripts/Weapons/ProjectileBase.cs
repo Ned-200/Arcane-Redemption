@@ -100,6 +100,18 @@ public class ProjectileBase : MonoBehaviour
                         target.TakeDamage(damage);
                         OnTargetHit(target);
                         Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+                        
+                        // Handle Snail boss invulnerability
+                        ShellBoss snailBoss = target as ShellBoss;
+                        if (snailBoss != null) {
+                            if (snailBoss.IsShellActive) {
+                                // Spawn ineffective effects
+                                SpawnIncorrectEffect();
+                                PlayIncorrectSound();
+                                Destroy(gameObject);
+                                return;
+                            }
+                        }
 
                         // Spawn impact effect
                         SpawnImpactEffect();

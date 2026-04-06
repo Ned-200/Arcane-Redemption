@@ -114,6 +114,7 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  footstepSounds: []
   lowHealthEffects: {fileID: 0}
   SpeakImagePrefab: {fileID: 5010717163584122740, guid: 5435685a6e1c9a34d9185f2794b50ad8, type: 3}
   FadeUI: {fileID: 0}
@@ -138,6 +139,12 @@ MonoBehaviour:
   hasSecondaryLines: 0
   secondaryLines: []
   textSpeed: 0.075
+  skipSounds:
+  - {fileID: 8300000, guid: edfa369940f7afc48a7026ba060c8217, type: 3}
+  - {fileID: 8300000, guid: 76ff9621d3dcb984daca269fe0ab79b9, type: 3}
+  - {fileID: 8300000, guid: f1ab5f3ea0b231943ac8a4d435f4ad9e, type: 3}
+  happySound: {fileID: 0}
+  angrySound: {fileID: 0}
   happyIndex: -1
   angryIndex: -1
   secondaryHappyIndex: -1

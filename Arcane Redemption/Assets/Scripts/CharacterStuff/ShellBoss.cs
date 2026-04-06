@@ -526,7 +526,7 @@ public class ShellBoss : EnemyCharacter
             isBackingUp = false;
         }
 
-        TryPerformRingAttack();
+        // TryPerformRingAttack(); Disable fire ring attack during enraged, its too OP
         TryPerformProjectileVolley();
     }
 

@@ -400,8 +400,6 @@ public class NPC_Character : BaseCharacter
     {
         if (skipSounds.Length > 0 && audioSource != null) {
             audioSource.PlayOneShot(skipSounds[Random.Range(0, skipSounds.Length)]);
-        } else {
-            Debug.LogError("NPCCharacter: Not assigned skip sounds.");
         }
     }
 

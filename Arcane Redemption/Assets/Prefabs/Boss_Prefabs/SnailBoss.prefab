@@ -1468,8 +1468,12 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  footstepSounds: []
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
+  damagedSounds: []
+  deathSound: {fileID: 0}
+  attackSounds: []
   detectionRadius: 15
   combatRadius: 3
   attackRange: 2
@@ -1511,13 +1515,13 @@ MonoBehaviour:
   phase1ComboCooldownMax: 12
   phase2ComboAttackCooldownMin: 1
   phase2ComboAttackCooldownMax: 1
-  phase2ComboCooldownMin: 5
-  phase2ComboCooldownMax: 10
+  phase2ComboCooldownMin: 4
+  phase2ComboCooldownMax: 8
   projectilePrefab: {fileID: 9094806483858042860, guid: 8299ac2a1a40781469484e92a33a2a2c, type: 3}
   projectileSpawnPoint: {fileID: 2564788194818711376}
-  projectileVolleyCooldown: 6
+  projectileVolleyCooldown: 4
   minProjectilesPerVolley: 3
-  maxProjectilesPerVolley: 6
+  maxProjectilesPerVolley: 5
   projectileSpeed: 15
   projectileDamage: 15
   projectileTrackingDuration: 4

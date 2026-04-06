@@ -55,6 +55,10 @@ public class GhostNPC : NPC_Character
             // If cutscene index, make the Ghost rise as the camera pans up
             if (index == cutsceneLine[cutsceneIndex] && !movedOrMoving)
             {
+                if (mayorIndex != 0) {
+                    skipSounds = new AudioClip[0];
+                }
+                
                 movedOrMoving = true;
                 StartCoroutine(TweenPosition(NPCMesh, targetPosition, 2));
             }

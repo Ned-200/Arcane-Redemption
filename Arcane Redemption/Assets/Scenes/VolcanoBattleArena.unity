@@ -27940,10 +27940,12 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  footstepSounds: []
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
   damagedSounds: []
   deathSound: {fileID: 0}
+  attackSounds: []
   detectionRadius: 15
   combatRadius: 3
   attackRange: 2
@@ -48759,6 +48761,7 @@ MonoBehaviour:
   BossAnim: {fileID: 602980668}
   moveYPosition: 75
   slamSound: {fileID: 8300000, guid: db768fbbc8c035448b77ff1b0f4526f0, type: 3}
+  roarSound: {fileID: 8300000, guid: 8b4c9c24d7bfe4744a88b2b99ec2c7ca, type: 3}
   cutsceneEnded: 0
   BossNameDisplay: {fileID: 217238787}
   BossDescriptionDisplay: {fileID: 1044937509}

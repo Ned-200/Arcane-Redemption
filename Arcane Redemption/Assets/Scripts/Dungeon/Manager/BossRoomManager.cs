@@ -96,7 +96,7 @@ public class BossRoomManager : DungeonManager
             Destroy(audioSource, roarSound.length);
         } else
         {
-            Debug.LogError("BossRoomManager: No slam sound found!");
+            Debug.LogError("BossRoomManager: No roar sound found!");
         }
     }
 

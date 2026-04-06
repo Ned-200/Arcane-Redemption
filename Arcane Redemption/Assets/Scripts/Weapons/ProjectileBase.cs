@@ -18,10 +18,12 @@ public class ProjectileBase : MonoBehaviour
 
     [Header("Visual Effects")]
     [SerializeField] protected GameObject hitEffect;
+    [SerializeField] protected GameObject incorrectEffect;
     [SerializeField] protected TrailRenderer trail;
 
     [Header("Audio")]
     [SerializeField] protected AudioClip[] impactSounds;    
+    [SerializeField] protected AudioClip[] incorrectImpactSounds;    
     [SerializeField] protected AudioClip[] wallSounds;
 
     protected BaseCharacter owner;
@@ -98,9 +100,20 @@ public class ProjectileBase : MonoBehaviour
                         target.TakeDamage(damage);
                         OnTargetHit(target);
                         Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
+
+                        // Spawn impact effect
+                        SpawnImpactEffect();
+
+                        // Play impact sound
+                        PlayImpactSound();
                     } else
                     {
                         Debug.Log($"[ProjectileBase] Hit {target.name}, but incorrect element matchup!");
+                        // Spawn ineffective impact effect
+                        SpawnIncorrectEffect();
+
+                        // Play ineffective impact sound
+                        PlayIncorrectSound();
                     }
                 } else { // if not enemy element is not assigned, deal damage normally
                     target.TakeDamage(damage);
@@ -119,12 +132,6 @@ public class ProjectileBase : MonoBehaviour
         {
             HandleEnvironmentalTriggers(other);
         }
-
-        // Spawn impact effect
-        SpawnImpactEffect();
-
-        // Play impact sound
-        PlayImpactSound();
 
         // Destroy the projectile
         if (destroyOnImpact)
@@ -362,6 +369,22 @@ public class ProjectileBase : MonoBehaviour
         if (impactSounds.Length > 0)
         {
             AudioSource.PlayClipAtPoint(impactSounds[Random.Range(0, impactSounds.Length)], transform.position);
+        }
+    }
+
+    protected virtual void SpawnIncorrectEffect()
+    {
+        if (incorrectEffect != null)
+        {
+            Instantiate(incorrectEffect, transform.position, incorrectEffect.transform.rotation);
+        }
+    }
+
+    protected virtual void PlayIncorrectSound()
+    {
+        if (incorrectImpactSounds.Length > 0)
+        {
+            AudioSource.PlayClipAtPoint(incorrectImpactSounds[Random.Range(0, incorrectImpactSounds.Length)], transform.position);
         }
     }
 

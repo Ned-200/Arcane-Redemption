@@ -10,7 +10,6 @@ public class MayorCharacter : NPC_Character
 
     protected override void Start()
     {
-
         base.Start();
 
         Debug.Log("Dialogue Begin");

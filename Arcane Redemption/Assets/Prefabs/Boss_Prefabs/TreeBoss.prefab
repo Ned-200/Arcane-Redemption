@@ -2676,6 +2676,7 @@ GameObject:
   - component: {fileID: 1760326166730399006}
   - component: {fileID: 8605892712019318776}
   - component: {fileID: 3200006220675563146}
+  - component: {fileID: 6802766579814913875}
   m_Layer: 6
   m_Name: TreeBoss
   m_TagString: Untagged
@@ -2745,13 +2746,15 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  footstepSounds: []
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
   damagedSounds:
-  - {fileID: 8300000, guid: b27220921410c4a488a2eac435a4945c, type: 3}
-  - {fileID: 8300000, guid: 6d90f749e75486044804dd88964694c7, type: 3}
-  - {fileID: 8300000, guid: 953eab2bf2f879c4b883b2ae35d17d3c, type: 3}
-  deathSound: {fileID: 0}
+  - {fileID: 8300000, guid: 8564612a6a0b14a4091699437a3a6e68, type: 3}
+  - {fileID: 8300000, guid: 80659ccd39034f44f9bc36c5f633dc34, type: 3}
+  - {fileID: 8300000, guid: 7ea52c21432ed9e4e9e79deeb5785795, type: 3}
+  deathSound: {fileID: 8300000, guid: ee93c25a9669a9a4bb9d8307d6e7c604, type: 3}
+  attackSounds: []
   detectionRadius: 30
   combatRadius: 5
   attackRange: 2
@@ -2813,6 +2816,8 @@ MonoBehaviour:
   shootSounds:
   - {fileID: 8300000, guid: acaa202661962084b8892d4795a3fb99, type: 3}
   - {fileID: 8300000, guid: e311661ed370ae041b7e461bd755cafd, type: 3}
+  retreatSound: {fileID: 8300000, guid: 06322bb13722a1443aa7b710ff4614bd, type: 3}
+  enragedSound: {fileID: 8300000, guid: 0086b02d07b2c4a4fbf06d4f0dad2c89, type: 3}
   bossDisplayName: Ancient Tree Guardian
   showBossGizmos: 1
   terrainSwap: {fileID: 0}
@@ -3035,6 +3040,103 @@ MonoBehaviour:
   duration: 3
   destroyAfter: 1
   destroyDelay: 0.2
+--- !u!82 &6802766579814913875
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075486636287271208}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: fb874131f15559b45b65f3fe84baea26, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7113541327632104058
 GameObject:
   m_ObjectHideFlags: 0

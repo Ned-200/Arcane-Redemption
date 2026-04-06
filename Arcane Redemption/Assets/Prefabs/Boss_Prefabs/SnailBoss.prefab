@@ -1410,6 +1410,7 @@ GameObject:
   - component: {fileID: 2509382146952755275}
   - component: {fileID: 1157574113767845527}
   - component: {fileID: 5068504393006897221}
+  - component: {fileID: 7809864949402233685}
   m_Layer: 6
   m_Name: SnailBoss
   m_TagString: Untagged
@@ -1468,8 +1469,15 @@ MonoBehaviour:
   staminaRegenDelay: 1
   manaRegenDelay: 2
   weaponSlotTransform: {fileID: 0}
+  footstepSounds: []
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
+  damagedSounds:
+  - {fileID: 8300000, guid: a07914c1525e46c4bb8e464c87eee258, type: 3}
+  - {fileID: 8300000, guid: 2b963993f8a656b418ce2753360fa26c, type: 3}
+  - {fileID: 8300000, guid: d5d97abcf2688cf468223c23967015b9, type: 3}
+  deathSound: {fileID: 8300000, guid: 1a0970899cb6243479cfbc7fa3d34780, type: 3}
+  attackSounds: []
   detectionRadius: 15
   combatRadius: 3
   attackRange: 2
@@ -1495,7 +1503,7 @@ MonoBehaviour:
   shellArmorManager: {fileID: 0}
   phase1MoveSpeed: 10
   rockPositionCheckRadius: 2
-  timeUnderRock: 8
+  timeUnderRock: 12
   rockCycleDelay: 1
   phase2MoveSpeedMultiplier: 1.5
   phase2DamageMultiplier: 1.3
@@ -1511,13 +1519,13 @@ MonoBehaviour:
   phase1ComboCooldownMax: 12
   phase2ComboAttackCooldownMin: 1
   phase2ComboAttackCooldownMax: 1
-  phase2ComboCooldownMin: 5
-  phase2ComboCooldownMax: 10
+  phase2ComboCooldownMin: 4
+  phase2ComboCooldownMax: 8
   projectilePrefab: {fileID: 9094806483858042860, guid: 8299ac2a1a40781469484e92a33a2a2c, type: 3}
   projectileSpawnPoint: {fileID: 2564788194818711376}
-  projectileVolleyCooldown: 6
+  projectileVolleyCooldown: 4
   minProjectilesPerVolley: 3
-  maxProjectilesPerVolley: 6
+  maxProjectilesPerVolley: 5
   projectileSpeed: 15
   projectileDamage: 15
   projectileTrackingDuration: 4
@@ -1525,6 +1533,14 @@ MonoBehaviour:
   volleySpreadAngle: 30
   rockSpawnPoints: []
   bossAnimator: {fileID: 5068504393006897221}
+  fireRingSounds:
+  - {fileID: 8300000, guid: 7d31a73a93a29f84499bdaec5782983a, type: 3}
+  - {fileID: 8300000, guid: 2cbcb1742efa954428273fb914e55a1b, type: 3}
+  - {fileID: 8300000, guid: b488c5c9830e0bc45966f56e552fc6a0, type: 3}
+  shellSounds:
+  - {fileID: 8300000, guid: 0ff21689a1e402c4c93c4cf8061d6a2b, type: 3}
+  - {fileID: 8300000, guid: a52b53591171f7d4da734a56ded29cde, type: 3}
+  - {fileID: 8300000, guid: 9f878adbdff860247ad03633befbed20, type: 3}
   arenaBounds: {fileID: 0}
   edgeAvoidanceStrength: 10
   GhostNPCPrefab: {fileID: 967328167914030711, guid: 50d8e720df2f8534da92faa9353049dc, type: 3}
@@ -1686,9 +1702,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!136 &9053343853328688710
 CapsuleCollider:
@@ -1734,7 +1750,11 @@ MonoBehaviour:
   removalOrder: 0
   shuffleOnStart: 0
   armorBreakVFX: {fileID: 0}
-  armorBreakSound: {fileID: 0}
+  shellCrackSounds:
+  - {fileID: 8300000, guid: 50d841390b353a04fbdd3270cbefc94f, type: 3}
+  - {fileID: 8300000, guid: 3f352384bf1e83642addf6acbff73a05, type: 3}
+  - {fileID: 8300000, guid: 45782ce2129caf04ebbf80c034359e48, type: 3}
+  shellBreakSound: {fileID: 8300000, guid: 046c23720e5cdc543949346b506fa615, type: 3}
   playFeedbackOnEachHit: 1
   showDebugLogs: 1
 --- !u!65 &1157574113767845527
@@ -1780,6 +1800,103 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &7809864949402233685
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3751372654829421371}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: fb874131f15559b45b65f3fe84baea26, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3823789693171551322
 GameObject:
   m_ObjectHideFlags: 0

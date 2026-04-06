@@ -14,7 +14,13 @@ public class IntroCutscene : NPC_Character
     [SerializeField] private MainMenu mainMenu;
 
     protected override void Start()
-    {
+    {        
+        // Add AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         cutsceneImage = CutsceneImageObject.GetComponent<Image>();
     }
 

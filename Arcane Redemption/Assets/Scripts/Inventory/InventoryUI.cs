@@ -28,6 +28,12 @@ public class InventoryUI : MonoBehaviour
     private GameObject controls;
     private bool gamePaused;
     private bool quittingToMenu;
+    [SerializeField] private GameObject loadingScreen;
+    
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] hoverSounds;
+    [SerializeField] private AudioClip[] clickSounds;
+    [SerializeField] private AudioClip quitSound;
 
     void Start()
     {
@@ -184,6 +190,7 @@ public class InventoryUI : MonoBehaviour
         // Toggle Inventory
         if (Input.GetKeyDown(KeyCode.I) && playerController.canMove)
         {
+            PlayClickSounds();
             if (InventoryOpen)
             {
                 InventoryOpen = false;
@@ -198,6 +205,7 @@ public class InventoryUI : MonoBehaviour
         // Hide controls
         if (Input.GetMouseButtonDown(0) && controls.activeSelf)
         {
+            PlayClickSounds();
             controls.SetActive(false);
         }
 
@@ -232,6 +240,8 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleControls()
     {
+        PlayClickSounds();
+
         if (controls.activeSelf) {
             controls.SetActive(false);
         } else
@@ -244,6 +254,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (gamePaused)
         {
+            PlayClickSounds();
             Debug.Log("InventoryUI: Resuming Game");
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -253,6 +264,7 @@ public class InventoryUI : MonoBehaviour
             playerController.canMove = true;
         } else if (playerController.canMove) // to pause, check if player can move
         {
+            PlayClickSounds();
             Debug.Log("InventoryUI: Pausing Game");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -286,7 +298,38 @@ public class InventoryUI : MonoBehaviour
             Time.timeScale = 1;
             gamePaused = false;
 
-            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            if (quitSound != null) {
+                audioSource.PlayOneShot(quitSound);
+            } else {
+                Debug.LogError("InventoryUI: Not assigned quit sound.");
+            }
+
+            loadingScreen.SetActive(true);
+            Invoke(nameof(Teleport), quitSound.length);
         }
     }
+
+    private void Teleport()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
+    public void PlayClickSounds()
+    {
+        if (clickSounds.Length > 0) {
+            audioSource.PlayOneShot(clickSounds[Random.Range(0, clickSounds.Length)]);
+        } else {
+            Debug.LogError("InventoryUI: Not assigned click sounds.");
+        }
+    }
+
+    public void PlayHoverSounds()
+    {
+        if (hoverSounds.Length > 0) {
+            audioSource.PlayOneShot(hoverSounds[Random.Range(0, hoverSounds.Length)]);
+        } else {
+            Debug.LogError("InventoryUI: Not assigned hover sounds.");
+        }
+    }
+    
 }

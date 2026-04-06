@@ -87,7 +87,7 @@ public class SwordHitToggle : MonoBehaviour
 
         // Play sounds
         Transform vineWall = FindChildWithTag(obj.transform, "Tough Plant Wall");
-        if (vineSounds.Length > 0 && vineWall != null)
+        if (vineSounds.Length > 0 && vineWall != null && lastHitTime != -999f)
         {
             AudioSource.PlayClipAtPoint(vineSounds[Random.Range(0, vineSounds.Length)], vineWall.position);
         }

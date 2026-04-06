@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 0.2f;
     [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private LayerMask groundMask = -1;
+    private bool landSoundCooldown;
     [SerializeField] private AudioClip[] landSounds;
 
     [Header("Debug")]
@@ -134,9 +135,12 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && !wasGroundedLastFrame)
         {
             // Play sounds
-            if (landSounds.Length > 0)
+            if (landSounds.Length > 0 && !landSoundCooldown)
             {
-                AudioSource.PlayClipAtPoint(landSounds[Random.Range(0, landSounds.Length)], transform.position);
+                AudioClip landSound = landSounds[Random.Range(0, landSounds.Length)];
+                landSoundCooldown = true;
+                AudioSource.PlayClipAtPoint(landSound, transform.position);
+                Invoke(nameof(SetLandSoundDebounce), landSound.length);
             }
 
             if (enableDebugLogs)
@@ -144,6 +148,11 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Player landed!");
             }
         }
+    }
+
+    private void SetLandSoundDebounce()
+    {
+        landSoundCooldown = false;
     }
 
     private void HandleGravity()

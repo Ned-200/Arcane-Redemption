@@ -12,6 +12,7 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private Animator BossAnim;
     [SerializeField] private float moveYPosition = 75;
     [SerializeField] private AudioClip slamSound;
+    [SerializeField] private AudioClip roarSound;
     private bool cutscenePlaying;
     public bool cutsceneEnded;
     private Animator playerAnim;
@@ -86,6 +87,19 @@ public class BossRoomManager : DungeonManager
         }
     }
 
+    private void playRoarSound()
+    {
+        if (roarSound != null)
+        {
+            AudioSource audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+            audioSource.PlayOneShot(roarSound, 1);
+            Destroy(audioSource, roarSound.length);
+        } else
+        {
+            Debug.LogError("BossRoomManager: No roar sound found!");
+        }
+    }
+
     void EnableBossCamera()
     {
         BossCamera.SetActive(true);
@@ -101,6 +115,7 @@ public class BossRoomManager : DungeonManager
 
     void RoarShake()
     {
+        playRoarSound();
         StartCoroutine(FadeText(BossNameDisplay, 1, 1));
         StartCoroutine(FadeText(BossDescriptionDisplay, 1, 1.25f));
 

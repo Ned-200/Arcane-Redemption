@@ -20,7 +20,9 @@ public class ShellArmorManager : MonoBehaviour
 
     [Header("Visual Feedback")]
     [SerializeField] private GameObject armorBreakVFX;
-    [SerializeField] private AudioClip armorBreakSound;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] shellCrackSounds;
+    [SerializeField] private AudioClip shellBreakSound;
     [SerializeField] private bool playFeedbackOnEachHit = true;
 
     [Header("Debug")]
@@ -42,6 +44,8 @@ public class ShellArmorManager : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        
         shellBoss = GetComponent<ShellBoss>();
         if (shellBoss == null)
         {
@@ -312,6 +316,11 @@ public class ShellArmorManager : MonoBehaviour
     {
         if (isShellBroken) return;
 
+        if (shellBreakSound != null)
+        {
+            audioSource.PlayOneShot(shellBreakSound);
+        }
+
         isShellBroken = true;
 
         if (showDebugLogs)
@@ -336,9 +345,9 @@ public class ShellArmorManager : MonoBehaviour
             Instantiate(armorBreakVFX, transform.position, Quaternion.identity);
         }
 
-        if (armorBreakSound != null)
+        if (shellCrackSounds != null)
         {
-            AudioSource.PlayClipAtPoint(armorBreakSound, transform.position);
+            audioSource.PlayOneShot(shellCrackSounds[Random.Range(0, shellCrackSounds.Length)]);
         }
     }
 

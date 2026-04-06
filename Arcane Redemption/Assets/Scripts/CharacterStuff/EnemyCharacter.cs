@@ -285,15 +285,21 @@ public class EnemyCharacter : BaseCharacter
         // Call base class TakeDamage which handles health reduction and events
         base.TakeDamage(damage);
 
+        // Play damaged sounds
+        if (damagedSounds.Length > 0)
+        {
+            AudioSource audioSource = GetComponent<AudioSource>(); // play sounds from parent audiosource if exists
+            if (audioSource != null) {
+                audioSource.PlayOneShot(damagedSounds[Random.Range(0, damagedSounds.Length)]);
+            } else { // Play clip at parent position otherwise
+                AudioSource.PlayClipAtPoint(damagedSounds[Random.Range(0, damagedSounds.Length)], transform.position);
+            }
+        }
+
         // Remove physical detail - FIXED: Safely check for children
         Transform detail1 = transform.Find("Detail1");
         if (detail1 != null && HealthPercent <= 0.9f)
         {
-            if (damagedSounds.Length > 0)
-            {
-                AudioSource.PlayClipAtPoint(damagedSounds[0], transform.position);
-            }
-
             Disintegrate detailDisintegrate = detail1.GetComponent<Disintegrate>();
             if (detailDisintegrate != null)
                 detailDisintegrate.TriggerDisintegration();
@@ -303,14 +309,6 @@ public class EnemyCharacter : BaseCharacter
         Transform detail2 = transform.Find("Detail2");
         if (detail2 != null && HealthPercent <= 0.5f)
         {
-            if (damagedSounds.Length > 1)
-            {
-                AudioSource.PlayClipAtPoint(damagedSounds[1], transform.position);
-            } else
-            {
-                AudioSource.PlayClipAtPoint(damagedSounds[0], transform.position);
-            }
-
             Disintegrate detailDisintegrate = detail2.GetComponent<Disintegrate>();
             if (detailDisintegrate != null)
                 detailDisintegrate.TriggerDisintegration();
@@ -319,14 +317,6 @@ public class EnemyCharacter : BaseCharacter
         Transform detail3 = transform.Find("Detail3");
         if (detail3 != null && HealthPercent <= 0.3f)
         {
-            if (damagedSounds.Length > 2)
-            {
-                AudioSource.PlayClipAtPoint(damagedSounds[2], transform.position);
-            } else
-            {
-                AudioSource.PlayClipAtPoint(damagedSounds[0], transform.position);
-            }
-
             Disintegrate detailDisintegrate = detail3.GetComponent<Disintegrate>();
             if (detailDisintegrate != null)
                 detailDisintegrate.TriggerDisintegration();

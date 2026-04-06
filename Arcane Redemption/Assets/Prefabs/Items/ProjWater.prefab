@@ -167,11 +167,16 @@ MonoBehaviour:
   element: Water
   toughVinesBurnable: 0
   hitEffect: {fileID: 7038505790271449214, guid: f7f953d178c44ff48b963c185ac5b7a4, type: 3}
+  incorrectEffect: {fileID: 7038505790271449214, guid: a66ec51a93b9d494cb39e70f4ec819bd, type: 3}
   trail: {fileID: 0}
   impactSounds:
   - {fileID: 8300000, guid: c853e1f6ac5d0d64ebfe8700c7bfd2a5, type: 3}
   - {fileID: 8300000, guid: 54e91b9496fe79c4797bf7b883b06a48, type: 3}
   - {fileID: 8300000, guid: 45f2a42f79db20c40909af793e365997, type: 3}
+  incorrectImpactSounds:
+  - {fileID: 8300000, guid: 0fc7066cbdfb55142963585c99cc43ce, type: 3}
+  - {fileID: 8300000, guid: 461dc04c01ee28945837351cdab6861c, type: 3}
+  - {fileID: 8300000, guid: 9a1116e205bba764ba284453a7310054, type: 3}
   wallSounds:
   - {fileID: 8300000, guid: ed9d5c9e02d48c341965e61809e5b457, type: 3}
   - {fileID: 8300000, guid: c9317b41a2ce14a498ed2996e9228f76, type: 3}

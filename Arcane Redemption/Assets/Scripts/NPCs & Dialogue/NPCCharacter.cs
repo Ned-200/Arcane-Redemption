@@ -22,7 +22,7 @@ public class NPC_Character : BaseCharacter
 
     [Header("Cutscene Camera")]
     [SerializeField] protected GameObject[] cutsceneCamera;
-    [SerializeField] protected int[] cutsceneLine;
+    public int[] cutsceneLine;
     [SerializeField] protected int endCutsceneLine;
 
     [Header("Text")]
@@ -34,6 +34,12 @@ public class NPC_Character : BaseCharacter
     public float textSpeed;
     protected int index;
     protected int cutsceneIndex;
+    
+    [Header("Sounds")]
+    protected AudioSource audioSource;
+    [SerializeField] protected AudioClip[] skipSounds;
+    [SerializeField] protected AudioClip happySound;
+    [SerializeField] protected AudioClip angrySound;
     
     [SerializeField] protected int happyIndex = -1;
     [SerializeField] protected int angryIndex = -1;
@@ -54,6 +60,12 @@ public class NPC_Character : BaseCharacter
 
     protected virtual void Start()
     {
+        // Add AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         // Get NPC Mesh and Cinemachine Camera
         NPCMesh = this.transform.Find("NPCMesh").gameObject;
         if (NPCMesh != null)
@@ -242,6 +254,14 @@ public class NPC_Character : BaseCharacter
     {
         TalkingAnim(true);
 
+        if (index == happyIndex) {
+            PlayHappySound();
+        } else if (index == angryIndex) {
+            PlayAngrySound();
+        } else {
+            PlaySkipSounds();
+        }
+
         // If an angry index exists, play the animation on the right line
         if (index == angryIndex) {
             if (NPCMesh.GetComponent<Animator>()) {
@@ -373,8 +393,31 @@ public class NPC_Character : BaseCharacter
                 playerMesh.SetActive(true);
                 weaponMesh.SetActive(true);
             }
-        
         }
     }
 
+    protected void PlaySkipSounds()
+    {
+        if (skipSounds.Length > 0 && audioSource != null) {
+            audioSource.PlayOneShot(skipSounds[Random.Range(0, skipSounds.Length)]);
+        }
+    }
+
+    protected void PlayHappySound()
+    {
+        if (happySound != null && audioSource != null) {
+            audioSource.PlayOneShot(happySound);
+        } else {
+            Debug.LogError("NPCCharacter: Not assigned happy sounds.");
+        }
+    }
+
+    protected void PlayAngrySound()
+    {
+        if (angrySound != null && audioSource != null) {
+            audioSource.PlayOneShot(angrySound);
+        } else {
+            Debug.LogError("NPCCharacter: Not assigned angry sounds.");
+        }
+    }
 }

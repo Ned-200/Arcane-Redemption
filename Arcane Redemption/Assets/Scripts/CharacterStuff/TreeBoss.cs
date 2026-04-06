@@ -71,8 +71,11 @@ public class TreeBoss : EnemyCharacter
     [SerializeField] private Animator bossAnimator;
 
     [Header("Sounds")]
+    private AudioSource audioSource;
     [SerializeField] private AudioClip[] slamSounds;
     [SerializeField] private AudioClip[] shootSounds;
+    [SerializeField] private AudioClip retreatSound;
+    [SerializeField] private AudioClip enragedSound;
 
     [Header("Boss UI")]
     [SerializeField] private string bossDisplayName = "Ancient Tree Guardian";
@@ -208,6 +211,8 @@ public class TreeBoss : EnemyCharacter
 
     private void InitializeBoss()
     {
+        audioSource = GetComponent<AudioSource>();
+
         InitializeState();
         InitializeCounters();
         InitializeRigidbody();
@@ -369,6 +374,12 @@ public class TreeBoss : EnemyCharacter
     private void PerformDashRetreat()
     {
         if (TargetPlayer == null) return;
+
+        // Play retreat sound
+        if (retreatSound != null)
+        {
+            audioSource.PlayOneShot(retreatSound);
+        }
 
         StopMeleeAttack();
         ResetDashRetreat();
@@ -550,6 +561,11 @@ public class TreeBoss : EnemyCharacter
 
     protected virtual void OnEnragedModeEntered()
     {
+        // Play retreat sound
+        if (enragedSound != null)
+        {
+            audioSource.PlayOneShot(enragedSound);
+        }
     }
 
     #endregion
@@ -1128,7 +1144,7 @@ public class TreeBoss : EnemyCharacter
         // Play slam sound
         if (slamSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(slamSounds[Random.Range(0, slamSounds.Length)], transform.position);
+            audioSource.PlayOneShot(slamSounds[Random.Range(0, slamSounds.Length)]);
         }
 
         Destroy(vineRingInstance, vineRingLifetime);
@@ -1229,7 +1245,7 @@ public class TreeBoss : EnemyCharacter
         // Play shoot sound
         if (shootSounds.Length > 0)
         {
-            AudioSource.PlayClipAtPoint(shootSounds[Random.Range(0, shootSounds.Length)], projectileSpawnPoint.position);
+            audioSource.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)]);
         }
 
         Vector3 spawnPosition = projectileSpawnPoint.position;

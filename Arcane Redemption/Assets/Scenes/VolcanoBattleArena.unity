@@ -7980,6 +7980,17 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!114 &616221839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2509382146952755275, guid: fd0d9a9c9b35ef24cb4723b7d343d358, type: 3}
+  m_PrefabInstance: {fileID: 4779870359866866427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 343ac55e73167d1419036232d44aef6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShellArmorManager
 --- !u!1 &621274107
 GameObject:
   m_ObjectHideFlags: 0
@@ -27743,7 +27754,7 @@ Transform:
   m_GameObject: {fileID: 1209207120}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -3, z: 0}
+  m_LocalPosition: {x: -1.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28001,6 +28012,8 @@ MonoBehaviour:
   - {fileID: 312099639}
   - {fileID: 1801843445}
   bossAnimator: {fileID: 0}
+  fireRingSounds: []
+  shellSounds: []
   arenaBounds: {fileID: 1250695705}
   edgeAvoidanceStrength: 3
   GhostNPCPrefab: {fileID: 0}
@@ -48761,7 +48774,7 @@ MonoBehaviour:
   BossAnim: {fileID: 602980668}
   moveYPosition: 75
   slamSound: {fileID: 8300000, guid: db768fbbc8c035448b77ff1b0f4526f0, type: 3}
-  roarSound: {fileID: 8300000, guid: 8b4c9c24d7bfe4744a88b2b99ec2c7ca, type: 3}
+  roarSound: {fileID: 8300000, guid: ef53bf9420d687b4491c76c543dab54e, type: 3}
   cutsceneEnded: 0
   BossNameDisplay: {fileID: 217238787}
   BossDescriptionDisplay: {fileID: 1044937509}
@@ -53313,6 +53326,10 @@ PrefabInstance:
       propertyPath: bossRoomManager
       value: 
       objectReference: {fileID: 1910004087}
+    - target: {fileID: 1868936596911321355, guid: fd0d9a9c9b35ef24cb4723b7d343d358, type: 3}
+      propertyPath: shellArmorManager
+      value: 
+      objectReference: {fileID: 616221839}
     - target: {fileID: 1880971131443132756, guid: fd0d9a9c9b35ef24cb4723b7d343d358, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -53359,7 +53376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2419906045270885073, guid: fd0d9a9c9b35ef24cb4723b7d343d358, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 82.9
+      value: 81.55
       objectReference: {fileID: 0}
     - target: {fileID: 2419906045270885073, guid: fd0d9a9c9b35ef24cb4723b7d343d358, type: 3}
       propertyPath: m_LocalPosition.z

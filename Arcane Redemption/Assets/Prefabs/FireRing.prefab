@@ -4977,3 +4977,8 @@ MonoBehaviour:
   ring: {fileID: 7613766175268314742}
   damage: 15
   destroyDelay: 10
+  damageSounds:
+  - {fileID: 8300000, guid: 167c5a068384f8b4a854b287cc290333, type: 3}
+  - {fileID: 8300000, guid: 40bcff7de77c3c44e8b296be73b026c9, type: 3}
+  - {fileID: 8300000, guid: e61039338bb796b49890de8ff534bbfb, type: 3}
+  burningPrefab: {fileID: 7038505790271449214, guid: 43856dfa99e3fc742bfcbdb9bd05485e, type: 3}

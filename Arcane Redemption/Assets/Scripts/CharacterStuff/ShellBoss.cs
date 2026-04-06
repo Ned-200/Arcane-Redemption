@@ -61,6 +61,11 @@ public class ShellBoss : EnemyCharacter
     [SerializeField] private Animator bossAnimator;
     private bool isWalking = false;
 
+    [Header("Sounds")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] fireRingSounds;
+    [SerializeField] private AudioClip[] shellSounds;
+
     [Header("Arena Boundaries")]
     [SerializeField] private ArenaBounds arenaBounds;
     [SerializeField] private float edgeAvoidanceStrength = 3f;
@@ -154,6 +159,7 @@ public class ShellBoss : EnemyCharacter
 
     private void InitializeBoss()
     {
+        audioSource = GetComponent<AudioSource>();
         InitializeShellArmorManager();
         InitializeHealthBarUI();
         InitializeRockSpawnPoints();
@@ -322,6 +328,12 @@ public class ShellBoss : EnemyCharacter
         {
             Debug.Log($"[{gameObject.name}] Blocked {damage} damage - shell armor is active! Must break all armor pieces first.");
             OnDamageBlocked(damage);
+
+            // Play shielded sound
+            if (shellSounds != null)
+            {
+                audioSource.PlayOneShot(shellSounds[Random.Range(0, shellSounds.Length)]);
+            }
             return;
         }
 
@@ -626,6 +638,12 @@ public class ShellBoss : EnemyCharacter
         if (bossAnimator != null)
         {
             bossAnimator.Play("Attack");
+        }
+
+        // Play retreat sound
+        if (fireRingSounds != null)
+        {
+            audioSource.PlayOneShot(fireRingSounds[Random.Range(0, fireRingSounds.Length)]);
         }
 
         // Create ring attack

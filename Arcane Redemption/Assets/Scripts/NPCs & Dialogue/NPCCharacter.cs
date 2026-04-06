@@ -22,7 +22,7 @@ public class NPC_Character : BaseCharacter
 
     [Header("Cutscene Camera")]
     [SerializeField] protected GameObject[] cutsceneCamera;
-    [SerializeField] protected int[] cutsceneLine;
+    public int[] cutsceneLine;
     [SerializeField] protected int endCutsceneLine;
 
     [Header("Text")]

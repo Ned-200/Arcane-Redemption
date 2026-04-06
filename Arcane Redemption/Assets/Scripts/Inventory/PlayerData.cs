@@ -16,6 +16,7 @@ public class PlayerData : MonoBehaviour
     public bool fireBossDefeated;
     public bool waterBossDefeated;
     public bool plantBossDefeated;
+    private bool hideMayor = true;
 
     private GameObject Player;
     private CharacterController characterController;
@@ -203,6 +204,60 @@ public class PlayerData : MonoBehaviour
                 {
                     Debug.LogError("PlayerData can't find VolcanoSpawn!");
                 }
+
+                // Hide town NPC
+                GameObject townNPC = GameObject.Find("TownNPC");
+                if (townNPC != null) 
+                {
+                    townNPC.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find TownNPC!");
+                }
+
+                // Update Mayor NPC
+                if (GameObject.Find("MayorNPC") != null) 
+                {
+                    hideMayor = false;
+
+                    NPC_Character MayorNPC = GameObject.Find("MayorNPC").GetComponent<NPC_Character>();
+                    if (MayorNPC != null) {
+                        MayorNPC.cutsceneLine = new int[0];
+                        MayorNPC.lines = new string[7];
+                        MayorNPC.lines[0] = "Excellent work, my friend!";
+                        MayorNPC.lines[1] = "You've restored <b><color=#ff3300>Fire</color></b> to the realm! Our <b><color=#0073bf>torches</color></b> are lit once more!";
+                        MayorNPC.transform.position = new Vector3(-60.3f, 26.5f, -4.7f);
+
+                        if (waterBossDefeated)
+                        {
+                            MayorNPC.lines[2] = "Now only one challenge remains... As long as <b><color=#541834>Skar</color></b> is around, the innocent people of this realm will never truly be safe...";
+                            MayorNPC.lines[3] = "After sealing the elements away, he sought refuge in the <b><color=#541834>Great Lookout Tower</color></b>, and no soul has seen him since.";
+                            MayorNPC.lines[4] = "With all the power he has consumed, I fear it has consumed him as well...";
+                            MayorNPC.lines[5] = "I cannot fathome the <b><color=#541834>monster</color></b> he's become, what he made himself into...";
+                            MayorNPC.lines[6] = "It is up to you to put an end to his reign. Head to the tower and stop him. I believe in you, Maguso.";
+                            
+                            MayorNPC.secondaryLines = new string[1];
+                            MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><541834=#ff3300>Skar</color></b> must be stopped once and for all!";
+
+                        } else {
+                            MayorNPC.lines[2] = "However, one more beast awaits you... a <b><color=#0073bf>Great Squid of Tides</color></b> protects the last element sealed element, <b><color=#0073bf>Water</color></b>.";
+                            MayorNPC.lines[3] = "It resides deep within <b><color=#0073bf>Swoosh Bay</color></b>, and will not be easy to reach.";
+                            MayorNPC.lines[4] = "To defeat it and bring water back to our realm, you must first obtain the <b><color=#1c8c20>Plant Emerald</color></b>.";
+                            MayorNPC.lines[5] = "Enter the <b><color=#1c8c20>Plant Labyrinth</color></b> and retrive it, and then use its power to restore the element of <b><color=#0073bf>Water</color></b>.";
+                            MayorNPC.lines[6] = "Best of luck, Maguso... And thank you.";
+
+                            MayorNPC.secondaryLines = new string[1];
+                            MayorNPC.secondaryLines[0] = "What's the hold up? Enter the <b><color=#1c8c20>Plant Labyrinth</color></b> and begin your trek to restore <b><color=#0073bf>Water</color></b> to the world!";
+
+                        }
+                    } else
+                    {
+                        Debug.LogError("PlayerData can't find MayorNPC's  Character script component!");
+                    }
+                } else
+                {
+                    Debug.LogError("PlayerData can't find MayorNPC!");
+                }
             }
 
             
@@ -217,6 +272,60 @@ public class PlayerData : MonoBehaviour
                 } else
                 {
                     Debug.LogError("PlayerData can't find BaySpawn!");
+                }
+
+                // Hide town NPC
+                GameObject townNPC = GameObject.Find("TownNPC");
+                if (townNPC != null) 
+                {
+                    townNPC.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find TownNPC!");
+                }
+
+                // Update Mayor NPC
+                if (GameObject.Find("MayorNPC") != null) 
+                {
+                    hideMayor = false;
+                    
+                    NPC_Character MayorNPC = GameObject.Find("MayorNPC").GetComponent<NPC_Character>();
+                    if (MayorNPC != null) {
+                        MayorNPC.cutsceneLine = new int[0];
+                        MayorNPC.lines = new string[6];
+                        MayorNPC.lines[0] = "You've done it again!";
+                        MayorNPC.lines[1] = "You've restored <b><color=#0073bf>Water</color></b> to the realm! Our <b><color=#0073bf>wells</color></b> are filled and <b><color=#0073bf>rivers</color></b> run free!";
+                        MayorNPC.transform.position = new Vector3(-60.3f, 26.5f, -4.7f);
+
+                        if (fireBossDefeated)
+                        {
+                            MayorNPC.lines[2] = "Now only one challenge remains... As long as <b><color=#541834>Skar</color></b> is around, the innocent people of this realm will never truly be safe...";
+                            MayorNPC.lines[3] = "After sealing the elements away, he sought refuge in the <b><color=#541834>Great Lookout Tower</color></b>, and no soul has seen him since.";
+                            MayorNPC.lines[4] = "With all the power he has consumed, I fear it has consumed him as well...";
+                            MayorNPC.lines[5] = "I cannot fathome the <b><color=#541834>monster</color></b> he's become, what he made himself into...";
+                            MayorNPC.lines[6] = "It is up to you to put an end to his reign. Head to the tower and stop him. I believe in you, Maguso.";
+                            
+                            MayorNPC.secondaryLines = new string[1];
+                            MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><541834=#ff3300>Skar</color></b> must be stopped once and for all!";
+
+                        } else {
+                            MayorNPC.lines[2] = "However, another beast lies ahead... a <b><color=#ff3300>Giant Snail of Magma</color></b> gaurds the last element sealed element, <b><color=#ff3300>Fire</color></b>.";
+                            MayorNPC.lines[3] = "It resides deep within the Volcano <b><color=#ff3300>Mount Fwoosh</color></b>, and will not be easy to reach.";
+                            MayorNPC.lines[4] = "To defeat it and bring warmth back to our realm, you must first obtain the <b><color=#0073bf>Water Sapphire</color></b>.";
+                            MayorNPC.lines[5] = "Enter the <b><color=#0073bf>Water Trials</color></b> and retrive it, and then use its power to restore the element of <b><color=#ff3300>Fire</color></b>.";
+                            MayorNPC.lines[6] = "Best of luck, Maguso... And thank you.";
+
+                            MayorNPC.secondaryLines = new string[1];
+                            MayorNPC.secondaryLines[0] = "What's the hold up? Enter the <b><color=#0073bf>Water Trials</color></b> and begin your trek to restore <b><color=#ff3300>Fire</color></b> to the world!";
+
+                        }
+                    } else
+                    {
+                        Debug.LogError("PlayerData can't find MayorNPC's  Character script component!");
+                    }
+                } else
+                {
+                    Debug.LogError("PlayerData can't find MayorNPC!");
                 }
             }
 
@@ -260,6 +369,17 @@ public class PlayerData : MonoBehaviour
 
             // Make tree calm after boss fight (by hiding sad tree)
             if (plantBossDefeated) { // to ensure not before
+
+                // Prevent Player from re-entering fire dungeon
+                GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
+                if (fireDungeonTeleportDoor != null) 
+                {
+                    fireDungeonTeleportDoor.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
+                }
+
                 GameObject SadTree = GameObject.Find("SadTree");
                 if (SadTree != null) 
                 {
@@ -347,12 +467,14 @@ public class PlayerData : MonoBehaviour
             }
 
             // Hide Mayor NPC
-            if (GameObject.Find("MayorNPC") != null) 
-            {
-                GameObject.Find("MayorNPC").SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find MayorNPC!");
+            if (hideMayor) {
+                if (GameObject.Find("MayorNPC") != null) 
+                {
+                    GameObject.Find("MayorNPC").SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find MayorNPC!");
+                }
             }
             
         }

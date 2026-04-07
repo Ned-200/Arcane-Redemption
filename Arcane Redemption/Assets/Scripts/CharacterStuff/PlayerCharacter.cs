@@ -309,6 +309,8 @@ public class PlayerCharacter : BaseCharacter
     {
         base.OnDeath();
 
+        transform.SetParent(null);
+
         if (deathHandled) return;
         deathHandled = true;
 

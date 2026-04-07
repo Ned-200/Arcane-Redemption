@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashCooldown = 1f;
     [SerializeField] private float dashInvincibilityDuration = 1.5f;
     [SerializeField] private AudioClip[] dodgeSounds;
+    [SerializeField] private GameObject iFrameEffectPrefab;
 
     [Header("Ground Check")]
     [SerializeField] private float groundCheckDistance = 0.2f;
@@ -323,6 +324,9 @@ public class PlayerController : MonoBehaviour
 
             // Grant invincibility frames for the dash
             baseCharacter.GrantInvincibility(dashInvincibilityDuration);
+            GameObject iFrameEffect = Instantiate(iFrameEffectPrefab, transform.position+new Vector3(0,1,0), iFrameEffectPrefab.transform.rotation);
+            iFrameEffect.transform.SetParent(transform);
+            Destroy(iFrameEffect, dashInvincibilityDuration);
 
             if (enableDebugLogs)
             {

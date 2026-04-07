@@ -37624,6 +37624,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ac3bef88ab5cb894db7ddf75bb90ba56, type: 3}
   - {fileID: 8300000, guid: 14e63ae07403c2248b0d86c836b89d1e, type: 3}
   - {fileID: 8300000, guid: 14723bf57e5290a4c9e1dfbf8714a123, type: 3}
+  iFrameEffectPrefab: {fileID: 7038505790271449214, guid: d7ab7ecc3980ca14cb186abdc6c335fe, type: 3}
   groundCheckDistance: 0.2
   groundCheckRadius: 0.3
   groundMask:

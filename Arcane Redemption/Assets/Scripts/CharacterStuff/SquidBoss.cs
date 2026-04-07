@@ -16,6 +16,7 @@ public class SquidBoss : EnemyCharacter
     [SerializeField] private string bossDisplayName = "Deep Sea Kraken";
 
     [Header("Cutscene")]
+    private PlayerData playerData;
     [SerializeField] private float cutsceneDelay = 17f;
     [SerializeField] private GameObject WaterGhostPrefab;
     private bool ghostSpawned = false;
@@ -112,6 +113,13 @@ public class SquidBoss : EnemyCharacter
     {
         FindPlayer();
         InitializeDormantBombers();
+
+        // Fetch Player Data (This must be done at start, not awake.)
+        playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+        if (playerData == null)
+        {
+            Debug.LogError("TreeBoss cannot find PlayerData!");
+        }
     }
 
     protected override void Update()
@@ -681,6 +689,12 @@ public class SquidBoss : EnemyCharacter
             {
                 Debug.LogError("SquidBoss not assigned a Ghost NPC Prefab! Check Fields!");
             }
+        }
+
+        // Update player data that water boss was defeated
+        if (playerData != null)
+        {
+            playerData.waterBossDefeated = true;
         }
 
         Debug.Log($"[{gameObject.name}] ☠️ Squid Boss defeated!");

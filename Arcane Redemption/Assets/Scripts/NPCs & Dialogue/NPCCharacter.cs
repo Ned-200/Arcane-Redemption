@@ -21,9 +21,9 @@ public class NPC_Character : BaseCharacter
     [SerializeField] protected GameObject FadeUI;
 
     [Header("Cutscene Camera")]
-    [SerializeField] protected GameObject[] cutsceneCamera;
+    public GameObject[] cutsceneCamera;
     public int[] cutsceneLine;
-    [SerializeField] protected int endCutsceneLine;
+    public int endCutsceneLine;
 
     [Header("Text")]
     [SerializeField] protected GameObject DialogueBox;

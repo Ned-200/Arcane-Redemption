@@ -17,6 +17,9 @@ public class PlayerData : MonoBehaviour
     public bool waterBossDefeated;
     public bool plantBossDefeated;
     private bool hideMayor = true;
+    private bool hideTownNPC = false;
+    private bool hideDoorNPC = true;
+    private bool hideTreeBoss = true;
 
     private GameObject Player;
     private CharacterController characterController;
@@ -81,89 +84,29 @@ public class PlayerData : MonoBehaviour
         {
             Debug.LogError("PlayerData can't find Player!");
         }
-
-        if (lastScene == "FireDungeonGraybox") // If coming from Fire Dungeon
+        
+        if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
         {
-            // Prevent Player from re-entering fire dungeon
-            GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
-            if (fireDungeonTeleportDoor != null) 
+            
+            if (lastScene == "FireDungeonGraybox") // If coming from Fire Dungeon
             {
-                fireDungeonTeleportDoor.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
+                // Hide NPCs
+                hideTownNPC = true;
+                hideDoorNPC = false;
+                hideTreeBoss = false;
+
+                // Set player spawn position
+                fireDungeonSpawn = GameObject.Find("FireDungeonSpawn").transform;
+                if (fireDungeonSpawn != null) {
+                    characterController.enabled = false;
+                    characterController.transform.position = fireDungeonSpawn.position;
+                    characterController.enabled = true;
+                } else
+                {
+                    Debug.LogError("PlayerData can't find fireDungeonSpawn!");
+                }
             }
 
-            // Make tree sad during boss fight (by hiding calm tree)
-            GameObject CalmTree = GameObject.Find("CalmTree");
-            if (CalmTree != null) 
-            {
-                CalmTree.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find CalmTree!");
-            }
-
-            // Hide Mayor NPC
-            if (GameObject.Find("MayorNPC") != null) 
-            {
-                GameObject.Find("MayorNPC").SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find MayorNPC!");
-            }
-
-            // Spawn Plant Boss in Town
-            GameObject plantBoss = GameObject.Find("TreeBoss");
-            if (plantBoss != null) 
-            {
-                plantBoss.SetActive(true);
-            } else
-            {
-                Debug.LogError("PlayerData can't find PlantBoss!");
-            }
-            GameObject treeBossCheckpoint = GameObject.Find("TreeBossCheckpoint");
-            if (treeBossCheckpoint != null) 
-            {
-                treeBossCheckpoint.SetActive(true);
-            } else
-            {
-                Debug.LogError("PlayerData can't find TreeBossCheckpoint!");
-            }
-            // Spawn Potions in Town
-            GameObject bossPotions = GameObject.Find("BossPotions");
-            if (bossPotions != null) 
-            {
-                bossPotions.SetActive(true);
-            } else
-            {
-                Debug.LogError("PlayerData can't find BossPotions!");
-            }
-
-            // Hide town NPC
-            GameObject townNPC = GameObject.Find("TownNPC");
-            if (townNPC != null) 
-            {
-                townNPC.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find TownNPC!");
-            }
-
-            // Set player spawn position
-            fireDungeonSpawn = GameObject.Find("FireDungeonSpawn").transform;
-            if (fireDungeonSpawn != null) {
-                characterController.enabled = false;
-                characterController.transform.position = fireDungeonSpawn.position;
-                characterController.enabled = true;
-            } else
-            {
-                Debug.LogError("PlayerData can't find fireDungeonSpawn!");
-            }
-
-        } else if (SceneManager.GetActiveScene().name == "GrayboxingV1") // If current scene is main area and NOT coming from Fire Dungeon, hide Door NPC
-        {
-            // MAKE NECESSARY CHANGES FOR ALL OTHER SCENES
             if (lastScene == "WaterDungeonGraybox") { // If coming from Water Dungeon
 
                 // Set player spawn position
@@ -205,15 +148,9 @@ public class PlayerData : MonoBehaviour
                     Debug.LogError("PlayerData can't find VolcanoSpawn!");
                 }
 
-                // Hide town NPC
-                GameObject townNPC = GameObject.Find("TownNPC");
-                if (townNPC != null) 
-                {
-                    townNPC.SetActive(false);
-                } else
-                {
-                    Debug.LogError("PlayerData can't find TownNPC!");
-                }
+                // Hide NPCs
+                hideTownNPC = true;
+                hideDoorNPC = true;
 
                 // Update Mayor NPC
                 if (GameObject.Find("MayorNPC") != null) 
@@ -222,11 +159,19 @@ public class PlayerData : MonoBehaviour
 
                     NPC_Character MayorNPC = GameObject.Find("MayorNPC").GetComponent<NPC_Character>();
                     if (MayorNPC != null) {
-                        MayorNPC.cutsceneLine = new int[0];
                         MayorNPC.lines = new string[7];
                         MayorNPC.lines[0] = "Excellent work, my friend!";
                         MayorNPC.lines[1] = "You've restored <b><color=#ff3300>Fire</color></b> to the realm! Our <b><color=#0073bf>torches</color></b> are lit once more!";
                         MayorNPC.transform.position = new Vector3(-60.3f, 26.5f, -4.7f);
+                            
+                        MayorNPC.cutsceneCamera = new GameObject[2];
+                        MayorNPC.cutsceneLine = new int[2];
+                        if (GameObject.Find("FireCamera") != null) {
+                            MayorNPC.cutsceneCamera[0] = GameObject.Find("FireCamera");
+                            MayorNPC.cutsceneLine[0] = 1;
+                        } else {
+                            Debug.LogError("PlayerData: No FireCamera found!");
+                        }
 
                         if (waterBossDefeated)
                         {
@@ -237,7 +182,14 @@ public class PlayerData : MonoBehaviour
                             MayorNPC.lines[6] = "It is up to you to put an end to his reign. Head to the tower and stop him. I believe in you, Maguso.";
                             
                             MayorNPC.secondaryLines = new string[1];
-                            MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><541834=#ff3300>Skar</color></b> must be stopped once and for all!";
+                            MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><color=#541834>Skar</color></b> must be stopped once and for all!";
+
+                            if (GameObject.Find("TowerCamera") != null) {     
+                                MayorNPC.cutsceneCamera[1] = GameObject.Find("TowerCamera");
+                                MayorNPC.cutsceneLine[1] = 3;
+                            } else {
+                                Debug.LogError("PlayerData: No TowerCamera found!");
+                            }
 
                         } else {
                             MayorNPC.lines[2] = "However, one more beast awaits you... a <b><color=#0073bf>Great Squid of Tides</color></b> protects the last element sealed element, <b><color=#0073bf>Water</color></b>.";
@@ -274,15 +226,9 @@ public class PlayerData : MonoBehaviour
                     Debug.LogError("PlayerData can't find BaySpawn!");
                 }
 
-                // Hide town NPC
-                GameObject townNPC = GameObject.Find("TownNPC");
-                if (townNPC != null) 
-                {
-                    townNPC.SetActive(false);
-                } else
-                {
-                    Debug.LogError("PlayerData can't find TownNPC!");
-                }
+                // Hide NPCs
+                hideTownNPC = true;
+                hideDoorNPC = true;
 
                 // Update Mayor NPC
                 if (GameObject.Find("MayorNPC") != null) 
@@ -291,11 +237,19 @@ public class PlayerData : MonoBehaviour
                     
                     NPC_Character MayorNPC = GameObject.Find("MayorNPC").GetComponent<NPC_Character>();
                     if (MayorNPC != null) {
-                        MayorNPC.cutsceneLine = new int[0];
-                        MayorNPC.lines = new string[6];
+                        MayorNPC.lines = new string[7];
                         MayorNPC.lines[0] = "You've done it again!";
                         MayorNPC.lines[1] = "You've restored <b><color=#0073bf>Water</color></b> to the realm! Our <b><color=#0073bf>wells</color></b> are filled and <b><color=#0073bf>rivers</color></b> run free!";
                         MayorNPC.transform.position = new Vector3(-60.3f, 26.5f, -4.7f);
+
+                        MayorNPC.cutsceneCamera = new GameObject[2];
+                        MayorNPC.cutsceneLine = new int[2];
+                        if (GameObject.Find("WaterCamera") != null) {
+                            MayorNPC.cutsceneCamera[0] = GameObject.Find("WaterCamera");
+                            MayorNPC.cutsceneLine[0] = 1;
+                        } else {
+                            Debug.LogError("PlayerData: No WaterCamera found!");
+                        }
 
                         if (fireBossDefeated)
                         {
@@ -306,7 +260,14 @@ public class PlayerData : MonoBehaviour
                             MayorNPC.lines[6] = "It is up to you to put an end to his reign. Head to the tower and stop him. I believe in you, Maguso.";
                             
                             MayorNPC.secondaryLines = new string[1];
-                            MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><541834=#ff3300>Skar</color></b> must be stopped once and for all!";
+                            MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><color=#541834>Skar</color></b> must be stopped once and for all!";
+
+                            if (GameObject.Find("TowerCamera") != null) {     
+                                MayorNPC.cutsceneCamera[1] = GameObject.Find("TowerCamera");
+                                MayorNPC.cutsceneLine[1] = 3;
+                            } else {
+                                Debug.LogError("PlayerData: No TowerCamera found!");
+                            }
 
                         } else {
                             MayorNPC.lines[2] = "However, another beast lies ahead... a <b><color=#ff3300>Giant Snail of Magma</color></b> gaurds the last element sealed element, <b><color=#ff3300>Fire</color></b>.";
@@ -327,6 +288,31 @@ public class PlayerData : MonoBehaviour
                 {
                     Debug.LogError("PlayerData can't find MayorNPC!");
                 }
+            }
+
+            // Hide additional cameras AFTER retrieving them in Bay and Volcano last scene checks
+            if (GameObject.Find("FireCamera") != null) 
+            {
+                GameObject.Find("FireCamera").SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find FireCamera!");
+            }
+
+            if (GameObject.Find("WaterCamera") != null) 
+            {
+                GameObject.Find("WaterCamera").SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find WaterCamera!");
+            }
+
+            if (GameObject.Find("TowerCamera") != null) 
+            {
+                GameObject.Find("TowerCamera").SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find TowerCamera!");
             }
 
             // ALWAYS DO IF IN MAIN SCENE, REGARDLESS OF LAST SCENE
@@ -367,9 +353,8 @@ public class PlayerData : MonoBehaviour
                 }
             }
 
-            // Make tree calm after boss fight (by hiding sad tree)
-            if (plantBossDefeated) { // to ensure not before
-
+            if (fireGemObtained)
+            {
                 // Prevent Player from re-entering fire dungeon
                 GameObject fireDungeonTeleportDoor = GameObject.Find("FireDungeonTeleportDoor");
                 if (fireDungeonTeleportDoor != null) 
@@ -379,6 +364,10 @@ public class PlayerData : MonoBehaviour
                 {
                     Debug.LogError("PlayerData can't find FireDungeonTeleportDoor!");
                 }
+            }
+
+            // Make tree calm after boss fight (by hiding sad tree)
+            if (plantBossDefeated) { // to ensure not before
 
                 GameObject SadTree = GameObject.Find("SadTree");
                 if (SadTree != null) 
@@ -431,39 +420,32 @@ public class PlayerData : MonoBehaviour
             }
 
             // Despawn Plant Boss in Town
-            GameObject plantBoss = GameObject.Find("TreeBoss");
-            if (plantBoss != null) 
-            {
-                plantBoss.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find PlantBoss!");
-            }
-            GameObject treeBossCheckpoint = GameObject.Find("TreeBossCheckpoint");
-            if (treeBossCheckpoint != null) 
-            {
-                treeBossCheckpoint.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find TreeBossCheckpoint!");
-            }
-            // Despawn Boss Potions in Town
-            GameObject bossPotions = GameObject.Find("BossPotions");
-            if (bossPotions != null) 
-            {
-                bossPotions.SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find BossPotions!");
-            }
-
-            // Hide Door NPC
-            if (GameObject.Find("DoorNPC") != null) 
-            {
-                GameObject.Find("DoorNPC").SetActive(false);
-            } else
-            {
-                Debug.LogError("PlayerData can't find DoorNPC!");
+            if (hideTreeBoss) {
+                GameObject plantBoss = GameObject.Find("TreeBoss");
+                if (plantBoss != null) 
+                {
+                    plantBoss.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find PlantBoss!");
+                }
+                GameObject treeBossCheckpoint = GameObject.Find("TreeBossCheckpoint");
+                if (treeBossCheckpoint != null) 
+                {
+                    treeBossCheckpoint.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find TreeBossCheckpoint!");
+                }
+                // Despawn Boss Potions in Town
+                GameObject bossPotions = GameObject.Find("BossPotions");
+                if (bossPotions != null) 
+                {
+                    bossPotions.SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find BossPotions!");
+                }
             }
 
             // Hide Mayor NPC
@@ -476,7 +458,46 @@ public class PlayerData : MonoBehaviour
                     Debug.LogError("PlayerData can't find MayorNPC!");
                 }
             }
-            
+            // Hide Town NPC
+            if (hideTownNPC) {
+                if (GameObject.Find("TownNPC") != null) 
+                {
+                    GameObject.Find("TownNPC").SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find TownNPC!");
+                }
+            }
+            // Hide Door NPC
+            if (hideDoorNPC) {
+                if (GameObject.Find("DoorNPC") != null) 
+                {
+                    GameObject.Find("DoorNPC").SetActive(false);
+                } else
+                {
+                    Debug.LogError("PlayerData can't find DoorNPC!");
+                }
+            }
+
+            // Restore or hide water, every check, regardless of last scene
+            GameObject RestoreWater = GameObject.Find("RestoreWater");
+            if (RestoreWater != null) 
+            {
+                RestoreWater.SetActive(waterBossDefeated);
+            } else
+            {
+                Debug.LogError("PlayerData can't find RestoreWater!");
+            }
+
+            // Restore fire or hide, every check, regardless of last scene
+            GameObject RestoreFire = GameObject.Find("RestoreFire");
+            if (RestoreFire != null) 
+            {
+                RestoreFire.SetActive(fireBossDefeated);
+            } else
+            {
+                Debug.LogError("PlayerData can't find RestoreFire!");
+            }
         }
     }
 

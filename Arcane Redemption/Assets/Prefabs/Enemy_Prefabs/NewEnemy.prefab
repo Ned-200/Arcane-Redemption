@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: -4815621317076837680}
   m_Layer: 6
   m_Name: NewEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,6 +433,9 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 2
   deathDelay: 3
+  canRespawn: 1
+  diesOnFall: 0
+  respawnEffect: {fileID: 261948290644060713, guid: a882d2c1d06f1a342908a3b61078ec18, type: 3}
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
   partsToDisintegrate:
@@ -490,7 +493,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4313333173240667122}
   serializedVersion: 5
-  m_Mass: 30
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -507,7 +510,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &4332124804974142284
 GameObject:

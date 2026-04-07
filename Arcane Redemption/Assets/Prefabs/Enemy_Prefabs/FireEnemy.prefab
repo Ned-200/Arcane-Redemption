@@ -1106,9 +1106,10 @@ GameObject:
   - component: {fileID: 7690271413594085346}
   - component: {fileID: 4022859813262624560}
   - component: {fileID: 434332866832427669}
+  - component: {fileID: -3936663742348249276}
   m_Layer: 6
   m_Name: FireEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1206,6 +1207,9 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 2
   deathDelay: 3
+  canRespawn: 1
+  diesOnFall: 0
+  respawnEffect: {fileID: 261948290644060713, guid: a882d2c1d06f1a342908a3b61078ec18, type: 3}
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
   partsToDisintegrate:
@@ -1258,6 +1262,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &-3936663742348249276
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260078628596633636}
+  serializedVersion: 5
+  m_Mass: 100
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &2278926546070684779
 GameObject:
   m_ObjectHideFlags: 0

@@ -110,7 +110,19 @@ public class DungeonManager : MonoBehaviour
                 playerController.canMove = false;
                 playerController.playerAnim.SetBool("Burned", true);
             }
+
+        } else if (other.CompareTag("Enemy")) { // Respawn / Kill enemy character if they fall in!
+            EnemyCharacter enemy = other.GetComponent<EnemyCharacter>();
+            if (enemy != null) {
+                Debug.Log("DungeonManager: Enemy fell in!");
+                if (enemy.canRespawn) {
+                    enemy.Respawn();
+                } else if (enemy.diesOnFall) {
+                    enemy.TakeDamage(500);
+                }
+            }
         }
+
     }
 
     protected virtual void SpawnPlayerAtopPit()

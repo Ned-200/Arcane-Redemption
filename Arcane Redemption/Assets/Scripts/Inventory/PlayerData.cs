@@ -514,6 +514,24 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("PlayerData can't find RestoreFire!");
             }
+
+            // ALWAYS hide dungeon door cameras, don't disable in scene so that they can be found.
+            GameObject WaterDungeonCamera = GameObject.Find("WaterDungeonCamera");
+            if (WaterDungeonCamera != null) 
+            {
+                WaterDungeonCamera.SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find WaterDungeonCamera!");
+            }
+            GameObject PlantDungeonCamera = GameObject.Find("PlantDungeonCamera");
+            if (PlantDungeonCamera != null) 
+            {
+                PlantDungeonCamera.SetActive(false);
+            } else
+            {
+                Debug.LogError("PlayerData can't find PlantDungeonCamera!");
+            }
         }
     }
 

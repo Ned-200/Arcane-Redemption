@@ -14,6 +14,7 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private AudioClip slamSound;
     [SerializeField] private AudioClip roarSound;
     [SerializeField] private int roarDelay = 1;
+    [SerializeField] private AudioSource bossMusicSource;
 
     private bool cutscenePlaying;
     public bool cutsceneEnded;
@@ -30,6 +31,19 @@ public class BossRoomManager : DungeonManager
         if (BossCamera == null)
         {
             Debug.LogError("BossRoomManager: BossCamera not assigned!");
+        }
+
+        if (bossMusicSource == null)
+        {
+            GameObject bossMusicSourceObject = GameObject.FindWithTag("BossMusicSource");
+            if (bossMusicSourceObject != null) {
+                bossMusicSource = bossMusicSourceObject.GetComponent<AudioSource>();
+            } else {
+                Debug.LogError("BossRoomManager: Cannot find bossMusicSource object!");
+            }
+            if (bossMusicSource == null) {
+                Debug.LogError("BossRoomManager: Not assigned and cannot find bossMusicSource!");
+            }
         }
 
         playerController = characterController.GetComponent<PlayerController>();
@@ -55,6 +69,8 @@ public class BossRoomManager : DungeonManager
             playerController.canMove = false; // stop player movement
             playerAnim.SetBool("isWalking", false);
             playerAnim.SetBool("isSprinting", false);
+
+            bossMusicSource.Play();
 
             if (battleLockedDoors.Length > 0) {
                 StartCoroutine(TweenPosition(battleLockedDoors[0], new Vector3(battleLockedDoors[0].transform.position.x, moveYPosition, battleLockedDoors[0].transform.position.z), moveDuration));

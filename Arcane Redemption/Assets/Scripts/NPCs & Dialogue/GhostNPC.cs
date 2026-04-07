@@ -14,6 +14,9 @@ public class GhostNPC : NPC_Character
     private GameObject bossExitBridge;
     private bool movedOrMoving;
     private Vector3 targetPosition;
+    [SerializeField] private AudioClip ghostMusic;
+    private AudioSource bossMusicSource;
+
     protected override void Start()
     {
         base.Start();
@@ -21,11 +24,32 @@ public class GhostNPC : NPC_Character
         Invoke(nameof(BeginGhostDialogue), 3);
         targetPosition = new Vector3(NPCMesh.transform.localPosition.x, NPCMesh.transform.localPosition.y+8, NPCMesh.transform.localPosition.z);
     
+        bossMusicSource = GameObject.FindWithTag("BossMusicSource").GetComponent<AudioSource>();
+        if (bossMusicSource != null)
+        {
+            if (ghostMusic != null) {
+                bossMusicSource.clip = ghostMusic;
+            } else
+            {
+                Debug.LogError("GhostNPC: not assigned ghostMusic!");
+            }
+            bossMusicSource.loop = false;
+            bossMusicSource.Stop();
+        } else
+        {
+            Debug.LogError("GhostNPC: Can't find BossMusicSource!");
+        }
+
     }
 
     private void BeginGhostDialogue()
     {
         CinemachineCamera.SetActive(true);
+
+        if (bossMusicSource != null)
+        {
+            bossMusicSource.Play();
+        }
 
         Debug.Log("Dialogue Begin");
         if (SpeakImage != null)

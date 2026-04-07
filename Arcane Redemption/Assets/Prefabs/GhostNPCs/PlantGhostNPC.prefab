@@ -152,6 +152,7 @@ MonoBehaviour:
   secondaryAngryIndex: -1
   mayorIndex: 8
   bridgeIndex: -1
+  ghostMusic: {fileID: 8300000, guid: 1a25d93596c3fbb42bc50f52ec7c92ac, type: 3}
 --- !u!1 &2523529956305888260
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class DoorNPC : NPC_Character
     protected GameObject ReturnToTownCamera1;
     protected GameObject ReturnToTownCamera2;
     private bool notFirstInteraction;
+    [SerializeField] private AudioClip townPanicSound;
 
 
     protected override void Start()
@@ -54,6 +55,7 @@ public class DoorNPC : NPC_Character
     {
         ReturnToTownCamera2.SetActive(true);
         textComponent.text = "*Distant screaming and sounds of chaos*";
+        audioSource.PlayOneShot(townPanicSound);
         DialogueBox.SetActive(true);
         Invoke(nameof(DisableCamera2), 4);
     }

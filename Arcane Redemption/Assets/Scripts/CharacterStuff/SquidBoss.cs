@@ -5,7 +5,7 @@ using System.Linq;
 
 /// <summary>
 /// Squid Boss with two-phase combat:
-/// Phase 1 (0-20s): Invulnerable shell phase with ranged attacks and minion spawning
+/// Phase 1 sucks player in, spawns bomber enemies
 /// Phase 2 (20s+): Shell breaks, vulnerable melee tentacle slam attacks
 /// </summary>
 public class SquidBoss : EnemyCharacter
@@ -22,9 +22,7 @@ public class SquidBoss : EnemyCharacter
     private bool ghostSpawned = false;
 
     [Header("Shell Phase (Phase 1)")]
-    [SerializeField] private ShellProtection shellProtection;
-    [SerializeField] private float shellDuration = 20f;
-    [SerializeField] private GameObject shellVisual;
+    [SerializeField] private float phase2Threshhold = 0.5f;
 
     [Header("Minion Spawning (Phase 1)")]
     [SerializeField] private float minionSpawnInterval = 5f;
@@ -71,7 +69,6 @@ public class SquidBoss : EnemyCharacter
     #region Private Fields
 
     private SquidBossPhase currentPhase = SquidBossPhase.ShellPhase;
-    private float shellTimer;
     private float lastMinionSpawnTime;
     private float lastProjectileTime;
     private float lastSuckTime;
@@ -98,7 +95,6 @@ public class SquidBoss : EnemyCharacter
 
     public SquidBossPhase CurrentPhase => currentPhase;
     public bool IsShellActive => currentPhase == SquidBossPhase.ShellPhase;
-    public float ShellTimeRemaining => Mathf.Max(0f, shellDuration - shellTimer);
 
     #endregion
 
@@ -163,11 +159,6 @@ public class SquidBoss : EnemyCharacter
             bossAnimator = GetComponent<Animator>();
         }
 
-        if (shellProtection == null)
-        {
-            shellProtection = GetComponent<ShellProtection>();
-        }
-
         if (tentaclePrefab == null)
         {
             Debug.LogError("SquidBoss: No tentaclePrefab assigned!");
@@ -177,7 +168,6 @@ public class SquidBoss : EnemyCharacter
 
         healthBarUI = FindFirstObjectByType<BossHealthBarUI>();
 
-        shellTimer = 0f;
         lastMinionSpawnTime = -minionSpawnInterval;
         lastProjectileTime = -projectileCooldown;
         lastSuckTime = -suckCooldown;
@@ -186,7 +176,7 @@ public class SquidBoss : EnemyCharacter
         cutsceneTimer = 0f;
         cutsceneComplete = false;
 
-        Debug.Log($"[{gameObject.name}] Squid Boss initialized - Cutscene delay: {cutsceneDelay}s, Shell duration: {shellDuration}s");
+        Debug.Log($"[{gameObject.name}] Squid Boss initialized - Cutscene delay: {cutsceneDelay}s");
     }
 
     private void FindPlayer()
@@ -271,9 +261,7 @@ public class SquidBoss : EnemyCharacter
 
     private void UpdateShellPhase()
     {
-        shellTimer += Time.deltaTime;
-
-        if (shellTimer >= shellDuration)
+        if (currentHealth < maxHealth*phase2Threshhold)
         {
             TransitionToVulnerablePhase();
             return;
@@ -313,8 +301,6 @@ public class SquidBoss : EnemyCharacter
 
         currentPhase = SquidBossPhase.VulnerablePhase;
 
-        BreakShell();
-
         if (bossAnimator != null)
         {
             bossAnimator.SetTrigger("ShellBreak");
@@ -327,23 +313,6 @@ public class SquidBoss : EnemyCharacter
 
         StopAllPhase1Actions();
     }
-
-    private void BreakShell()
-    {
-        if (shellProtection != null && shellProtection.IsShellActive)
-        {
-            while (shellProtection.IsShellActive)
-            {
-                shellProtection.TryDamageShell();
-            }
-        }
-
-        if (shellVisual != null)
-        {
-            shellVisual.SetActive(false);
-        }
-    }
-
     private void StopAllPhase1Actions()
     {
         if (suckCoroutine != null)
@@ -647,13 +616,6 @@ public class SquidBoss : EnemyCharacter
             return;
         }
 
-        if (IsShellActive)
-        {
-            Debug.Log($"[{gameObject.name}] 🛡️ BLOCKED {damage} damage - shell is active!");
-            OnDamageBlocked(damage);
-            return;
-        }
-
         base.TakeDamage(damage);
     }
 
@@ -728,7 +690,6 @@ public class SquidBoss : EnemyCharacter
         {
             Gizmos.color = Color.yellow;
             Vector3 timerPos = transform.position + Vector3.up * 5f;
-            Gizmos.DrawWireSphere(timerPos, ShellTimeRemaining / shellDuration * 2f);
         }
 
         // Show cutscene timer

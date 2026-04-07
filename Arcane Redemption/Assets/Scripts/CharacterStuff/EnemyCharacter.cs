@@ -528,6 +528,10 @@ public class EnemyCharacter : BaseCharacter
         
         Debug.Log($"[{gameObject.name}] smoked bozo - Destroyed in {deathDelay} seconds");
         
+        if (rigidBody != null) {
+            rigidBody.useGravity = false;
+        }
+
         // Play death animation
         if (enemyAnim != null && enemyAnim.runtimeAnimatorController != null)
         {

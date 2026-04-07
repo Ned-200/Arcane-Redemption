@@ -21390,6 +21390,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131335421096361779, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: removalThreshold
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 1633437944916431531, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
       propertyPath: m_Name
       value: BayBoss
@@ -21434,9 +21438,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5011375257405593896, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5796747044047783194, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: removalThreshold
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931475282221955807, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: armorPieces.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6931475282221955807, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: 'armorPieces.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1547193613}
+    - target: {fileID: 7081902223635058080, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: removalThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155192920189151274, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 7155192920189151274, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
       propertyPath: shellDuration
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155192920189151274, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: shellProtection
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7155192920189151274, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
       propertyPath: movingPlatformParent
@@ -21490,7 +21522,16 @@ PrefabInstance:
       propertyPath: 'dormantBombers.Array.data[11]'
       value: 
       objectReference: {fileID: 750704080}
-    m_RemovedComponents: []
+    - target: {fileID: 8268552884574354706, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: removalThreshold
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140474454867983244, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+      propertyPath: removalThreshold
+      value: 0.85
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5011375257405593896, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -42634,6 +42675,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834228be1cb43d344addd7dff06657ab, type: 3}
+--- !u!114 &1547193613 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7081902223635058080, guid: 83a045b27a0127a47ab5c2b7820023c2, type: 3}
+  m_PrefabInstance: {fileID: 665439622}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628190eb27bdccb4894119bffcc6d3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossArmorPiece
 --- !u!1 &1549593279
 GameObject:
   m_ObjectHideFlags: 0

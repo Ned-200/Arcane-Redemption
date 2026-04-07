@@ -16,6 +16,7 @@ TagManager:
   - Tough Plant Wall
   - FloorSpike
   - BossMusicSource
+  - Enemy
   layers:
   - Default
   - TransparentFX

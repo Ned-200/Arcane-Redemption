@@ -43,6 +43,7 @@ public class SquidBoss : EnemyCharacter
     [SerializeField] private float suckForce = 10f;
     [SerializeField] private float suckCooldown = 8f;
     [SerializeField] private float suckRadius = 15f;
+    [SerializeField] private Transform suckSpawnPoint;
     [SerializeField] private GameObject suckVFXPrefab;
 
     [Header("Tentacle Slam (Phase 2)")]
@@ -482,7 +483,7 @@ public class SquidBoss : EnemyCharacter
 
         if (suckVFXPrefab != null)
         {
-            suckVFXInstance = Instantiate(suckVFXPrefab, transform.position, Quaternion.identity);
+            suckVFXInstance = Instantiate(suckVFXPrefab, suckSpawnPoint.position, suckSpawnPoint.rotation);
         }
 
         if (suckSound != null)

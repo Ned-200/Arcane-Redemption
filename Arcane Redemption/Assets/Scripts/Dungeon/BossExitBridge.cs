@@ -9,6 +9,8 @@ public class BossExitBridge : MonoBehaviour
     private CinemachineImpulseSource impulseSource;
     [SerializeField] private int moveElevation;
     [SerializeField] private int moveDuration;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip moveSound;
     private bool movedOrMoving;
     
 
@@ -17,6 +19,17 @@ public class BossExitBridge : MonoBehaviour
         if (bridgeCamera == null)
         {
             Debug.LogError("BossExitBridge: bridgeCamera not assigned!");
+        }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("BossExitBridge: audioSource not found! Check components!");
+        }
+
+        if (moveSound == null)
+        {
+            Debug.LogError("BossExitBridge: moveSound not assigned!");
         }
 
         impulseSource = GetComponent<CinemachineImpulseSource>();
@@ -37,6 +50,11 @@ public class BossExitBridge : MonoBehaviour
                 impulseSource.GenerateImpulse(1.5f);
             }
             
+            if (moveSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(moveSound);
+            }
+
             Invoke(nameof(disableBridgeCamera), moveDuration);
         }
     }

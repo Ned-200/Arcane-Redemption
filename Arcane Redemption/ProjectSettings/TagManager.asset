@@ -15,6 +15,7 @@ TagManager:
   - PlantBridge
   - Tough Plant Wall
   - FloorSpike
+  - BossMusicSource
   layers:
   - Default
   - TransparentFX

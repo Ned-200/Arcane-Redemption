@@ -1745,7 +1745,7 @@ MonoBehaviour:
   detectionRadius: 15
   requiresDetection: 1
   phase2HealthThreshold: 0.5
-  elementSwitchInterval: 10
+  elementSwitchInterval: 20
   showElementIndicator: 1
   plantMaterial: {fileID: 0}
   fireMaterial: {fileID: 0}
@@ -1757,17 +1757,27 @@ MonoBehaviour:
   plantVolleyMaxProjectiles: 5
   plantVolleyCooldown: 5
   plantProjectilePrefab: {fileID: 8497696522997006273, guid: 58e292c96342e28489ea69606780c648, type: 3}
-  plantMinionPrefabs: []
-  plantSummonCooldown: 8
+  plantMinionPrefabs:
+  - {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
+  - {fileID: 4313333173240667122, guid: 07fe40b83bd70fc4789bb40516866e18, type: 3}
+  plantSummonCooldown: 5
   fireApproachSpeed: 5
   fireHitsBeforeRetreat: 2
   fireRetreatDistance: 15
   fireRetreatSpeed: 6
-  fireRingPrefab: {fileID: 1423825965522082719, guid: 0b26c2e9d9471eb4986a811aa9b68686, type: 3}
-  fireRingCooldown: 6
+  fireRingPrefab: {fileID: 1423825965522082719, guid: 9ef79a4e546bf1c4bb9d6dfaace71743, type: 3}
+  minComboAttacks: 1
+  maxComboAttacks: 4
+  fireRingComboAttackCooldownMin: 1
+  fireRingComboAttackCooldownMax: 2
+  fireRingComboCooldownMin: 6
+  fireRingComboCooldownMax: 10
+  fireRingSounds: []
   waterFleeSpeed: 5.5
   waterFleeDistance: 20
-  waterMinionPrefabs: []
+  waterMinionPrefabs:
+  - {fileID: 853700350503265619, guid: 834228be1cb43d344addd7dff06657ab, type: 3}
+  - {fileID: 6991326440383510534, guid: 213543c44bf78184fa059c38bd871f4d, type: 3}
   waterSummonCooldown: 7
   enragedSpeedMultiplier: 1.5
   enragedDamageMultiplier: 1.3

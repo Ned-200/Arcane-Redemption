@@ -45,7 +45,13 @@ public class FinalBoss : EnemyCharacter
     [SerializeField] private float fireRetreatDistance = 15f;
     [SerializeField] private float fireRetreatSpeed = 6f;
     [SerializeField] private GameObject fireRingPrefab;
-    [SerializeField] private float fireRingCooldown = 6f;
+    [SerializeField] private int minComboAttacks = 1;
+    [SerializeField] private int maxComboAttacks = 4;
+    [SerializeField] private float fireRingComboAttackCooldownMin = 1f;
+    [SerializeField] private float fireRingComboAttackCooldownMax = 2f;
+    [SerializeField] private float fireRingComboCooldownMin = 6f;
+    [SerializeField] private float fireRingComboCooldownMax = 10f;
+    [SerializeField] private AudioClip[] fireRingSounds;
 
     [Header("Water Mode Settings")]
     [SerializeField] private float waterFleeSpeed = 5.5f;
@@ -114,8 +120,10 @@ public class FinalBoss : EnemyCharacter
     private bool isRetreating = false;
     private float lastPlantVolleyTime;
     private float lastPlantSummonTime;
-    private float lastFireRingTime;
+    private float lastFireRingComboTime;
     private float lastWaterSummonTime;
+    private bool isPerformingFireRingCombo = false;
+    private Coroutine fireRingComboCoroutine;
 
     // Phase 2 tracking
     private bool isEnraged = false;
@@ -124,6 +132,7 @@ public class FinalBoss : EnemyCharacter
     private Coroutine enragedBehaviorCoroutine;
 
     private Rigidbody bossRigidbody;
+    private AudioSource audioSource;
 
     #endregion
 
@@ -189,6 +198,12 @@ public class FinalBoss : EnemyCharacter
             bossRenderer = GetComponentInChildren<Renderer>();
         }
 
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         if (mouthCollider != null) mouthCollider.enabled = false;
         if (handCollider != null) handCollider.enabled = false;
 
@@ -196,7 +211,7 @@ public class FinalBoss : EnemyCharacter
 
         lastPlantVolleyTime = -plantVolleyCooldown;
         lastPlantSummonTime = -plantSummonCooldown;
-        lastFireRingTime = -fireRingCooldown;
+        lastFireRingComboTime = -fireRingComboCooldownMax;
         lastWaterSummonTime = -waterSummonCooldown;
 
         // Set initial element property for ProjectileBase
@@ -483,32 +498,81 @@ public class FinalBoss : EnemyCharacter
 
     private void TryFireRingAttack()
     {
-        if (Time.time - lastFireRingTime < fireRingCooldown) return;
-        if (fireRingPrefab == null) return;
+        if (isPerformingFireRingCombo) return;
 
-        SpawnFireRing();
-        lastFireRingTime = Time.time;
+        float comboCooldown = Random.Range(fireRingComboCooldownMin, fireRingComboCooldownMax);
+
+        if (Time.time - lastFireRingComboTime < comboCooldown) return;
+
+        PerformFireRingAttackCombo();
     }
 
-    private void SpawnFireRing()
+    private void PerformFireRingAttackCombo()
     {
-        Vector3 spawnPosition = transform.position;
-        
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up * 2f, Vector3.down, out hit, 20f))
+        if (fireRingComboCoroutine != null)
         {
-            spawnPosition = new Vector3(transform.position.x, hit.point.y, transform.position.z);
-        }
-        else
-        {
-            spawnPosition.y = 0f;
+            StopCoroutine(fireRingComboCoroutine);
         }
 
-        Instantiate(fireRingPrefab, spawnPosition, Quaternion.identity);
+        int comboLength = Random.Range(minComboAttacks, maxComboAttacks + 1);
+        fireRingComboCoroutine = StartCoroutine(FireRingAttackComboSequence(comboLength));
+    }
 
+    private IEnumerator FireRingAttackComboSequence(int attackCount)
+    {
+        isPerformingFireRingCombo = true;
+
+        Debug.Log($"[{gameObject.name}] 🔥 Starting Fire Ring Combo x{attackCount}");
+
+        for (int i = 0; i < attackCount; i++)
+        {
+            ExecuteSingleFireRingAttack();
+
+            if (i < attackCount - 1)
+            {
+                float attackDelay = Random.Range(fireRingComboAttackCooldownMin, fireRingComboAttackCooldownMax);
+                yield return new WaitForSeconds(attackDelay);
+            }
+        }
+
+        lastFireRingComboTime = Time.time;
+        isPerformingFireRingCombo = false;
+        fireRingComboCoroutine = null;
+    }
+
+    private void ExecuteSingleFireRingAttack()
+    {
         if (bossAnimator != null)
         {
             bossAnimator.Play("Attack");
+        }
+
+        // Play fire ring sound
+        if (fireRingSounds != null && fireRingSounds.Length > 0 && audioSource != null)
+        {
+            audioSource.PlayOneShot(fireRingSounds[Random.Range(0, fireRingSounds.Length)]);
+        }
+
+        // Create ring attack 2m above ground level with fixed X rotation
+        if (fireRingPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position;
+            
+            // Raycast down to find ground
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position + Vector3.up * 2f, Vector3.down, out hit, 20f))
+            {
+                spawnPosition = new Vector3(transform.position.x, hit.point.y + 2f, transform.position.z);
+            }
+            else
+            {
+                spawnPosition.y = 2f; // Fallback to Y=2 if no ground found
+            }
+
+            // Force X rotation to 90 degrees (parallel to ground)
+            Quaternion rotation = Quaternion.Euler(90f, 0f, 0f);
+            
+            Instantiate(fireRingPrefab, spawnPosition, rotation);
         }
 
         Debug.Log($"[{gameObject.name}] 🔥 Fire Ring spawned!");
@@ -550,13 +614,17 @@ public class FinalBoss : EnemyCharacter
         if (minionPrefabs.Length == 0) return;
 
         GameObject minionPrefab = minionPrefabs[Random.Range(0, minionPrefabs.Length)];
-        Vector3 spawnOffset = Random.insideUnitSphere * 5f;
-        spawnOffset.y = 0f;
+        
+        // Generate random direction on horizontal plane
+        Vector2 randomCircle = Random.insideUnitCircle.normalized; // Normalized to get edge of circle
+        Vector3 spawnDirection = new Vector3(randomCircle.x, 0f, randomCircle.y);
+        
+        // Spawn exactly 15m away from boss
+        Vector3 spawnPosition = transform.position + (spawnDirection * 15f);
 
-        Vector3 spawnPosition = transform.position + spawnOffset;
         Instantiate(minionPrefab, spawnPosition, Quaternion.identity);
 
-        Debug.Log($"[{gameObject.name}] 👾 Summoned {currentElement} minion!");
+        Debug.Log($"[{gameObject.name}] 👾 Summoned {currentElement} minion at 15m distance!");
     }
 
     #endregion
@@ -1041,6 +1109,12 @@ public class FinalBoss : EnemyCharacter
     private void ForceDetection()
     {
         OnPlayerDetected();
+    }
+
+    [ContextMenu("Force Fire Ring Attack")]
+    private void ForceFireRingAttack()
+    {
+        PerformFireRingAttackCombo();
     }
 
     #endregion

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Squid Boss with two-phase combat:
@@ -16,6 +17,8 @@ public class SquidBoss : EnemyCharacter
 
     [Header("Cutscene")]
     [SerializeField] private float cutsceneDelay = 17f;
+    [SerializeField] private GameObject WaterGhostPrefab;
+    private bool ghostSpawned = false;
 
     [Header("Shell Phase (Phase 1)")]
     [SerializeField] private ShellProtection shellProtection;
@@ -42,7 +45,9 @@ public class SquidBoss : EnemyCharacter
     [SerializeField] private GameObject suckVFXPrefab;
 
     [Header("Tentacle Slam (Phase 2)")]
-    [SerializeField] private Collider tentacleCollider;
+    [SerializeField] private GameObject movingPlatformParent;
+    private Transform[] movingPlatforms;
+    [SerializeField] private GameObject tentaclePrefab;
     [SerializeField] private float tentacleSlamDamage = 20f;
     [SerializeField] private float tentacleSlamCooldown = 2.5f;
     [SerializeField] private float phase2MoveSpeed = 4f;
@@ -52,16 +57,12 @@ public class SquidBoss : EnemyCharacter
     [SerializeField] private Animator bossAnimator;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip[] slamSounds;
     [SerializeField] private AudioClip[] projectileSounds;
     [SerializeField] private AudioClip suckSound;
     [SerializeField] private AudioClip shellBreakSound;
 
     [Header("Boss UI")]
     private BossHealthBarUI healthBarUI;
-
-    [Header("Debug")]
-    [SerializeField] private bool showDebugGizmos = true;
 
     #endregion
 
@@ -158,10 +159,12 @@ public class SquidBoss : EnemyCharacter
             shellProtection = GetComponent<ShellProtection>();
         }
 
-        if (tentacleCollider != null)
+        if (tentaclePrefab == null)
         {
-            tentacleCollider.enabled = false;
+            Debug.LogError("SquidBoss: No tentaclePrefab assigned!");
         }
+
+        movingPlatforms = movingPlatformParent.GetComponentsInChildren<Transform>();
 
         healthBarUI = FindFirstObjectByType<BossHealthBarUI>();
 
@@ -201,6 +204,17 @@ public class SquidBoss : EnemyCharacter
             Debug.Log($"[{gameObject.name}] Auto-found {dormantBombers.Length} bomber enemies in scene");
         }
 
+        foreach (BomberEnemy bomber in dormantBombers)
+        {
+            if (bomber != null)
+            {
+                bomber.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void DestroyBombers()
+    {
         foreach (BomberEnemy bomber in dormantBombers)
         {
             if (bomber != null)
@@ -277,15 +291,7 @@ public class SquidBoss : EnemyCharacter
 
         if (!isPerformingTentacleSlam)
         {
-            if (distanceToPlayer > phase2AttackRange)
-            {
-                MoveTowardsPlayer();
-            }
-            else
-            {
-                TryTentacleSlam();
-            }
-
+            TryTentacleSlam();
             RotateTowardsPlayer();
         }
     }
@@ -336,6 +342,10 @@ public class SquidBoss : EnemyCharacter
             StopCoroutine(suckCoroutine);
             suckCoroutine = null;
             isPerformingSuck = false;
+            if (bossAnimator != null)
+            {
+                bossAnimator.SetBool("isSucking", false);
+            }
         }
 
         if (suckVFXInstance != null)
@@ -459,7 +469,7 @@ public class SquidBoss : EnemyCharacter
 
         if (bossAnimator != null)
         {
-            bossAnimator.Play("Suck");
+            bossAnimator.SetBool("isSucking", true);
         }
 
         if (suckVFXPrefab != null)
@@ -487,6 +497,10 @@ public class SquidBoss : EnemyCharacter
         }
 
         isPerformingSuck = false;
+        if (bossAnimator != null)
+        {
+            bossAnimator.SetBool("isSucking", false);
+        }
         suckCoroutine = null;
     }
 
@@ -547,6 +561,25 @@ public class SquidBoss : EnemyCharacter
 
         Debug.Log($"[{gameObject.name}] 🦑 TENTACLE SLAM!");
 
+        if (movingPlatforms.Length > 0) {
+            if (movingPlatforms.Contains(playerTransform.parent))
+            {
+                Transform playerPlatform = playerTransform.parent;
+
+                Vector3 lookDirection = playerTransform.localPosition - playerPlatform.position;
+                lookDirection = new Vector3(0, lookDirection.y, 0);
+                lookDirection.Normalize();
+                Quaternion startRotation = Quaternion.EulerAngles(lookDirection);
+                Vector3 positionOffset = new Vector3(playerPlatform.position.x,playerPlatform.position.y-8, playerPlatform.position.z);
+
+                GameObject TentacleAttack = Instantiate(tentaclePrefab, positionOffset -= lookDirection, startRotation);
+                TentacleAttack.transform.SetParent(playerPlatform);
+            }
+        } else
+        {
+            Debug.LogError("SquidBoss: No moving platforms assgined! Check inspector!");
+        }
+
         if (bossAnimator != null)
         {
             bossAnimator.Play("Slam");
@@ -556,40 +589,6 @@ public class SquidBoss : EnemyCharacter
 
         isPerformingTentacleSlam = false;
         tentacleSlamCoroutine = null;
-    }
-
-    public void EnableTentacleCollider()
-    {
-        if (tentacleCollider != null)
-        {
-            tentacleCollider.enabled = true;
-        }
-    }
-
-    public void DisableTentacleCollider()
-    {
-        if (tentacleCollider != null)
-        {
-            tentacleCollider.enabled = false;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (currentPhase != SquidBossPhase.VulnerablePhase) return;
-        if (!isPerformingTentacleSlam) return;
-
-        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-        if (player != null)
-        {
-            player.TakeDamage(tentacleSlamDamage);
-            Debug.Log($"[{gameObject.name}] 💥 Tentacle slam hit {player.name} for {tentacleSlamDamage} damage!");
-
-            if (slamSounds.Length > 0)
-            {
-                AudioSource.PlayClipAtPoint(slamSounds[Random.Range(0, slamSounds.Length)], transform.position);
-            }
-        }
     }
 
     #endregion
@@ -657,6 +656,8 @@ public class SquidBoss : EnemyCharacter
     {
         base.OnDeath();
 
+        DestroyBombers();
+
         if (healthBarUI != null)
         {
             healthBarUI.HideBossHealthBar();
@@ -667,6 +668,19 @@ public class SquidBoss : EnemyCharacter
         if (tentacleSlamCoroutine != null)
         {
             StopCoroutine(tentacleSlamCoroutine);
+        }
+
+        if (!ghostSpawned)
+        {
+            ghostSpawned = true;
+            if (WaterGhostPrefab != null)
+            {
+                Instantiate(WaterGhostPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            }
+            else
+            {
+                Debug.LogError("SquidBoss not assigned a Ghost NPC Prefab! Check Fields!");
+            }
         }
 
         Debug.Log($"[{gameObject.name}] ☠️ Squid Boss defeated!");

@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -68,7 +68,7 @@ Material:
     - _Normal_Strength: 0.75
     - _Normal_Tiling: 0.13
     - _QueueControl: 0
-    - _QueueOffset: 1
+    - _QueueOffset: 0
     - _Refracted_Scale: -3.77
     - _Refracted_Speed: 2.09
     - _Refracted_Strength: 2.47

@@ -4930,7 +4930,7 @@ GameObject:
   - component: {fileID: 3101720167699748449}
   - component: {fileID: 8421105137482583317}
   m_Layer: 14
-  m_Name: FlyingWaterProjectile
+  m_Name: BayBossProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4946,7 +4946,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.97294, y: 3.01322, z: -30.55247}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5974427047049410451}
@@ -5014,7 +5014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TreeBossProjectile
   damage: 10
   speed: 20
-  lifetime: 5
+  lifetime: 6
   destroyOnImpact: 1
   targetLayers:
     serializedVersion: 2
@@ -5030,8 +5030,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 45f2a42f79db20c40909af793e365997, type: 3}
   incorrectImpactSounds: []
   wallSounds: []
-  trackingDuration: 1.25
-  trackingStrength: 3
+  trackingDuration: 3
+  trackingStrength: 5
   maxTurnRate: 360
   accelerationRate: 20
   centerMassOffset: {x: 0, y: 1, z: 0}

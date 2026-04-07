@@ -13,6 +13,8 @@ public class BossRoomManager : DungeonManager
     [SerializeField] private float moveYPosition = 75;
     [SerializeField] private AudioClip slamSound;
     [SerializeField] private AudioClip roarSound;
+    [SerializeField] private int roarDelay = 1;
+
     private bool cutscenePlaying;
     public bool cutsceneEnded;
     private Animator playerAnim;
@@ -102,10 +104,15 @@ public class BossRoomManager : DungeonManager
 
     void EnableBossCamera()
     {
+        if (BossAnim.gameObject.name == "BayBoss")
+        {
+            StartCoroutine(TweenPosition(BossAnim.gameObject, new Vector3(BossAnim.gameObject.transform.position.x, moveYPosition, BossAnim.gameObject.transform.position.z), moveDuration));
+        }
+
         BossCamera.SetActive(true);
         CinematicCamera.SetActive(false);
-        Invoke(nameof(RoarShake), 1);
-        Invoke(nameof(DisableBossCamera), 4);
+        Invoke(nameof(RoarShake), roarDelay);
+        Invoke(nameof(DisableBossCamera), roarDelay+3);
 
         if (BossAnim != null)
         {

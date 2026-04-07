@@ -683,7 +683,7 @@ public class SquidBoss : EnemyCharacter
             ghostSpawned = true;
             if (WaterGhostPrefab != null)
             {
-                Instantiate(WaterGhostPrefab, gameObject.transform.position, gameObject.transform.rotation);
+                Instantiate(WaterGhostPrefab, transform.position+new Vector3(0,25,0), WaterGhostPrefab.transform.rotation);
             }
             else
             {

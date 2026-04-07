@@ -163,7 +163,8 @@ public class PlayerData : MonoBehaviour
                         MayorNPC.lines[0] = "Excellent work, my friend!";
                         MayorNPC.lines[1] = "You've restored <b><color=#ff3300>Fire</color></b> to the realm! Our <b><color=#0073bf>torches</color></b> are lit once more!";
                         MayorNPC.transform.position = new Vector3(-60.3f, 26.5f, -4.7f);
-                            
+                        
+                        MayorNPC.endCutsceneLine = 6;
                         MayorNPC.cutsceneCamera = new GameObject[2];
                         MayorNPC.cutsceneLine = new int[2];
                         if (GameObject.Find("FireCamera") != null) {
@@ -180,7 +181,7 @@ public class PlayerData : MonoBehaviour
                             MayorNPC.lines[4] = "With all the power he has consumed, I fear it has consumed him as well...";
                             MayorNPC.lines[5] = "I cannot fathome the <b><color=#541834>monster</color></b> he's become, what he made himself into...";
                             MayorNPC.lines[6] = "It is up to you to put an end to his reign. Head to the tower and stop him. I believe in you, Maguso.";
-                            
+
                             MayorNPC.secondaryLines = new string[1];
                             MayorNPC.secondaryLines[0] = "Well? Go on! Head to the <b><color=#541834>Tower</color></b> behind the large stone gate outside town, <b><color=#541834>Skar</color></b> must be stopped once and for all!";
 
@@ -198,10 +199,17 @@ public class PlayerData : MonoBehaviour
                             MayorNPC.lines[5] = "Enter the <b><color=#1c8c20>Plant Labyrinth</color></b> and retrive it, and then use its power to restore the element of <b><color=#0073bf>Water</color></b>.";
                             MayorNPC.lines[6] = "Best of luck, Maguso... And thank you.";
 
+                            if (GameObject.Find("PlantDungeonCamera") != null) {     
+                                MayorNPC.cutsceneCamera[1] = GameObject.Find("PlantDungeonCamera");
+                                MayorNPC.cutsceneLine[1] = 4;
+                            } else {
+                                Debug.LogError("PlayerData: No PlantDungeonCamera found!");
+                            }
+
                             MayorNPC.secondaryLines = new string[1];
                             MayorNPC.secondaryLines[0] = "What's the hold up? Enter the <b><color=#1c8c20>Plant Labyrinth</color></b> and begin your trek to restore <b><color=#0073bf>Water</color></b> to the world!";
-
                         }
+
                     } else
                     {
                         Debug.LogError("PlayerData can't find MayorNPC's  Character script component!");
@@ -244,6 +252,7 @@ public class PlayerData : MonoBehaviour
 
                         MayorNPC.cutsceneCamera = new GameObject[2];
                         MayorNPC.cutsceneLine = new int[2];
+                        MayorNPC.endCutsceneLine = 6;
                         if (GameObject.Find("WaterCamera") != null) {
                             MayorNPC.cutsceneCamera[0] = GameObject.Find("WaterCamera");
                             MayorNPC.cutsceneLine[0] = 1;
@@ -276,10 +285,17 @@ public class PlayerData : MonoBehaviour
                             MayorNPC.lines[5] = "Enter the <b><color=#0073bf>Water Trials</color></b> and retrive it, and then use its power to restore the element of <b><color=#ff3300>Fire</color></b>.";
                             MayorNPC.lines[6] = "Best of luck, Maguso... And thank you.";
 
+                            if (GameObject.Find("WaterDungeonCamera") != null) {     
+                                MayorNPC.cutsceneCamera[1] = GameObject.Find("WaterDungeonCamera");
+                                MayorNPC.cutsceneLine[1] = 4;
+                            } else {
+                                Debug.LogError("PlayerData: No WaterDungeonCamera found!");
+                            }
+
                             MayorNPC.secondaryLines = new string[1];
                             MayorNPC.secondaryLines[0] = "What's the hold up? Enter the <b><color=#0073bf>Water Trials</color></b> and begin your trek to restore <b><color=#ff3300>Fire</color></b> to the world!";
-
                         }
+
                     } else
                     {
                         Debug.LogError("PlayerData can't find MayorNPC's  Character script component!");

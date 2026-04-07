@@ -257,6 +257,16 @@ public class ProjectileBase : MonoBehaviour
             AudioSource.PlayClipAtPoint(wallSounds[Random.Range(0, wallSounds.Length)], other.transform.position);
         }
 
+        if (other.name == "TowerVineWall") {
+            PlayerData playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+            if (playerData != null) {
+                playerData.vineWallBurned = true;
+            } else
+            {
+                Debug.LogError("ProjectileBase: Can't find player data!");
+            }
+        }
+
         return true;
     }
 
@@ -310,6 +320,16 @@ public class ProjectileBase : MonoBehaviour
         if (flameCollider != null) flameCollider.enabled = false;
         if (flameLight != null) flameLight.enabled = false;
         if (flameWallScript != null) flameWallScript.enabled = false;
+
+        if (flameWall.name == "TowerFlameWall") {
+            PlayerData playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+            if (playerData != null) {
+                playerData.fireWallDoused = true;
+            } else
+            {
+                Debug.LogError("ProjectileBase: Can't find player data!");
+            }
+        }
 
         Destroy(flameWall, 3f);
 
@@ -369,6 +389,16 @@ public class ProjectileBase : MonoBehaviour
         {
             Debug.LogError($"{other.gameObject.name}: PlantBridge missing PlantBridge component!");
             return false;
+        }
+
+        if (other.name == "TowerPlantBridgeCastPoint") {
+            PlayerData playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+            if (playerData != null) {
+                playerData.plantBridgeGrown = true;
+            } else
+            {
+                Debug.LogError("ProjectileBase: Can't find player data!");
+            }
         }
 
         plantBridge.GrowBridge();

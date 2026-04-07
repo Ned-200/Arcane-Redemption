@@ -95,13 +95,13 @@ public class ProjectileBase : MonoBehaviour
                 
                 if (enemy.element != null && enemy.element != "") { // If enemy has an assigned element
                     // For each possible element, check if projectile overpowers enemy element
-                    if ((enemy.element == "Fire" && element == "Water") || (enemy.element == "Water" && element == "Plant") || enemy.element == "Plant" && element == "Fire") 
+                    if ((enemy.element == "Fire" && element == "Water") || (enemy.element == "Water" && element == "Plant") || (enemy.element == "Plant" && element == "Fire")) 
                     {
                         target.TakeDamage(damage);
                         OnTargetHit(target);
                         Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");
                         
-                        // Handle Snail boss invulnerability
+                        // Handle Shell boss invulnerability
                         ShellBoss snailBoss = target as ShellBoss;
                         if (snailBoss != null) {
                             if (snailBoss.IsShellActive) {
@@ -113,6 +113,16 @@ public class ProjectileBase : MonoBehaviour
                             }
                         }
 
+                        // Handle Final Boss (element validation already passed)
+                        FinalBoss finalBoss = target as FinalBoss;
+                        if (finalBoss != null) {
+                            if (!finalBoss.IsEnraged) {
+                                Debug.Log($"[ProjectileBase] ✅ Final Boss vulnerable to {element}! Current element: {finalBoss.element}");
+                            } else {
+                                Debug.Log($"[ProjectileBase] Final Boss is enraged - all attacks effective!");
+                            }
+                        }
+
                         // Spawn impact effect
                         SpawnImpactEffect();
 
@@ -121,13 +131,14 @@ public class ProjectileBase : MonoBehaviour
                     } else
                     {
                         Debug.Log($"[ProjectileBase] Hit {target.name}, but incorrect element matchup!");
+                        
                         // Spawn ineffective impact effect
                         SpawnIncorrectEffect();
 
                         // Play ineffective impact sound
                         PlayIncorrectSound();
                     }
-                } else { // if not enemy element is not assigned, deal damage normally
+                } else { // if enemy element is not assigned, deal damage normally
                     target.TakeDamage(damage);
                     OnTargetHit(target);
                     Debug.Log($"[ProjectileBase] Hit {target.name} for {damage} damage!");

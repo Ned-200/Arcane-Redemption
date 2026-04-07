@@ -17097,6 +17097,7 @@ MonoBehaviour:
   BossAnim: {fileID: 0}
   moveYPosition: 75
   slamSound: {fileID: 0}
+  roarSound: {fileID: 0}
   cutsceneEnded: 0
   BossNameDisplay: {fileID: 880464299}
   BossDescriptionDisplay: {fileID: 1912996460}
@@ -32651,7 +32652,7 @@ PrefabInstance:
       objectReference: {fileID: 1346425770}
     - target: {fileID: 713965316299437099, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_VersionIndex
-      value: 2122
+      value: 2125
       objectReference: {fileID: 0}
     - target: {fileID: 1118476338118507859, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
@@ -32659,7 +32660,7 @@ PrefabInstance:
       objectReference: {fileID: 155818510}
     - target: {fileID: 1118476338118507859, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_VersionIndex
-      value: 1288
+      value: 1291
       objectReference: {fileID: 0}
     - target: {fileID: 2009367766757723834, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_RotationAtRest.y
@@ -32779,7 +32780,7 @@ PrefabInstance:
       objectReference: {fileID: 1918288121}
     - target: {fileID: 7619194552254058729, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_VersionIndex
-      value: 4861
+      value: 4864
       objectReference: {fileID: 0}
     - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: maxStamina
@@ -32819,7 +32820,7 @@ PrefabInstance:
       objectReference: {fileID: 1587747681}
     - target: {fileID: 8866390142278909826, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_VersionIndex
-      value: 2119
+      value: 2122
       objectReference: {fileID: 0}
     - target: {fileID: 9095288898766885287, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
@@ -32827,7 +32828,7 @@ PrefabInstance:
       objectReference: {fileID: 2068251912}
     - target: {fileID: 9095288898766885287, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_VersionIndex
-      value: 1285
+      value: 1288
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

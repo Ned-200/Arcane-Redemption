@@ -841,17 +841,24 @@ public class FinalBoss : EnemyCharacter
 
     private IEnumerator ExecuteRangedRetreat()
     {
-        Debug.Log($"[{gameObject.name}] 🏃 RANGED RETREAT!");
+        Debug.Log($"[{gameObject.name}] 🏃 RANGED RETREAT STARTED!");
 
         float startDistance = Vector3.Distance(transform.position, playerTransform.position);
         float targetDistance = startDistance + enragedRetreatDistance;
+        float retreatStartTime = Time.time;
+        float maxRetreatTime = 3f; // Add timeout to prevent infinite loop
+
+        Debug.Log($"[{gameObject.name}] Retreat - Start Distance: {startDistance:F1}m, Target Distance: {targetDistance:F1}m");
 
         while (playerTransform != null)
         {
             float currentDistance = Vector3.Distance(transform.position, playerTransform.position);
+            float retreatElapsedTime = Time.time - retreatStartTime;
 
-            if (currentDistance >= targetDistance)
+            // Break if reached target distance OR timeout
+            if (currentDistance >= targetDistance || retreatElapsedTime >= maxRetreatTime)
             {
+                Debug.Log($"[{gameObject.name}] ✓ Retreat ended - Distance: {currentDistance:F1}m, Time: {retreatElapsedTime:F1}s");
                 break;
             }
 
@@ -861,9 +868,18 @@ public class FinalBoss : EnemyCharacter
             yield return null;
         }
 
+        // Check if we have required components for projectile volley
+        if (enragedProjectilePrefab == null)
+        {
+            Debug.LogError($"[{gameObject.name}] ❌ Cannot fire projectile volley - enragedProjectilePrefab is NULL!");
+            yield break;
+        }
+
+        Debug.Log($"[{gameObject.name}] 🎯 Starting projectile volley - Count: {enragedVolleyCount}, Damage: {enragedProjectileDamage}");
+
         yield return StartCoroutine(FireProjectileVolley(enragedProjectilePrefab, enragedVolleyCount, enragedProjectileDamage));
 
-        Debug.Log($"[{gameObject.name}] Retreat complete, charging back!");
+        Debug.Log($"[{gameObject.name}] ✓ Volley complete, charging back!");
     }
 
     #endregion
@@ -930,6 +946,9 @@ public class FinalBoss : EnemyCharacter
 
     public override void TakeDamage(float damage)
     {
+        // Add this debug log at the very start
+        Debug.Log($"[FinalBoss] TakeDamage CALLED - Damage: {damage}, Current Element: {element}, Phase: {currentPhase}, Enraged: {isEnraged}, IsDead: {IsDead}");
+        
         if (IsDead) return;
 
         // Auto-detect player if hit before entering detection radius
@@ -941,12 +960,14 @@ public class FinalBoss : EnemyCharacter
         // Phase 2: Takes all damage
         if (isEnraged)
         {
+            Debug.Log($"[FinalBoss] ENRAGED - accepting all damage");
             base.TakeDamage(damage);
             return;
         }
 
         // Phase 1: Element filtering already handled by ProjectileBase
         // If this method is called, the damage source was already validated
+        Debug.Log($"[FinalBoss] Phase 1 - damage passed element check");
         base.TakeDamage(damage);
 
         // Track hits for Fire mode retreat

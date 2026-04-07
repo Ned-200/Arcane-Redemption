@@ -1035,9 +1035,10 @@ GameObject:
   - component: {fileID: 4513549246079938223}
   - component: {fileID: 5376661360837035912}
   - component: {fileID: 9118874147942289425}
+  - component: {fileID: 316647028507343587}
   m_Layer: 6
   m_Name: WaterEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1108,6 +1109,9 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 2
   deathDelay: 3
+  canRespawn: 1
+  diesOnFall: 0
+  respawnEffect: {fileID: 261948290644060713, guid: a882d2c1d06f1a342908a3b61078ec18, type: 3}
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
   partsToDisintegrate:
@@ -1156,7 +1160,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 2
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!95 &9118874147942289425
 Animator:
   serializedVersion: 7
@@ -1179,6 +1183,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &316647028507343587
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6991326440383510534}
+  serializedVersion: 5
+  m_Mass: 100
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &7225243796373871924
 GameObject:
   m_ObjectHideFlags: 0

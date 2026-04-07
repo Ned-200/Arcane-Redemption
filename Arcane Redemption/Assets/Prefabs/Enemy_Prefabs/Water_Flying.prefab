@@ -584,9 +584,10 @@ GameObject:
   - component: {fileID: 8798363202959071567}
   - component: {fileID: 7142103234936527441}
   - component: {fileID: 5663721258231427097}
+  - component: {fileID: 361604440290857664}
   m_Layer: 6
   m_Name: Water_Flying
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -657,6 +658,9 @@ MonoBehaviour:
   attackDamage: 5
   attackCooldown: 4
   deathDelay: 3
+  canRespawn: 0
+  diesOnFall: 1
+  respawnEffect: {fileID: 0}
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
   partsToDisintegrate:
@@ -681,7 +685,9 @@ MonoBehaviour:
   projectileDamage: 10
   groundPhaseHealthThreshold: 10
   groundDropSpeed: 8
-  groundHeight: 1
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 841
   shootSounds:
   - {fileID: 8300000, guid: c92d3bfe3b69f0c4d8ead2d67338f12a, type: 3}
   - {fileID: 8300000, guid: 64bcfee63dc521044b1ed58aaef640ff, type: 3}
@@ -779,6 +785,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!135 &361604440290857664
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854799962476339427}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 1, z: -0.5}
 --- !u!1 &2215799607039134330
 GameObject:
   m_ObjectHideFlags: 0

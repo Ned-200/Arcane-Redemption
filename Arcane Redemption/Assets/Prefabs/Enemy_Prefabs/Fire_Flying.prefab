@@ -310,9 +310,10 @@ GameObject:
   - component: {fileID: 5772367095118819390}
   - component: {fileID: 4929131252247984768}
   - component: {fileID: 6738360146378545442}
+  - component: {fileID: 6633904787461489781}
   m_Layer: 6
   m_Name: Fire_Flying
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -404,6 +405,9 @@ MonoBehaviour:
   attackDamage: 5
   attackCooldown: 2
   deathDelay: 3
+  canRespawn: 0
+  diesOnFall: 1
+  respawnEffect: {fileID: 0}
   showDebugGizmos: 1
   disintegrate: {fileID: 0}
   partsToDisintegrate:
@@ -428,7 +432,9 @@ MonoBehaviour:
   projectileDamage: 10
   groundPhaseHealthThreshold: 10
   groundDropSpeed: 8
-  groundHeight: -23
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 73
   shootSounds:
   - {fileID: 8300000, guid: 3fa4e8266289d0d45877744eda7c0562, type: 3}
   - {fileID: 8300000, guid: 69372bd22987b4a4b99a2350009e3c44, type: 3}
@@ -505,6 +511,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &6633904787461489781
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732292901591587241}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 1, z: -0.5}
 --- !u!1 &1824729716725565813
 GameObject:
   m_ObjectHideFlags: 0

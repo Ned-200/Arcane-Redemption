@@ -33,6 +33,11 @@ public class EnemyCharacter : BaseCharacter
 
     [Header("Death Settings")]
     [SerializeField] private float deathDelay = 3f;
+    public bool canRespawn = false;
+    public bool diesOnFall = false;
+    protected Rigidbody rigidBody;
+    private Vector3 enemyRespawnPoint;
+    [SerializeField] GameObject respawnEffect;
 
     [Header("Debug")]
     [SerializeField] protected bool showDebugGizmos = true;
@@ -69,6 +74,29 @@ public class EnemyCharacter : BaseCharacter
 
         // Equip default weapon
         EquipDefaultWeapon();
+
+        // Get rigidbody and set respawns
+        IntializeRigidbody();
+    }
+
+    /// <summary>
+    /// Safely initializes the rigidboy and respawn positions
+    /// </summary>
+    protected void IntializeRigidbody()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+        
+        if (rigidBody == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No Animator component found - animations disabled");
+            return;
+        }
+
+        // Only try to set spawnpoint if character has a rigidbody and respawn point
+        if (canRespawn && enemyRespawnPoint != null) {
+            enemyRespawnPoint = transform.position; // Set respawn point to first position on start
+            Debug.Log($"[{gameObject.name}] respawn position was set!");
+        }
     }
 
     /// <summary>
@@ -532,6 +560,22 @@ public class EnemyCharacter : BaseCharacter
     }
 
     #endregion
+
+    public void Respawn()
+    {
+        if (canRespawn && enemyRespawnPoint != null && rigidBody != null)
+        {
+            Debug.Log($"[{gameObject.name}] Respawning enemy character!");
+            rigidBody.isKinematic = true;
+            transform.position = enemyRespawnPoint;
+            rigidBody.isKinematic = false;
+            if (respawnEffect != null)
+            {
+                Instantiate(respawnEffect, enemyRespawnPoint, respawnEffect.transform.rotation);
+            }
+        }
+    }
+
 
     #region Debug Gizmos
 

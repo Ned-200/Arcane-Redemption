@@ -16,7 +16,7 @@
 [RequireComponent(typeof(EnemyAIController))]
 public class FlyingToGroundEnemy : EnemyCharacter
 {
-    #region Serialized Fields
+    #region Serialized Fields 
 
     [Header("Flying Phase Settings")]
     [SerializeField] private Transform patrolPointA;
@@ -45,7 +45,9 @@ public class FlyingToGroundEnemy : EnemyCharacter
     [Header("Phase Transition")]
     [SerializeField] private float groundPhaseHealthThreshold = 10f; // Health value to trigger ground phase
     [SerializeField] private float groundDropSpeed = 8f;      // How fast to fall when transitioning
-    [SerializeField] private float groundHeight = 0.5f;       // Y position when grounded
+    protected bool grounded = false;
+    [SerializeField] protected LayerMask groundLayers;
+    private float flyingHeight;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip[] shootSounds;
@@ -122,6 +124,17 @@ public class FlyingToGroundEnemy : EnemyCharacter
         // Ground phase is handled entirely by EnemyAIController (no manual update needed)
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (grounded) return;
+
+        // Collide if touching correct layer
+        if ((groundLayers & (1 << other.gameObject.layer)) != 0)
+        {
+            grounded = true;
+        }
+    }
+
     #endregion
 
     #region Initialization
@@ -141,7 +154,7 @@ public class FlyingToGroundEnemy : EnemyCharacter
         if (rb != null)
         {
             rb.useGravity = false; // Disable gravity while flying
-            rb.isKinematic = false;
+            // rb.isKinematic = false;
         }
         else
         {
@@ -172,6 +185,9 @@ public class FlyingToGroundEnemy : EnemyCharacter
             Debug.LogWarning($"[{gameObject.name}] Projectile spawn point not assigned! Using enemy position as spawn point.", this);
         }
         
+        // Set starting "altitude", so enemy doesnt drop early by descening to player
+        flyingHeight = transform.position.y;
+
         // Initialize shooting timer
         lastShootTime = -shootCooldown; // Allow immediate first shot
     }
@@ -437,6 +453,7 @@ public class FlyingToGroundEnemy : EnemyCharacter
     private void MoveToward(Vector3 targetPosition, float speed)
     {
         Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        newPosition.y = flyingHeight;
         
         if (rb != null)
         {
@@ -511,10 +528,11 @@ public class FlyingToGroundEnemy : EnemyCharacter
     private void UpdateGroundTransition()
     {
         // Check if enemy has reached the ground
-        if (transform.position.y <= groundHeight)
+        if (grounded)
         {
             CompleteGroundTransition();
         }
+        
     }
 
     /// <summary>
@@ -527,17 +545,12 @@ public class FlyingToGroundEnemy : EnemyCharacter
         
         isTransitioningToGround = false;
         
-        // Snap to ground height
-        Vector3 groundedPosition = transform.position;
-        groundedPosition.y = groundHeight;
-        transform.position = groundedPosition;
-        
         // Stop Rigidbody physics - EnemyAIController will use transform.position directly
         if (rb != null)
         {
-            rb.isKinematic = true;
+            // rb.isKinematic = true;
             rb.useGravity = false;
-            Debug.Log($"[{gameObject.name}] Rigidbody set to kinematic. EnemyAIController will handle movement via transform.position.");
+            // Debug.Log($"[{gameObject.name}] Rigidbody set to kinematic. EnemyAIController will handle movement via transform.position.");
         }
         
         // Enable EnemyAIController to take over ground combat logic

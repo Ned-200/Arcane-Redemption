@@ -250,7 +250,7 @@ public class NPC_Character : BaseCharacter
         weaponMesh.SetActive(false);
     }
 
-    protected IEnumerator TypeLine()
+    protected virtual IEnumerator TypeLine()
     {
         TalkingAnim(true);
 

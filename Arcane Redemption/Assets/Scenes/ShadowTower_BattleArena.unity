@@ -297,9 +297,19 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!4 &39048145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4516091150407572354, guid: 3f9a307b9ca625f45af2e18109620ec4, type: 3}
+  m_PrefabInstance: {fileID: 2242099712348746834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &123481896 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8489093161075204446, guid: 3f9a307b9ca625f45af2e18109620ec4, type: 3}
+  m_PrefabInstance: {fileID: 2242099712348746834}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &125279101 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2368489659509794791, guid: 3f9a307b9ca625f45af2e18109620ec4, type: 3}
   m_PrefabInstance: {fileID: 2242099712348746834}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &148251913
@@ -1554,6 +1564,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!4 &385511522 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1499392817556445739, guid: 3f9a307b9ca625f45af2e18109620ec4, type: 3}
+  m_PrefabInstance: {fileID: 2242099712348746834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &429315970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,6 +1768,13 @@ MonoBehaviour:
   detectionRadius: 15
   requiresDetection: 1
   phase2HealthThreshold: 0.5
+  healthCones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  healthPerCone: 60
   elementSwitchInterval: 20
   showElementIndicator: 1
   plantMaterial: {fileID: 0}
@@ -3242,7 +3264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7539627773298504599, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: startingWeaponIndex
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7547903552290137520, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -3255,6 +3277,10 @@ PrefabInstance:
     - target: {fileID: 7619194552254058729, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_VersionIndex
       value: 3989
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: maxHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8074217898286727442, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: respawnPoint
@@ -30454,6 +30480,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &960758784 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2518785385496095238, guid: 3f9a307b9ca625f45af2e18109620ec4, type: 3}
+  m_PrefabInstance: {fileID: 2242099712348746834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &996094882
 GameObject:
   m_ObjectHideFlags: 0
@@ -33641,7 +33672,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606087419}
   serializedVersion: 5
-  m_Mass: 50
+  m_Mass: 5000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -33672,7 +33703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d78605f66d21e842899e2b5c0a4e3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FinalBoss
-  maxHealth: 20
+  maxHealth: 300
   maxStamina: 100
   maxMana: 100
   staminaRegenRate: 20
@@ -33692,8 +33723,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  moveSpeed: 3
-  rotationSpeed: 5
+  moveSpeed: 7
+  rotationSpeed: 10.15
   element: 
   attackDamage: 5
   attackCooldown: 2
@@ -33708,6 +33739,13 @@ MonoBehaviour:
   detectionRadius: 20
   requiresDetection: 1
   phase2HealthThreshold: 0.5
+  healthCones:
+  - {fileID: 39048145}
+  - {fileID: 960758784}
+  - {fileID: 385511522}
+  - {fileID: 2145358012}
+  - {fileID: 125279101}
+  healthPerCone: 60
   elementSwitchInterval: 20
   showElementIndicator: 1
   plantMaterial: {fileID: 0}
@@ -33751,7 +33789,7 @@ MonoBehaviour:
   handCollider: {fileID: 686658492}
   chompDamage: 30
   slamDamage: 25
-  meleeAttackRange: 9.92
+  meleeAttackRange: 13.98
   chompWindupTime: 0.3
   chompActiveTime: 0.3
   chompRecoveryTime: 0.2
@@ -33759,9 +33797,9 @@ MonoBehaviour:
   slamActiveTime: 0.3
   slamRecoveryTime: 0.1
   enragedProjectilePrefab: {fileID: 8497696522997006273, guid: 58e292c96342e28489ea69606780c648, type: 3}
-  enragedVolleyCount: 1
+  enragedVolleyCount: 5
   enragedProjectileSpeed: 20
-  enragedProjectileDamage: 20
+  enragedProjectileDamage: 5
   projectileSpawnPoint: {fileID: 1212206512}
   projectileSpeed: 15
   projectileSpawnDelay: 0.2
@@ -33793,8 +33831,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12.2893505, y: 18.962708, z: 18.33611}
-  m_Center: {x: 0.2676948, y: 8.981354, z: -1.5709972}
+  m_Size: {x: 12.2893505, y: 18.962708, z: 12.637338}
+  m_Center: {x: 0.2676951, y: 8.981354, z: -0.84405136}
 --- !u!43 &1679618184
 Mesh:
   m_ObjectHideFlags: 0
@@ -68754,6 +68792,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!4 &2145358012 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3588739907895978735, guid: 3f9a307b9ca625f45af2e18109620ec4, type: 3}
+  m_PrefabInstance: {fileID: 2242099712348746834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2242099712348746834
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -71,6 +71,11 @@ public class PlayerData : MonoBehaviour
     private void RunCheck() {
         Debug.Log("Player Data is running a scene check");
 
+        hideMayor = true;
+        hideTownNPC = false;
+        hideDoorNPC = true;
+        hideTreeBoss = true;
+
         // Get Player
         Player = GameObject.FindWithTag("Player");
         if (Player != null)

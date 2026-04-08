@@ -108,9 +108,12 @@ public class FinalBoss : EnemyCharacter
     [SerializeField] private AudioClip[] projectileSounds;
     [SerializeField] private AudioClip enrageSound;
     [SerializeField] private AudioClip detectionSound;
+    [SerializeField] private AudioSource bossMusicSource;
 
     [Header("Boss UI")]
     private BossHealthBarUI healthBarUI;
+    [SerializeField] private GameObject skarDeathDialogue;
+    [SerializeField] private GameObject heroExitDoor;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugGizmos = true;
@@ -302,6 +305,12 @@ public class FinalBoss : EnemyCharacter
         if (detectionSound != null)
         {
             AudioSource.PlayClipAtPoint(detectionSound, transform.position);
+        }
+
+        // Play detection sound
+        if (bossMusicSource != null)
+        {
+            bossMusicSource.Play();
         }
 
         // Play intro animation if available
@@ -1159,6 +1168,11 @@ public class FinalBoss : EnemyCharacter
     {
         base.OnDeath();
 
+        if (bossMusicSource != null)
+        {
+            bossMusicSource.Stop();
+        }
+
         if (healthBarUI != null)
         {
             healthBarUI.HideBossHealthBar();
@@ -1169,12 +1183,48 @@ public class FinalBoss : EnemyCharacter
             StopCoroutine(enragedBehaviorCoroutine);
         }
 
+        Invoke(nameof(finalChoice), 3);
+
         StopAllCoroutines();
 
         Debug.Log($"[{gameObject.name}] ☠️ Final Boss defeated!");
     }
 
     #endregion
+
+    private void finalChoice() {
+
+        // Get Player
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            // Get playerController
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (playerController == null)
+            {
+                Debug.LogError("FinalChoice: playerController NOT FOUND! Check Player Hierarchy.");
+            }
+            // Get playerAnim
+            Animator playerAnim = player.GetComponent<Animator>();
+            if (playerAnim == null)
+            {
+                Debug.LogError("NPC: playerAnim NOT FOUND! Check Player Hierarchy.");
+            }
+
+            // disable player movement
+            playerController.canMove = false;
+            playerAnim.SetBool("isWalking", false);
+            playerAnim.SetBool("isSprinting", false);
+
+        } else
+        {
+            Debug.LogError("FinalChoice: player NOT FOUND! Check tag.");
+        }
+
+        skarDeathDialogue.SetActive(true);
+        heroExitDoor.SetActive(true);
+    }
+
 
     #region Debug Gizmos
 

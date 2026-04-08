@@ -7,6 +7,7 @@ using Unity.Cinemachine;
 
 public class SkarDialogue : NPC_Character
 {
+    [SerializeField] private bool endCutscene;
     [SerializeField] private GameObject CinematicCamera1;
     [SerializeField] private GameObject CinematicCamera2;
     private bool notFirstInteraction;
@@ -19,23 +20,37 @@ public class SkarDialogue : NPC_Character
     {
         base.Start();
 
-        Skar.SetActive(false);
+        if (!endCutscene) {
+            Skar.SetActive(false);
 
-        if (CinematicCamera1 == null || CinematicCamera2 == null) 
-        {   
-            Debug.Log("SkarDialogue: Cinematic Cameras not assigned!");
-        }
-
-        thunderLight = CinematicCamera2.GetComponent<Light>();
-        if (thunderLight == null) 
-        {   
-            Debug.Log("SkarDialogue: thunderLight not found!");
+            if (CinematicCamera1 == null || CinematicCamera2 == null) 
+            {   
+                Debug.Log("SkarDialogue: Cinematic Cameras not assigned!");
+            }
+        
+            thunderLight = CinematicCamera2.GetComponent<Light>();
+            if (thunderLight == null) 
+            {   
+                Debug.Log("SkarDialogue: thunderLight not found!");
+            }
+        } else
+        {
+            StartDialogue();
         }
     }
 
     protected override void Update()
     {
-        if (!notFirstInteraction && playerInRange)
+
+        if (endCutscene)
+        {
+            //Make NPC face player
+            Vector3 lookDirection = player.transform.position - NPCMesh.transform.position;
+            lookDirection.Normalize();
+            NPCMesh.transform.rotation = Quaternion.Slerp(NPCMesh.transform.rotation, Quaternion.LookRotation(lookDirection), lookSpeed * Time.deltaTime);
+        }
+
+        if (!notFirstInteraction && playerInRange && !endCutscene)
         {
             notFirstInteraction = true;
             Invoke(nameof(EnableCamera1), 2);

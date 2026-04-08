@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinalChoice : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class FinalChoice : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject finalImage;
+    [SerializeField] private GameObject credits;
     
     [Header("Prompt")]
     [SerializeField] private GameObject interactPromptPrefab;
@@ -16,6 +18,13 @@ public class FinalChoice : MonoBehaviour
     private GameObject interactPrompt;
     private bool playerInRange = false;
     private bool choiceMade;
+
+
+    [Header("Teleport Stuff")]
+    [SerializeField] protected string destinationSceneName;
+    protected private bool teleporting = false;
+    private PlayerData playerData;
+
 
     [Header("Player")]
     protected GameObject player;
@@ -35,6 +44,13 @@ public class FinalChoice : MonoBehaviour
         if (promptPosition == null)
         {
             Debug.LogError("TeleportDoor: promptPosition not assigned! Please assign the prefab. "  + this.gameObject.name);
+        }
+
+        // Get PlayerData
+        playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+        if (playerData == null)
+        {
+            Debug.LogError("InventoryUI: No playerData found!");
         }
 
         // Get Player
@@ -74,6 +90,30 @@ public class FinalChoice : MonoBehaviour
             playerController.canMove = false;
             playerAnim.SetBool("isWalking", false);
             playerAnim.SetBool("isSprinting", false);
+        } else if (choiceMade && Input.GetKeyDown(KeyCode.E))
+        {
+            credits.SetActive(true);
+            Invoke(nameof(Teleport), 8);
+        }
+    }
+
+    protected void Teleport()
+    {
+        Debug.Log("Teleporting Player to new Scene");
+
+        SceneManager.LoadScene(destinationSceneName, LoadSceneMode.Single);
+        teleporting = true;
+
+        Debug.Log("FinalChoice: Quitting to menu & destroying player save");
+        if (playerData != null) {
+            Destroy(playerData.gameObject); // If has player data, destroy it
+        } else {
+            playerData = GameObject.FindWithTag("PlayerData").GetComponent<PlayerData>();
+            if (playerData != null) {
+                Destroy(playerData.gameObject); // if no data found, try to find it again
+            } else {
+                Debug.LogError("InventoryUI: No PlayerData found to destroy. Check Data object Tag.");
+            }
         }
     }
 

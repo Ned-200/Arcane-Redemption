@@ -21,6 +21,11 @@ public class FinalBoss : EnemyCharacter
     [Header("Phase Transition")]
     [SerializeField] private float phase2HealthThreshold = 0.5f; // 50% health
 
+    [Header("Diegetic Health Display - Cones")]
+    [SerializeField] private Transform[] healthCones = new Transform[5]; // 5 cones for 300 HP
+    [SerializeField] private float healthPerCone = 60f; // 300 HP / 5 cones = 60 HP per cone
+    private float lastConeRemovedAtHealth;
+
     [Header("Phase 1: Elemental Cycling")]
     [SerializeField] private float elementSwitchInterval = 10f;
     [SerializeField] private bool showElementIndicator = true;
@@ -75,10 +80,10 @@ public class FinalBoss : EnemyCharacter
 
     [Header("Phase 2: Melee Attack Timing")]
     [SerializeField] private float chompWindupTime = 0.3f;
-    [SerializeField] private float chompActiveTime = 2.0f; // ← INCREASED from 0.3
+    [SerializeField] private float chompActiveTime = 2.0f;
     [SerializeField] private float chompRecoveryTime = 0.2f;
     [SerializeField] private float slamWindupTime = 0.4f;
-    [SerializeField] private float slamActiveTime = 2.0f;  // ← INCREASED from 0.3
+    [SerializeField] private float slamActiveTime = 4.0f;
     [SerializeField] private float slamRecoveryTime = 0.1f;
 
     [Header("Phase 2: Ranged Settings")]
@@ -241,7 +246,10 @@ public class FinalBoss : EnemyCharacter
         // Initialize detection state
         playerDetected = !requiresDetection; // If detection not required, start active
 
-        Debug.Log($"[{gameObject.name}] Final Boss initialized - Starting element: {currentElement}, Detection required: {requiresDetection}");
+        // Initialize cone health tracking
+        lastConeRemovedAtHealth = MaxHealth;
+
+        Debug.Log($"[{gameObject.name}] Final Boss initialized - Starting element: {currentElement}, Detection required: {requiresDetection}, Max Health: {MaxHealth}, Health per cone: {healthPerCone}");
     }
 
     private void FindPlayer()
@@ -1043,6 +1051,11 @@ public class FinalBoss : EnemyCharacter
         {
             Debug.Log($"[FinalBoss] ENRAGED - accepting all damage");
             base.TakeDamage(damage);
+            
+            // ===== CONE REMOVAL SYSTEM =====
+            CheckAndRemoveCone();
+            // ================================
+            
             return;
         }
 
@@ -1050,6 +1063,10 @@ public class FinalBoss : EnemyCharacter
         // If this method is called, the damage source was already validated
         Debug.Log($"[FinalBoss] Phase 1 - damage passed element check");
         base.TakeDamage(damage);
+
+        // ===== CONE REMOVAL SYSTEM (Phase 1) =====
+        CheckAndRemoveCone();
+        // ==========================================
 
         // Track hits for Fire mode retreat
         if (currentElement == ElementType.Fire)
@@ -1061,6 +1078,67 @@ public class FinalBoss : EnemyCharacter
                 Debug.Log($"[{gameObject.name}] Fire mode: Retreating after {fireHitsTaken} hits!");
             }
         }
+    }
+
+    /// <summary>
+    /// Checks if a cone should be removed based on health thresholds.
+    /// Removes one cone every 60 HP lost.
+    /// </summary>
+    private void CheckAndRemoveCone()
+    {
+        // Check if we've lost enough health to remove a cone
+        float healthLost = lastConeRemovedAtHealth - CurrentHealth;
+        
+        if (healthLost >= healthPerCone)
+        {
+            // Calculate how many cones should be removed
+            int conesToRemove = Mathf.FloorToInt(healthLost / healthPerCone);
+            
+            for (int i = 0; i < conesToRemove; i++)
+            {
+                RemoveNextCone();
+            }
+            
+            // Update the threshold for next cone removal
+            lastConeRemovedAtHealth = CurrentHealth;
+        }
+    }
+
+    /// <summary>
+    /// Removes the next available cone from the boss.
+    /// </summary>
+    private void RemoveNextCone()
+    {
+        // Find the first active cone (from end to start for visual effect)
+        for (int i = healthCones.Length - 1; i >= 0; i--)
+        {
+            if (healthCones[i] != null && healthCones[i].gameObject.activeSelf)
+            {
+                Debug.LogWarning($"[{gameObject.name}] 💥 Removing cone {i + 1} - Health at {CurrentHealth:F0}/{MaxHealth:F0}");
+                
+                // Check if the cone has a DisintegrateSIDE or DisintegrateUP component
+                DisintegrateSIDE disintegrateSide = healthCones[i].GetComponent<DisintegrateSIDE>();
+                DisintegrateUP disintegrateUp = healthCones[i].GetComponent<DisintegrateUP>();
+                
+                if (disintegrateSide != null)
+                {
+                    disintegrateSide.TriggerDisintegration(true);
+                }
+                else if (disintegrateUp != null)
+                {
+                    disintegrateUp.TriggerDisintegration(true);
+                }
+                else
+                {
+                    // Fallback: just disable the cone if no disintegrate component
+                    healthCones[i].gameObject.SetActive(false);
+                }
+                
+                return; // Only remove one cone at a time
+            }
+        }
+        
+        Debug.LogWarning($"[{gameObject.name}] No more cones to remove!");
     }
 
     #endregion
@@ -1266,6 +1344,32 @@ public class FinalBoss : EnemyCharacter
         if (Application.isPlaying)
         {
             StartCoroutine(SlamAttack());
+        }
+    }
+
+    [ContextMenu("Force Remove Next Cone")]
+    private void ForceRemoveNextCone()
+    {
+        if (Application.isPlaying)
+        {
+            RemoveNextCone();
+        }
+    }
+
+    [ContextMenu("Restore All Cones")]
+    private void RestoreAllCones()
+    {
+        if (Application.isPlaying)
+        {
+            foreach (Transform cone in healthCones)
+            {
+                if (cone != null)
+                {
+                    cone.gameObject.SetActive(true);
+                }
+            }
+            lastConeRemovedAtHealth = MaxHealth;
+            Debug.Log($"[{gameObject.name}] All cones restored!");
         }
     }
 

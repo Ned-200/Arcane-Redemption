@@ -43,7 +43,7 @@ public class BaseCharacter : MonoBehaviour
     protected HandSlot weaponSlot;
 
     // Invincibility state
-    private bool isInvincible;
+    public bool isInvincible;
     private float invincibilityTimeRemaining;
 
     #endregion

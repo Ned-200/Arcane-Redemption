@@ -32,7 +32,7 @@ public class FinalBoss : EnemyCharacter
     [SerializeField] private Material plantMaterial;
     [SerializeField] private Material fireMaterial;
     [SerializeField] private Material waterMaterial;
-    [SerializeField] private Renderer bossRenderer;
+    [SerializeField] private Renderer[] bossRenderer;
 
     [Header("Plant Mode Settings")]
     [SerializeField] private float plantKitingDistance = 10f;
@@ -208,10 +208,10 @@ public class FinalBoss : EnemyCharacter
             bossAnimator = GetComponent<Animator>();
         }
 
-        if (bossRenderer == null)
-        {
-            bossRenderer = GetComponentInChildren<Renderer>();
-        }
+        // if (bossRenderer == null)
+        // {
+        //     bossRenderer = GetComponentInChildren<Renderer>();
+        // }
 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
@@ -231,7 +231,7 @@ public class FinalBoss : EnemyCharacter
 
         // Set initial element property for ProjectileBase
         element = "Plant";
-        ApplyElementalMaterial();
+        // ApplyElementalMaterial();
 
         // Initialize Rigidbody
         bossRigidbody = GetComponent<Rigidbody>();
@@ -282,6 +282,7 @@ public class FinalBoss : EnemyCharacter
     private void OnPlayerDetected()
     {
         playerDetected = true;
+        ApplyElementalMaterial();
 
         Debug.Log($"[{gameObject.name}] 👁️ PLAYER DETECTED! Combat begins!");
 
@@ -419,9 +420,11 @@ public class FinalBoss : EnemyCharacter
             _ => null
         };
 
-        if (targetMaterial != null)
-        {
-            bossRenderer.material = targetMaterial;
+        for (int i = 0; i < bossRenderer.Length; i++) {
+            if (targetMaterial != null && bossRenderer[i] != null)
+            {
+                bossRenderer[i].material = targetMaterial;
+            }
         }
     }
 
@@ -986,7 +989,7 @@ public class FinalBoss : EnemyCharacter
 
         // Use Rigidbody velocity instead of transform.position
         Vector3 targetVelocity = direction * speed;
-        targetVelocity.y = bossRigidbody.linearVelocity.y; // Preserve gravity
+        // targetVelocity.y = bossRigidbody.linearVelocity.y; // Preserve gravity
 
         bossRigidbody.linearVelocity = targetVelocity;
 
@@ -1004,7 +1007,7 @@ public class FinalBoss : EnemyCharacter
         directionAway.y = 0f;
 
         Vector3 targetVelocity = directionAway * speed;
-        targetVelocity.y = bossRigidbody.linearVelocity.y; // Preserve gravity
+        // targetVelocity.y = bossRigidbody.linearVelocity.y; // Preserve gravity
 
         bossRigidbody.linearVelocity = targetVelocity;
 

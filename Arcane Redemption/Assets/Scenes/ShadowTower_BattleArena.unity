@@ -3250,6 +3250,10 @@ PrefabInstance:
       propertyPath: m_TranslationOffset.z
       value: -0.015911669
       objectReference: {fileID: 0}
+    - target: {fileID: 7065954753341959028, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: globalVolume
+      value: 
+      objectReference: {fileID: 996094883}
     - target: {fileID: 7347822102702317493, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -3264,7 +3268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7539627773298504599, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: startingWeaponIndex
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7547903552290137520, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

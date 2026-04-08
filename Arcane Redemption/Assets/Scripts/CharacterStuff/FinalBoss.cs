@@ -73,6 +73,14 @@ public class FinalBoss : EnemyCharacter
     [SerializeField] private float slamDamage = 25f;
     [SerializeField] private float meleeAttackRange = 5f;
 
+    [Header("Phase 2: Melee Attack Timing")]
+    [SerializeField] private float chompWindupTime = 0.3f;
+    [SerializeField] private float chompActiveTime = 2.0f; // ← INCREASED from 0.3
+    [SerializeField] private float chompRecoveryTime = 0.2f;
+    [SerializeField] private float slamWindupTime = 0.4f;
+    [SerializeField] private float slamActiveTime = 2.0f;  // ← INCREASED from 0.3
+    [SerializeField] private float slamRecoveryTime = 0.1f;
+
     [Header("Phase 2: Ranged Settings")]
     [SerializeField] private GameObject enragedProjectilePrefab;
     [SerializeField] private int enragedVolleyCount = 5;
@@ -129,6 +137,7 @@ public class FinalBoss : EnemyCharacter
     private bool isEnraged = false;
     private EnragedBehavior currentEnragedBehavior;
     private bool isPerformingMeleeAttack = false;
+    private bool attackHasHitPlayer = false;
     private Coroutine enragedBehaviorCoroutine;
 
     private Rigidbody bossRigidbody;
@@ -751,22 +760,48 @@ public class FinalBoss : EnemyCharacter
     private IEnumerator ChompAttack()
     {
         isPerformingMeleeAttack = true;
+        attackHasHitPlayer = false;
 
         if (bossAnimator != null)
         {
-            bossAnimator.Play("Chomp");
+            bossAnimator.Play("ChompMeleeAttack");
         }
 
         Debug.Log($"[{gameObject.name}] 🦷 CHOMP ATTACK!");
 
-        yield return new WaitForSeconds(0.8f);
+        // Windup phase
+        yield return new WaitForSeconds(chompWindupTime);
 
+        // ACTIVE PHASE - Enable collider
+        if (mouthCollider != null)
+        {
+            mouthCollider.enabled = true;
+            Debug.Log($"[{gameObject.name}] 🔴 Mouth collider ENABLED");
+        }
+
+        // Keep collider active for damage window
+        yield return new WaitForSeconds(chompActiveTime);
+
+        // Disable collider FIRST
+        if (mouthCollider != null)
+        {
+            mouthCollider.enabled = false;
+            Debug.Log($"[{gameObject.name}] ⚫ Mouth collider DISABLED");
+        }
+
+        // Recovery phase
+        yield return new WaitForSeconds(chompRecoveryTime);
+
+        // Set this LAST - after collider is disabled and recovery is done
         isPerformingMeleeAttack = false;
+        
+        Debug.Log($"[{gameObject.name}] ✅ Chomp attack COMPLETE - isPerformingMeleeAttack = false");
     }
 
     private IEnumerator SlamAttack()
     {
         isPerformingMeleeAttack = true;
+        attackHasHitPlayer = false;
 
         if (bossAnimator != null)
         {
@@ -775,67 +810,113 @@ public class FinalBoss : EnemyCharacter
 
         Debug.Log($"[{gameObject.name}] ✋ HAND SLAM!");
 
-        yield return new WaitForSeconds(0.8f);
+        // Windup
+        yield return new WaitForSeconds(slamWindupTime);
 
+        // ACTIVE PHASE
+        if (handCollider != null)
+        {
+            handCollider.enabled = true;
+            Debug.Log($"[{gameObject.name}] 🔴 Hand collider ENABLED");
+        }
+
+        // Active damage window
+        yield return new WaitForSeconds(slamActiveTime);
+
+        // Disable collider FIRST
+        if (handCollider != null)
+        {
+            handCollider.enabled = false;
+            Debug.Log($"[{gameObject.name}] ⚫ Hand collider DISABLED");
+        }
+
+        // Recovery
+        yield return new WaitForSeconds(slamRecoveryTime);
+
+        // Set this LAST
         isPerformingMeleeAttack = false;
-    }
-
-    public void EnableMouthCollider()
-    {
-        if (mouthCollider != null) mouthCollider.enabled = true;
-    }
-
-    public void DisableMouthCollider()
-    {
-        if (mouthCollider != null) mouthCollider.enabled = false;
-    }
-
-    public void EnableHandCollider()
-    {
-        if (handCollider != null) handCollider.enabled = true;
-    }
-
-    public void DisableHandCollider()
-    {
-        if (handCollider != null) handCollider.enabled = false;
+        
+        Debug.Log($"[{gameObject.name}] ✅ Slam attack COMPLETE - isPerformingMeleeAttack = false");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isEnraged || !isPerformingMeleeAttack) return;
+        Debug.Log($"[{gameObject.name}] 🔍 OnTriggerEnter called! Other: {other.gameObject.name}, Layer: {LayerMask.LayerToName(other.gameObject.layer)}, Enraged: {isEnraged}, Performing Attack: {isPerformingMeleeAttack}");
 
-        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-        if (player != null)
+        // EARLY EXITS
+        if (!isEnraged)
         {
-            float damage = 0f;
-            string attackType = "";
+            Debug.Log($"[{gameObject.name}] ❌ Not enraged, ignoring trigger");
+            return;
+        }
 
-            if (mouthCollider != null && mouthCollider.enabled)
+        if (!isPerformingMeleeAttack)
+        {
+            Debug.Log($"[{gameObject.name}] ❌ Not performing melee attack, ignoring trigger");
+            return;
+        }
+
+        if (attackHasHitPlayer)
+        {
+            Debug.Log($"[{gameObject.name}] ❌ Already hit player this attack, ignoring trigger");
+            return;
+        }
+
+        // IGNORE NON-PLAYER LAYERS
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log($"[{gameObject.name}] ❌ Ignoring non-player layer: {other.gameObject.name} (Layer: {LayerMask.LayerToName(other.gameObject.layer)})");
+            return;
+        }
+
+        // Find PlayerCharacter
+        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+        
+        if (player == null)
+        {
+            player = other.GetComponentInParent<PlayerCharacter>();
+        }
+        
+        if (player == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] ❌ PlayerCharacter component not found on '{other.gameObject.name}' or its parents!");
+            return;
+        }
+
+        // DEAL DAMAGE
+        float damage = 0f;
+        string attackType = "";
+
+        if (mouthCollider != null && mouthCollider.enabled)
+        {
+            damage = chompDamage * enragedDamageMultiplier;
+            attackType = "Chomp";
+
+            if (chompSounds.Length > 0)
             {
-                damage = chompDamage * enragedDamageMultiplier;
-                attackType = "Chomp";
-
-                if (chompSounds.Length > 0)
-                {
-                    AudioSource.PlayClipAtPoint(chompSounds[Random.Range(0, chompSounds.Length)], transform.position);
-                }
+                AudioSource.PlayClipAtPoint(chompSounds[Random.Range(0, chompSounds.Length)], transform.position);
             }
-            else if (handCollider != null && handCollider.enabled)
+        }
+        else if (handCollider != null && handCollider.enabled)
+        {
+            damage = slamDamage * enragedDamageMultiplier;
+            attackType = "Slam";
+
+            if (slamSounds.Length > 0)
             {
-                damage = slamDamage * enragedDamageMultiplier;
-                attackType = "Slam";
-
-                if (slamSounds.Length > 0)
-                {
-                    AudioSource.PlayClipAtPoint(slamSounds[Random.Range(0, slamSounds.Length)], transform.position);
-                }
+                AudioSource.PlayClipAtPoint(slamSounds[Random.Range(0, slamSounds.Length)], transform.position);
             }
+        }
 
-            if (damage > 0f)
-            {
-                player.TakeDamage(damage);
-                Debug.Log($"[{gameObject.name}] 💥 {attackType} hit {player.name} for {damage:F1} damage!");
-            }
+        if (damage > 0f)
+        {
+            player.TakeDamage(damage);
+            attackHasHitPlayer = true;
+            Debug.Log($"[{gameObject.name}] 💥 {attackType} hit {player.name} for {damage:F1} damage!");
+        }
+        else
+        {
+            Debug.LogWarning($"[{gameObject.name}] ❌ Damage is 0! Mouth enabled: {mouthCollider?.enabled}, Hand enabled: {handCollider?.enabled}");
         }
     }
 
@@ -1097,6 +1178,38 @@ public class FinalBoss : EnemyCharacter
             float progress = elementTimer / elementSwitchInterval;
             Gizmos.DrawWireSphere(timerPos, progress * 2f);
         }
+
+        // === MELEE ATTACK COLLIDER VISUALIZATION ===
+        if (Application.isPlaying && isEnraged)
+        {
+            // Draw mouth collider when active
+            if (mouthCollider != null && mouthCollider.enabled)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(mouthCollider.bounds.center, 1.5f);
+                
+                #if UNITY_EDITOR
+                UnityEditor.Handles.Label(
+                    mouthCollider.bounds.center + Vector3.up * 2f,
+                    "🔴 MOUTH ACTIVE"
+                );
+                #endif
+            }
+            
+            // Draw hand collider when active
+            if (handCollider != null && handCollider.enabled)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireSphere(handCollider.bounds.center, 1.5f);
+                
+                #if UNITY_EDITOR
+                UnityEditor.Handles.Label(
+                    handCollider.bounds.center + Vector3.up * 2f,
+                    "🔴 HAND ACTIVE"
+                );
+                #endif
+            }
+        }
     }
 
     private Color GetElementColor(ElementType element)
@@ -1136,6 +1249,24 @@ public class FinalBoss : EnemyCharacter
     private void ForceFireRingAttack()
     {
         PerformFireRingAttackCombo();
+    }
+
+    [ContextMenu("Force Chomp Attack")]
+    private void ForceChompAttack()
+    {
+        if (Application.isPlaying)
+        {
+            StartCoroutine(ChompAttack());
+        }
+    }
+
+    [ContextMenu("Force Slam Attack")]
+    private void ForceSlamAttack()
+    {
+        if (Application.isPlaying)
+        {
+            StartCoroutine(SlamAttack());
+        }
     }
 
     #endregion

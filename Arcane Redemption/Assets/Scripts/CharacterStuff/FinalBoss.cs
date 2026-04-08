@@ -208,11 +208,6 @@ public class FinalBoss : EnemyCharacter
             bossAnimator = GetComponent<Animator>();
         }
 
-        // if (bossRenderer == null)
-        // {
-        //     bossRenderer = GetComponentInChildren<Renderer>();
-        // }
-
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -231,9 +226,8 @@ public class FinalBoss : EnemyCharacter
 
         // Set initial element property for ProjectileBase
         element = "Plant";
-        // ApplyElementalMaterial();
 
-        // Initialize Rigidbody
+        // Initialize Rigidbody with anti-push configuration
         bossRigidbody = GetComponent<Rigidbody>();
         if (bossRigidbody == null)
         {
@@ -241,11 +235,23 @@ public class FinalBoss : EnemyCharacter
         }
         else
         {
+            // Keep existing rotation constraints (X and Z frozen, Y free for turning)
             bossRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            
+            // ANTI-PUSH SETTINGS
+            bossRigidbody.mass = 100f; // Heavy mass prevents player from pushing
+            bossRigidbody.linearDamping = 5f; // High drag prevents sliding
+            bossRigidbody.angularDamping = 5f; // Prevents spinning
+            
+            // Better collision detection
+            bossRigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            
+            // Ensure gravity is enabled
+            bossRigidbody.useGravity = true;
         }
 
         // Initialize detection state
-        playerDetected = !requiresDetection; // If detection not required, start active
+        playerDetected = !requiresDetection;
 
         // Initialize cone health tracking
         lastConeRemovedAtHealth = MaxHealth;
@@ -987,9 +993,8 @@ public class FinalBoss : EnemyCharacter
         Vector3 direction = (playerTransform.position - transform.position).normalized;
         direction.y = 0f;
 
-        // Use Rigidbody velocity instead of transform.position
         Vector3 targetVelocity = direction * speed;
-        // targetVelocity.y = bossRigidbody.linearVelocity.y; // Preserve gravity
+        targetVelocity.y = bossRigidbody.linearVelocity.y; // RESTORE THIS - Preserve gravity
 
         bossRigidbody.linearVelocity = targetVelocity;
 
@@ -1007,7 +1012,7 @@ public class FinalBoss : EnemyCharacter
         directionAway.y = 0f;
 
         Vector3 targetVelocity = directionAway * speed;
-        // targetVelocity.y = bossRigidbody.linearVelocity.y; // Preserve gravity
+        targetVelocity.y = bossRigidbody.linearVelocity.y; // RESTORE THIS - Preserve gravity
 
         bossRigidbody.linearVelocity = targetVelocity;
 

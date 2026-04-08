@@ -149,6 +149,9 @@ public class FinalBoss : EnemyCharacter
     private bool attackHasHitPlayer = false;
     private Coroutine enragedBehaviorCoroutine;
 
+    // Minion tracking
+    private List<GameObject> spawnedMinions = new List<GameObject>();
+
     private Rigidbody bossRigidbody;
     private AudioSource audioSource;
 
@@ -181,6 +184,9 @@ public class FinalBoss : EnemyCharacter
         base.Update();
 
         if (IsDead) return;
+
+        // Clean up null references from destroyed minions
+        spawnedMinions.RemoveAll(minion => minion == null);
 
         // Check for player detection
         if (!playerDetected && requiresDetection)
@@ -658,9 +664,44 @@ public class FinalBoss : EnemyCharacter
         // Spawn exactly 15m away from boss
         Vector3 spawnPosition = transform.position + (spawnDirection * 15f);
 
-        Instantiate(minionPrefab, spawnPosition, Quaternion.identity);
+        GameObject minion = Instantiate(minionPrefab, spawnPosition, Quaternion.identity);
+        
+        // Track the spawned minion
+        spawnedMinions.Add(minion);
 
-        Debug.Log($"[{gameObject.name}] 👾 Summoned {currentElement} minion at 15m distance!");
+        Debug.Log($"[{gameObject.name}] 👾 Summoned {currentElement} minion at 15m distance! Total active minions: {spawnedMinions.Count}");
+    }
+
+    /// <summary>
+    /// Destroys all minions spawned by this boss.
+    /// </summary>
+    private void KillAllMinions()
+    {
+        int killedCount = 0;
+        
+        foreach (GameObject minion in spawnedMinions)
+        {
+            if (minion != null)
+            {
+                // Try to trigger death on EnemyCharacter if it exists
+                EnemyCharacter enemyChar = minion.GetComponent<EnemyCharacter>();
+                if (enemyChar != null && !enemyChar.IsDead)
+                {
+                    enemyChar.TakeDamage(9999f); // Force kill
+                    killedCount++;
+                }
+                else
+                {
+                    // Fallback: just destroy the GameObject
+                    Destroy(minion);
+                    killedCount++;
+                }
+            }
+        }
+        
+        spawnedMinions.Clear();
+        
+        Debug.Log($"[{gameObject.name}] 💀 Killed {killedCount} minions on boss death!");
     }
 
     #endregion
@@ -1182,6 +1223,9 @@ public class FinalBoss : EnemyCharacter
         {
             StopCoroutine(enragedBehaviorCoroutine);
         }
+
+        // Kill all minions when boss dies
+        KillAllMinions();
 
         Invoke(nameof(finalChoice), 3);
 

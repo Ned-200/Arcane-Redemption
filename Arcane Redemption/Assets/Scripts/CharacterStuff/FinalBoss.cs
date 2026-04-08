@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Final Boss with two-phase combat system:
 /// Phase 1 (Health > 50%): Elemental cycling every 10s (Plant/Fire/Water) with element-specific damage filtering
-/// Phase 2 (Health <= 50%): Enraged melee/ranged hybrid with 50/50 RNG decision making
+/// Phase 2 (Health <= 50%): Enraged melee/ranged hybrid with 70/30 RNG decision making (70% melee, 30% ranged)
 /// </summary>
 public class FinalBoss : EnemyCharacter
 {
@@ -70,6 +70,7 @@ public class FinalBoss : EnemyCharacter
     [SerializeField] private float enragedChargeSpeed = 7f;
     [SerializeField] private float enragedRetreatDistance = 20f;
     [SerializeField] private float enragedRetreatSpeed = 8f;
+    [SerializeField] [Range(0f, 1f)] private float meleeBehaviorChance = 0.7f; // 70% chance for melee
 
     [Header("Phase 2: Melee Attack Colliders")]
     [SerializeField] private Collider mouthCollider;
@@ -715,7 +716,8 @@ public class FinalBoss : EnemyCharacter
         {
             float rng = Random.value;
 
-            if (rng <= 0.5f)
+            // 70% chance for melee, 30% chance for ranged
+            if (rng <= meleeBehaviorChance)
             {
                 currentEnragedBehavior = EnragedBehavior.MeleeCharge;
                 yield return StartCoroutine(ExecuteMeleeCharge());

@@ -103126,6 +103126,10 @@ PrefabInstance:
       propertyPath: m_TranslationOffset.z
       value: -0.015906543
       objectReference: {fileID: 0}
+    - target: {fileID: 7065954753341959028, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
+      propertyPath: globalVolume
+      value: 
+      objectReference: {fileID: 1353991160}
     - target: {fileID: 7347822102702317493, guid: 3ffb52a14838933428dcfeb724961ce8, type: 3}
       propertyPath: m_Mesh
       value: 

@@ -37567,7 +37567,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 155fcfc330a05114bb44185daac331ea, type: 3}
   - {fileID: 8300000, guid: deb327a093c182c4caa2350daba5d391, type: 3}
   - {fileID: 8300000, guid: ffdf942e22088c5498c5838faa8a91d0, type: 3}
-  lowHealthEffects: {fileID: 0}
+  isInvincible: 0
+  lowHealthEffects: {fileID: 7065954753341959028}
   mouseSensitivity: 500
   cameraDistance: 5
   cameraHeight: 1.8

@@ -411,6 +411,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 283bf755685b5024690c9fbf81b1d81d, type: 3}
   - {fileID: 8300000, guid: 2a53eec164f2bb3488197699704256ff, type: 3}
   - {fileID: 8300000, guid: 8c801995a39d06b4abaa1ccede6b65f4, type: 3}
+  isInvincible: 0
   lowHealthEffects: {fileID: 0}
   defaultWeapon: {fileID: 0}
   damagedSounds:
@@ -421,7 +422,7 @@ MonoBehaviour:
   attackSounds:
   - {fileID: 8300000, guid: 59349418327c7ee4a816425eabe7c552, type: 3}
   - {fileID: 8300000, guid: 5087be11562433248965b0435a533b25, type: 3}
-  detectionRadius: 15
+  detectionRadius: 45
   combatRadius: 3
   attackRange: 2.04
   playerLayer:

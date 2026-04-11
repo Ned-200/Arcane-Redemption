@@ -17,6 +17,7 @@ public class MainRegionManager : DungeonManager
     
     [Header("Cutscene")]
     [SerializeField] private GameObject CinematicCamera;
+    [SerializeField] private GameObject[] birdgeCameras;
     [SerializeField] private float cinematicDuration = 5.0f;
     [SerializeField] private TextMeshProUGUI BossNameDisplay; // change within scene
     [SerializeField] private TextMeshProUGUI BossDescriptionDisplay;  // change within scene
@@ -65,6 +66,11 @@ public class MainRegionManager : DungeonManager
             {
                 enemiesDefeated += enemiesPerBridge[doorsOpened];
                 StartCoroutine(TweenPosition(battleLockedDoors[doorsOpened], new Vector3(battleLockedDoors[doorsOpened].transform.localPosition.x, battleLockedDoors[doorsOpened].transform.localPosition.y+bridgeElevation, battleLockedDoors[doorsOpened].transform.localPosition.z), moveDuration));
+                if (birdgeCameras[doorsOpened] != null) {
+                    birdgeCameras[doorsOpened].SetActive(true);
+                    playerController.canMove = false; // disable player movement
+                    Invoke(nameof(DisableBridgeCamera), moveDuration);
+                }
                 Debug.Log("Opening door " + doorsOpened);
                 
                 CinemachineImpulseSource impulseSource = battleLockedDoors[doorsOpened].GetComponent<CinemachineImpulseSource>();
@@ -82,6 +88,10 @@ public class MainRegionManager : DungeonManager
         }
     }
 
+    void DisableBridgeCamera() {
+        birdgeCameras[doorsOpened-1].SetActive(false);
+        playerController.canMove = true; // re-enable player movement
+    }
 
     void EnableCinematicCamera()
     {

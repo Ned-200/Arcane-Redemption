@@ -37812,7 +37812,7 @@ MonoBehaviour:
   - {fileID: 7974002538488432503}
   - {fileID: 3400340984016264117}
   m_EndBones: []
-  m_Material: {fileID: 11400000, guid: 058b0588808452a4b9de859d7d823542, type: 2}
+  m_Material: {fileID: 11400000, guid: efcb9885402e6874eadefeada407df7f, type: 2}
   m_StartDepth: 0
   m_SiblingConstraints: 0
   m_ClosedSiblings: 0

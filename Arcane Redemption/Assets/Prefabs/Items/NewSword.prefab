@@ -148,7 +148,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3ec823e032e4f474992ba2875511925e, type: 3}
   - {fileID: 8300000, guid: 9e68da24f8233ac4eb727805485fd7de, type: 3}
   - {fileID: 8300000, guid: 0058fc19aaeae814ebe776afd7c36318, type: 3}
-  attackRange: 3
+  attackRange: 4
   attackAngle: 90
   targetLayers:
     serializedVersion: 2
@@ -213,16 +213,16 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1025
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 4.835834
+  m_Height: 4
   m_Direction: 2
-  m_Center: {x: -0.000006826375, y: -0.0068391506, z: 1.0154797}
+  m_Center: {x: 0, y: 0, z: 0.75}
 --- !u!114 &7965651238228894035
 MonoBehaviour:
   m_ObjectHideFlags: 0

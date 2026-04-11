@@ -107,6 +107,13 @@ public abstract class RangedWeapon : WeaponBase
     {
         if (hasAimMode && playerCamera != null)
         {
+            // Auto-fix locked zoom
+            if (!Input.GetMouseButton(1) && isAiming)
+            {
+                isAiming = false;
+                OnAimStateChanged(isAiming);
+            }
+
             // Smoothly transition FOV when aiming
             float targetFOV = isAiming ? aimFOV : normalFOV;
             playerCamera.Lens.FieldOfView = Mathf.Lerp(playerCamera.Lens.FieldOfView, targetFOV, Time.deltaTime * aimSpeed);

@@ -17,6 +17,8 @@ public class PlayerData : MonoBehaviour
     public bool waterBossDefeated;
     public bool plantBossDefeated;
     private bool hideMayor = true;
+    private bool hideVolcanoMayorTrigger = true;
+    private bool hideBayMayorTrigger = true;
     private bool hideTownNPC = false;
     private bool hideDoorNPC = true;
     private bool hideTreeBoss = true;
@@ -72,6 +74,8 @@ public class PlayerData : MonoBehaviour
         Debug.Log("Player Data is running a scene check");
 
         hideMayor = true;
+        hideVolcanoMayorTrigger = true;
+        hideBayMayorTrigger = true;
         hideTownNPC = false;
         hideDoorNPC = true;
         hideTreeBoss = true;
@@ -156,6 +160,7 @@ public class PlayerData : MonoBehaviour
                 // Hide NPCs
                 hideTownNPC = true;
                 hideDoorNPC = true;
+                hideVolcanoMayorTrigger = false;
 
                 // Update Mayor NPC
                 if (GameObject.Find("MayorNPC") != null) 
@@ -242,6 +247,7 @@ public class PlayerData : MonoBehaviour
                 // Hide NPCs
                 hideTownNPC = true;
                 hideDoorNPC = true;
+                hideBayMayorTrigger = false;
 
                 // Update Mayor NPC
                 if (GameObject.Find("MayorNPC") != null) 
@@ -499,7 +505,24 @@ public class PlayerData : MonoBehaviour
                     Debug.LogError("PlayerData can't find DoorNPC!");
                 }
             }
-
+            // Hide volcanoMayorTrigger
+            if (hideVolcanoMayorTrigger) {
+                GameObject volcanoMayorTrigger = GameObject.Find("VolcanoMayorTrigger");
+                if (volcanoMayorTrigger != null) {
+                    volcanoMayorTrigger.SetActive(false);
+                } else {
+                    Debug.LogError("PlayerData can't find volcanoMayorTrigger!");
+                }
+            }
+            // Hide bayMayorTrigger
+            if (hideBayMayorTrigger) {
+                GameObject bayMayorTrigger = GameObject.Find("BayMayorTrigger");
+                if (bayMayorTrigger != null) {
+                    bayMayorTrigger.SetActive(false);
+                } else {
+                    Debug.LogError("PlayerData can't find bayMayorTrigger!");
+                }
+            }
             // Restore or hide water, every check, regardless of last scene
             GameObject RestoreWater = GameObject.Find("RestoreWater");
             if (RestoreWater != null) 
@@ -537,6 +560,7 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("PlayerData can't find PlantDungeonCamera!");
             }
+
         }
     }
 

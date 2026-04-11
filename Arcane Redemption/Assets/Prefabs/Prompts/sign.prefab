@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 213362826320135520}
   serializedVersion: 2
   m_LocalRotation: {x: 9.057082e-17, y: 1, z: 0.00000013435884, w: -0.0000000754979}
-  m_LocalPosition: {x: 0.0006856558, y: -0.0027426246, z: 0.026923422}
-  m_LocalScale: {x: 1.7991155, y: 0.14512397, z: 1.1670539}
+  m_LocalPosition: {x: 0.0006856558, y: -0.0027, z: 0.0311}
+  m_LocalScale: {x: 2, y: 0.25, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1076605146964332783}
@@ -212,8 +212,8 @@ Transform:
   m_GameObject: {fileID: 1936880145476250784}
   serializedVersion: 2
   m_LocalRotation: {x: 0.70710677, y: -0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.0008419848, y: -0.00462, z: 0.02629}
-  m_LocalScale: {x: 0.016903145, y: 0.016903145, z: 0.016903145}
+  m_LocalPosition: {x: -0.00143, y: -0.005, z: 0.0307}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1076605146964332783}
@@ -242,7 +242,7 @@ MonoBehaviour:
     m_Bits: 1
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 0}
-  m_Size: {x: 1.25, y: 1, z: 0.1}
+  m_Size: {x: 2, y: 1.5, z: 0.1}
   m_FadeFactor: 0.9
   version: 1
   m_DecalLayerMask: 1
@@ -401,7 +401,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0.0017789642}
-  m_LocalScale: {x: 0.16664782, y: 0.16664782, z: 0.16664782}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1076605146964332783}

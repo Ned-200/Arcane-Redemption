@@ -1196,7 +1196,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: b27220921410c4a488a2eac435a4945c, type: 3}
   attackSounds:
   - {fileID: 8300000, guid: 2ac31ff5a5302a54385bbd0cd9ed08e6, type: 3}
-  detectionRadius: 45
+  detectionRadius: 20
   combatRadius: 3
   attackRange: 2.04
   playerLayer:
@@ -1239,7 +1239,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   eyeHeight: 1.5
-  sightAngle: 90
+  sightAngle: 150
   showLineOfSightDebug: 0
   memoryDuration: 3
 --- !u!135 &434332866832427669

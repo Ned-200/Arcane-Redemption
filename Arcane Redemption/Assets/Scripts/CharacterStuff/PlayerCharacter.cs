@@ -61,6 +61,9 @@ public class PlayerCharacter : BaseCharacter
     {
         base.Awake();
 
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 60;
+    
         playerController = GetComponent<PlayerController>();
        // lowHealthEffects = FindObjectOfType<LowHealthPostProcess>();
 

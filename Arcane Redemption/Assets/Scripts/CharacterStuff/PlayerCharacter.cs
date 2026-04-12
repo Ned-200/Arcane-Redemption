@@ -169,13 +169,17 @@ public class PlayerCharacter : BaseCharacter
     {
         base.Update();
 
+        if (!IsAlive)
+        {
+            HandleDeathScreen();
+        }
+    }
+
+    private void FixedUpdate()
+    {        
         if (IsAlive)
         {
             HandleCameraInput();
-        }
-        else
-        {
-            HandleDeathScreen();
         }
     }
 
@@ -248,8 +252,8 @@ public class PlayerCharacter : BaseCharacter
 
     private void HandleCameraInput()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         currentYaw += mouseX;
 

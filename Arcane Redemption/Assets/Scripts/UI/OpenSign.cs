@@ -13,7 +13,7 @@ public class OpenSign : MonoBehaviour
     private GameObject signView;
     private Image signUI;
     private GameObject interactPrompt;
-    private bool viewingSign;
+    private bool viewingSign = false;
     [SerializeField] private DecalProjector decalProjector;
 
     [Header("Sounds")]
@@ -21,7 +21,7 @@ public class OpenSign : MonoBehaviour
     [SerializeField] private AudioClip creakSoundClosed;
 
 
-    void Start()
+    void Awake()
     {
         // Get Sign UI
         GameObject canvas = GameObject.FindWithTag("MainCanvas");
@@ -115,7 +115,7 @@ public class OpenSign : MonoBehaviour
 
         if (blankSprite == null)
         {
-            Debug.LogError("What the fuck");
+            Debug.LogError("OpenSign: No blankSprite created");
         }
 
         return blankSprite;

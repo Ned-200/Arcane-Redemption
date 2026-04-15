@@ -21,7 +21,7 @@ public class GhostNPC : NPC_Character
     {
         base.Start();
 
-        Invoke(nameof(BeginGhostDialogue), 3);
+        Invoke(nameof(BeginGhostDialogue), 2);
         targetPosition = new Vector3(NPCMesh.transform.localPosition.x, NPCMesh.transform.localPosition.y+8, NPCMesh.transform.localPosition.z);
     
         bossMusicSource = GameObject.FindWithTag("BossMusicSource").GetComponent<AudioSource>();

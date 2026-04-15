@@ -37555,7 +37555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
   maxHealth: 100
-  maxStamina: 100
+  maxStamina: 125
   maxMana: 100
   staminaRegenRate: 20
   manaRegenRate: 2
@@ -37608,11 +37608,11 @@ MonoBehaviour:
   torsoLayerIndex: 2
   canMove: 1
   walkSpeed: 6
-  sprintSpeed: 10
-  sprintStaminaCost: 10
+  sprintSpeed: 12
+  sprintStaminaCost: 12
   jumpHeight: 2.5
   gravity: -20
-  jumpStaminaCost: 15
+  jumpStaminaCost: 10
   jumpSounds:
   - {fileID: 8300000, guid: cc8b3f0409de2ae4bb397d9b107d3389, type: 3}
   - {fileID: 8300000, guid: cf5f019b5792bab4b812cf3badf4cbf7, type: 3}

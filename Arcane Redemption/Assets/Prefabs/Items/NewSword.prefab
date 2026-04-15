@@ -148,7 +148,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3ec823e032e4f474992ba2875511925e, type: 3}
   - {fileID: 8300000, guid: 9e68da24f8233ac4eb727805485fd7de, type: 3}
   - {fileID: 8300000, guid: 0058fc19aaeae814ebe776afd7c36318, type: 3}
-  attackRange: 4
+  attackRange: 2
   attackAngle: 90
   targetLayers:
     serializedVersion: 2
@@ -156,7 +156,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2335413524624424645, guid: f662c8ee3262e2a4b853996704ffc7bb, type: 3}
   useCollisionDamage: 1
   collisionDamage: {fileID: 7965651238228894035}
-  collisionDamageDuration: 0.3
+  collisionDamageDuration: 0.5
   slashEffect: {fileID: 0}
   weaponTrail: {fileID: 0}
   comboWindow: 2

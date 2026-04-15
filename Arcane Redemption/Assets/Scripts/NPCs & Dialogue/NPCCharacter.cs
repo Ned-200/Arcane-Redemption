@@ -131,7 +131,7 @@ public class NPC_Character : BaseCharacter
             lookDirection.Normalize();
             NPCMesh.transform.rotation = Quaternion.Slerp(NPCMesh.transform.rotation, Quaternion.LookRotation(lookDirection), lookSpeed * Time.deltaTime);
 
-            if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking)
+            if (Input.GetKeyDown(KeyCode.E) && !NPC_Speaking && playerController.canMove)
             {
                 Debug.Log("Dialogue Begin");
                 if (SpeakImage != null)

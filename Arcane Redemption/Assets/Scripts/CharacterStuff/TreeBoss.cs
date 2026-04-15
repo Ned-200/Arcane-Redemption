@@ -1303,15 +1303,9 @@ public class TreeBoss : EnemyCharacter
             {
                 Debug.LogError("TreeBoss not assigned a Ghost NPC Prefab! Check Fields!");
             }
-            
-            if (MayorNPC != null)
-            {
-                MayorNPC.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("TreeBoss not assigned MayorNPC! Check Fields!");
-            }
+
+            Invoke(nameof(SpawnMayor), 2);
+
         }
 
         // Change tags so that plant walls are burnable
@@ -1336,6 +1330,18 @@ public class TreeBoss : EnemyCharacter
         }
 
         disintegrate.TriggerDisintegration();
+    }
+
+    private void SpawnMayor()
+    {
+        if (MayorNPC != null)
+        {
+            MayorNPC.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("TreeBoss not assigned MayorNPC! Check Fields!");
+        }
     }
 
     protected override void OnStateChanged(EnemyState newState)

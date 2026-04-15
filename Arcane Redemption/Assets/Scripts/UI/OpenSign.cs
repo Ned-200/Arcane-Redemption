@@ -95,7 +95,7 @@ public class OpenSign : MonoBehaviour
         Texture tex = material.mainTexture;
         if (tex == null)
         {
-            Debug.LogError("What the hell");
+            Debug.LogError("OpenSign: No main texture found");
         }
 
         Texture2D tex2D = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);

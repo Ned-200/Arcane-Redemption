@@ -85473,12 +85473,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007829297}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6968afa0aba5129478a32a720057d4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanarReflection
-  mainCamera: {fileID: 604163668}
+  mainCamera: {fileID: 1499676825}
   waterMaterial: {fileID: 2100000, guid: 77bdb48160a74b8498ddc64697a59324, type: 2}
   textureSize: 1024
   format: 2
